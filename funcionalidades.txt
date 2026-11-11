@@ -1,0 +1,4 @@
+1. gerar lead da pagina, da turma e do projeto (funcionamentos, comercial, visitar site, qr code por projeto)
+2. gerar um curtir projeto (nota, recomenda/nao recomanda, nps)
+3. gravar no google sheets
+4. criar dashboard

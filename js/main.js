@@ -39,7 +39,10 @@
       save: "Salvar",
       reset: "Restaurar padrão",
       baseUrlSaved: "URL base configurada!",
-      baseUrlReset: "URL padrão restaurada!"
+      baseUrlReset: "URL padrão restaurada!",
+      pageQrBtn: "QR Code do Workshop SENAI 2026",
+      pageQrTitle: "QR Code do Workshop SENAI 2026",
+      pageQrSub: "Aponte a câmera do seu celular para abrir o portal completo do evento."
     },
     en: {
       theme: "Theme", back: "← Back", eyebrow: "São Carlos · Technology in Action",
@@ -76,7 +79,10 @@
       save: "Save",
       reset: "Reset default",
       baseUrlSaved: "Base URL configured!",
-      baseUrlReset: "Default base URL restored!"
+      baseUrlReset: "Default base URL restored!",
+      pageQrBtn: "SENAI Workshop 2026 QR Code",
+      pageQrTitle: "SENAI Workshop 2026 QR Code",
+      pageQrSub: "Point your phone camera to access the full event portal."
     }
   };
 
@@ -125,6 +131,22 @@
       return baseHref + "/html/" + courseKey + ".html#" + pid;
     }
     return hrefClean + "#" + pid;
+  }
+
+  function getHomePageShareUrl() {
+    var custom = getCustomBase();
+    if (custom) {
+      if (custom.indexOf(".html") !== -1) {
+        return custom.replace(/\/html\/[a-z0-9_-]+\.html/i, "/index.html").split("#")[0].split("?")[0];
+      }
+      return custom.replace(/\/+$/, "") + "/";
+    }
+    var hrefClean = window.location.href.split("#")[0].split("?")[0];
+    var page = document.body.getAttribute("data-page");
+    if (page !== "home") {
+      return hrefClean.replace(/\/html\/[a-z0-9_-]+\.html/i, "/index.html");
+    }
+    return hrefClean;
   }
 
   function findProject(courseKey, idOrSlug) {
@@ -209,7 +231,17 @@
 
     root.innerHTML = headerHTML(false) +
       '<section class="hero"><div class="container"><span class="eyebrow">' + T("eyebrow") + '</span>' +
-      '<h1>' + T("heroTitle") + '</h1><p class="sub">' + T("heroSub") + '</p>' +
+      '<h1>' + T("heroTitle") + '</h1>' +
+      '<p class="sub hero-sub-row">' +
+        '<span>' + T("heroSub") + '</span>' +
+        '<button class="hero-qr-btn" id="heroQrBtn" type="button" title="' + esc(T("pageQrBtn")) + '" aria-label="' + esc(T("pageQrBtn")) + '">' +
+          '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+            '<rect width="5" height="5" x="3" y="3" rx="1"/><rect width="5" height="5" x="16" y="3" rx="1"/><rect width="5" height="5" x="3" y="16" rx="1"/>' +
+            '<path d="M21 16h-3a2 2 0 0 0-2 2v3"/><path d="M21 21v.01"/><path d="M12 7v3a2 2 0 0 1-2 2H7"/>' +
+            '<path d="M3 12h.01"/><path d="M12 3h.01"/><path d="M12 16v.01"/><path d="M16 12h1"/><path d="M21 12v.01"/><path d="M12 21v-1"/>' +
+          '</svg>' +
+        '</button>' +
+      '</p>' +
       '<a class="btn" href="#turmas">' + T("seeClasses") + '</a></div></section>' +
       '<section class="section" id="turmas"><div class="container"><h2 class="section-title">' + T("classesTitle") + '</h2><p class="section-sub">' + T("classesSub") + '</p><div class="class-grid">' + cards + '</div></div></section>' +
       '<section class="section about"><div class="container"><h2 class="section-title">' + T("aboutTitle") + '</h2><br><p class="about-text">' + T("aboutText") + '</p>' +
@@ -219,6 +251,13 @@
       '<div class="stat reveal"><b>' + cursos.length + '</b><span>' + T("statCourses") + '</span></div>' +
       '<div class="stat reveal"><b>100%</b><span>' + T("statDedication") + '</span></div></div></div></section>' +
       footerHTML();
+
+    var heroQrBtn = document.getElementById("heroQrBtn");
+    if (heroQrBtn) {
+      heroQrBtn.onclick = function () {
+        openPageQrModal();
+      };
+    }
 
     if (window.Leads) window.Leads.trackPageView("home");
   }
@@ -426,6 +465,7 @@
 
     var m = ensureModal();
     var dialog = document.getElementById("modalDialog");
+    dialog.className = "modal-dialog";
     activeModalProject = { project: p, courseKey: courseKey, index: index };
 
     var qrSvg = "";
@@ -606,6 +646,141 @@
     }
   }
 
+  function openPageQrModal() {
+    var homeUrl = getHomePageShareUrl();
+    var customBase = getCustomBase();
+    var m = ensureModal();
+    var dialog = document.getElementById("modalDialog");
+    dialog.className = "modal-dialog modal-dialog-page-qr";
+    activeModalProject = null;
+
+    var qrSvg = "";
+    if (window.QRCode && typeof window.QRCode.generateSVG === "function") {
+      qrSvg = window.QRCode.generateSVG(homeUrl, { size: 240, margin: 2 });
+    }
+
+    dialog.innerHTML =
+      '<button class="modal-close" id="modalCloseBtn" aria-label="' + esc(T("close")) + '">&times;</button>' +
+      '<div class="page-qr-dialog-body">' +
+        '<div class="page-qr-header">' +
+          '<span class="modal-badge">SENAI SÃO CARLOS · 2026</span>' +
+          '<h2 class="page-qr-title">' + esc(T("pageQrTitle")) + '</h2>' +
+          '<p class="page-qr-sub">' + esc(T("pageQrSub")) + '</p>' +
+        '</div>' +
+        '<div class="page-qr-frame" id="pageQrFrame">' + qrSvg + '</div>' +
+        '<div class="modal-url-box page-qr-url-box">' +
+          '<input type="text" class="modal-url-input" id="pageQrUrlInput" value="' + esc(homeUrl) + '" readonly>' +
+          '<button class="modal-btn-copy" id="pageQrCopyBtn">' + T("copyLink") + '</button>' +
+        '</div>' +
+        '<div class="modal-share-buttons" style="justify-content:center">' +
+          '<button class="btn-share-sec" id="pageQrDownloadSvgBtn">📥 ' + T("downloadSvg") + '</button>' +
+          '<button class="btn-share-sec" id="pageQrDownloadPngBtn">🖼️ ' + T("downloadPng") + '</button>' +
+          '<a class="btn-share-sec" href="' + esc(homeUrl) + '" target="_blank" rel="noopener">↗ ' + T("openNewTab") + '</a>' +
+        '</div>' +
+        '<button class="modal-base-url-toggle" id="pageQrBaseUrlToggle">' + T("customBaseUrl") + '</button>' +
+        '<div class="modal-base-url-box" id="pageQrBaseUrlBox">' +
+          '<label>URL base no GitHub Pages (ex: https://usuario.github.io/senai-workshop-2026):</label>' +
+          '<div class="modal-base-url-row">' +
+            '<input type="text" class="modal-base-url-input" id="pageQrBaseUrlInput" placeholder="https://seu-usuario.github.io/senai-workshop-2026" value="' + esc(customBase) + '">' +
+            '<button class="modal-base-url-save" id="pageQrBaseUrlSave">' + T("save") + '</button>' +
+            '<button class="btn-share-sec" id="pageQrBaseUrlReset" style="padding:4px 8px;font-size:.75rem">' + T("reset") + '</button>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+
+    document.getElementById("modalCloseBtn").onclick = function () { closeModal(false); };
+
+    var copyBtn = document.getElementById("pageQrCopyBtn");
+    copyBtn.onclick = function () {
+      var currentUrl = document.getElementById("pageQrUrlInput").value;
+      if (window.Leads) {
+        window.Leads.sendLead({
+          tipo: "Lead QR Code",
+          pagina: "home",
+          turma: "Geral",
+          acao: "Copiou Link da Página Inicial",
+          mensagem: "URL: " + currentUrl
+        });
+      }
+      copyText(currentUrl, T("linkCopied"));
+    };
+
+    var inputUrl = document.getElementById("pageQrUrlInput");
+    inputUrl.onclick = function () { inputUrl.select(); };
+
+    document.getElementById("pageQrDownloadSvgBtn").onclick = function () {
+      var currentUrl = document.getElementById("pageQrUrlInput").value;
+      if (window.Leads) {
+        window.Leads.sendLead({
+          tipo: "Lead QR Code",
+          pagina: "home",
+          turma: "Geral",
+          acao: "Baixou QR Code Página (SVG)",
+          mensagem: "URL: " + currentUrl
+        });
+      }
+      if (!window.QRCode) return;
+      var svgCode = window.QRCode.generateSVG(currentUrl, { size: 480, margin: 3 });
+      var blob = new Blob([svgCode], { type: "image/svg+xml;charset=utf-8" });
+      downloadFile(blob, "qrcode-senai-workshop-2026.svg");
+    };
+
+    document.getElementById("pageQrDownloadPngBtn").onclick = function () {
+      var currentUrl = document.getElementById("pageQrUrlInput").value;
+      if (window.Leads) {
+        window.Leads.sendLead({
+          tipo: "Lead QR Code",
+          pagina: "home",
+          turma: "Geral",
+          acao: "Baixou QR Code Página (PNG)",
+          mensagem: "URL: " + currentUrl
+        });
+      }
+      if (!window.QRCode) return;
+      var canvas = document.createElement("canvas");
+      window.QRCode.drawCanvas(canvas, currentUrl, { size: 800, margin: 4 });
+      canvas.toBlob(function (blob) {
+        if (blob) downloadFile(blob, "qrcode-senai-workshop-2026.png");
+      });
+    };
+
+    var toggleBtn = document.getElementById("pageQrBaseUrlToggle");
+    var baseBox = document.getElementById("pageQrBaseUrlBox");
+    toggleBtn.onclick = function () { baseBox.classList.toggle("is-open"); };
+
+    document.getElementById("pageQrBaseUrlSave").onclick = function () {
+      var v = document.getElementById("pageQrBaseUrlInput").value.trim().replace(/\/+$/, "");
+      if (v) {
+        store("custom_base_url", v);
+        showToast(T("baseUrlSaved"));
+      } else {
+        removeStore("custom_base_url");
+        showToast(T("baseUrlReset"));
+      }
+      openPageQrModal();
+    };
+
+    document.getElementById("pageQrBaseUrlReset").onclick = function () {
+      removeStore("custom_base_url");
+      showToast(T("baseUrlReset"));
+      openPageQrModal();
+    };
+
+    m.classList.add("is-open");
+    m.setAttribute("aria-hidden", "false");
+    document.body.classList.add("modal-open");
+
+    if (window.Leads) {
+      window.Leads.sendLead({
+        tipo: "Lead QR Code",
+        pagina: "home",
+        turma: "Geral",
+        acao: "Visualizou QR Code da Página Inicial",
+        mensagem: "Abriu modal com QR Code grande do Workshop"
+      });
+    }
+  }
+
   function initCardClicks(courseKey, P) {
     var grid = document.getElementById("projectGrid");
     if (!grid) return;
@@ -673,6 +848,10 @@
       return;
     }
     if (page === "home") {
+      if (raw === "qr" || raw === "qrcode" || raw === "qrcode-home") {
+        openPageQrModal();
+        return;
+      }
       var any = findProjectAnyCourse(raw);
       if (any) {
         window.location.replace(S.cursos[any.courseKey].pagina + "#" + raw);
@@ -710,6 +889,10 @@
     if (!candidate) return;
 
     if (page === "home") {
+      if (candidate === "qr" || candidate === "qrcode" || candidate === "qrcode-home") {
+        setTimeout(openPageQrModal, 100);
+        return;
+      }
       var matchAny = findProjectAnyCourse(candidate);
       if (matchAny) {
         window.location.replace(S.cursos[matchAny.courseKey].pagina + "#" + candidate);

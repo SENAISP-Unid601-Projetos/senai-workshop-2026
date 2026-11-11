@@ -2,3 +2,4 @@
 2. gerar um curtir projeto (nota, recomenda/nao recomanda, nps)
 3. gravar no google sheets
 4. criar dashboard
+5. criar o README.md

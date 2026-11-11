@@ -25,6 +25,11 @@ window.SITE = {
      Exemplo: "https://seu-usuario.github.io/senai-workshop-2026" */
   baseUrl: "",
 
+  /* URL do Web App do Google Apps Script para salvar leads no Google Sheets.
+     Cole aqui a URL gerada na implantação do Apps Script (termina com /exec).
+     Exemplo: "https://script.google.com/macros/s/AKfycb.../exec" */
+  googleSheetsUrl: "",
+
   cursos: {
     ds: {
       pagina: "html/ds.html",

@@ -219,6 +219,8 @@
       '<div class="stat reveal"><b>' + cursos.length + '</b><span>' + T("statCourses") + '</span></div>' +
       '<div class="stat reveal"><b>100%</b><span>' + T("statDedication") + '</span></div></div></div></section>' +
       footerHTML();
+
+    if (window.Leads) window.Leads.trackPageView("home");
   }
 
   function act(url, label, primary) {
@@ -275,6 +277,18 @@
 
     initCarousel(P.length);
     initCardClicks(key, P);
+
+    // Rastreia cliques no slide link do carrossel
+    document.querySelectorAll(".slide-link").forEach(function (el) {
+      el.addEventListener("click", function () {
+        var pIdx = current;
+        if (P[pIdx] && window.Leads) {
+          window.Leads.trackProjectAction(P[pIdx], key, "visitar_site", { url: P[pIdx].landing });
+        }
+      });
+    });
+
+    if (window.Leads) window.Leads.trackCourseView(key, tr(c.nome));
   }
 
   function go(i, n) {
@@ -435,7 +449,7 @@
         '<h2 class="modal-title">' + esc(p.nome) + '</h2>' +
         '<h3 class="modal-sub">' + esc(p.subtitulo) + '</h3>' +
         '<p class="modal-desc">' + esc(p.descricao) + '</p>' +
-        '<div class="modal-actions actions">' +
+        '<div class="modal-actions actions" id="modalActions">' +
           act(p.funcionamento, T("tech")) +
           act(p.comercial, T("commercial")) +
           act(p.landing, T("visit"), true) +
@@ -486,6 +500,7 @@
     var qrToggleBtn = document.getElementById("modalQrToggleBtn");
     var shareBox = document.getElementById("modalShareBox");
     var qrToggleText = document.getElementById("modalQrToggleText");
+
     if (qrToggleBtn && shareBox) {
       qrToggleBtn.onclick = function () {
         var isOpen = shareBox.classList.toggle("is-open");
@@ -493,14 +508,36 @@
         qrToggleBtn.setAttribute("aria-expanded", isOpen ? "true" : "false");
         if (qrToggleText) qrToggleText.textContent = isOpen ? T("qrToggleHide") : T("qrToggle");
         if (isOpen) {
+          if (window.Leads) window.Leads.trackProjectAction(p, courseKey, "abriu_qr_code");
           shareBox.scrollIntoView({ behavior: "smooth", block: "nearest" });
         }
       };
     }
 
+    // Rastreia cliques nos botões de ação do modal
+    var modalActions = document.getElementById("modalActions");
+    if (modalActions) {
+      modalActions.addEventListener("click", function (e) {
+        var a = e.target.closest ? e.target.closest("a") : null;
+        if (!a) return;
+        var label = (a.textContent || "").trim().toLowerCase();
+        var actType = "visitar_site";
+        var actUrl = p.landing;
+        if (label.indexOf("funcionamento") !== -1 || label.indexOf("how it works") !== -1) {
+          actType = "funcionamento";
+          actUrl = p.funcionamento;
+        } else if (label.indexOf("comercial") !== -1) {
+          actType = "comercial";
+          actUrl = p.comercial;
+        }
+        if (window.Leads) window.Leads.trackProjectAction(p, courseKey, actType, { url: actUrl });
+      });
+    }
+
     var copyBtn = document.getElementById("modalCopyBtn");
     copyBtn.onclick = function () {
       var currentUrl = document.getElementById("modalUrlInput").value;
+      if (window.Leads) window.Leads.trackProjectAction(p, courseKey, "copiou_link_qr");
       copyText(currentUrl, T("linkCopied"));
     };
 
@@ -509,6 +546,7 @@
 
     document.getElementById("modalDownloadSvgBtn").onclick = function () {
       var currentUrl = document.getElementById("modalUrlInput").value;
+      if (window.Leads) window.Leads.trackProjectAction(p, courseKey, "baixou_qr_svg");
       if (!window.QRCode) return;
       var svgCode = window.QRCode.generateSVG(currentUrl, { size: 360, margin: 3 });
       var blob = new Blob([svgCode], { type: "image/svg+xml;charset=utf-8" });
@@ -517,6 +555,7 @@
 
     document.getElementById("modalDownloadPngBtn").onclick = function () {
       var currentUrl = document.getElementById("modalUrlInput").value;
+      if (window.Leads) window.Leads.trackProjectAction(p, courseKey, "baixou_qr_png");
       if (!window.QRCode) return;
       var canvas = document.createElement("canvas");
       window.QRCode.drawCanvas(canvas, currentUrl, { size: 600, margin: 4 });
@@ -574,14 +613,35 @@
     function handleCardActivation(card) {
       var idx = Number(card.getAttribute("data-proj-idx"));
       if (P[idx]) {
+        if (window.Leads) window.Leads.trackProjectAction(P[idx], courseKey, "abriu_modal");
         openModal(P[idx], courseKey, idx, true);
       }
     }
 
     grid.addEventListener("click", function (e) {
-      // If clicking inside action buttons, let default link/toast handle it
+      // If clicking inside action buttons, let default link/toast handle it and track lead
       var actionBtn = e.target.closest ? e.target.closest(".actions a, .actions button") : null;
-      if (actionBtn) return;
+      if (actionBtn) {
+        var cardEl = e.target.closest ? e.target.closest(".project-card") : null;
+        if (cardEl) {
+          var idx = Number(cardEl.getAttribute("data-proj-idx"));
+          var p = P[idx];
+          if (p && window.Leads) {
+            var label = (actionBtn.textContent || "").trim().toLowerCase();
+            var actType = "visitar_site";
+            var actUrl = p.landing;
+            if (label.indexOf("funcionamento") !== -1 || label.indexOf("how it works") !== -1) {
+              actType = "funcionamento";
+              actUrl = p.funcionamento;
+            } else if (label.indexOf("comercial") !== -1) {
+              actType = "comercial";
+              actUrl = p.comercial;
+            }
+            window.Leads.trackProjectAction(p, courseKey, actType, { url: actUrl });
+          }
+        }
+        return;
+      }
 
       var card = e.target.closest ? e.target.closest(".project-card") : null;
       if (card) {
@@ -657,6 +717,7 @@
     } else {
       var match = findProject(page, candidate);
       if (match) {
+        if (window.Leads) window.Leads.trackProjectAction(match.project, page, "acesso_via_qr_code");
         // Abre imediatamente o modal do projeto
         setTimeout(function () {
           openModal(match.project, page, match.index, false);

@@ -28,7 +28,7 @@ window.SITE = {
   /* URL do Web App do Google Apps Script para salvar leads no Google Sheets.
      Cole aqui a URL gerada na implantação do Apps Script (termina com /exec).
      Exemplo: "https://script.google.com/macros/s/AKfycb.../exec" */
-  googleSheetsUrl: "",
+  googleSheetsUrl: "https://script.google.com/macros/s/AKfycbxDJNvpZ07fTokYSDry66IOgwjDwDDi9c6kkj7XAUI5aTm_f1zB1AllYS-fLcDsTag/exec",
 
   cursos: {
     ds: {

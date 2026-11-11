@@ -242,7 +242,7 @@
           '</svg>' +
         '</button>' +
       '</p>' +
-      '<a class="btn" href="#turmas">' + T("seeClasses") + '</a></div></section>' +
+      '<div class="hero-cta"><a class="btn" href="#turmas">' + T("seeClasses") + '</a></div></div></section>' +
       '<section class="section" id="turmas"><div class="container"><h2 class="section-title">' + T("classesTitle") + '</h2><p class="section-sub">' + T("classesSub") + '</p><div class="class-grid">' + cards + '</div></div></section>' +
       '<section class="section about"><div class="container"><h2 class="section-title">' + T("aboutTitle") + '</h2><br><p class="about-text">' + T("aboutText") + '</p>' +
       '<div class="stat-grid">' +
@@ -656,7 +656,7 @@
 
     var qrSvg = "";
     if (window.QRCode && typeof window.QRCode.generateSVG === "function") {
-      qrSvg = window.QRCode.generateSVG(homeUrl, { size: 240, margin: 2 });
+      qrSvg = window.QRCode.generateSVG(homeUrl, { size: 520, margin: 2 });
     }
 
     dialog.innerHTML =

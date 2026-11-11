@@ -1250,22 +1250,23 @@ body.modal-open {
 }
 
 /* ---------- Hero QR Code Button (Home) ---------- */
-.hero-sub-row{display:inline-flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap}
+.hero-sub-row{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;margin:22px auto 26px;width:100%}
+.hero-cta{display:block;width:100%;margin-top:6px}
 .hero-qr-btn{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:12px;background:var(--card);border:1px solid var(--line);color:var(--text);cursor:pointer;transition:all .25s ease;box-shadow:var(--shadow);vertical-align:middle;padding:0}
 .hero-qr-btn:hover{border-color:var(--red);color:var(--red-2);transform:translateY(-2px) scale(1.08);box-shadow:0 8px 24px rgba(228,0,43,.38)}
 .hero-qr-btn svg{width:22px;height:22px}
 
-/* ---------- Modal QR Code Grande da Página ---------- */
-.modal-dialog-page-qr{max-width:540px;text-align:center}
-.page-qr-dialog-body{padding:38px 30px 30px;display:flex;flex-direction:column;align-items:center;gap:16px;overflow-y:auto;max-height:calc(100vh - 60px)}
+/* ---------- Modal QR Code Grande da Página (80% da tela) ---------- */
+.modal-dialog-page-qr{width:80vw !important;max-width:960px !important;height:82vh !important;max-height:88vh !important;text-align:center;display:flex;flex-direction:column}
+.page-qr-dialog-body{padding:36px 32px 28px;display:flex;flex-direction:column;align-items:center;justify-content:space-evenly;gap:14px;overflow-y:auto;height:100%}
 .page-qr-dialog-body::-webkit-scrollbar{width:6px}
 .page-qr-dialog-body::-webkit-scrollbar-thumb{background:var(--line);border-radius:999px}
-.page-qr-header{display:flex;flex-direction:column;align-items:center;gap:8px}
-.page-qr-title{font-size:clamp(1.3rem,3.4vw,1.75rem);font-weight:900;line-height:1.2}
-.page-qr-sub{color:var(--muted);font-size:.92rem;max-width:440px;line-height:1.55}
-.page-qr-frame{background:#fff;padding:14px;border-radius:18px;box-shadow:0 14px 40px rgba(0,0,0,.35);width:min(270px,82vw);display:grid;place-items:center;margin:6px 0}
-.page-qr-frame svg,.page-qr-frame img{width:100%;height:auto;display:block}
-.page-qr-url-box{width:100%;max-width:440px}
+.page-qr-header{display:flex;flex-direction:column;align-items:center;gap:6px}
+.page-qr-title{font-size:clamp(1.4rem,3.4vw,2.1rem);font-weight:900;line-height:1.2}
+.page-qr-sub{color:var(--muted);font-size:clamp(.92rem,1.8vw,1.08rem);max-width:540px;line-height:1.5}
+.page-qr-frame{background:#fff;padding:16px;border-radius:24px;box-shadow:0 20px 60px rgba(0,0,0,.45);width:min(440px,44vh,64vw);aspect-ratio:1/1;display:grid;place-items:center;margin:4px auto;flex-shrink:0}
+.page-qr-frame svg,.page-qr-frame img{width:100%;height:100%;display:block}
+.page-qr-url-box{width:100%;max-width:500px}
 
 /* ---------- Footer ---------- */
 .footer {
@@ -1414,4 +1415,7 @@ body.modal-open {
   .btn-share-sec {
     justify-content: center
   }
+  .modal-dialog-page-qr{width:92vw !important;height:auto !important;max-height:92vh !important}
+  .page-qr-dialog-body{padding:30px 18px 22px;gap:14px}
+  .page-qr-frame{width:min(300px,74vw);padding:12px}
 }

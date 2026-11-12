@@ -21,6 +21,139 @@
   let countdownSeconds = REFRESH_INTERVAL_SECONDS;
   let countdownTimerId = null;
 
+  // Dicionário de Internacionalização (Português / Inglês)
+  const DASH_I18N = {
+    pt: {
+      docTitle: "SENAI Workshop 2026 — Rankings e Visitas",
+      headerTitle: "Workshop 2026 • Painel de Rankings & Visitas",
+      headerSubtitle: "Critérios de avaliação: Apresentação vs. Ideia e Solução Técnica",
+      badgeLoading: "Carregando...",
+      badgeLive: "Google Sheets Ao Vivo",
+      badgeAlphabetical: "Ordem Alfabética",
+      badgeEmpty: "Planilha Vazia (Ordem Alfabética)",
+      badgeOffline: "Offline (Ordem Alfabética)",
+      badgeConnectedNoVotes: "Google Sheets Conectado (Sem votos ainda)",
+      badgeTooltipLive: "Dados sincronizados com a planilha em tempo real",
+      badgeTooltipMock: "Aguardando avaliações na planilha",
+      btnRefresh: "Atualizar",
+      btnRefreshTitle: "Atualizar dados agora (reseta o timer)",
+      btnFullscreen: "Tela Cheia",
+      btnFullscreenExit: "Sair",
+      btnFullscreenTitle: "Alternar modo Tela Cheia",
+      btnFullscreenExitTitle: "Sair do modo Tela Cheia (ESC)",
+      btnBack: "← Voltar ao Site",
+      btnLangTitle: "Mudar idioma para Inglês / Switch to English",
+
+      // Colunas
+      colDs: "💻 Dev. de Sistemas",
+      colMec: "⚙️ Mecatrônica",
+      colCenter: "📊 Visitas na Turma e Projetos",
+      colCenterSub: "DS vs. Mecatrônica",
+
+      // Rankings
+      topBestTitle: "Top 5 Mais Bem Votados",
+      topBestSub: "Notas de 0 a 5.0 nos 2 critérios",
+      topBestBadge: "🏆 Top 5",
+      topWorstTitle: "Top 5 Menos Votados",
+      topWorstSub: "Menores médias registradas",
+      topWorstBadge: "⚠️ Top 5 Menos Votados",
+
+      // Contadores
+      evaluatedCount: "Avaliados",
+      projectsCount: "Projetos",
+
+      // KPI Placar
+      kpiDsLabel: "Dev. de Sistemas",
+      kpiMecLabel: "Mecatrônica",
+      kpiTotalLabel: "Total Geral",
+      kpiTotalSub: "Turma + Projetos",
+      kpiPctSub: "das visitas",
+
+      // Gráficos
+      chartCenterLabels: ['Dev. de Sistemas (DS)', 'Mecatrônica (MEC)'],
+      chartCenterDataset: 'Visitas na Turma e Projetos',
+      chartCenterTooltipTotal: 'Total',
+      chartCenterTooltipVisits: 'visitas',
+      criteriaPresentation: 'Apresentação',
+      criteriaSolution: 'Ideia e Solução Técnica',
+      chartTooltipNoVotes: 'Sem votos ainda',
+      chartTooltipAlphabetical: '(Exibindo em ordem alfabética)',
+      chartTooltipAverage: 'Média Ponderada'
+    },
+    en: {
+      docTitle: "SENAI Workshop 2026 — Rankings & Visits",
+      headerTitle: "Workshop 2026 • Rankings & Visits Dashboard",
+      headerSubtitle: "Evaluation criteria: Presentation vs. Technical Idea & Solution",
+      badgeLoading: "Loading...",
+      badgeLive: "Google Sheets Live",
+      badgeAlphabetical: "Alphabetical Order",
+      badgeEmpty: "Empty Sheet (Alphabetical Order)",
+      badgeOffline: "Offline (Alphabetical Order)",
+      badgeConnectedNoVotes: "Google Sheets Connected (No votes yet)",
+      badgeTooltipLive: "Data synchronized in real time with spreadsheet",
+      badgeTooltipMock: "Waiting for evaluations in spreadsheet",
+      btnRefresh: "Refresh",
+      btnRefreshTitle: "Refresh data now (resets timer)",
+      btnFullscreen: "Fullscreen",
+      btnFullscreenExit: "Exit",
+      btnFullscreenTitle: "Toggle Fullscreen mode",
+      btnFullscreenExitTitle: "Exit Fullscreen mode (ESC)",
+      btnBack: "← Back to Site",
+      btnLangTitle: "Mudar idioma para Português / Switch to Portuguese",
+
+      // Colunas
+      colDs: "💻 Systems Development",
+      colMec: "⚙️ Mechatronics",
+      colCenter: "📊 Class & Project Visits",
+      colCenterSub: "DS vs. Mechatronics",
+
+      // Rankings
+      topBestTitle: "Top 5 Highest Rated",
+      topBestSub: "Scores from 0 to 5.0 in both criteria",
+      topBestBadge: "🏆 Top 5",
+      topWorstTitle: "Top 5 Lowest Rated",
+      topWorstSub: "Lowest recorded averages",
+      topWorstBadge: "⚠️ Top 5 Lowest Rated",
+
+      // Contadores
+      evaluatedCount: "Evaluated",
+      projectsCount: "Projects",
+
+      // KPI Placar
+      kpiDsLabel: "Systems Dev.",
+      kpiMecLabel: "Mechatronics",
+      kpiTotalLabel: "Overall Total",
+      kpiTotalSub: "Class + Projects",
+      kpiPctSub: "of visits",
+
+      // Gráficos
+      chartCenterLabels: ['Systems Dev. (DS)', 'Mechatronics (MEC)'],
+      chartCenterDataset: 'Class and Project Visits',
+      chartCenterTooltipTotal: 'Total',
+      chartCenterTooltipVisits: 'visits',
+      criteriaPresentation: 'Presentation',
+      criteriaSolution: 'Technical Idea & Solution',
+      chartTooltipNoVotes: 'No votes yet',
+      chartTooltipAlphabetical: '(Showing in alphabetical order)',
+      chartTooltipAverage: 'Weighted Average'
+    }
+  };
+
+  // Idioma ativo sincronizado com o localStorage do site principal
+  let currentLang = "pt";
+  try {
+    currentLang = localStorage.getItem("lang") || "pt";
+  } catch (e) {}
+
+  function getI18n() {
+    return DASH_I18N[currentLang] || DASH_I18N.pt;
+  }
+
+  // Cache dos últimos dados para re-renderização instantânea ao trocar de idioma
+  let lastLoadedData = null;
+  let lastIsLive = false;
+  let lastStatusKey = "badgeLoading";
+
   // Instâncias dos gráficos para limpeza de memória
   let chartInstances = {
     visitasCenter: null,
@@ -68,9 +201,10 @@
     nomes.sort((a, b) => a.localeCompare(b, 'pt-BR', { numeric: true, sensitivity: 'base' }));
 
     const primeiros5 = nomes.slice(0, 5);
+    const ordinal = (idx) => currentLang === 'en' ? `${idx + 1}.` : `${idx + 1}º`;
 
     return {
-      projetos: primeiros5.map((nome, idx) => `${idx + 1}º ${nome}`),
+      projetos: primeiros5.map((nome, idx) => `${ordinal(idx)} ${nome}`),
       apresentacao: [0, 0, 0, 0, 0],
       solucaoTecnica: [0, 0, 0, 0, 0],
       isAlphabetical: true
@@ -97,18 +231,24 @@
   }
 
   // Atualiza badge de status de conexão no cabeçalho
-  function updateConnectionBadge(isLive, labelText) {
+  function updateConnectionBadge(isLive, statusKey) {
     const badge = document.getElementById('badge-connection-status');
     if (!badge) return;
 
+    lastIsLive = isLive;
+    if (statusKey) lastStatusKey = statusKey;
+
+    const t = getI18n();
+    const label = t[lastStatusKey] || lastStatusKey;
+
     if (isLive) {
       badge.className = "badge-live";
-      badge.innerHTML = `<span class="pulse-dot-green"></span> ${labelText || "Google Sheets Ao Vivo"}`;
-      badge.title = "Dados sincronizados com a planilha em tempo real";
+      badge.innerHTML = `<span class="pulse-dot-green"></span> <span id="badge-status-text">${label}</span>`;
+      badge.title = t.badgeTooltipLive;
     } else {
       badge.className = "badge-mock";
-      badge.innerHTML = `<span class="pulse-dot"></span> ${labelText || "Ordem Alfabética"}`;
-      badge.title = "Aguardando avaliações na planilha";
+      badge.innerHTML = `<span class="pulse-dot"></span> <span id="badge-status-text">${label}</span>`;
+      badge.title = t.badgeTooltipMock;
     }
   }
 
@@ -119,6 +259,9 @@
     const ctx = document.getElementById('chart-visitas-center');
     if (!ctx) return;
     if (chartInstances.visitasCenter) chartInstances.visitasCenter.destroy();
+
+    const t = getI18n();
+    const locale = currentLang === "pt" ? "pt-BR" : "en-US";
 
     const dsVal = (visitasData && Number(visitasData.ds)) || 0;
     const mecVal = (visitasData && Number(visitasData.mec)) || 0;
@@ -131,28 +274,28 @@
     const dsPctEl = document.getElementById('kpi-ds-pct');
     const mecPctEl = document.getElementById('kpi-mec-pct');
 
-    if (dsEl) dsEl.textContent = dsVal.toLocaleString('pt-BR');
-    if (mecEl) mecEl.textContent = mecVal.toLocaleString('pt-BR');
-    if (totEl) totEl.textContent = (dsVal + mecVal).toLocaleString('pt-BR');
+    if (dsEl) dsEl.textContent = dsVal.toLocaleString(locale);
+    if (mecEl) mecEl.textContent = mecVal.toLocaleString(locale);
+    if (totEl) totEl.textContent = (dsVal + mecVal).toLocaleString(locale);
 
     if (dsPctEl) {
       dsPctEl.textContent = (dsVal + mecVal > 0)
-        ? `${((dsVal / totalConsolidado) * 100).toFixed(1)}% das visitas`
-        : "0% das visitas";
+        ? `${((dsVal / totalConsolidado) * 100).toFixed(1)}% ${t.kpiPctSub}`
+        : `0% ${t.kpiPctSub}`;
     }
 
     if (mecPctEl) {
       mecPctEl.textContent = (dsVal + mecVal > 0)
-        ? `${((mecVal / totalConsolidado) * 100).toFixed(1)}% das visitas`
-        : "0% das visitas";
+        ? `${((mecVal / totalConsolidado) * 100).toFixed(1)}% ${t.kpiPctSub}`
+        : `0% ${t.kpiPctSub}`;
     }
 
     chartInstances.visitasCenter = new Chart(ctx, {
       type: 'bar',
       data: {
-        labels: ['Dev. de Sistemas (DS)', 'Mecatrônica (MEC)'],
+        labels: t.chartCenterLabels,
         datasets: [{
-          label: 'Visitas na Turma e Projetos',
+          label: t.chartCenterDataset,
           data: [dsVal, mecVal],
           backgroundColor: ['#0a6cff', '#e4002b'],
           borderRadius: 12,
@@ -176,7 +319,7 @@
               label: function (context) {
                 const val = context.parsed.y;
                 const pct = (dsVal + mecVal > 0) ? ((val / totalConsolidado) * 100).toFixed(1) : "0";
-                return ` Total: ${val.toLocaleString('pt-BR')} visitas (${pct}%)`;
+                return ` ${t.chartCenterTooltipTotal}: ${val.toLocaleString(locale)} ${t.chartCenterTooltipVisits} (${pct}%)`;
               }
             }
           }
@@ -191,7 +334,7 @@
             grid: { color: 'rgba(255, 255, 255, 0.05)' },
             ticks: {
               callback: function (val) {
-                return val.toLocaleString('pt-BR');
+                return val.toLocaleString(locale);
               }
             }
           }
@@ -208,6 +351,7 @@
     if (!ctx) return;
     if (chartInstances[instanceKey]) chartInstances[instanceKey].destroy();
 
+    const t = getI18n();
     const colorApresentacao = isTop ? '#10b981' : '#f59e0b';
     const colorSolucao = isTop ? '#06b6d4' : '#f97316';
 
@@ -228,7 +372,7 @@
         labels: projetos,
         datasets: [
           {
-            label: 'Apresentação',
+            label: t.criteriaPresentation,
             data: apresentacao,
             backgroundColor: colorApresentacao,
             borderRadius: 6,
@@ -237,7 +381,7 @@
             categoryPercentage: 0.8
           },
           {
-            label: 'Ideia e Solução Técnica',
+            label: t.criteriaSolution,
             data: solucaoTecnica,
             backgroundColor: colorSolucao,
             borderRadius: 6,
@@ -271,20 +415,20 @@
             callbacks: {
               label: function (context) {
                 if (isAlpha) {
-                  return ` ${context.dataset.label}: Sem votos ainda`;
+                  return ` ${context.dataset.label}: ${t.chartTooltipNoVotes}`;
                 }
                 const valor = Number(context.parsed.x) || 0;
                 return ` ${context.dataset.label}: ${valor.toFixed(1)} / 5.0`;
               },
               afterBody: function (items) {
                 if (isAlpha) {
-                  return '\n(Exibindo em ordem alfabética)';
+                  return `\n${t.chartTooltipAlphabetical}`;
                 }
                 if (items && items.length >= 2) {
                   const v1 = Number(items[0].parsed.x) || 0;
                   const v2 = Number(items[1].parsed.x) || 0;
                   const media = ((v1 + v2) / 2).toFixed(2);
-                  return `\n⭐ Média Ponderada: ${media} / 5.0`;
+                  return `\n⭐ ${t.chartTooltipAverage}: ${media} / 5.0`;
                 }
                 return '';
               }
@@ -406,24 +550,24 @@
         }
       };
 
-      const labelStatus = (totalDsAvaliados > 0 || totalMecAvaliados > 0)
-        ? "Google Sheets Ao Vivo"
-        : "Google Sheets Conectado (Sem votos ainda)";
+      const statusKey = (totalDsAvaliados > 0 || totalMecAvaliados > 0)
+        ? "badgeLive"
+        : "badgeConnectedNoVotes";
 
-      renderComDados(dadosFinais, true, labelStatus);
+      renderComDados(dadosFinais, true, statusKey);
       return;
 
     } else if (json && json.status === "empty") {
       console.warn("[Dashboard] Planilha vazia. Usando ordem alfabética.");
-      renderFallbackAlfabetico("Planilha Vazia (Ordem Alfabética)");
+      renderFallbackAlfabetico("badgeEmpty");
       return;
     }
 
     console.warn("[Dashboard] Usando ordem alfabética como fallback.");
-    renderFallbackAlfabetico("Offline (Ordem Alfabética)");
+    renderFallbackAlfabetico("badgeOffline");
   }
 
-  function renderFallbackAlfabetico(badgeLabel) {
+  function renderFallbackAlfabetico(statusKey) {
     const fallbackData = {
       visitas: { ds: 0, mec: 0, total: 0 },
       ds: {
@@ -437,11 +581,17 @@
         totalAvaliados: 0
       }
     };
-    renderComDados(fallbackData, false, badgeLabel);
+    renderComDados(fallbackData, false, statusKey || "badgeOffline");
   }
 
-  function renderComDados(data, isLive, badgeLabel) {
-    updateConnectionBadge(isLive, badgeLabel);
+  function renderComDados(data, isLive, statusKey) {
+    lastLoadedData = data;
+    lastIsLive = isLive;
+    if (statusKey) lastStatusKey = statusKey;
+
+    const t = getI18n();
+
+    updateConnectionBadge(isLive, lastStatusKey);
 
     // 1. Centro: Visitas por Turma (apenas acessos na turma e projetos)
     renderVisitasCenterChart(data.visitas);
@@ -458,15 +608,15 @@
     const dsCountEl = document.getElementById('count-ds-avaliados');
     if (dsCountEl) {
       dsCountEl.textContent = data.ds.totalAvaliados > 0
-        ? `${data.ds.totalAvaliados} Avaliados`
-        : "Ordem Alfabética";
+        ? `${data.ds.totalAvaliados} ${t.evaluatedCount}`
+        : t.badgeAlphabetical;
     }
 
     const mecCountEl = document.getElementById('count-mec-avaliados');
     if (mecCountEl) {
       mecCountEl.textContent = data.mec.totalAvaliados > 0
-        ? `${data.mec.totalAvaliados} Avaliados`
-        : "Ordem Alfabética";
+        ? `${data.mec.totalAvaliados} ${t.evaluatedCount}`
+        : t.badgeAlphabetical;
     }
   }
 
@@ -568,14 +718,16 @@
     document.documentElement.classList.toggle('is-fullscreen', isFullscreen);
     document.body.classList.toggle('is-fullscreen', isFullscreen);
 
+    const t = getI18n();
+
     if (isFullscreen) {
-      if (labelEl) labelEl.textContent = "Sair";
+      if (labelEl) labelEl.textContent = t.btnFullscreenExit;
       if (iconEl) iconEl.textContent = "🗗";
-      if (btn) btn.title = "Sair do modo Tela Cheia (ESC)";
+      if (btn) btn.title = t.btnFullscreenExitTitle;
     } else {
-      if (labelEl) labelEl.textContent = "Tela Cheia";
+      if (labelEl) labelEl.textContent = t.btnFullscreen;
       if (iconEl) iconEl.textContent = "⛶";
-      if (btn) btn.title = "Alternar modo Tela Cheia";
+      if (btn) btn.title = t.btnFullscreenTitle;
     }
 
     // Redimensiona todos os gráficos Chart.js com escalonamento para garantir layout perfeito
@@ -583,9 +735,123 @@
   }
 
   // ===================================================================
+  // APLICAÇÃO E TRANSIÇÃO DE IDIOMA (I18N)
+  // ===================================================================
+  function applyLanguage() {
+    const t = getI18n();
+    document.documentElement.lang = currentLang === "pt" ? "pt-BR" : "en";
+    document.title = t.docTitle;
+
+    const langLabel = document.getElementById('lang-label');
+    if (langLabel) langLabel.textContent = currentLang === "pt" ? "EN" : "PT";
+
+    const btnLang = document.getElementById('btn-lang');
+    if (btnLang) btnLang.title = t.btnLangTitle;
+
+    const titleEl = document.getElementById('dash-title');
+    if (titleEl) titleEl.textContent = t.headerTitle;
+
+    const subEl = document.getElementById('dash-sub');
+    if (subEl) subEl.textContent = t.headerSubtitle;
+
+    const refreshLabel = document.getElementById('refresh-label');
+    if (refreshLabel) refreshLabel.textContent = t.btnRefresh;
+
+    const btnRefresh = document.getElementById('btn-refresh-data');
+    if (btnRefresh) btnRefresh.title = t.btnRefreshTitle;
+
+    const btnBack = document.getElementById('btn-back');
+    if (btnBack) btnBack.textContent = t.btnBack;
+
+    const isFullscreen = !!(document.fullscreenElement || document.webkitFullscreenElement);
+    const fsLabel = document.getElementById('fs-label');
+    if (fsLabel) fsLabel.textContent = isFullscreen ? t.btnFullscreenExit : t.btnFullscreen;
+
+    const btnFullscreen = document.getElementById('btn-fullscreen');
+    if (btnFullscreen) btnFullscreen.title = isFullscreen ? t.btnFullscreenExitTitle : t.btnFullscreenTitle;
+
+    // Colunas
+    const pillDs = document.getElementById('pill-ds-label');
+    if (pillDs) pillDs.textContent = t.colDs;
+
+    const pillCenter = document.getElementById('pill-center-label');
+    if (pillCenter) pillCenter.textContent = t.colCenter;
+
+    const pillCenterSub = document.getElementById('pill-center-sub');
+    if (pillCenterSub) pillCenterSub.textContent = t.colCenterSub;
+
+    const pillMec = document.getElementById('pill-mec-label');
+    if (pillMec) pillMec.textContent = t.colMec;
+
+    // Card Titles, Subtitles & Badges
+    const dsBestTitle = document.getElementById('ds-best-title');
+    if (dsBestTitle) dsBestTitle.textContent = t.topBestTitle;
+    const dsBestSub = document.getElementById('ds-best-sub');
+    if (dsBestSub) dsBestSub.textContent = t.topBestSub;
+    const dsBestBadge = document.getElementById('ds-best-badge');
+    if (dsBestBadge) dsBestBadge.textContent = t.topBestBadge;
+
+    const dsWorstTitle = document.getElementById('ds-worst-title');
+    if (dsWorstTitle) dsWorstTitle.textContent = t.topWorstTitle;
+    const dsWorstSub = document.getElementById('ds-worst-sub');
+    if (dsWorstSub) dsWorstSub.textContent = t.topWorstSub;
+    const dsWorstBadge = document.getElementById('ds-worst-badge');
+    if (dsWorstBadge) dsWorstBadge.textContent = t.topWorstBadge;
+
+    const mecBestTitle = document.getElementById('mec-best-title');
+    if (mecBestTitle) mecBestTitle.textContent = t.topBestTitle;
+    const mecBestSub = document.getElementById('mec-best-sub');
+    if (mecBestSub) mecBestSub.textContent = t.topBestSub;
+    const mecBestBadge = document.getElementById('mec-best-badge');
+    if (mecBestBadge) mecBestBadge.textContent = t.topBestBadge;
+
+    const mecWorstTitle = document.getElementById('mec-worst-title');
+    if (mecWorstTitle) mecWorstTitle.textContent = t.topWorstTitle;
+    const mecWorstSub = document.getElementById('mec-worst-sub');
+    if (mecWorstSub) mecWorstSub.textContent = t.topWorstSub;
+    const mecWorstBadge = document.getElementById('mec-worst-badge');
+    if (mecWorstBadge) mecWorstBadge.textContent = t.topWorstBadge;
+
+    // KPI Labels
+    const kpiDs = document.getElementById('kpi-ds-label');
+    if (kpiDs) kpiDs.textContent = t.kpiDsLabel;
+    const kpiMec = document.getElementById('kpi-mec-label');
+    if (kpiMec) kpiMec.textContent = t.kpiMecLabel;
+    const kpiTotal = document.getElementById('kpi-total-label');
+    if (kpiTotal) kpiTotal.textContent = t.kpiTotalLabel;
+    const kpiTotalSub = document.getElementById('kpi-total-sub');
+    if (kpiTotalSub) kpiTotalSub.textContent = t.kpiTotalSub;
+
+    // Atualiza status badge
+    updateConnectionBadge(lastIsLive, lastStatusKey);
+
+    // Se já tiver dados carregados, re-renderiza os gráficos e contadores com o novo idioma
+    if (lastLoadedData) {
+      renderComDados(lastLoadedData, lastIsLive, lastStatusKey);
+    }
+  }
+
+  function toggleLanguage() {
+    currentLang = currentLang === "pt" ? "en" : "pt";
+    try {
+      localStorage.setItem("lang", currentLang);
+    } catch (e) {}
+    applyLanguage();
+  }
+
+  // ===================================================================
   // INICIALIZAÇÃO
   // ===================================================================
   function init() {
+    // Sincroniza tema dark/light salvo no site principal
+    try {
+      const savedTheme = localStorage.getItem("theme") || "dark";
+      document.documentElement.setAttribute("data-theme", savedTheme);
+    } catch (e) {}
+
+    // Aplica idioma inicial
+    applyLanguage();
+
     carregarDados();
     startAutoRefreshTimer();
 
@@ -599,6 +865,11 @@
     const btnFullscreen = document.getElementById('btn-fullscreen');
     if (btnFullscreen) {
       btnFullscreen.addEventListener('click', toggleFullscreen);
+    }
+
+    const btnLang = document.getElementById('btn-lang');
+    if (btnLang) {
+      btnLang.addEventListener('click', toggleLanguage);
     }
 
     document.addEventListener('fullscreenchange', updateFullscreenButtonState);

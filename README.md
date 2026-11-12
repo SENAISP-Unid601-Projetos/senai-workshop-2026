@@ -78,13 +78,19 @@ O portal foi concebido para ser leve, rápido, responsivo e 100% estático (comp
 ```text
 senai-workshop-2026/
 ├── index.html                 # Página inicial (Home do portal)
+├── dashboard.html             # Dashboard ao vivo de avaliações e visitas
 ├── html/
 │   ├── ds.html                # Página da turma de Desenvolvimento de Sistemas
 │   └── mecatronica.html       # Página da turma de Mecatrônica
+├── img/                       # Diretório de imagens (JPG / PNG)
+│   ├── turmas/                # Capas das turmas (ds.jpg, mecatronica.jpg...)
+│   └── projetos/              # Capas dos projetos (ds-1.jpg, mec-1.png...)
 ├── css/
-│   └── style.css              # Folha de estilos unificada (Dark/Light + Modais + QR)
+│   ├── style.css              # Folha de estilos unificada (Dark/Light + Modais + QR)
+│   └── dashboard.css          # Estilos do Dashboard e modo Tela Cheia
 ├── js/
 │   ├── data.js                # BANCO DE DADOS: Dados dos cursos, equipe e projetos
+│   ├── dashboard.js           # Lógica do dashboard, gráficos e timers
 │   ├── leads.js               # Módulo de telemetria, captura e envio de leads
 │   ├── main.js                # Lógica principal, rotas, carrossel e modais
 │   └── qrcode.min.js          # Biblioteca autônoma de geração de QR Code
@@ -170,7 +176,7 @@ Para adicionar ou modificar um projeto, localize o array `projetos` da turma des
   nome: "Nome do Projeto",                        // Nome exibido nos cards e carrossel
   subtitulo: "Frase de impacto do projeto",        // Resumo curto
   descricao: "Descrição detalhada do projeto...", // Texto completo no modal
-  imagem: "https://...",                          // Imagem/Logo (ou "" para imagem padrão)
+  imagem: "img/projetos/ds-1.jpg",                // Imagem local em img/projetos/ (ou URL externa, ou "")
   alunos: 5,                                      // Quantidade de integrantes
   landing: "https://...",                         // Link da Landing Page ("Visitar site")
   funcionamento: "https://...",                   // Link do Pitch Técnico ("Funcionamento")
@@ -178,7 +184,12 @@ Para adicionar ou modificar um projeto, localize o array `projetos` da turma des
 }
 ```
 
-> **Dica:** Se algum link ainda não estiver disponível, mantenha como `""`. O botão exibirá o rótulo "Em breve" automaticamente com um aviso amigável ao ser clicado.
+> **Dica de Imagens:** As capas podem ser arquivos `.jpg` ou `.png`:
+> - Salve as capas das turmas em [`img/turmas/`](file:///Users/rafael.selvagio/Projetos/MyApps/SoftwaresIA/senai-workshop-2026/img/turmas) (ex: `img/turmas/ds.jpg`).
+> - Salve as capas dos projetos em [`img/projetos/`](file:///Users/rafael.selvagio/Projetos/MyApps/SoftwaresIA/senai-workshop-2026/img/projetos) (ex: `img/projetos/ds-1.jpg`).
+> - Se deixar `""`, o sistema exibe automaticamente a inicial estilizada do projeto.
+>
+> **Dica de Links:** Se algum link ainda não estiver disponível, mantenha como `""`. O botão exibirá o rótulo "Em breve" automaticamente com um aviso amigável ao ser clicado.
 
 ---
 

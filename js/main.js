@@ -117,7 +117,32 @@
   function T(k) { return (I18N[lang] && I18N[lang][k]) || k; }
   function tr(x) { return x && typeof x === "object" ? (x[lang] || x.pt || "") : (x || ""); }
   function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
-  function safeUrl(u) { u = String(u || "").trim(); return /^(https?:\/\/|\.{0,2}\/|#)/i.test(u) ? u : ""; }
+  function safeUrl(u) {
+    u = String(u || "").trim();
+    if (!u) return "";
+    if (/^(javascript|vbscript):/i.test(u)) return "";
+    return u;
+  }
+
+  /* Resolve caminhos de imagens locais (ex: 'img/turmas/ds.jpg') para funcionar tanto
+     na Home (raiz) quanto dentro das páginas de turmas em 'html/' (../img/...) */
+  function resolveImg(u) {
+    u = safeUrl(u);
+    if (!u) return "";
+    if (/^(https?:|\/\/|data:)/i.test(u)) return u;
+
+    var isCoursePage = document.body ? (document.body.getAttribute("data-page") !== "home") : false;
+
+    if (isCoursePage) {
+      if (u.indexOf("../") === 0) return u;
+      if (u.indexOf("./") === 0) u = u.substring(2);
+      if (u.indexOf("/") === 0) return u;
+      return "../" + u;
+    } else {
+      if (u.indexOf("../") === 0) return u.replace(/^\.\.\//, "");
+      return u;
+    }
+  }
 
   function slugify(text) {
     return String(text || "")
@@ -250,7 +275,7 @@
       var c = S.cursos[k];
       var sigla = k === "ds" ? "DS" : "MEC";
       return '<article class="class-card reveal">' +
-        '<div class="class-img"><img src="' + esc(c.imagem) + '" alt="' + esc(tr(c.nome)) + '" loading="lazy"><span class="badge">' + sigla + '</span></div>' +
+        '<div class="class-img"><img src="' + esc(resolveImg(c.imagem)) + '" alt="' + esc(tr(c.nome)) + '" loading="lazy"><span class="badge">' + sigla + '</span></div>' +
         '<div class="class-body"><h3>' + esc(tr(c.nome)) + ' · ' + esc(tr(c.turma)) + '</h3><p>' + esc(tr(c.descricao)) + '</p>' +
         '<div class="stats-row"><div><b>' + totalProj(c) + '</b><span>' + T("projects") + '</span></div><div><b>' + fmt(totalAlunos(c)) + '</b><span>' + T("students") + '</span></div></div>' +
         '<a class="btn" href="' + esc(c.pagina) + '">' + T("seeProjects") + '</a></div></article>';
@@ -309,7 +334,7 @@
     var chips = P.map(function (p, i) { return '<button class="chip' + (i === 0 ? " active" : "") + '" data-go="' + i + '">' + esc(p.nome) + '</button>'; }).join("");
 
     var slides = P.map(function (p, i) {
-      var img = safeUrl(p.imagem) || c.imagem;
+      var img = resolveImg(p.imagem || c.imagem);
       var has = !!img;
       return '<article class="slide' + (i === 0 ? " active" : "") + (has ? "" : " noimg") + '">' +
         '<div class="slide-bg"' + (has ? ' style="background-image:url(\'' + esc(img) + '\')"' : '') + '></div>' +
@@ -322,7 +347,7 @@
 
     var cards = P.map(function (p, i) {
       var pid = getProjectId(p, key, i);
-      var u = safeUrl(p.imagem);
+      var u = resolveImg(p.imagem);
       return '<article class="project-card reveal" id="proj-' + i + '" data-proj-id="' + esc(pid) + '" data-proj-idx="' + i + '" tabindex="0" role="button" aria-haspopup="dialog" aria-label="' + esc(p.nome) + '">' +
         '<div class="project-img">' + (u ? '<img src="' + esc(u) + '" alt="' + esc(p.nome) + '" loading="lazy">' : '<span class="ph">' + esc((p.nome || "?").charAt(0)) + '</span>') + '</div>' +
         '<div class="project-body">' +
@@ -725,7 +750,7 @@
     var shareUrl = getProjectShareUrl(p, courseKey, index);
     var customBase = getCustomBase();
     var courseBadge = courseKey === "ds" ? "DS" : "MEC";
-    var img = safeUrl(p.imagem);
+    var img = resolveImg(p.imagem);
     var currentRatings = getProjectRatings(pid);
 
     var m = ensureModal();

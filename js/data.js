@@ -6,7 +6,10 @@
      nome           -> nome do projeto (aparece no carrossel, no card e no modal)
      subtitulo      -> frase curta de destaque
      descricao      -> resumo do projeto
-     imagem         -> URL da logo/imagem (deixe "" para usar o padrão do curso)
+     imagem         -> Capa ou logo (JPG ou PNG).
+                       * Capas de turmas: salve em 'img/turmas/' (ex: 'img/turmas/ds.jpg' ou 'img/turmas/mecatronica.png')
+                       * Capas de projetos: salve em 'img/projetos/' (ex: 'img/projetos/ds-1.jpg' ou 'img/projetos/mec-1.png')
+                       * Deixe "" para usar a letra inicial / padrão visual.
      alunos         -> quantidade de integrantes do grupo (número)
      landing        -> link da LANDING PAGE do grupo        (botão "Visitar site")
      funcionamento  -> link do PITCH TÉCNICO (como o sistema funciona)  (botão "Funcionamento")
@@ -39,6 +42,7 @@ window.SITE = {
         pt: "Projetos em desenvolvimento web full-stack, mobile, banco de dados, IoT e sistemas inteligentes criados pelos grupos de trabalho da turma.",
         en: "Projects in full-stack web, mobile, databases, IoT and intelligent systems created by the class work groups."
       },
+      // Capa da turma (local: "img/turmas/ds.jpg" ou "img/turmas/ds.png" / externa: URL https)
       imagem: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1920&h=1080&fit=crop",
       projetos: [
         { id: "ds-1", nome: "Projeto DS 1", subtitulo: "Frase de destaque do projeto", descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.", imagem: "", alunos: 0, landing: "", funcionamento: "", comercial: "" },
@@ -66,6 +70,7 @@ window.SITE = {
         pt: "Projetos integrando robótica, automação industrial, eletrônica e programação embarcada para soluções mecatrônicas.",
         en: "Projects integrating robotics, industrial automation, electronics and embedded programming for mechatronic solutions."
       },
+      // Capa da turma (local: "img/turmas/mecatronica.jpg" ou "img/turmas/mecatronica.png" / externa: URL https)
       imagem: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=1920&h=1080&fit=crop",
       projetos: [
         { id: "mec-1", nome: "Projeto MEC 1", subtitulo: "Frase de destaque do projeto", descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.", imagem: "", alunos: 0, landing: "", funcionamento: "", comercial: "" },

@@ -115,6 +115,61 @@ button {
   color: var(--red)
 }
 
+/* Botão Seletor de Idioma (PT / EN) */
+.btn-lang {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 14px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.btn-lang .lang-icon {
+  font-size: 0.92rem;
+  line-height: 1;
+}
+
+.btn-lang .lang-badges {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.btn-lang .lang-badge {
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 999px;
+  color: var(--muted);
+  transition: .2s;
+  line-height: 1.2;
+}
+
+.btn-lang .lang-badge.active {
+  background: rgba(255, 255, 255, 0.16);
+  color: var(--text);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="light"] .btn-lang .lang-badge.active {
+  background: var(--red);
+  color: #ffffff;
+}
+
+.btn-lang .lang-divider {
+  color: var(--muted);
+  opacity: 0.5;
+  font-weight: 400;
+  font-size: 0.75rem;
+}
+
+[data-theme="light"] .btn-lang .lang-divider {
+  opacity: 0.4;
+}
+
 .header-dash-btn {
   display: inline-flex;
   align-items: center;

@@ -238,7 +238,14 @@
       '<div class="header-actions">' +
       '<a class="btn-ghost header-dash-btn" href="' + dashUrl + '" title="' + esc(T("dashboardTitle")) + '">📊 ' + T("dashboard") + '</a>' +
       '<button class="btn-ghost" id="themeBtn">' + T("theme") + ' ' + (theme === "dark" ? "☀" : "☾") + '</button>' +
-      '<button class="btn-ghost" id="langBtn">' + (lang === "pt" ? "EN" : "PT") + '</button>' +
+      '<button class="btn-ghost btn-lang" id="langBtn" title="' + (lang === "pt" ? "Alterar idioma: Português / English" : "Switch language: Portuguese / English") + '" aria-label="' + (lang === "pt" ? "Idioma: Português selecionado" : "Language: English selected") + '">' +
+      '<span class="lang-icon">🌐</span>' +
+      '<span class="lang-badges">' +
+      '<span class="lang-badge' + (lang === "pt" ? ' active' : '') + '" id="lang-badge-pt">PT</span>' +
+      '<span class="lang-divider">|</span>' +
+      '<span class="lang-badge' + (lang === "en" ? ' active' : '') + '" id="lang-badge-en">EN</span>' +
+      '</span>' +
+      '</button>' +
       '</div></div></header>';
   }
 
@@ -1244,10 +1251,44 @@
     document.documentElement.lang = lang === "pt" ? "pt-BR" : "en";
     var page = document.body.getAttribute("data-page");
     if (page === "home") renderHome(root); else renderCourse(root, page);
-    document.getElementById("themeBtn").onclick = function () { theme = theme === "dark" ? "light" : "dark"; store("theme", theme); applyTheme(); render(); };
-    document.getElementById("langBtn").onclick = function () { lang = lang === "pt" ? "en" : "pt"; store("lang", lang); render(); };
+    var themeBtn = document.getElementById("themeBtn");
+    if (themeBtn) {
+      themeBtn.onclick = function () { theme = theme === "dark" ? "light" : "dark"; store("theme", theme); applyTheme(); render(); };
+    }
+    var langBtn = document.getElementById("langBtn");
+    if (langBtn) {
+      langBtn.onclick = function (e) {
+        var badgePt = document.getElementById("lang-badge-pt");
+        var badgeEn = document.getElementById("lang-badge-en");
+        if (e && e.target === badgePt) {
+          if (lang === "pt") return;
+          lang = "pt";
+        } else if (e && e.target === badgeEn) {
+          if (lang === "en") return;
+          lang = "en";
+        } else {
+          lang = lang === "pt" ? "en" : "pt";
+        }
+        store("lang", lang);
+        render();
+      };
+    }
     initReveal();
     checkInitialRoute();
   }
+
+  // Sincronização em tempo real entre abas/páginas (ex: dashboard vs site)
+  window.addEventListener("storage", function (e) {
+    if (e.key === "lang" && e.newValue && e.newValue !== lang) {
+      lang = e.newValue;
+      render();
+    }
+    if (e.key === "theme" && e.newValue && e.newValue !== theme) {
+      theme = e.newValue;
+      applyTheme();
+      render();
+    }
+  });
+
   render();
 })();

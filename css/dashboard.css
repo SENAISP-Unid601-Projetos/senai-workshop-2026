@@ -31,6 +31,12 @@
   --dash-muted: #586379;
 }
 
+html {
+  overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -44,10 +50,14 @@ body.dashboard-body {
   min-height: 100vh;
   line-height: 1.5;
   padding-bottom: 40px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  width: 100%;
 }
 
 .dash-container {
   max-width: 1580px;
+  width: 100%;
   margin: 0 auto;
   padding: 0 24px;
 }
@@ -60,7 +70,7 @@ body.dashboard-body {
 html.is-fullscreen {
   width: 100vw !important;
   height: 100vh !important;
-  overflow: hidden;
+  overflow: hidden !important;
 }
 
 :fullscreen body.dashboard-body,
@@ -70,7 +80,7 @@ body.is-fullscreen {
   height: 100vh !important;
   max-width: 100vw !important;
   max-height: 100vh !important;
-  padding: 0 0 10px 0 !important;
+  padding: 0 0 8px 0 !important;
   margin: 0 !important;
   display: flex !important;
   flex-direction: column !important;
@@ -83,6 +93,7 @@ body.is-fullscreen {
 body.is-fullscreen .dash-header {
   padding: 8px 0 !important;
   margin-bottom: 8px !important;
+  flex-shrink: 0 !important;
 }
 
 :fullscreen .dash-container,
@@ -106,9 +117,12 @@ body.is-fullscreen main.dash-container {
 :fullscreen .dash-trio-layout,
 :-webkit-full-screen .dash-trio-layout,
 body.is-fullscreen .dash-trio-layout {
+  display: grid !important;
+  grid-template-columns: 1fr 1.2fr 1fr !important;
   flex: 1 !important;
   gap: 12px !important;
   min-height: 0 !important;
+  height: 100% !important;
   align-items: stretch !important;
 }
 
@@ -117,8 +131,9 @@ body.is-fullscreen .dash-trio-layout {
 body.is-fullscreen .dash-col-side {
   display: flex !important;
   flex-direction: column !important;
-  gap: 10px !important;
+  gap: 8px !important;
   min-height: 0 !important;
+  height: 100% !important;
 }
 
 :fullscreen .dash-col-center,
@@ -126,61 +141,69 @@ body.is-fullscreen .dash-col-side {
 body.is-fullscreen .dash-col-center {
   display: flex !important;
   flex-direction: column !important;
+  gap: 8px !important;
   min-height: 0 !important;
+  height: 100% !important;
+  grid-column: auto !important;
+  order: 0 !important;
 }
 
 :fullscreen .column-header-pill,
 :-webkit-full-screen .column-header-pill,
 body.is-fullscreen .column-header-pill {
-  padding: 6px 12px !important;
-  font-size: 0.82rem !important;
+  padding: 5px 12px !important;
+  font-size: 0.8rem !important;
+  flex-shrink: 0 !important;
 }
 
 :fullscreen .dash-card,
 :-webkit-full-screen .dash-card,
 body.is-fullscreen .dash-card {
-  padding: 12px 14px !important;
+  padding: 10px 14px !important;
   flex: 1 !important;
   display: flex !important;
   flex-direction: column !important;
   min-height: 0 !important;
+  overflow: hidden !important;
 }
 
 :fullscreen .card-top,
 :-webkit-full-screen .card-top,
 body.is-fullscreen .card-top {
-  margin-bottom: 6px !important;
+  margin-bottom: 4px !important;
+  flex-shrink: 0 !important;
 }
 
 :fullscreen .card-title-group h2,
 :-webkit-full-screen .card-title-group h2,
 body.is-fullscreen .card-title-group h2 {
-  font-size: 0.9rem !important;
+  font-size: 0.88rem !important;
 }
 
 :fullscreen .card-title-group .project-subtitle,
 :-webkit-full-screen .card-title-group .project-subtitle,
 body.is-fullscreen .card-title-group .project-subtitle {
-  font-size: 0.72rem !important;
+  font-size: 0.7rem !important;
 }
 
 :fullscreen .center-kpi-row,
 :-webkit-full-screen .center-kpi-row,
 body.is-fullscreen .center-kpi-row {
-  margin: 6px 0 10px !important;
+  margin: 4px 0 6px !important;
   gap: 8px !important;
+  flex-shrink: 0 !important;
 }
 
 :fullscreen .center-kpi-item,
 :-webkit-full-screen .center-kpi-item,
 body.is-fullscreen .center-kpi-item {
-  padding: 8px 10px !important;
+  padding: 6px 10px !important;
 }
 
 :fullscreen .center-kpi-value,
 :-webkit-full-screen .center-kpi-value,
 body.is-fullscreen .center-kpi-value {
-  font-size: 1.25rem !important;
+  font-size: 1.2rem !important;
 }
 
 :fullscreen .canvas-box-ranking,
@@ -189,6 +212,8 @@ body.is-fullscreen .canvas-box-ranking {
   flex: 1 !important;
   height: auto !important;
   min-height: 0 !important;
+  width: 100% !important;
+  overflow: hidden !important;
 }
 
 :fullscreen .canvas-box-center,
@@ -197,6 +222,8 @@ body.is-fullscreen .canvas-box-center {
   flex: 1 !important;
   height: auto !important;
   min-height: 0 !important;
+  width: 100% !important;
+  overflow: hidden !important;
 }
 
 /* =====================================================================
@@ -384,9 +411,10 @@ body.is-fullscreen .canvas-box-center {
   grid-template-columns: 1fr 1.25fr 1fr;
   gap: 22px;
   align-items: stretch;
+  width: 100%;
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 992px) {
   .dash-trio-layout {
     grid-template-columns: 1fr 1fr;
   }
@@ -404,6 +432,13 @@ body.is-fullscreen .canvas-box-center {
     grid-column: span 1;
     order: -1;
   }
+}
+
+/* CRUCIAL: min-width: 0 impede que os gráficos Chart.js travem ou quebrem o grid */
+.dash-col-side,
+.dash-col-center {
+  min-width: 0;
+  box-sizing: border-box;
 }
 
 .dash-col-side {
@@ -462,9 +497,10 @@ body.is-fullscreen .canvas-box-center {
   padding: 20px;
   display: flex;
   flex-direction: column;
-  transition: var(--dash-transition);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
   position: relative;
   overflow: hidden;
+  min-width: 0;
 }
 
 .dash-card:hover {
@@ -529,18 +565,36 @@ body.is-fullscreen .canvas-box-center {
   border: 1px solid rgba(245, 158, 11, 0.3);
 }
 
-/* Canvas Boxes ajustados para Top 5 */
-.canvas-box-ranking {
+/* =====================================================================
+   CANVAS BOXES E REGRAS DE CONTENÇÃO DO CHART.JS
+   ===================================================================== */
+.canvas-box-ranking,
+.canvas-box-center {
   position: relative;
-  height: 300px;
   width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.canvas-box-ranking {
+  height: 290px;
 }
 
 .canvas-box-center {
-  position: relative;
   flex: 1;
-  min-height: 520px;
-  width: 100%;
+  min-height: 480px;
+  height: 100%;
+}
+
+/* Garante que o canvas nunca force a coluna do grid a se expandir */
+.canvas-box-ranking canvas,
+.canvas-box-center canvas {
+  width: 100% !important;
+  max-width: 100% !important;
+  height: 100% !important;
+  max-height: 100% !important;
+  display: block;
 }
 
 /* Placar do Centro */
@@ -557,6 +611,7 @@ body.is-fullscreen .canvas-box-center {
   border-radius: 12px;
   padding: 12px 14px;
   text-align: center;
+  min-width: 0;
 }
 
 .center-kpi-item.ds {

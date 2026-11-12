@@ -538,6 +538,27 @@
     }
   }
 
+  // Redimensionamento seguro e performático de todas as instâncias Chart.js
+  function triggerChartsResize() {
+    for (const k in chartInstances) {
+      if (chartInstances[k]) {
+        try {
+          chartInstances[k].resize();
+        } catch (e) {
+          // ignora instâncias em transição ou descartadas
+        }
+      }
+    }
+  }
+
+  function triggerChartsResizeSequence() {
+    // Escalonamento em múltiplos intervalos para cobrir as animações nativas de tela cheia do macOS (~300ms a 700ms)
+    const ticks = [50, 150, 300, 500, 750, 1000];
+    ticks.forEach(delay => {
+      setTimeout(triggerChartsResize, delay);
+    });
+  }
+
   function updateFullscreenButtonState() {
     const isFullscreen = !!(document.fullscreenElement || document.webkitFullscreenElement);
     const labelEl = document.getElementById('fs-label');
@@ -557,12 +578,8 @@
       if (btn) btn.title = "Alternar modo Tela Cheia";
     }
 
-    // Redimensiona todos os gráficos Chart.js para preencherem 100% da nova área
-    setTimeout(() => {
-      for (const k in chartInstances) {
-        if (chartInstances[k]) chartInstances[k].resize();
-      }
-    }, 120);
+    // Redimensiona todos os gráficos Chart.js com escalonamento para garantir layout perfeito
+    triggerChartsResizeSequence();
   }
 
   // ===================================================================
@@ -586,6 +603,24 @@
 
     document.addEventListener('fullscreenchange', updateFullscreenButtonState);
     document.addEventListener('webkitfullscreenchange', updateFullscreenButtonState);
+
+    // Redimensionamento de janela com debounce
+    let winResizeTimer = null;
+    window.addEventListener('resize', () => {
+      if (winResizeTimer) clearTimeout(winResizeTimer);
+      winResizeTimer = setTimeout(triggerChartsResize, 100);
+    });
+
+    // ResizeObserver no container de layout para estabilizar dimensões automaticamente
+    if (window.ResizeObserver) {
+      let roTimer = null;
+      const ro = new ResizeObserver(() => {
+        if (roTimer) clearTimeout(roTimer);
+        roTimer = setTimeout(triggerChartsResize, 60);
+      });
+      const layoutEl = document.querySelector('.dash-trio-layout');
+      if (layoutEl) ro.observe(layoutEl);
+    }
   }
 
   if (document.readyState === 'loading') {

@@ -52,20 +52,156 @@ body.dashboard-body {
   padding: 0 24px;
 }
 
-/* Modo Tela Cheia */
+/* =====================================================================
+   MODO TELA CHEIA (FULLSCREEN 100% HORIZONTAL E VERTICAL)
+   ===================================================================== */
+:fullscreen,
+:-webkit-full-screen,
+html.is-fullscreen {
+  width: 100vw !important;
+  height: 100vh !important;
+  overflow: hidden;
+}
+
 :fullscreen body.dashboard-body,
-:-webkit-full-screen body.dashboard-body {
-  padding-bottom: 20px;
+:-webkit-full-screen body.dashboard-body,
+body.is-fullscreen {
+  width: 100vw !important;
+  height: 100vh !important;
+  max-width: 100vw !important;
+  max-height: 100vh !important;
+  padding: 0 0 10px 0 !important;
+  margin: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
   background: var(--dash-bg);
 }
 
-:fullscreen .dash-container,
-:-webkit-full-screen .dash-container {
-  max-width: 98vw;
-  padding: 0 20px;
+:fullscreen .dash-header,
+:-webkit-full-screen .dash-header,
+body.is-fullscreen .dash-header {
+  padding: 8px 0 !important;
+  margin-bottom: 8px !important;
 }
 
-/* Header */
+:fullscreen .dash-container,
+:-webkit-full-screen .dash-container,
+body.is-fullscreen .dash-container {
+  max-width: 100% !important;
+  width: 100% !important;
+  padding: 0 16px !important;
+}
+
+:fullscreen main.dash-container,
+:-webkit-full-screen main.dash-container,
+body.is-fullscreen main.dash-container {
+  flex: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+}
+
+:fullscreen .dash-trio-layout,
+:-webkit-full-screen .dash-trio-layout,
+body.is-fullscreen .dash-trio-layout {
+  flex: 1 !important;
+  gap: 12px !important;
+  min-height: 0 !important;
+  align-items: stretch !important;
+}
+
+:fullscreen .dash-col-side,
+:-webkit-full-screen .dash-col-side,
+body.is-fullscreen .dash-col-side {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px !important;
+  min-height: 0 !important;
+}
+
+:fullscreen .dash-col-center,
+:-webkit-full-screen .dash-col-center,
+body.is-fullscreen .dash-col-center {
+  display: flex !important;
+  flex-direction: column !important;
+  min-height: 0 !important;
+}
+
+:fullscreen .column-header-pill,
+:-webkit-full-screen .column-header-pill,
+body.is-fullscreen .column-header-pill {
+  padding: 6px 12px !important;
+  font-size: 0.82rem !important;
+}
+
+:fullscreen .dash-card,
+:-webkit-full-screen .dash-card,
+body.is-fullscreen .dash-card {
+  padding: 12px 14px !important;
+  flex: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  min-height: 0 !important;
+}
+
+:fullscreen .card-top,
+:-webkit-full-screen .card-top,
+body.is-fullscreen .card-top {
+  margin-bottom: 6px !important;
+}
+
+:fullscreen .card-title-group h2,
+:-webkit-full-screen .card-title-group h2,
+body.is-fullscreen .card-title-group h2 {
+  font-size: 0.9rem !important;
+}
+
+:fullscreen .card-title-group .project-subtitle,
+:-webkit-full-screen .card-title-group .project-subtitle,
+body.is-fullscreen .card-title-group .project-subtitle {
+  font-size: 0.72rem !important;
+}
+
+:fullscreen .center-kpi-row,
+:-webkit-full-screen .center-kpi-row,
+body.is-fullscreen .center-kpi-row {
+  margin: 6px 0 10px !important;
+  gap: 8px !important;
+}
+
+:fullscreen .center-kpi-item,
+:-webkit-full-screen .center-kpi-item,
+body.is-fullscreen .center-kpi-item {
+  padding: 8px 10px !important;
+}
+
+:fullscreen .center-kpi-value,
+:-webkit-full-screen .center-kpi-value,
+body.is-fullscreen .center-kpi-value {
+  font-size: 1.25rem !important;
+}
+
+:fullscreen .canvas-box-ranking,
+:-webkit-full-screen .canvas-box-ranking,
+body.is-fullscreen .canvas-box-ranking {
+  flex: 1 !important;
+  height: auto !important;
+  min-height: 0 !important;
+}
+
+:fullscreen .canvas-box-center,
+:-webkit-full-screen .canvas-box-center,
+body.is-fullscreen .canvas-box-center {
+  flex: 1 !important;
+  height: auto !important;
+  min-height: 0 !important;
+}
+
+/* =====================================================================
+   HEADER PADRÃO
+   ===================================================================== */
 .dash-header {
   border-bottom: 1px solid var(--dash-card-border);
   background: rgba(10, 14, 22, 0.85);
@@ -221,7 +357,6 @@ body.dashboard-body {
   box-shadow: 0 4px 14px var(--dash-red-glow);
 }
 
-/* Pílula do Contador dentro do Botão Atualizar */
 .dash-timer-pill {
   font-family: monospace;
   font-size: 0.75rem;
@@ -236,7 +371,6 @@ body.dashboard-body {
   display: inline-block;
 }
 
-/* Ícone de Fullscreen */
 .fs-icon {
   font-size: 0.95rem;
   display: inline-block;
@@ -395,17 +529,17 @@ body.dashboard-body {
   border: 1px solid rgba(245, 158, 11, 0.3);
 }
 
-/* Canvas Boxes */
+/* Canvas Boxes ajustados para Top 5 */
 .canvas-box-ranking {
   position: relative;
-  height: 250px;
+  height: 300px;
   width: 100%;
 }
 
 .canvas-box-center {
   position: relative;
   flex: 1;
-  min-height: 440px;
+  min-height: 520px;
   width: 100%;
 }
 

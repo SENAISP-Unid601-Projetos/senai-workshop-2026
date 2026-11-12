@@ -4,9 +4,10 @@
  * =====================================================================
  * Este script gerencia toda a integração do Workshop com o Google Sheets:
  *  1. doPost(e) -> Grava acessos, cliques e notas (Apresentação e Solução Técnica)
- *  2. doGet(e)  -> Lê os dados reais da planilha e devolve JSON pronto para o Dashboard:
- *                  - Total de visitas consolidadas por turma (DS e MEC)
- *                  - Top 3 mais bem votados e Top 3 menos votados por turma
+ *  2. doGet(e)  -> Lê os dados reais da planilha e devolve JSON/JSONP para o Dashboard:
+ *                  - Total de visitas na turma e no projeto (DS e MEC)
+ *                    (Acessos gerais à página home NÃO entram na conta de DS/MEC)
+ *                  - Top 5 mais bem votados e Top 5 menos votados por turma
  *
  * Colunas na planilha:
  *  1. Data e Hora
@@ -120,11 +121,11 @@ function doPost(e) {
  * =====================================================================
  * API DO DASHBOARD (doGet)
  * =====================================================================
- * Processa as linhas da planilha em tempo real e entrega:
- *  - Contagem consolidada de visitas para DS e Mecatrônica
- *  - Top 3 mais bem votados e Top 3 menos votados por turma com:
- *    1. Apresentação
- *    2. Ideia e Solução Técnica
+ * Regras:
+ * - Visitas: contabiliza APENAS acessos na turma e no projeto (DS e MEC).
+ *   Acessos gerais à página inicial ("home", "Geral") NÃO entram na contagem.
+ * - Rankings: Top 5 mais bem votados e Top 5 menos votados por turma.
+ * - Suporta JSON e JSONP (para testes locais via file:// ou localhost).
  * =====================================================================
  */
 function doGet(e) {
@@ -134,27 +135,50 @@ function doGet(e) {
 
     var lastRow = sheet.getLastRow();
     if (lastRow <= 1) {
-      return ContentService
-        .createTextOutput(JSON.stringify({
-          status: "empty",
-          mensagem: "A planilha ainda não possui registros de dados.",
-          visitas: { ds: 0, mec: 0, total: 0 },
-          ds: {
-            top3: { projetos: [], apresentacao: [], solucaoTecnica: [] },
-            bottom3: { projetos: [], apresentacao: [], solucaoTecnica: [] },
-            totalAvaliados: 0
-          },
-          mec: {
-            top3: { projetos: [], apresentacao: [], solucaoTecnica: [] },
-            bottom3: { projetos: [], apresentacao: [], solucaoTecnica: [] },
-            totalAvaliados: 0
-          }
-        }))
-        .setMimeType(ContentService.MimeType.JSON);
+      return buildApiResponse(e, {
+        status: "empty",
+        mensagem: "A planilha ainda não possui registros de dados.",
+        visitas: { ds: 0, mec: 0, total: 0 },
+        ds: {
+          top5: { projetos: [], apresentacao: [], solucaoTecnica: [] },
+          bottom5: { projetos: [], apresentacao: [], solucaoTecnica: [] },
+          totalAvaliados: 0
+        },
+        mec: {
+          top5: { projetos: [], apresentacao: [], solucaoTecnica: [] },
+          bottom5: { projetos: [], apresentacao: [], solucaoTecnica: [] },
+          totalAvaliados: 0
+        }
+      });
     }
 
     var values = sheet.getDataRange().getValues();
+    var headerRow = values[0];
     var rows = values.slice(1);
+
+    // Mapeamento dinâmico dos cabeçalhos para evitar erro caso a ordem das colunas mude
+    var colMap = {
+      tipo: 1,
+      turma: 2,
+      projId: 3,
+      projNome: 4,
+      acao: 5,
+      pagina: 7,
+      notaAp: 10,
+      notaSol: 11
+    };
+
+    for (var c = 0; c < headerRow.length; c++) {
+      var h = String(headerRow[c] || "").toLowerCase().trim();
+      if (h.indexOf("tipo") !== -1) colMap.tipo = c;
+      else if (h.indexOf("turma") !== -1) colMap.turma = c;
+      else if (h.indexOf("id") !== -1) colMap.projId = c;
+      else if (h.indexOf("nome") !== -1) colMap.projNome = c;
+      else if (h.indexOf("ação") !== -1 || h.indexOf("acao") !== -1) colMap.acao = c;
+      else if (h.indexOf("página") !== -1 || h.indexOf("pagina") !== -1) colMap.pagina = c;
+      else if (h.indexOf("apresenta") !== -1) colMap.notaAp = c;
+      else if (h.indexOf("solu") !== -1 || (h.indexOf("projeto") !== -1 && h.indexOf("nota") !== -1)) colMap.notaSol = c;
+    }
 
     var visitasDS = 0;
     var visitasMEC = 0;
@@ -162,68 +186,101 @@ function doGet(e) {
     var mapaDS = {};
     var mapaMEC = {};
 
+    function parseRatingNumber(val) {
+      if (val === undefined || val === null || val === "") return 0;
+      if (typeof val === "number") return isNaN(val) ? 0 : val;
+      var clean = String(val).trim().replace(',', '.').replace(/[^0-9.]/g, '');
+      var parsed = parseFloat(clean);
+      return isNaN(parsed) ? 0 : parsed;
+    }
+
     for (var i = 0; i < rows.length; i++) {
       var row = rows[i];
-      var turmaRaw = String(row[2] || "").trim();
-      var projId = String(row[3] || "").trim();
-      var projNome = String(row[4] || "").trim();
-      var pagina = String(row[7] || "").trim().toLowerCase();
-      var notaAp = Number(row[10]);
-      var notaSol = Number(row[11]);
+      var tipoRaw = String(row[colMap.tipo] || "").trim();
+      var turmaRaw = String(row[colMap.turma] || "").trim();
+      var projId = String(row[colMap.projId] || "").trim();
+      var projNome = String(row[colMap.projNome] || "").trim();
+      var acaoRaw = String(row[colMap.acao] || "").trim();
+      var pagina = String(row[colMap.pagina] || "").trim().toLowerCase();
+
+      var notaAp = parseRatingNumber(row[colMap.notaAp]);
+      var notaSol = parseRatingNumber(row[colMap.notaSol]);
 
       var turmaLower = turmaRaw.toLowerCase();
       var projIdLower = projId.toLowerCase();
+      var projNomeLower = projNome.toLowerCase();
+      var tipoLower = tipoRaw.toLowerCase();
+      var acaoLower = acaoRaw.toLowerCase();
 
+      // Identifica se a linha pertence a Desenvolvimento de Sistemas ou Mecatrônica
       var isDS = turmaLower.indexOf("desenvolvimento") !== -1 ||
                  turmaLower.indexOf("sistemas") !== -1 ||
                  turmaLower === "ds" ||
                  projIdLower.indexOf("ds") === 0 ||
+                 projNomeLower.indexOf("ds") !== -1 ||
                  pagina === "ds";
 
       var isMEC = turmaLower.indexOf("meca") !== -1 ||
                   turmaLower === "mec" ||
                   projIdLower.indexOf("mec") === 0 ||
+                  projNomeLower.indexOf("mec") !== -1 ||
                   pagina === "mecatronica";
 
-      if (isDS) {
-        visitasDS++;
-      } else if (isMEC) {
-        visitasMEC++;
+      // REGRA: Contabilizar apenas acesso na TURMA e no PROJETO (DS e MEC).
+      // Acessos apenas na página inicial ("home", "Geral", "Lead Página") NÃO devem ser contabilizados.
+      var isAcessoPaginaGeral = (tipoLower.indexOf("página") !== -1 || tipoLower.indexOf("pagina") !== -1) &&
+                                (pagLowerIsHome(pagina) || turmaLower === "geral" || acaoLower.indexOf("página inicial") !== -1);
+
+      if (!isAcessoPaginaGeral) {
+        if (isDS) {
+          visitasDS++;
+        } else if (isMEC) {
+          visitasMEC++;
+        }
       }
 
-      var temNotaAp = !isNaN(notaAp) && notaAp > 0;
-      var temNotaSol = !isNaN(notaSol) && notaSol > 0;
+      // Processa avaliações para o ranking
+      var temNotaAp = notaAp > 0;
+      var temNotaSol = notaSol > 0;
 
-      if ((temNotaAp || temNotaSol) && projId && projId !== "-") {
-        var mapa = isDS ? mapaDS : (isMEC ? mapaMEC : null);
-        if (!mapa) {
-          mapa = (projIdLower.indexOf("ds") === 0) ? mapaDS : mapaMEC;
-        }
+      if (temNotaAp || temNotaSol) {
+        var key = projIdLower && projIdLower !== "-" ? projIdLower : projNomeLower;
+        if (key && key !== "-") {
+          var mapa = isDS ? mapaDS : (isMEC ? mapaMEC : null);
+          if (!mapa) {
+            mapa = (key.indexOf("ds") !== -1) ? mapaDS : mapaMEC;
+          }
 
-        var key = projIdLower;
-        if (!mapa[key]) {
-          mapa[key] = {
-            id: projId,
-            nome: (projNome && projNome !== "-") ? projNome : projId.toUpperCase(),
-            somaAp: 0,
-            qtdAp: 0,
-            somaSol: 0,
-            qtdSol: 0
-          };
-        }
+          if (!mapa[key]) {
+            var nomeFinal = projNome && projNome !== "-" ? projNome : (projId && projId !== "-" ? projId.toUpperCase() : "Projeto");
+            mapa[key] = {
+              id: projId,
+              nome: nomeFinal,
+              somaAp: 0,
+              qtdAp: 0,
+              somaSol: 0,
+              qtdSol: 0
+            };
+          }
 
-        if (temNotaAp) {
-          mapa[key].somaAp += notaAp;
-          mapa[key].qtdAp++;
-        }
-        if (temNotaSol) {
-          mapa[key].somaSol += notaSol;
-          mapa[key].qtdSol++;
+          if (temNotaAp) {
+            mapa[key].somaAp += notaAp;
+            mapa[key].qtdAp++;
+          }
+          if (temNotaSol) {
+            mapa[key].somaSol += notaSol;
+            mapa[key].qtdSol++;
+          }
         }
       }
     }
 
-    function processarMapa(mapa) {
+    function pagLowerIsHome(p) {
+      return p === "home" || p === "" || p === "-" || p === "index" || p === "index.html";
+    }
+
+    // Calcula médias e extrai rankings dos Top 5 mais e Top 5 menos votados
+    function processarMapaTop5(mapa) {
       var lista = [];
       for (var k in mapa) {
         var p = mapa[k];
@@ -249,40 +306,46 @@ function doGet(e) {
         });
       }
 
+      // Ordena por maior média geral
       lista.sort(function(a, b) { return b.mediaGeral - a.mediaGeral; });
 
       var total = lista.length;
-      var top3Raw = lista.slice(0, 3);
-      var bottom3Raw = total > 3 ? lista.slice(total - 3) : lista.slice().reverse().slice(0, 3);
+      var top5Raw = lista.slice(0, 5);
+      var bottom5Raw = total > 5 ? lista.slice(total - 5) : lista.slice().reverse().slice(0, 5);
 
-      var top3 = {
-        projetos: top3Raw.map(function(item, idx) { return (idx + 1) + "º " + item.nome; }),
-        apresentacao: top3Raw.map(function(item) { return item.apresentacao; }),
-        solucaoTecnica: top3Raw.map(function(item) { return item.solucaoTecnica; }),
-        medias: top3Raw.map(function(item) { return item.mediaGeral; }),
-        votos: top3Raw.map(function(item) { return item.totalVotos; })
+      var top5 = {
+        projetos: top5Raw.map(function(item, idx) { return (idx + 1) + "º " + item.nome; }),
+        apresentacao: top5Raw.map(function(item) { return item.apresentacao; }),
+        solucaoTecnica: top5Raw.map(function(item) { return item.solucaoTecnica; }),
+        medias: top5Raw.map(function(item) { return item.mediaGeral; }),
+        votos: top5Raw.map(function(item) { return item.totalVotos; })
       };
 
-      var bottom3 = {
-        projetos: bottom3Raw.map(function(item, idx) {
-          var pos = total > 3 ? (total - 3 + idx + 1) : (total - idx);
+      var bottom5 = {
+        projetos: bottom5Raw.map(function(item, idx) {
+          var pos = total > 5 ? (total - 5 + idx + 1) : (total - idx);
           return pos + "º " + item.nome;
         }),
-        apresentacao: bottom3Raw.map(function(item) { return item.apresentacao; }),
-        solucaoTecnica: bottom3Raw.map(function(item) { return item.solucaoTecnica; }),
-        medias: bottom3Raw.map(function(item) { return item.mediaGeral; }),
-        votos: bottom3Raw.map(function(item) { return item.totalVotos; })
+        apresentacao: bottom5Raw.map(function(item) { return item.apresentacao; }),
+        solucaoTecnica: bottom5Raw.map(function(item) { return item.solucaoTecnica; }),
+        medias: bottom5Raw.map(function(item) { return item.mediaGeral; }),
+        votos: bottom5Raw.map(function(item) { return item.totalVotos; })
       };
 
       return {
-        top3: top3,
-        bottom3: bottom3,
+        top5: top5,
+        bottom5: bottom5,
+        // Aliases para retrocompatibilidade
+        top3: top5,
+        bottom3: bottom5,
+        top4: top5,
+        bottom4: bottom5,
         totalAvaliados: total
       };
     }
 
-    var dsProcessado = processarMapa(mapaDS);
-    var mecProcessado = processarMapa(mapaMEC);
+    var dsProcessado = processarMapaTop5(mapaDS);
+    var mecProcessado = processarMapaTop5(mapaMEC);
 
     var response = {
       status: "success",
@@ -297,15 +360,24 @@ function doGet(e) {
       mec: mecProcessado
     };
 
-    return ContentService
-      .createTextOutput(JSON.stringify(response))
-      .setMimeType(ContentService.MimeType.JSON);
+    return buildApiResponse(e, response);
 
   } catch (err) {
-    return ContentService
-      .createTextOutput(JSON.stringify({ status: "error", message: err.toString() }))
-      .setMimeType(ContentService.MimeType.JSON);
+    return buildApiResponse(e, { status: "error", message: err.toString() });
   }
+}
+
+// Suporta retorno JSON direto e JSONP (callback) para testes locais sem bloqueio de CORS
+function buildApiResponse(e, data) {
+  var jsonStr = JSON.stringify(data);
+  if (e && e.parameter && e.parameter.callback) {
+    return ContentService
+      .createTextOutput(e.parameter.callback + "(" + jsonStr + ");")
+      .setMimeType(ContentService.MimeType.JAVASCRIPT);
+  }
+  return ContentService
+    .createTextOutput(jsonStr)
+    .setMimeType(ContentService.MimeType.JSON);
 }
 
 function setupSheetHeaders(sheet) {

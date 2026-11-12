@@ -1,12 +1,14 @@
 /**
  * =====================================================================
- * SENAI WORKSHOP 2026 — DASHBOARD DE AVALIAÇÕES E VISITAS
+ * SENAI WORKSHOP 2026 — DASHBOARD DE AVALIAÇÕES E VISITAS (TOP 5)
  * =====================================================================
  * Recursos:
- * - Suporta retorno da API com top3/bottom3 ou top4/bottom4
- * - Exibe notas reais das avaliações do Google Sheets
- * - Fallback: se não houver dados, lista os 3 primeiros projetos por ordem alfabética
- * - Total geral de visitas por turma no centro
+ * - Top 5 Mais Bem Votados & Top 5 Menos Votados (DS e MEC)
+ * - Visitas no centro: contabiliza estritamente acessos à turma e projetos
+ *   (ignora acessos gerais à home)
+ * - Fallback inteligente: se não houver dados, lista os 5 primeiros
+ *   projetos em ordem alfabética
+ * - Suporta requisições via fetch e JSONP (compatibilidade total com file://)
  * - Atualização automática a cada 30 segundos com contador visual
  * - Modo Tela Cheia (Fullscreen)
  * =====================================================================
@@ -22,10 +24,10 @@
   // Instâncias dos gráficos para limpeza de memória
   let chartInstances = {
     visitasCenter: null,
-    dsTop3: null,
-    dsBottom3: null,
-    mecTop3: null,
-    mecBottom3: null
+    dsTop5: null,
+    dsBottom5: null,
+    mecTop5: null,
+    mecBottom5: null
   };
 
   function setupChartDefaults() {
@@ -46,7 +48,7 @@
     return "";
   }
 
-  // Gera os 3 primeiros projetos ordenados alfabeticamente para quando não houver dados no Google Sheets
+  // Gera os 5 primeiros projetos ordenados alfabeticamente para quando não houver dados no Google Sheets
   function getAlphabeticalFallback(courseKey) {
     let nomes = [];
 
@@ -58,30 +60,30 @@
 
     if (nomes.length === 0) {
       nomes = courseKey === 'ds'
-        ? ['Projeto DS 1', 'Projeto DS 2', 'Projeto DS 3']
-        : ['Projeto MEC 1', 'Projeto MEC 2', 'Projeto MEC 3'];
+        ? ['Projeto DS 1', 'Projeto DS 2', 'Projeto DS 3', 'Projeto DS 4', 'Projeto DS 5']
+        : ['Projeto MEC 1', 'Projeto MEC 2', 'Projeto MEC 3', 'Projeto MEC 4', 'Projeto MEC 5'];
     }
 
     // Ordenação alfabética natural (DS 1, DS 2, DS 3...)
     nomes.sort((a, b) => a.localeCompare(b, 'pt-BR', { numeric: true, sensitivity: 'base' }));
 
-    const primeiros3 = nomes.slice(0, 3);
+    const primeiros5 = nomes.slice(0, 5);
 
     return {
-      projetos: primeiros3.map((nome, idx) => `${idx + 1}º ${nome}`),
-      apresentacao: [0, 0, 0],
-      solucaoTecnica: [0, 0, 0],
+      projetos: primeiros5.map((nome, idx) => `${idx + 1}º ${nome}`),
+      apresentacao: [0, 0, 0, 0, 0],
+      solucaoTecnica: [0, 0, 0, 0, 0],
       isAlphabetical: true
     };
   }
 
-  // Normaliza o ranking vindo da API para até 3 itens (suportando top3 e top4)
+  // Normaliza o ranking vindo da API para até 5 itens (suportando top5, top4 e top3)
   function normalizarRanking(rankingObj, courseKey) {
     if (!rankingObj || !rankingObj.projetos || rankingObj.projetos.length === 0) {
       return getAlphabeticalFallback(courseKey);
     }
 
-    const maxItems = 3;
+    const maxItems = 5;
     const projetos = rankingObj.projetos.slice(0, maxItems);
     const apresentacao = (rankingObj.apresentacao || []).slice(0, maxItems);
     const solucaoTecnica = (rankingObj.solucaoTecnica || []).slice(0, maxItems);
@@ -111,7 +113,7 @@
   }
 
   // ===================================================================
-  // 1. GRÁFICO CENTRAL: TOTAL GERAL DE VISITAS POR TURMA (DS vs MEC)
+  // 1. GRÁFICO CENTRAL: TOTAL DE VISITAS NA TURMA E PROJETOS (DS vs MEC)
   // ===================================================================
   function renderVisitasCenterChart(visitasData) {
     const ctx = document.getElementById('chart-visitas-center');
@@ -150,7 +152,7 @@
       data: {
         labels: ['Dev. de Sistemas (DS)', 'Mecatrônica (MEC)'],
         datasets: [{
-          label: 'Total Geral de Visitas',
+          label: 'Visitas na Turma e Projetos',
           data: [dsVal, mecVal],
           backgroundColor: ['#0a6cff', '#e4002b'],
           borderRadius: 12,
@@ -302,7 +304,7 @@
           y: {
             grid: { display: false },
             ticks: {
-              font: { size: 11, weight: '500' }
+              font: { size: 10.5, weight: '500' }
             }
           }
         }
@@ -311,8 +313,40 @@
   }
 
   // ===================================================================
-  // CARREGAMENTO DOS DADOS (API GOOGLE SHEETS)
+  // CARREGAMENTO DOS DADOS (SUPORTA FETCH E JSONP PARA TESTES LOCAIS)
   // ===================================================================
+  function fetchJsonp(url) {
+    return new Promise((resolve, reject) => {
+      const callbackName = 'gas_cb_' + Math.round(100000 * Math.random());
+      const script = document.createElement('script');
+      const sep = url.indexOf('?') === -1 ? '?' : '&';
+      script.src = `${url}${sep}callback=${callbackName}&t=${Date.now()}`;
+
+      const timeoutId = setTimeout(() => {
+        cleanup();
+        reject(new Error('Timeout ao carregar dados do Google Sheets'));
+      }, 10000);
+
+      function cleanup() {
+        if (timeoutId) clearTimeout(timeoutId);
+        if (script.parentNode) script.parentNode.removeChild(script);
+        delete window[callbackName];
+      }
+
+      window[callbackName] = function (data) {
+        cleanup();
+        resolve(data);
+      };
+
+      script.onerror = function (err) {
+        cleanup();
+        reject(err);
+      };
+
+      document.head.appendChild(script);
+    });
+  }
+
   async function carregarDados() {
     setupChartDefaults();
     const apiUrl = getApiUrl();
@@ -323,74 +357,83 @@
       return;
     }
 
+    updateConnectionBadge(false, "Sincronizando...");
+
+    let json = null;
+
+    // Tentativa 1: Fetch padrão
     try {
-      updateConnectionBadge(false, "Sincronizando...");
       const response = await fetch(apiUrl, { method: "GET" });
-
-      if (!response.ok) {
-        throw new Error(`HTTP Error ${response.status}`);
+      if (response.ok) {
+        json = await response.json();
       }
-
-      const json = await response.json();
-
-      if (json && json.status === "success") {
-        console.log("[Dashboard] Dados recebidos com sucesso do Google Sheets:", json);
-
-        // Suporta tanto a estrutura top3/bottom3 quanto top4/bottom4
-        const dsRawTop = (json.ds && (json.ds.top3 || json.ds.top4)) || null;
-        const dsRawBottom = (json.ds && (json.ds.bottom3 || json.ds.bottom4)) || null;
-        const mecRawTop = (json.mec && (json.mec.top3 || json.mec.top4)) || null;
-        const mecRawBottom = (json.mec && (json.mec.bottom3 || json.mec.bottom4)) || null;
-
-        const totalDsAvaliados = (json.ds && json.ds.totalAvaliados) || 0;
-        const totalMecAvaliados = (json.mec && json.mec.totalAvaliados) || 0;
-
-        const dadosFinais = {
-          visitas: json.visitas || { ds: 0, mec: 0, total: 0 },
-          ds: {
-            top3: totalDsAvaliados > 0 ? normalizarRanking(dsRawTop, 'ds') : getAlphabeticalFallback('ds'),
-            bottom3: totalDsAvaliados > 0 ? normalizarRanking(dsRawBottom, 'ds') : getAlphabeticalFallback('ds'),
-            totalAvaliados: totalDsAvaliados
-          },
-          mec: {
-            top3: totalMecAvaliados > 0 ? normalizarRanking(mecRawTop, 'mecatronica') : getAlphabeticalFallback('mecatronica'),
-            bottom3: totalMecAvaliados > 0 ? normalizarRanking(mecRawBottom, 'mecatronica') : getAlphabeticalFallback('mecatronica'),
-            totalAvaliados: totalMecAvaliados
-          }
-        };
-
-        const labelStatus = (totalDsAvaliados > 0 || totalMecAvaliados > 0)
-          ? "Google Sheets Ao Vivo"
-          : "Google Sheets Conectado (Sem votos ainda)";
-
-        renderComDados(dadosFinais, true, labelStatus);
-        return;
-
-      } else if (json && json.status === "empty") {
-        console.warn("[Dashboard] Planilha vazia. Usando ordem alfabética.");
-        renderFallbackAlfabetico("Planilha Vazia (Ordem Alfabética)");
-        return;
-      }
-
-      throw new Error(json.message || "Resposta inválida da API");
-
-    } catch (err) {
-      console.warn("[Dashboard] Erro ao buscar Google Sheets. Usando ordem alfabética:", err);
-      renderFallbackAlfabetico("Offline (Ordem Alfabética)");
+    } catch (e) {
+      // Ignora erro de fetch (ex: CORS de file://) e tenta JSONP
     }
+
+    // Tentativa 2: JSONP (perfeito para quando o arquivo é aberto via file:/// no navegador)
+    if (!json) {
+      try {
+        json = await fetchJsonp(apiUrl);
+      } catch (e) {
+        console.warn("[Dashboard] Falha nas tentativas de fetch e JSONP:", e);
+      }
+    }
+
+    if (json && json.status === "success") {
+      console.log("[Dashboard] Dados recebidos com sucesso do Google Sheets:", json);
+
+      // Suporta top5, top4 e top3 da API
+      const dsRawTop = (json.ds && (json.ds.top5 || json.ds.top4 || json.ds.top3)) || null;
+      const dsRawBottom = (json.ds && (json.ds.bottom5 || json.ds.bottom4 || json.ds.bottom3)) || null;
+      const mecRawTop = (json.mec && (json.mec.top5 || json.mec.top4 || json.mec.top3)) || null;
+      const mecRawBottom = (json.mec && (json.mec.bottom5 || json.mec.bottom4 || json.mec.bottom3)) || null;
+
+      const totalDsAvaliados = (json.ds && json.ds.totalAvaliados) || 0;
+      const totalMecAvaliados = (json.mec && json.mec.totalAvaliados) || 0;
+
+      const dadosFinais = {
+        visitas: json.visitas || { ds: 0, mec: 0, total: 0 },
+        ds: {
+          top5: totalDsAvaliados > 0 ? normalizarRanking(dsRawTop, 'ds') : getAlphabeticalFallback('ds'),
+          bottom5: totalDsAvaliados > 0 ? normalizarRanking(dsRawBottom, 'ds') : getAlphabeticalFallback('ds'),
+          totalAvaliados: totalDsAvaliados
+        },
+        mec: {
+          top5: totalMecAvaliados > 0 ? normalizarRanking(mecRawTop, 'mecatronica') : getAlphabeticalFallback('mecatronica'),
+          bottom5: totalMecAvaliados > 0 ? normalizarRanking(mecRawBottom, 'mecatronica') : getAlphabeticalFallback('mecatronica'),
+          totalAvaliados: totalMecAvaliados
+        }
+      };
+
+      const labelStatus = (totalDsAvaliados > 0 || totalMecAvaliados > 0)
+        ? "Google Sheets Ao Vivo"
+        : "Google Sheets Conectado (Sem votos ainda)";
+
+      renderComDados(dadosFinais, true, labelStatus);
+      return;
+
+    } else if (json && json.status === "empty") {
+      console.warn("[Dashboard] Planilha vazia. Usando ordem alfabética.");
+      renderFallbackAlfabetico("Planilha Vazia (Ordem Alfabética)");
+      return;
+    }
+
+    console.warn("[Dashboard] Usando ordem alfabética como fallback.");
+    renderFallbackAlfabetico("Offline (Ordem Alfabética)");
   }
 
   function renderFallbackAlfabetico(badgeLabel) {
     const fallbackData = {
       visitas: { ds: 0, mec: 0, total: 0 },
       ds: {
-        top3: getAlphabeticalFallback('ds'),
-        bottom3: getAlphabeticalFallback('ds'),
+        top5: getAlphabeticalFallback('ds'),
+        bottom5: getAlphabeticalFallback('ds'),
         totalAvaliados: 0
       },
       mec: {
-        top3: getAlphabeticalFallback('mecatronica'),
-        bottom3: getAlphabeticalFallback('mecatronica'),
+        top5: getAlphabeticalFallback('mecatronica'),
+        bottom5: getAlphabeticalFallback('mecatronica'),
         totalAvaliados: 0
       }
     };
@@ -400,16 +443,16 @@
   function renderComDados(data, isLive, badgeLabel) {
     updateConnectionBadge(isLive, badgeLabel);
 
-    // 1. Centro: Visitas por Turma
+    // 1. Centro: Visitas por Turma (apenas acessos na turma e projetos)
     renderVisitasCenterChart(data.visitas);
 
-    // 2. Esquerda: Dev. de Sistemas (Top 3 Mais e Top 3 Menos)
-    renderRankingChart('chart-ds-top3', 'dsTop3', data.ds.top3, true);
-    renderRankingChart('chart-ds-bottom3', 'dsBottom3', data.ds.bottom3, false);
+    // 2. Esquerda: Dev. de Sistemas (Top 5 Mais e Top 5 Menos)
+    renderRankingChart('chart-ds-top5', 'dsTop5', data.ds.top5, true);
+    renderRankingChart('chart-ds-bottom5', 'dsBottom5', data.ds.bottom5, false);
 
-    // 3. Direita: Mecatrônica (Top 3 Mais e Top 3 Menos)
-    renderRankingChart('chart-mec-top3', 'mecTop3', data.mec.top3, true);
-    renderRankingChart('chart-mec-bottom3', 'mecBottom3', data.mec.bottom3, false);
+    // 3. Direita: Mecatrônica (Top 5 Mais e Top 5 Menos)
+    renderRankingChart('chart-mec-top5', 'mecTop5', data.mec.top5, true);
+    renderRankingChart('chart-mec-bottom5', 'mecBottom5', data.mec.bottom5, false);
 
     // Atualiza contadores nos cabeçalhos
     const dsCountEl = document.getElementById('count-ds-avaliados');
@@ -501,6 +544,9 @@
     const btn = document.getElementById('btn-fullscreen');
     const iconEl = btn ? btn.querySelector('.fs-icon') : null;
 
+    document.documentElement.classList.toggle('is-fullscreen', isFullscreen);
+    document.body.classList.toggle('is-fullscreen', isFullscreen);
+
     if (isFullscreen) {
       if (labelEl) labelEl.textContent = "Sair";
       if (iconEl) iconEl.textContent = "🗗";
@@ -510,6 +556,13 @@
       if (iconEl) iconEl.textContent = "⛶";
       if (btn) btn.title = "Alternar modo Tela Cheia";
     }
+
+    // Redimensiona todos os gráficos Chart.js para preencherem 100% da nova área
+    setTimeout(() => {
+      for (const k in chartInstances) {
+        if (chartInstances[k]) chartInstances[k].resize();
+      }
+    }, 120);
   }
 
   // ===================================================================

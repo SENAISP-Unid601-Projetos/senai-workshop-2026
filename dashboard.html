@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SENAI Workshop 2026 — Rankings e Visitas</title>
-  <meta name="description" content="Dashboard com rankings dos Top 3 mais e menos votados por turma e total geral de visitas.">
+  <meta name="description" content="Dashboard com rankings dos Top 5 mais e menos votados por turma e total de visitas na turma e projetos.">
   <link rel="stylesheet" href="css/dashboard.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -62,43 +62,43 @@
           <span class="pill-count" id="count-ds-avaliados">14 Projetos</span>
         </div>
 
-        <!-- DS: Top 3 Mais Bem Votados -->
+        <!-- DS: Top 5 Mais Bem Votados -->
         <article class="dash-card card-best">
           <div class="card-top">
             <div class="card-title-group">
-              <h2>Top 3 Mais Bem Votados</h2>
+              <h2>Top 5 Mais Bem Votados</h2>
               <div class="project-subtitle">Notas de 0 a 5.0 nos 2 critérios</div>
             </div>
-            <span class="badge-tag best">🏆 Top 3</span>
+            <span class="badge-tag best">🏆 Top 5</span>
           </div>
 
           <div class="canvas-box-ranking">
-            <canvas id="chart-ds-top3"></canvas>
+            <canvas id="chart-ds-top5"></canvas>
           </div>
         </article>
 
-        <!-- DS: Top 3 Menos Votados -->
+        <!-- DS: Top 5 Menos Votados -->
         <article class="dash-card card-worst">
           <div class="card-top">
             <div class="card-title-group">
-              <h2>Top 3 Menos Votados</h2>
+              <h2>Top 5 Menos Votados</h2>
               <div class="project-subtitle">Menores médias registradas</div>
             </div>
-            <span class="badge-tag worst">⚠️ Top 3 Menos Votados</span>
+            <span class="badge-tag worst">⚠️ Top 5 Menos Votados</span>
           </div>
 
           <div class="canvas-box-ranking">
-            <canvas id="chart-ds-bottom3"></canvas>
+            <canvas id="chart-ds-bottom5"></canvas>
           </div>
         </article>
       </section>
 
       <!-- ============================================================= -->
-      <!-- 2. COLUNA CENTRAL: TOTAL GERAL DE VISITAS POR TURMA -->
+      <!-- 2. COLUNA CENTRAL: TOTAL DE VISITAS NA TURMA E PROJETOS -->
       <!-- ============================================================= -->
       <section class="dash-col-center">
         <div class="column-header-pill center">
-          <span>📊 Total Geral de Visitas</span>
+          <span>📊 Visitas na Turma e Projetos</span>
           <span class="pill-count">DS vs. Mecatrônica</span>
         </div>
 
@@ -120,7 +120,7 @@
             <div class="center-kpi-item total">
               <div class="center-kpi-label">Total Geral</div>
               <div class="center-kpi-value" id="kpi-total-visitas" style="color: #10b981;">--</div>
-              <div class="center-kpi-sub">Visitas no evento</div>
+              <div class="center-kpi-sub">Turma + Projetos</div>
             </div>
           </div>
 
@@ -140,33 +140,33 @@
           <span class="pill-count" id="count-mec-avaliados">16 Projetos</span>
         </div>
 
-        <!-- MEC: Top 3 Mais Bem Votados -->
+        <!-- MEC: Top 5 Mais Bem Votados -->
         <article class="dash-card card-best">
           <div class="card-top">
             <div class="card-title-group">
-              <h2>Top 3 Mais Bem Votados</h2>
+              <h2>Top 5 Mais Bem Votados</h2>
               <div class="project-subtitle">Notas de 0 a 5.0 nos 2 critérios</div>
             </div>
-            <span class="badge-tag best">🏆 Top 3</span>
+            <span class="badge-tag best">🏆 Top 5</span>
           </div>
 
           <div class="canvas-box-ranking">
-            <canvas id="chart-mec-top3"></canvas>
+            <canvas id="chart-mec-top5"></canvas>
           </div>
         </article>
 
-        <!-- MEC: Top 3 Menos Votados -->
+        <!-- MEC: Top 5 Menos Votados -->
         <article class="dash-card card-worst">
           <div class="card-top">
             <div class="card-title-group">
-              <h2>Top 3 Menos Votados</h2>
+              <h2>Top 5 Menos Votados</h2>
               <div class="project-subtitle">Menores médias registradas</div>
             </div>
-            <span class="badge-tag worst">⚠️ Top 3 Menos Votados</span>
+            <span class="badge-tag worst">⚠️ Top 5 Menos Votados</span>
           </div>
 
           <div class="canvas-box-ranking">
-            <canvas id="chart-mec-bottom3"></canvas>
+            <canvas id="chart-mec-bottom5"></canvas>
           </div>
         </article>
       </section>

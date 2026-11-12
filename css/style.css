@@ -115,6 +115,18 @@ button {
   color: var(--red)
 }
 
+.header-dash-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+}
+
+.header-dash-btn:hover {
+  border-color: #ffb703;
+  color: #ffb703;
+}
+
 .back {
   display: inline-flex;
   gap: 6px;
@@ -873,8 +885,8 @@ body.modal-open {
   color: var(--text);
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  width: min(680px, 100%);
-  max-height: calc(100vh - 40px);
+  width: min(850px, 100%);
+  max-height: min(92vh, 920px);
   display: flex;
   flex-direction: column;
   position: relative;
@@ -914,7 +926,10 @@ body.modal-open {
 }
 
 .modal-cover {
-  height: 200px;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  height: auto;
+  max-height: min(420px, 45vh);
   position: relative;
   overflow: hidden;
   background: linear-gradient(135deg, var(--card-2), var(--bg-2));
@@ -926,7 +941,8 @@ body.modal-open {
 .modal-cover img {
   width: 100%;
   height: 100%;
-  object-fit: cover
+  object-fit: cover;
+  aspect-ratio: 16 / 9
 }
 
 .modal-cover::after {
@@ -998,6 +1014,109 @@ body.modal-open {
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
   margin-top: 6px
+}
+
+/* QR Code no Meta Row */
+.modal-meta-row .btn-qr-toggle {
+  margin-left: auto;
+  padding: 5px 13px;
+  font-size: .76rem;
+}
+
+/* Barra de Avaliação do Projeto (Estritamente em uma linha só) */
+.modal-eval-bar {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
+  padding: 10px 14px !important;
+  margin-top: 10px !important;
+  background: var(--card-2);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  flex-wrap: nowrap !important;
+  white-space: nowrap !important;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.modal-eval-bar::-webkit-scrollbar {
+  display: none;
+}
+
+.modal-eval-bar:hover {
+  border-color: color-mix(in srgb, var(--line) 60%, var(--red));
+}
+
+.eval-title {
+  font-weight: 800;
+  color: var(--text);
+  font-size: .83rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.eval-divider {
+  color: var(--muted);
+  opacity: .5;
+  user-select: none;
+  font-size: .85rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.eval-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.eval-label {
+  color: var(--muted);
+  font-weight: 600;
+  font-size: .82rem;
+  white-space: nowrap;
+}
+
+.eval-stars {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  white-space: nowrap;
+}
+
+.star-btn {
+  background: transparent !important;
+  border: 0 !important;
+  padding: 0 1px !important;
+  line-height: 1 !important;
+  font-size: 1.35rem !important;
+  color: #4b5563;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: transform .15s ease, color .15s ease, text-shadow .15s ease;
+  user-select: none;
+}
+
+[data-theme="light"] .star-btn {
+  color: #cbd5e1;
+}
+
+.star-btn:hover {
+  transform: scale(1.3);
+  color: #ffb703 !important;
+}
+
+/* Estado dourado ativo para estrelas selecionadas (1 a N) */
+.star-btn.is-active {
+  color: #ffb703 !important;
+  text-shadow: 0 0 10px rgba(255, 183, 3, 0.6) !important;
 }
 
 /* Toggle do QR Code */
@@ -1250,23 +1369,153 @@ body.modal-open {
 }
 
 /* ---------- Hero QR Code Button (Home) ---------- */
-.hero-sub-row{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;margin:22px auto 26px;width:100%}
-.hero-cta{display:block;width:100%;margin-top:6px}
-.hero-qr-btn{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:12px;background:var(--card);border:1px solid var(--line);color:var(--text);cursor:pointer;transition:all .25s ease;box-shadow:var(--shadow);vertical-align:middle;padding:0}
-.hero-qr-btn:hover{border-color:var(--red);color:var(--red-2);transform:translateY(-2px) scale(1.08);box-shadow:0 8px 24px rgba(228,0,43,.38)}
-.hero-qr-btn svg{width:22px;height:22px}
+.hero-sub-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 22px auto 26px;
+  width: 100%
+}
+
+.hero-cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.hero-dash-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 26px;
+  border-radius: 12px;
+  font-weight: 700;
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--text);
+  box-shadow: var(--shadow);
+  transition: all .25s ease;
+  text-decoration: none;
+}
+
+.hero-dash-btn:hover {
+  border-color: #ffb703;
+  color: #ffb703;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(255, 183, 3, .25);
+}
+
+.hero-qr-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  color: var(--text);
+  cursor: pointer;
+  transition: all .25s ease;
+  box-shadow: var(--shadow);
+  vertical-align: middle;
+  padding: 0
+}
+
+.hero-qr-btn:hover {
+  border-color: var(--red);
+  color: var(--red-2);
+  transform: translateY(-2px) scale(1.08);
+  box-shadow: 0 8px 24px rgba(228, 0, 43, .38)
+}
+
+.hero-qr-btn svg {
+  width: 22px;
+  height: 22px
+}
 
 /* ---------- Modal QR Code Grande da Página (80% da tela) ---------- */
-.modal-dialog-page-qr{width:80vw !important;max-width:960px !important;height:82vh !important;max-height:88vh !important;text-align:center;display:flex;flex-direction:column}
-.page-qr-dialog-body{padding:36px 32px 28px;display:flex;flex-direction:column;align-items:center;justify-content:space-evenly;gap:14px;overflow-y:auto;height:100%}
-.page-qr-dialog-body::-webkit-scrollbar{width:6px}
-.page-qr-dialog-body::-webkit-scrollbar-thumb{background:var(--line);border-radius:999px}
-.page-qr-header{display:flex;flex-direction:column;align-items:center;gap:6px}
-.page-qr-title{font-size:clamp(1.4rem,3.4vw,2.1rem);font-weight:900;line-height:1.2}
-.page-qr-sub{color:var(--muted);font-size:clamp(.92rem,1.8vw,1.08rem);max-width:540px;line-height:1.5}
-.page-qr-frame{background:#fff;padding:16px;border-radius:24px;box-shadow:0 20px 60px rgba(0,0,0,.45);width:min(440px,44vh,64vw);aspect-ratio:1/1;display:grid;place-items:center;margin:4px auto;flex-shrink:0}
-.page-qr-frame svg,.page-qr-frame img{width:100%;height:100%;display:block}
-.page-qr-url-box{width:100%;max-width:500px}
+.modal-dialog-page-qr {
+  width: 80vw !important;
+  max-width: 960px !important;
+  height: 82vh !important;
+  max-height: 88vh !important;
+  text-align: center;
+  display: flex;
+  flex-direction: column
+}
+
+.page-qr-dialog-body {
+  padding: 36px 32px 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 14px;
+  overflow-y: auto;
+  height: 100%
+}
+
+.page-qr-dialog-body::-webkit-scrollbar {
+  width: 6px
+}
+
+.page-qr-dialog-body::-webkit-scrollbar-thumb {
+  background: var(--line);
+  border-radius: 999px
+}
+
+.page-qr-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px
+}
+
+.page-qr-title {
+  font-size: clamp(1.4rem, 3.4vw, 2.1rem);
+  font-weight: 900;
+  line-height: 1.2
+}
+
+.page-qr-sub {
+  color: var(--muted);
+  font-size: clamp(.92rem, 1.8vw, 1.08rem);
+  max-width: 540px;
+  line-height: 1.5
+}
+
+.page-qr-frame {
+  background: #fff;
+  padding: 16px;
+  border-radius: 24px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, .45);
+  width: min(440px, 44vh, 64vw);
+  aspect-ratio: 1/1;
+  display: grid;
+  place-items: center;
+  margin: 4px auto;
+  flex-shrink: 0
+}
+
+.page-qr-frame svg,
+.page-qr-frame img {
+  width: 100%;
+  height: 100%;
+  display: block
+}
+
+.page-qr-url-box {
+  width: 100%;
+  max-width: 500px
+}
 
 /* ---------- Footer ---------- */
 .footer {
@@ -1329,6 +1578,29 @@ body.modal-open {
   text-decoration: underline
 }
 
+.footer-dash-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  padding: 9px 18px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: .92rem;
+  background: var(--card);
+  border: 1px solid var(--line);
+  color: var(--text);
+  transition: all .25s ease;
+  text-decoration: none;
+}
+
+.footer-dash-link:hover {
+  border-color: #ffb703;
+  color: #ffb703;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(255, 183, 3, .2);
+}
+
 .copy {
   border-top: 1px solid var(--line);
   padding-top: 22px;
@@ -1347,11 +1619,29 @@ body.modal-open {
 .reveal.in {
   opacity: 1;
   transform: none
-  .page-qr-dialog-body{padding:30px 18px 22px;gap:14px}
-  .page-qr-frame{width:min(230px,78vw);padding:10px}
 }
 
 @media(max-width:640px) {
+  .header-actions {
+    gap: 6px;
+  }
+
+  .header-actions .btn-ghost {
+    padding: 6px 12px;
+    font-size: .8rem;
+  }
+
+  .hero-cta {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .hero-cta .btn,
+  .hero-cta .hero-dash-btn {
+    width: 100%;
+    max-width: 320px;
+  }
+
   .arrow {
     width: 42px;
     height: 42px
@@ -1387,7 +1677,8 @@ body.modal-open {
   }
 
   .modal-cover {
-    height: 160px
+    height: auto;
+    aspect-ratio: 16 / 9;
   }
 
   .modal-scroll {
@@ -1415,7 +1706,49 @@ body.modal-open {
   .btn-share-sec {
     justify-content: center
   }
-  .modal-dialog-page-qr{width:92vw !important;height:auto !important;max-height:92vh !important}
-  .page-qr-dialog-body{padding:30px 18px 22px;gap:14px}
-  .page-qr-frame{width:min(300px,74vw);padding:12px}
+
+  .modal-dialog-page-qr {
+    width: 92vw !important;
+    height: auto !important;
+    max-height: 92vh !important
+  }
+
+  .page-qr-dialog-body {
+    padding: 30px 18px 22px;
+    gap: 14px
+  }
+
+  .page-qr-frame {
+    width: min(300px, 74vw);
+    padding: 12px
+  }
+
+  .modal-meta-row .btn-qr-toggle {
+    margin-left: 0
+  }
+
+  .modal-eval-bar {
+    flex-wrap: nowrap !important;
+    gap: 6px !important;
+    padding: 8px 10px !important;
+    justify-content: flex-start !important;
+    overflow-x: auto !important;
+  }
+
+  .eval-title {
+    font-size: .76rem !important;
+  }
+
+  .eval-label {
+    font-size: .74rem !important;
+  }
+
+  .star-btn {
+    font-size: 1.15rem !important;
+    padding: 0 1px !important;
+  }
+
+  .eval-divider {
+    margin: 0 1px !important;
+  }
 }

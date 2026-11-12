@@ -1,6 +1,6 @@
 1. gerar lead da pagina, da turma e do projeto (funcionamentos, comercial, visitar site, qr code por projeto) - ok
-2. gerar um curtir projeto (nota, recomenda/nao recomanda, nps)
+2. gerar um curtir projeto (nota, recomenda/nao recomanda, nps) - ok
 3. gravar no google sheets - ok
-4. criar dashboard
+4. criar dashboard - chart js - ok
 5. criar o README.md - ok
 6. crie qr code da pagina - ok

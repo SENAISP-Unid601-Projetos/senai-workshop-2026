@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SENAI Workshop 2026 — Rankings e Visitas</title>
+  <meta name="description" content="Dashboard com rankings dos Top 3 mais e menos votados por turma e total geral de visitas.">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="dashboard-body">
+
+  <!-- CABEÇALHO DO PAINEL -->
+  <header class="dash-header">
+    <div class="dash-container">
+      <div class="dash-header-inner">
+        <div class="dash-brand">
+          <span class="dash-logo-badge">SENAI</span>
+          <div class="dash-title-group">
+            <h1>Workshop 2026 • Painel de Rankings & Visitas</h1>
+            <p>Critérios de avaliação: Apresentação vs. Ideia e Solução Técnica</p>
+          </div>
+        </div>
+
+        <div class="dash-actions">
+          <span id="badge-connection-status" class="badge-mock" title="Status da Conexão">
+            <span class="pulse-dot"></span>
+            Carregando...
+          </span>
+
+          <!-- Botão Atualizar com Timer integrado de 30s -->
+          <button id="btn-refresh-data" class="dash-btn" title="Atualizar dados agora (reseta o timer)">
+            <span class="refresh-icon">🔄</span> Atualizar <span id="refresh-timer" class="dash-timer-pill">30s</span>
+          </button>
+
+          <!-- Botão Tela Cheia (Fullscreen) -->
+          <button id="btn-fullscreen" class="dash-btn" title="Alternar modo Tela Cheia">
+            <span class="fs-icon">⛶</span> <span id="fs-label">Tela Cheia</span>
+          </button>
+
+          <a href="index.html" class="dash-btn dash-btn-primary">
+            ← Voltar ao Site
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="dash-container">
+
+    <!-- LAYOUT EM 3 COLUNAS: ESQUERDA (DS) | CENTRO (VISITAS) | DIREITA (MEC) -->
+    <div class="dash-trio-layout">
+
+      <!-- ============================================================= -->
+      <!-- 1. COLUNA ESQUERDA: DESENVOLVIMENTO DE SISTEMAS (DS) -->
+      <!-- ============================================================= -->
+      <section class="dash-col-side">
+        <div class="column-header-pill ds">
+          <span>💻 Dev. de Sistemas</span>
+          <span class="pill-count" id="count-ds-avaliados">14 Projetos</span>
+        </div>
+
+        <!-- DS: Top 3 Mais Bem Votados -->
+        <article class="dash-card card-best">
+          <div class="card-top">
+            <div class="card-title-group">
+              <h2>Top 3 Mais Bem Votados</h2>
+              <div class="project-subtitle">Notas de 0 a 5.0 nos 2 critérios</div>
+            </div>
+            <span class="badge-tag best">🏆 Top 3</span>
+          </div>
+
+          <div class="canvas-box-ranking">
+            <canvas id="chart-ds-top3"></canvas>
+          </div>
+        </article>
+
+        <!-- DS: Top 3 Menos Votados -->
+        <article class="dash-card card-worst">
+          <div class="card-top">
+            <div class="card-title-group">
+              <h2>Top 3 Menos Votados</h2>
+              <div class="project-subtitle">Menores médias registradas</div>
+            </div>
+            <span class="badge-tag worst">⚠️ Top 3 Menos Votados</span>
+          </div>
+
+          <div class="canvas-box-ranking">
+            <canvas id="chart-ds-bottom3"></canvas>
+          </div>
+        </article>
+      </section>
+
+      <!-- ============================================================= -->
+      <!-- 2. COLUNA CENTRAL: TOTAL GERAL DE VISITAS POR TURMA -->
+      <!-- ============================================================= -->
+      <section class="dash-col-center">
+        <div class="column-header-pill center">
+          <span>📊 Total Geral de Visitas</span>
+          <span class="pill-count">DS vs. Mecatrônica</span>
+        </div>
+
+        <article class="dash-card center-card">
+          <!-- Mini Placar das Visitas -->
+          <div class="center-kpi-row">
+            <div class="center-kpi-item ds">
+              <div class="center-kpi-label">Dev. de Sistemas</div>
+              <div class="center-kpi-value" id="kpi-ds-visitas" style="color: #3b82f6;">--</div>
+              <div class="center-kpi-sub" id="kpi-ds-pct">--% das visitas</div>
+            </div>
+
+            <div class="center-kpi-item mec">
+              <div class="center-kpi-label">Mecatrônica</div>
+              <div class="center-kpi-value" id="kpi-mec-visitas" style="color: #ff4d6a;">--</div>
+              <div class="center-kpi-sub" id="kpi-mec-pct">--% das visitas</div>
+            </div>
+
+            <div class="center-kpi-item total">
+              <div class="center-kpi-label">Total Geral</div>
+              <div class="center-kpi-value" id="kpi-total-visitas" style="color: #10b981;">--</div>
+              <div class="center-kpi-sub">Visitas no evento</div>
+            </div>
+          </div>
+
+          <!-- Canvas do Gráfico Central de Barras -->
+          <div class="canvas-box-center">
+            <canvas id="chart-visitas-center"></canvas>
+          </div>
+        </article>
+      </section>
+
+      <!-- ============================================================= -->
+      <!-- 3. COLUNA DIREITA: MECATRÔNICA (MEC) -->
+      <!-- ============================================================= -->
+      <section class="dash-col-side">
+        <div class="column-header-pill mec">
+          <span>⚙️ Mecatrônica</span>
+          <span class="pill-count" id="count-mec-avaliados">16 Projetos</span>
+        </div>
+
+        <!-- MEC: Top 3 Mais Bem Votados -->
+        <article class="dash-card card-best">
+          <div class="card-top">
+            <div class="card-title-group">
+              <h2>Top 3 Mais Bem Votados</h2>
+              <div class="project-subtitle">Notas de 0 a 5.0 nos 2 critérios</div>
+            </div>
+            <span class="badge-tag best">🏆 Top 3</span>
+          </div>
+
+          <div class="canvas-box-ranking">
+            <canvas id="chart-mec-top3"></canvas>
+          </div>
+        </article>
+
+        <!-- MEC: Top 3 Menos Votados -->
+        <article class="dash-card card-worst">
+          <div class="card-top">
+            <div class="card-title-group">
+              <h2>Top 3 Menos Votados</h2>
+              <div class="project-subtitle">Menores médias registradas</div>
+            </div>
+            <span class="badge-tag worst">⚠️ Top 3 Menos Votados</span>
+          </div>
+
+          <div class="canvas-box-ranking">
+            <canvas id="chart-mec-bottom3"></canvas>
+          </div>
+        </article>
+      </section>
+
+    </div>
+
+  </main>
+
+  <!-- SCRIPTS -->
+  <!-- Chart.js via CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <!-- Dados de Configuração do Projeto (SITE.googleSheetsUrl) -->
+  <script src="js/data.js"></script>
+  <!-- Lógica e Dados dos Rankings (Consome API do Google Sheets via doGet) -->
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

@@ -80,6 +80,8 @@
       contato: data.contato || "-",
       empresa: data.empresa || data.perfil || "-",
       mensagem: data.mensagem || "-",
+      nota_apresentacao: (data.nota_apresentacao && Number(data.nota_apresentacao) > 0) ? Number(data.nota_apresentacao) : "",
+      nota_projeto: (data.nota_projeto && Number(data.nota_projeto) > 0) ? Number(data.nota_projeto) : "",
       pagina: data.pagina || (document.body ? document.body.getAttribute("data-page") : "-") || "-",
       dispositivo: getDeviceType(),
       origem: window.location.href || "-"
@@ -215,12 +217,39 @@
     });
   }
 
+  /* ----- Rastreamento de Avaliação com Estrelas (Apresentação & Projeto) ----- */
+  function submitEvaluation(project, courseKey, ratings) {
+    if (!project) return;
+    ratings = ratings || {};
+    var turmaNome = courseKey === "ds" ? "Desenvolvimento de Sistemas" : (courseKey === "mecatronica" ? "Mecatrônica" : courseKey);
+    var pid = project.id || (project.nome ? project.nome.toLowerCase().replace(/\s+/g, '-') : "-");
+    var ap = Number(ratings.apresentacao) || 0;
+    var proj = Number(ratings.projeto) || 0;
+
+    var detalhes = [];
+    if (ap > 0) detalhes.push("Apresentação: " + ap + "★");
+    if (proj > 0) detalhes.push("Ideia e Solução Técnica: " + proj + "★");
+    var resumo = detalhes.join(" | ") || "Avaliação registrada";
+
+    return sendLead({
+      tipo: "Avaliação",
+      turma: turmaNome,
+      projeto_id: pid,
+      projeto_nome: project.nome || "-",
+      acao: "Avaliação: " + resumo,
+      mensagem: resumo,
+      nota_apresentacao: ap,
+      nota_projeto: proj
+    });
+  }
+
   return {
     sendLead: sendLead,
     trackPageView: trackPageView,
     trackCourseView: trackCourseView,
     trackProjectAction: trackProjectAction,
     submitContactLead: submitContactLead,
+    submitEvaluation: submitEvaluation,
     getSheetsUrl: getSheetsUrl,
     getLocalHistory: getLocalHistory
   };

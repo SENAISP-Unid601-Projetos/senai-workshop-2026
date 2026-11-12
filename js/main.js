@@ -42,7 +42,17 @@
       baseUrlReset: "URL padrão restaurada!",
       pageQrBtn: "QR Code do Workshop SENAI 2026",
       pageQrTitle: "QR Code do Workshop SENAI 2026",
-      pageQrSub: "Aponte a câmera do seu celular para abrir o portal completo do evento."
+      pageQrSub: "Aponte a câmera do seu celular para abrir o portal completo do evento.",
+      evalTitle: "Avalie este grupo",
+      evalApresentacao: "Apresentação:",
+      evalProjeto: "Ideia e Solução Técnica:",
+      evalSaved: "Avaliação salva! ⭐",
+      dashboard: "Rankings",
+      dashboardTitle: "Ver painel de notas e rankings",
+      dashboardHero: "🏆 Acompanhar Rankings",
+      dashboardFooter: "Rankings & Apuração",
+      dashboardFooterDesc: "Acompanhe os projetos mais votados e o total de visitas ao vivo.",
+      dashboardFooterBtn: "Acessar Painel"
     },
     en: {
       theme: "Theme", back: "← Back", eyebrow: "São Carlos · Technology in Action",
@@ -82,7 +92,17 @@
       baseUrlReset: "Default base URL restored!",
       pageQrBtn: "SENAI Workshop 2026 QR Code",
       pageQrTitle: "SENAI Workshop 2026 QR Code",
-      pageQrSub: "Point your phone camera to access the full event portal."
+      pageQrSub: "Point your phone camera to access the full event portal.",
+      evalTitle: "Rate this group",
+      evalApresentacao: "Presentation:",
+      evalProjeto: "Idea & Technical Solution:",
+      evalSaved: "Rating saved! ⭐",
+      dashboard: "Rankings",
+      dashboardTitle: "View ratings and rankings dashboard",
+      dashboardHero: "🏆 View Live Rankings",
+      dashboardFooter: "Rankings & Results",
+      dashboardFooterDesc: "Track most voted projects and live total visits.",
+      dashboardFooterBtn: "Open Dashboard"
     }
   };
 
@@ -185,11 +205,13 @@
   /* ----- header ----- */
   function headerHTML(isCourse) {
     var home = isCourse ? "../index.html" : "index.html";
+    var dashUrl = isCourse ? "../dashboard.html" : "dashboard.html";
     return '<header class="header"><div class="container">' +
       (isCourse
         ? '<a class="btn-ghost back" href="' + home + '">' + T("back") + '</a>'
         : '<a class="logo" href="' + home + '">SEN<span>AI</span></a>') +
       '<div class="header-actions">' +
+      '<a class="btn-ghost header-dash-btn" href="' + dashUrl + '" title="' + esc(T("dashboardTitle")) + '">📊 ' + T("dashboard") + '</a>' +
       '<button class="btn-ghost" id="themeBtn">' + T("theme") + ' ' + (theme === "dark" ? "☀" : "☾") + '</button>' +
       '<button class="btn-ghost" id="langBtn">' + (lang === "pt" ? "EN" : "PT") + '</button>' +
       '</div></div></header>';
@@ -202,7 +224,11 @@
     if (safeUrl(p.github)) links += '<a href="' + esc(safeUrl(p.github)) + '" target="_blank" rel="noopener">GitHub</a>';
     return '<div class="person"><b>' + esc(p.nome) + '</b>' + (role ? '<small>' + role + '</small><br>' : '') + links + '</div>';
   }
-  function footerHTML() {
+  function footerHTML(isCourse) {
+    if (isCourse === undefined) {
+      isCourse = document.body ? (document.body.getAttribute("data-page") !== "home") : false;
+    }
+    var dashUrl = isCourse ? "../dashboard.html" : "dashboard.html";
     var eq = S.equipe || {};
     var team = "";
     if (eq.lider) team += personHTML(eq.lider, T("techLead"));
@@ -211,6 +237,7 @@
       '<div><h4>' + T("fTitle") + '</h4><p>' + T("fText") + '</p><strong class="tf">' + T("fSlogan") + '</strong></div>' +
       '<div><h4>' + T("fClasses") + '</h4><ul>' + cursos.map(function (c) { return '<li>' + esc(tr(c.nome)) + ' — ' + esc(tr(c.turma)) + '</li>'; }).join("") + '</ul></div>' +
       (team ? '<div><h4>' + T("fTeam") + '</h4>' + team + '</div>' : '') +
+      '<div><h4>' + T("dashboardFooter") + '</h4><p>' + T("dashboardFooterDesc") + '</p><a class="footer-dash-link" href="' + dashUrl + '">📊 ' + T("dashboardFooterBtn") + ' →</a></div>' +
       '</div><div class="copy"><strong>SENAI São Carlos</strong> - ' + T("rights") + '<br>© ' + S.ano + ' ' + T("copyright") +
       (eq.lider && eq.lider.nome ? '<br>' + T("devBy") + ' ' + esc(eq.lider.nome) : '') + '</div></div></footer>';
   }
@@ -242,7 +269,10 @@
           '</svg>' +
         '</button>' +
       '</p>' +
-      '<div class="hero-cta"><a class="btn" href="#turmas">' + T("seeClasses") + '</a></div></div></section>' +
+      '<div class="hero-cta">' +
+        '<a class="btn" href="#turmas">' + T("seeClasses") + '</a>' +
+        '<a class="hero-dash-btn" href="dashboard.html" title="' + esc(T("dashboardTitle")) + '">' + T("dashboardHero") + '</a>' +
+      '</div></div></section>' +
       '<section class="section" id="turmas"><div class="container"><h2 class="section-title">' + T("classesTitle") + '</h2><p class="section-sub">' + T("classesSub") + '</p><div class="class-grid">' + cards + '</div></div></section>' +
       '<section class="section about"><div class="container"><h2 class="section-title">' + T("aboutTitle") + '</h2><br><p class="about-text">' + T("aboutText") + '</p>' +
       '<div class="stat-grid">' +
@@ -250,7 +280,7 @@
       '<div class="stat reveal"><b>' + fmt(na) + '</b><span>' + T("statStudents") + '</span></div>' +
       '<div class="stat reveal"><b>' + cursos.length + '</b><span>' + T("statCourses") + '</span></div>' +
       '<div class="stat reveal"><b>100%</b><span>' + T("statDedication") + '</span></div></div></div></section>' +
-      footerHTML();
+      footerHTML(false);
 
     var heroQrBtn = document.getElementById("heroQrBtn");
     if (heroQrBtn) {
@@ -312,7 +342,7 @@
       '<div class="dots">' + dots + '</div><a class="scroll-down" href="#projetos" aria-label="Descer">↓</a></section>' +
       '<section class="section" id="projetos"><div class="container"><h2 class="section-title">' + T("ourProjects") + '</h2><p class="section-sub">' + T("ourProjectsSub") + '</p>' +
       (P.length ? '<div class="project-grid" id="projectGrid">' + cards + '</div>' : '<p class="section-sub">' + T("noProjects") + '</p>') + '</div></section>' +
-      footerHTML();
+      footerHTML(true);
 
     initCarousel(P.length);
     initCardClicks(key, P);
@@ -454,6 +484,240 @@
     document.body.removeChild(inp);
   }
 
+  /* ----- AVALIAÇÃO DO PROJETO (ESTRELAS) ----- */
+  function getProjectRatings(pid) {
+    try {
+      var all = JSON.parse(localStorage.getItem("senai_ratings") || "{}");
+      return all[pid] || { apresentacao: 0, projeto: 0 };
+    } catch (e) {
+      return { apresentacao: 0, projeto: 0 };
+    }
+  }
+
+  function saveProjectRating(pid, criterion, value) {
+    try {
+      var all = JSON.parse(localStorage.getItem("senai_ratings") || "{}");
+      if (!all[pid]) all[pid] = { apresentacao: 0, projeto: 0 };
+      all[pid][criterion] = Number(value) || 0;
+      all[pid].updatedAt = new Date().toISOString();
+      localStorage.setItem("senai_ratings", JSON.stringify(all));
+      return all[pid];
+    } catch (e) {
+      return { apresentacao: 0, projeto: 0 };
+    }
+  }
+
+  function markProjectRatingSubmitted(pid) {
+    try {
+      var all = JSON.parse(localStorage.getItem("senai_ratings") || "{}");
+      if (!all[pid]) all[pid] = { apresentacao: 0, projeto: 0 };
+      all[pid].submitted = true;
+      localStorage.setItem("senai_ratings", JSON.stringify(all));
+      return all[pid];
+    } catch (e) {
+      return { apresentacao: 0, projeto: 0, submitted: true };
+    }
+  }
+
+  function renderStarsHTML(criterion, score) {
+    var stars = "";
+    for (var i = 1; i <= 5; i++) {
+      var active = Boolean(score && i <= score);
+      var activeClass = active ? " is-active" : "";
+      var inlineStyle = active ? ' style="color:#ffb703;text-shadow:0 0 10px rgba(255,183,3,0.7)"' : '';
+      stars += '<button class="star-btn' + activeClass + '"' + inlineStyle + ' data-crit="' + criterion + '" data-val="' + i + '" type="button" aria-label="' + i + ' estrelas">★</button>';
+    }
+    return '<div class="eval-stars" data-crit="' + criterion + '">' + stars + '</div>';
+  }
+
+  /* ----- EFEITO VISUAL: FOGOS DE ARTIFÍCIO (2 SEGUNDOS) ----- */
+  var fireworksTimer = null;
+  var fireworksAnimId = null;
+
+  function triggerFireworks() {
+    var existing = document.getElementById("senaiFireworksCanvas");
+    if (existing && existing.parentNode) {
+      existing.parentNode.removeChild(existing);
+      if (fireworksAnimId) cancelAnimationFrame(fireworksAnimId);
+      clearTimeout(fireworksTimer);
+    }
+
+    var canvas = document.createElement("canvas");
+    canvas.id = "senaiFireworksCanvas";
+    canvas.style.position = "fixed";
+    canvas.style.inset = "0";
+    canvas.style.width = "100vw";
+    canvas.style.height = "100vh";
+    canvas.style.pointerEvents = "none";
+    canvas.style.zIndex = "99999";
+    canvas.style.transition = "opacity 0.4s ease-out";
+    document.body.appendChild(canvas);
+
+    var ctx = canvas.getContext("2d");
+    var dpr = window.devicePixelRatio || 1;
+    var realW = window.innerWidth;
+    var realH = window.innerHeight;
+    canvas.width = realW * dpr;
+    canvas.height = realH * dpr;
+    ctx.scale(dpr, dpr);
+
+    var particles = [];
+    var colors = [
+      "#ffb703", "#fbbf24", "#e4002b", "#ff3b57",
+      "#00f0ff", "#10b981", "#a855f7", "#ffffff", "#38bdf8"
+    ];
+
+    function createBurst(cx, cy, count) {
+      count = count || 45;
+      for (var i = 0; i < count; i++) {
+        var angle = Math.random() * Math.PI * 2;
+        var speed = Math.random() * 8 + 2;
+        var color = colors[Math.floor(Math.random() * colors.length)];
+        particles.push({
+          x: cx,
+          y: cy,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          radius: Math.random() * 3 + 2,
+          color: color,
+          alpha: 1,
+          decay: Math.random() * 0.016 + 0.016,
+          gravity: 0.12
+        });
+      }
+    }
+
+    // Explosões comemorativas espalhadas pela tela
+    createBurst(realW * 0.5, realH * 0.35, 60);
+    createBurst(realW * 0.25, realH * 0.42, 45);
+    createBurst(realW * 0.75, realH * 0.38, 45);
+
+    setTimeout(function () {
+      createBurst(realW * 0.38, realH * 0.25, 45);
+      createBurst(realW * 0.62, realH * 0.28, 45);
+      createBurst(realW * 0.85, realH * 0.5, 35);
+      createBurst(realW * 0.15, realH * 0.5, 35);
+    }, 250);
+
+    var startTime = Date.now();
+    var duration = 2000; // Exatamente 2 segundos
+
+    function loop() {
+      var elapsed = Date.now() - startTime;
+      if (elapsed >= duration) {
+        if (canvas.parentNode) canvas.parentNode.removeChild(canvas);
+        fireworksAnimId = null;
+        return;
+      }
+
+      ctx.clearRect(0, 0, realW, realH);
+
+      for (var i = particles.length - 1; i >= 0; i--) {
+        var p = particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += p.gravity;
+        p.vx *= 0.98;
+        p.vy *= 0.98;
+        p.alpha -= p.decay;
+
+        if (p.alpha <= 0) {
+          particles.splice(i, 1);
+          continue;
+        }
+
+        ctx.save();
+        ctx.globalAlpha = Math.max(0, p.alpha);
+        ctx.fillStyle = p.color;
+        ctx.shadowColor = p.color;
+        ctx.shadowBlur = 8;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+
+      fireworksAnimId = requestAnimationFrame(loop);
+    }
+
+    loop();
+
+    setTimeout(function () {
+      canvas.style.opacity = "0";
+    }, 1600);
+
+    fireworksTimer = setTimeout(function () {
+      if (canvas.parentNode) canvas.parentNode.removeChild(canvas);
+      if (fireworksAnimId) cancelAnimationFrame(fireworksAnimId);
+    }, 2000);
+  }
+
+  function initRatingHandlers(p, courseKey, pid) {
+    var evalBar = document.getElementById("modalEvalBar");
+    if (!evalBar) return;
+    var current = getProjectRatings(pid);
+
+    function updateStarsUI(criterion, score) {
+      var group = evalBar.querySelector('.eval-stars[data-crit="' + criterion + '"]');
+      if (!group) return;
+      var btns = group.querySelectorAll(".star-btn");
+      btns.forEach(function (btn) {
+        var val = Number(btn.getAttribute("data-val"));
+        var active = val <= score;
+        btn.classList.toggle("is-active", active);
+        if (active) {
+          btn.style.color = "#ffb703";
+          btn.style.textShadow = "0 0 10px rgba(255, 183, 3, 0.7)";
+        } else {
+          btn.style.color = "";
+          btn.style.textShadow = "";
+        }
+      });
+    }
+
+    evalBar.querySelectorAll(".star-btn").forEach(function (btn) {
+      var crit = btn.getAttribute("data-crit");
+      var val = Number(btn.getAttribute("data-val"));
+
+      btn.addEventListener("mouseenter", function () {
+        updateStarsUI(crit, val);
+      });
+
+      btn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        var updated = saveProjectRating(pid, crit, val);
+        current = updated;
+        updateStarsUI(crit, val);
+
+        btn.style.transform = "scale(1.35)";
+        setTimeout(function () { btn.style.transform = ""; }, 180);
+
+        // Opção 1: Só envia e só solta os fogos quando AMBOS os critérios estiverem avaliados (> 0)
+        var hasApresentacao = Number(updated.apresentacao) > 0;
+        var hasProjeto = Number(updated.projeto) > 0;
+
+        if (hasApresentacao && hasProjeto && !updated.submitted) {
+          markProjectRatingSubmitted(pid);
+          updated.submitted = true;
+
+          // Dispara efeito visual de fogos de artifício na página toda (dura 2 segundos)
+          triggerFireworks();
+
+          if (window.Leads && typeof window.Leads.submitEvaluation === "function") {
+            window.Leads.submitEvaluation(p, courseKey, updated);
+          }
+        }
+      });
+    });
+
+    evalBar.querySelectorAll(".eval-stars").forEach(function (group) {
+      var crit = group.getAttribute("data-crit");
+      group.addEventListener("mouseleave", function () {
+        updateStarsUI(crit, current[crit] || 0);
+      });
+    });
+  }
+
   function openModal(p, courseKey, index, updateUrl) {
     if (!p) return;
     var c = S.cursos[courseKey];
@@ -462,6 +726,7 @@
     var customBase = getCustomBase();
     var courseBadge = courseKey === "ds" ? "DS" : "MEC";
     var img = safeUrl(p.imagem);
+    var currentRatings = getProjectRatings(pid);
 
     var m = ensureModal();
     var dialog = document.getElementById("modalDialog");
@@ -485,6 +750,10 @@
           '<span class="modal-badge">' + courseBadge + ' · ' + esc(tr(c.turma)) + '</span>' +
           '<span class="pname">' + esc(p.nome) + '</span>' +
           (Number(p.alunos) > 0 ? '<span class="meta">' + p.alunos + ' ' + T("members") + '</span>' : '') +
+          '<button class="btn-qr-toggle" id="modalQrToggleBtn" aria-expanded="false" title="' + esc(T("qrToggle")) + '">' +
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>' +
+            '<span id="modalQrToggleText">' + esc(T("qrToggle")) + '</span>' +
+          '</button>' +
         '</div>' +
         '<h2 class="modal-title">' + esc(p.nome) + '</h2>' +
         '<h3 class="modal-sub">' + esc(p.subtitulo) + '</h3>' +
@@ -494,11 +763,20 @@
           act(p.comercial, T("commercial")) +
           act(p.landing, T("visit"), true) +
         '</div>' +
-        '<div class="modal-qr-toggle-bar">' +
-          '<button class="btn-qr-toggle" id="modalQrToggleBtn" aria-expanded="false" title="' + esc(T("qrToggle")) + '">' +
-            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>' +
-            '<span id="modalQrToggleText">' + esc(T("qrToggle")) + '</span>' +
-          '</button>' +
+        '<div class="modal-eval-bar" id="modalEvalBar">' +
+          '<div class="eval-title">' +
+            '<span>' + T("evalTitle") + '</span>' +
+          '</div>' +
+          '<span class="eval-divider">-</span>' +
+          '<div class="eval-item">' +
+            '<span class="eval-label">' + T("evalApresentacao") + '</span>' +
+            renderStarsHTML("apresentacao", currentRatings.apresentacao) +
+          '</div>' +
+          '<span class="eval-divider">-</span>' +
+          '<div class="eval-item">' +
+            '<span class="eval-label">' + T("evalProjeto") + '</span>' +
+            renderStarsHTML("projeto", currentRatings.projeto) +
+          '</div>' +
         '</div>' +
         '<div class="modal-share" id="modalShareBox">' +
           '<div class="modal-share-top">' +
@@ -536,6 +814,7 @@
 
     // Handlers inside modal
     document.getElementById("modalCloseBtn").onclick = function () { closeModal(true); };
+    initRatingHandlers(p, courseKey, pid);
 
     var qrToggleBtn = document.getElementById("modalQrToggleBtn");
     var shareBox = document.getElementById("modalShareBox");

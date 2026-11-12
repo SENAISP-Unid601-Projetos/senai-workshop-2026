@@ -52,7 +52,23 @@
       dashboardHero: "🏆 Acompanhar Rankings",
       dashboardFooter: "Rankings & Apuração",
       dashboardFooterDesc: "Acompanhe os projetos mais votados e o total de visitas ao vivo.",
-      dashboardFooterBtn: "Acessar Painel"
+      dashboardFooterBtn: "Acessar Painel",
+      eventTitle: "Data e Local do Evento",
+      eventSub: "Venha prestigiar os projetos inovadores e soluções desenvolvidas pelos nossos alunos.",
+      eventDateLabel: "Data do Evento",
+      eventDateVal: "02 e 03 de Dezembro de 2026",
+      eventDateDays: "Quarta e Quinta-feira • Projetos em Exposição",
+      eventLocLabel: "Local",
+      eventLocName: "Faculdade de Tecnologia e Escola SENAI",
+      eventLocUnit: "Antonio Adolpho Lobbe • São Carlos/SP",
+      eventAddrLabel: "Endereço",
+      eventAddrVal: "R. Cândido Padim, 25 - Vila Prado",
+      eventAddrCity: "São Carlos - SP • CEP 13574-002",
+      eventOpenMaps: "Abrir no Google Maps",
+      eventMapTitle: "📍 Mapa de Localização",
+      eventViewRoute: "Ver rota no Google Maps ↗",
+      eventHeroBadgeDate: "02 e 03 de Dezembro",
+      eventHeroBadgeLoc: "SENAI São Carlos"
     },
     en: {
       theme: "Theme", back: "← Back", eyebrow: "São Carlos · Technology in Action",
@@ -102,7 +118,23 @@
       dashboardHero: "🏆 View Live Rankings",
       dashboardFooter: "Rankings & Results",
       dashboardFooterDesc: "Track most voted projects and live total visits.",
-      dashboardFooterBtn: "Open Dashboard"
+      dashboardFooterBtn: "Open Dashboard",
+      eventTitle: "Event Date & Location",
+      eventSub: "Come check out the innovative projects and solutions developed by our students.",
+      eventDateLabel: "Event Date",
+      eventDateVal: "December 2 & 3, 2026",
+      eventDateDays: "Wednesday & Thursday • Projects on Display",
+      eventLocLabel: "Location",
+      eventLocName: "SENAI College of Technology and School",
+      eventLocUnit: "Antonio Adolpho Lobbe • São Carlos/SP",
+      eventAddrLabel: "Address",
+      eventAddrVal: "R. Cândido Padim, 25 - Vila Prado",
+      eventAddrCity: "São Carlos - SP • Brazil",
+      eventOpenMaps: "Open in Google Maps",
+      eventMapTitle: "📍 Location Map",
+      eventViewRoute: "Open in Google Maps ↗",
+      eventHeroBadgeDate: "December 2 & 3",
+      eventHeroBadgeLoc: "SENAI São Carlos"
     }
   };
 
@@ -263,15 +295,31 @@
     var dashUrl = isCourse ? "../dashboard.html" : "dashboard.html";
     var eq = S.equipe || {};
     var team = "";
-    if (eq.lider) team += personHTML(eq.lider, T("techLead"));
-    if (eq.devs && eq.devs.length) team += '<p style="margin:12px 0 8px">' + T("fDevs") + '</p>' + eq.devs.map(function (d) { return personHTML(d); }).join("");
+    if (eq.lider && eq.lider.nome) team += personHTML(eq.lider, T("techLead"));
+    if (eq.devs && eq.devs.length) {
+      if (eq.lider && eq.lider.nome) {
+        team += '<p style="margin:12px 0 8px">' + T("fDevs") + '</p>';
+      }
+      team += eq.devs.map(function (d) { return personHTML(d); }).join("");
+    }
+
+    var devCredits = "";
+    if (eq.lider && eq.lider.nome) {
+      devCredits = esc(eq.lider.nome);
+    } else if (eq.devs && eq.devs.length) {
+      var devNames = eq.devs.filter(function (d) { return d && d.nome; }).map(function (d) { return esc(d.nome); });
+      if (devNames.length === 1) devCredits = devNames[0];
+      else if (devNames.length === 2) devCredits = devNames[0] + " e " + devNames[1];
+      else if (devNames.length > 2) devCredits = devNames.slice(0, -1).join(", ") + " e " + devNames[devNames.length - 1];
+    }
+
     return '<footer class="footer"><div class="container"><div class="footer-grid">' +
       '<div><h4>' + T("fTitle") + '</h4><p>' + T("fText") + '</p><strong class="tf">' + T("fSlogan") + '</strong></div>' +
       '<div><h4>' + T("fClasses") + '</h4><ul>' + cursos.map(function (c) { return '<li>' + esc(tr(c.nome)) + ' — ' + esc(tr(c.turma)) + '</li>'; }).join("") + '</ul></div>' +
       (team ? '<div><h4>' + T("fTeam") + '</h4>' + team + '</div>' : '') +
       '<div><h4>' + T("dashboardFooter") + '</h4><p>' + T("dashboardFooterDesc") + '</p><a class="footer-dash-link" href="' + dashUrl + '">📊 ' + T("dashboardFooterBtn") + ' →</a></div>' +
       '</div><div class="copy"><strong>SENAI São Carlos</strong> - ' + T("rights") + '<br>© ' + S.ano + ' ' + T("copyright") +
-      (eq.lider && eq.lider.nome ? '<br>' + T("devBy") + ' ' + esc(eq.lider.nome) : '') + '</div></div></footer>';
+      (devCredits ? '<br>' + T("devBy") + ' ' + devCredits : '') + '</div></div></footer>';
   }
 
   /* ----- HOME ----- */
@@ -291,6 +339,11 @@
     root.innerHTML = headerHTML(false) +
       '<section class="hero"><div class="container"><span class="eyebrow">' + T("eyebrow") + '</span>' +
       '<h1>' + T("heroTitle") + '</h1>' +
+      '<div class="hero-event-pill">' +
+        '<span class="hero-pill-icon">📅</span> <strong>' + T("eventHeroBadgeDate") + '</strong>' +
+        '<span class="hero-pill-sep">•</span>' +
+        '<span class="hero-pill-icon">📍</span> <a href="#local">' + T("eventHeroBadgeLoc") + '</a>' +
+      '</div>' +
       '<p class="sub hero-sub-row">' +
         '<span>' + T("heroSub") + '</span>' +
         '<button class="hero-qr-btn" id="heroQrBtn" type="button" title="' + esc(T("pageQrBtn")) + '" aria-label="' + esc(T("pageQrBtn")) + '">' +
@@ -312,6 +365,52 @@
       '<div class="stat reveal"><b>' + fmt(na) + '</b><span>' + T("statStudents") + '</span></div>' +
       '<div class="stat reveal"><b>' + cursos.length + '</b><span>' + T("statCourses") + '</span></div>' +
       '<div class="stat reveal"><b>100%</b><span>' + T("statDedication") + '</span></div></div></div></section>' +
+      '<section class="section event-location" id="local"><div class="container">' +
+      '<h2 class="section-title">' + T("eventTitle") + '</h2>' +
+      '<p class="section-sub">' + T("eventSub") + '</p>' +
+      '<div class="event-grid">' +
+        '<div class="event-card reveal">' +
+          '<div class="event-info-item">' +
+            '<div class="event-icon-box">📅</div>' +
+            '<div>' +
+              '<h3>' + T("eventDateLabel") + '</h3>' +
+              '<p><strong>' + T("eventDateVal") + '</strong></p>' +
+              '<span class="event-subtext">' + T("eventDateDays") + '</span>' +
+            '</div>' +
+          '</div>' +
+          '<div class="event-info-item">' +
+            '<div class="event-icon-box">📍</div>' +
+            '<div>' +
+              '<h3>' + T("eventLocLabel") + '</h3>' +
+              '<p><strong>' + T("eventLocName") + '</strong></p>' +
+              '<span class="event-subtext">' + T("eventLocUnit") + '</span>' +
+            '</div>' +
+          '</div>' +
+          '<div class="event-info-item">' +
+            '<div class="event-icon-box">🗺️</div>' +
+            '<div>' +
+              '<h3>' + T("eventAddrLabel") + '</h3>' +
+              '<p>' + T("eventAddrVal") + '</p>' +
+              '<span class="event-subtext">' + T("eventAddrCity") + '</span>' +
+            '</div>' +
+          '</div>' +
+          '<div class="event-actions">' +
+            '<a class="btn event-map-btn" href="https://maps.app.goo.gl/ERURVEKNRXTKch5o6" target="_blank" rel="noopener">' +
+              '<span>🗺️ ' + T("eventOpenMaps") + '</span>' +
+              '<span class="go">↗</span>' +
+            '</a>' +
+          '</div>' +
+        '</div>' +
+        '<div class="map-card reveal">' +
+          '<div class="map-header">' +
+            '<span class="map-title">' + T("eventMapTitle") + '</span>' +
+            '<a href="https://maps.app.goo.gl/ERURVEKNRXTKch5o6" target="_blank" rel="noopener" class="map-external-link">' + T("eventViewRoute") + '</a>' +
+          '</div>' +
+          '<div class="map-frame-wrapper">' +
+            '<iframe src="https://maps.google.com/maps?q=-22.0234009,-47.8972138&amp;hl=pt-BR&amp;z=16&amp;output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="' + esc(T("eventLocName")) + '"></iframe>' +
+          '</div>' +
+        '</div>' +
+      '</div></div></section>' +
       footerHTML(false);
 
     var heroQrBtn = document.getElementById("heroQrBtn");

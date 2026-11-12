@@ -1467,6 +1467,44 @@ body.modal-open {
   box-shadow: 0 10px 24px rgba(255, 183, 3, .25);
 }
 
+/* ---------- Hero Event Date & Location Pill ---------- */
+.hero-event-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 6px auto 14px;
+  padding: 8px 20px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--card) 85%, transparent);
+  border: 1px solid color-mix(in srgb, var(--red) 35%, var(--line));
+  color: var(--text);
+  font-size: 0.95rem;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.15);
+  flex-wrap: wrap;
+}
+
+.hero-event-pill strong {
+  color: #ffb703;
+  font-weight: 700;
+}
+
+.hero-event-pill .hero-pill-sep {
+  opacity: 0.4;
+}
+
+.hero-event-pill a {
+  color: var(--text);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.2s ease;
+}
+
+.hero-event-pill a:hover {
+  color: var(--red);
+}
+
 .hero-qr-btn {
   display: inline-flex;
   align-items: center;
@@ -1662,6 +1700,162 @@ body.modal-open {
   text-align: center;
   color: var(--muted);
   font-size: .85rem
+}
+
+/* ---------- Seção do Evento: Data, Local e Mapa ---------- */
+.event-location {
+  padding: 80px 0;
+  border-top: 1px solid var(--line);
+  background: radial-gradient(800px 400px at 50% 10%, rgba(228, 0, 43, 0.06), transparent 70%);
+}
+
+.event-grid {
+  display: grid;
+  grid-template-columns: minmax(320px, 1fr) minmax(360px, 1.4fr);
+  gap: 32px;
+  align-items: stretch;
+  margin-top: 24px;
+}
+
+.event-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 34px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  box-shadow: var(--shadow);
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.event-card:hover {
+  border-color: color-mix(in srgb, var(--red) 40%, var(--line));
+}
+
+.event-info-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.event-icon-box {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--red) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--red) 25%, transparent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35rem;
+  flex-shrink: 0;
+}
+
+.event-info-item h3 {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  margin-bottom: 4px;
+  font-weight: 700;
+}
+
+.event-info-item p {
+  font-size: 1.05rem;
+  color: var(--text);
+  margin: 0;
+  line-height: 1.35;
+}
+
+.event-info-item .event-subtext {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-top: 3px;
+}
+
+.event-actions {
+  margin-top: auto;
+  padding-top: 10px;
+}
+
+.event-map-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 13px 20px;
+  border-radius: 12px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+/* Card do Mapinha Google */
+.map-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow);
+  min-height: 420px;
+}
+
+.map-header {
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--line);
+  background: color-mix(in srgb, var(--bg) 50%, var(--card));
+}
+
+.map-title {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.map-external-link {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--red-2);
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.map-external-link:hover {
+  text-decoration: underline;
+}
+
+.map-frame-wrapper {
+  flex: 1;
+  width: 100%;
+  min-height: 360px;
+  position: relative;
+  background: #1a1a1a;
+}
+
+.map-frame-wrapper iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+@media(max-width:860px) {
+  .event-grid {
+    grid-template-columns: 1fr;
+  }
+  .map-card {
+    min-height: 340px;
+  }
+  .map-frame-wrapper {
+    min-height: 300px;
+  }
 }
 
 /* ---------- Reveal ---------- */

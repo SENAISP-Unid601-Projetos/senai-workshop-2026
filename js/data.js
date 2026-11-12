@@ -23,6 +23,16 @@
 window.SITE = {
   ano: 2026,
 
+  /* Informações do Evento */
+  evento: {
+    data: "02 e 03 de Dezembro de 2026",
+    diasSemana: { pt: "Quarta e Quinta-feira", en: "Wednesday and Thursday" },
+    local: "Faculdade de Tecnologia e Escola SENAI Antonio Adolpho Lobbe",
+    endereco: "R. Cândido Padim, 25 - Vila Prado, São Carlos - SP",
+    mapsUrl: "https://maps.app.goo.gl/ERURVEKNRXTKch5o6",
+    mapsEmbedUrl: "https://maps.google.com/maps?q=-22.0234009,-47.8972138&hl=pt-BR&z=16&output=embed"
+  },
+
   /* URL base para os links dos QR Codes (quando publicado no GitHub Pages).
      Deixe "" para autodetectar o endereço atual no navegador.
      Exemplo: "https://seu-usuario.github.io/senai-workshop-2026" */
@@ -95,10 +105,10 @@ window.SITE = {
 
   /* Equipe que desenvolveu o site (rodapé). Apague os blocos se não quiser exibir. */
   equipe: {
-    lider: { nome: "Nome do Tech Lead", instagram: "", github: "" },
+    lider: null,
     devs: [
-      { nome: "Nome do Desenvolvedor 1", instagram: "", github: "" },
-      { nome: "Nome do Desenvolvedor 2", instagram: "", github: "" }
+      { nome: "Wesley Pecoraro", instagram: "", github: "" },
+      { nome: "Rafael de Sena Selvagio", instagram: "", github: "" }
     ]
   }
 };

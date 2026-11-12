@@ -3,9 +3,9 @@
  * SENAI WORKSHOP 2026 — DASHBOARD DE AVALIAÇÕES E VISITAS
  * =====================================================================
  * Recursos:
- * - Top 3 Mais Bem Votados & Top 3 Menos Votados (DS e MEC)
- * - Fallback inteligente: se não houver dados no Sheets, lista os 3 primeiros
- *   projetos por ordem alfabética
+ * - Suporta retorno da API com top3/bottom3 ou top4/bottom4
+ * - Exibe notas reais das avaliações do Google Sheets
+ * - Fallback: se não houver dados, lista os 3 primeiros projetos por ordem alfabética
  * - Total geral de visitas por turma no centro
  * - Atualização automática a cada 30 segundos com contador visual
  * - Modo Tela Cheia (Fullscreen)
@@ -19,7 +19,7 @@
   let countdownSeconds = REFRESH_INTERVAL_SECONDS;
   let countdownTimerId = null;
 
-  // Instâncias dos gráficos para limpeza
+  // Instâncias dos gráficos para limpeza de memória
   let chartInstances = {
     visitasCenter: null,
     dsTop3: null,
@@ -62,7 +62,7 @@
         : ['Projeto MEC 1', 'Projeto MEC 2', 'Projeto MEC 3'];
     }
 
-    // Ordenação alfabética (com ordenação natural para números: DS 1, DS 2, DS 3...)
+    // Ordenação alfabética natural (DS 1, DS 2, DS 3...)
     nomes.sort((a, b) => a.localeCompare(b, 'pt-BR', { numeric: true, sensitivity: 'base' }));
 
     const primeiros3 = nomes.slice(0, 3);
@@ -72,6 +72,25 @@
       apresentacao: [0, 0, 0],
       solucaoTecnica: [0, 0, 0],
       isAlphabetical: true
+    };
+  }
+
+  // Normaliza o ranking vindo da API para até 3 itens (suportando top3 e top4)
+  function normalizarRanking(rankingObj, courseKey) {
+    if (!rankingObj || !rankingObj.projetos || rankingObj.projetos.length === 0) {
+      return getAlphabeticalFallback(courseKey);
+    }
+
+    const maxItems = 3;
+    const projetos = rankingObj.projetos.slice(0, maxItems);
+    const apresentacao = (rankingObj.apresentacao || []).slice(0, maxItems);
+    const solucaoTecnica = (rankingObj.solucaoTecnica || []).slice(0, maxItems);
+
+    return {
+      projetos: projetos,
+      apresentacao: apresentacao,
+      solucaoTecnica: solucaoTecnica,
+      isAlphabetical: false
     };
   }
 
@@ -99,8 +118,8 @@
     if (!ctx) return;
     if (chartInstances.visitasCenter) chartInstances.visitasCenter.destroy();
 
-    const dsVal = (visitasData && visitasData.ds) || 0;
-    const mecVal = (visitasData && visitasData.mec) || 0;
+    const dsVal = (visitasData && Number(visitasData.ds)) || 0;
+    const mecVal = (visitasData && Number(visitasData.mec)) || 0;
     const totalConsolidado = (dsVal + mecVal) || 1;
 
     // Atualiza cards numéricos do placar
@@ -180,7 +199,7 @@
   }
 
   // ===================================================================
-  // 2. FUNÇÃO REUTILIZÁVEL: RANKING DE 3 PROJETOS (2 CRITÉRIOS)
+  // 2. FUNÇÃO REUTILIZÁVEL: RANKING DE PROJETOS (2 CRITÉRIOS)
   // ===================================================================
   function renderRankingChart(canvasId, instanceKey, rankingData, isTop) {
     const ctx = document.getElementById(canvasId);
@@ -190,17 +209,14 @@
     const colorApresentacao = isTop ? '#10b981' : '#f59e0b';
     const colorSolucao = isTop ? '#06b6d4' : '#f97316';
 
-    const projetos = (rankingData && rankingData.projetos && rankingData.projetos.length > 0)
-      ? rankingData.projetos.slice(0, 3)
-      : ['Sem projetos'];
-
+    const count = (rankingData && rankingData.projetos) ? rankingData.projetos.length : 0;
+    const projetos = count > 0 ? rankingData.projetos : ['Sem projetos'];
     const apresentacao = (rankingData && rankingData.apresentacao && rankingData.apresentacao.length > 0)
-      ? rankingData.apresentacao.slice(0, 3)
-      : [0, 0, 0];
-
+      ? rankingData.apresentacao
+      : new Array(projetos.length).fill(0);
     const solucaoTecnica = (rankingData && rankingData.solucaoTecnica && rankingData.solucaoTecnica.length > 0)
-      ? rankingData.solucaoTecnica.slice(0, 3)
-      : [0, 0, 0];
+      ? rankingData.solucaoTecnica
+      : new Array(projetos.length).fill(0);
 
     const isAlpha = rankingData && rankingData.isAlphabetical;
 
@@ -243,23 +259,29 @@
             }
           },
           tooltip: {
+            mode: 'index',
+            intersect: false,
             backgroundColor: '#141b2b',
             titleColor: '#eef2f8',
             borderColor: 'rgba(255, 255, 255, 0.12)',
             borderWidth: 1,
+            padding: 10,
             callbacks: {
               label: function (context) {
                 if (isAlpha) {
                   return ` ${context.dataset.label}: Sem votos ainda`;
                 }
-                return ` ${context.dataset.label}: ${context.parsed.x.toFixed(1)} / 5.0`;
+                const valor = Number(context.parsed.x) || 0;
+                return ` ${context.dataset.label}: ${valor.toFixed(1)} / 5.0`;
               },
               afterBody: function (items) {
                 if (isAlpha) {
                   return '\n(Exibindo em ordem alfabética)';
                 }
-                if (items.length >= 2) {
-                  const media = ((items[0].parsed.x + items[1].parsed.x) / 2).toFixed(2);
+                if (items && items.length >= 2) {
+                  const v1 = Number(items[0].parsed.x) || 0;
+                  const v2 = Number(items[1].parsed.x) || 0;
+                  const media = ((v1 + v2) / 2).toFixed(2);
                   return `\n⭐ Média Ponderada: ${media} / 5.0`;
                 }
                 return '';
@@ -289,13 +311,12 @@
   }
 
   // ===================================================================
-  // CARREGAMENTO DOS DADOS (API GOOGLE SHEETS COM FALLBACK ALFABÉTICO)
+  // CARREGAMENTO DOS DADOS (API GOOGLE SHEETS)
   // ===================================================================
   async function carregarDados() {
     setupChartDefaults();
     const apiUrl = getApiUrl();
 
-    // Se não houver URL da API configurada, usa ordem alfabética
     if (!apiUrl) {
       console.warn("[Dashboard] URL do Google Sheets não configurada. Usando ordem alfabética.");
       renderFallbackAlfabetico("Ordem Alfabética (Sem URL)");
@@ -313,26 +334,32 @@
       const json = await response.json();
 
       if (json && json.status === "success") {
-        console.log("[Dashboard] Dados recebidos do Google Sheets:", json);
+        console.log("[Dashboard] Dados recebidos com sucesso do Google Sheets:", json);
 
-        const temVotosDS = json.ds && json.ds.totalAvaliados > 0 && json.ds.top3 && json.ds.top3.projetos && json.ds.top3.projetos.length > 0;
-        const temVotosMEC = json.mec && json.mec.totalAvaliados > 0 && json.mec.top3 && json.mec.top3.projetos && json.mec.top3.projetos.length > 0;
+        // Suporta tanto a estrutura top3/bottom3 quanto top4/bottom4
+        const dsRawTop = (json.ds && (json.ds.top3 || json.ds.top4)) || null;
+        const dsRawBottom = (json.ds && (json.ds.bottom3 || json.ds.bottom4)) || null;
+        const mecRawTop = (json.mec && (json.mec.top3 || json.mec.top4)) || null;
+        const mecRawBottom = (json.mec && (json.mec.bottom3 || json.mec.bottom4)) || null;
+
+        const totalDsAvaliados = (json.ds && json.ds.totalAvaliados) || 0;
+        const totalMecAvaliados = (json.mec && json.mec.totalAvaliados) || 0;
 
         const dadosFinais = {
           visitas: json.visitas || { ds: 0, mec: 0, total: 0 },
           ds: {
-            top3: temVotosDS ? json.ds.top3 : getAlphabeticalFallback('ds'),
-            bottom3: temVotosDS ? json.ds.bottom3 : getAlphabeticalFallback('ds'),
-            totalAvaliados: (json.ds && json.ds.totalAvaliados) || 0
+            top3: totalDsAvaliados > 0 ? normalizarRanking(dsRawTop, 'ds') : getAlphabeticalFallback('ds'),
+            bottom3: totalDsAvaliados > 0 ? normalizarRanking(dsRawBottom, 'ds') : getAlphabeticalFallback('ds'),
+            totalAvaliados: totalDsAvaliados
           },
           mec: {
-            top3: temVotosMEC ? json.mec.top3 : getAlphabeticalFallback('mecatronica'),
-            bottom3: temVotosMEC ? json.mec.bottom3 : getAlphabeticalFallback('mecatronica'),
-            totalAvaliados: (json.mec && json.mec.totalAvaliados) || 0
+            top3: totalMecAvaliados > 0 ? normalizarRanking(mecRawTop, 'mecatronica') : getAlphabeticalFallback('mecatronica'),
+            bottom3: totalMecAvaliados > 0 ? normalizarRanking(mecRawBottom, 'mecatronica') : getAlphabeticalFallback('mecatronica'),
+            totalAvaliados: totalMecAvaliados
           }
         };
 
-        const labelStatus = (temVotosDS || temVotosMEC)
+        const labelStatus = (totalDsAvaliados > 0 || totalMecAvaliados > 0)
           ? "Google Sheets Ao Vivo"
           : "Google Sheets Conectado (Sem votos ainda)";
 
@@ -340,7 +367,7 @@
         return;
 
       } else if (json && json.status === "empty") {
-        console.warn("[Dashboard] Planilha vazia. Usando ordem alfabética dos 3 primeiros.");
+        console.warn("[Dashboard] Planilha vazia. Usando ordem alfabética.");
         renderFallbackAlfabetico("Planilha Vazia (Ordem Alfabética)");
         return;
       }
@@ -384,7 +411,7 @@
     renderRankingChart('chart-mec-top3', 'mecTop3', data.mec.top3, true);
     renderRankingChart('chart-mec-bottom3', 'mecBottom3', data.mec.bottom3, false);
 
-    // Atualiza contadores de projetos avaliados nos cabeçalhos
+    // Atualiza contadores nos cabeçalhos
     const dsCountEl = document.getElementById('count-ds-avaliados');
     if (dsCountEl) {
       dsCountEl.textContent = data.ds.totalAvaliados > 0

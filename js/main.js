@@ -58,6 +58,9 @@
       eventDateLabel: "Data do Evento",
       eventDateVal: "02 e 03 de Dezembro de 2026",
       eventDateDays: "Quarta e Quinta-feira • Projetos em Exposição",
+      eventTimeLabel: "Horário",
+      eventTimeVal: "Das 08h às 17h",
+      eventTimeSub: "Aberto ao público • Entrada gratuita",
       eventLocLabel: "Local",
       eventLocName: "Faculdade de Tecnologia e Escola SENAI",
       eventLocUnit: "Antonio Adolpho Lobbe • São Carlos/SP",
@@ -68,6 +71,7 @@
       eventMapTitle: "📍 Mapa de Localização",
       eventViewRoute: "Ver rota no Google Maps ↗",
       eventHeroBadgeDate: "02 e 03 de Dezembro",
+      eventHeroBadgeTime: "08h às 17h",
       eventHeroBadgeLoc: "SENAI São Carlos"
     },
     en: {
@@ -124,6 +128,9 @@
       eventDateLabel: "Event Date",
       eventDateVal: "December 2 & 3, 2026",
       eventDateDays: "Wednesday & Thursday • Projects on Display",
+      eventTimeLabel: "Hours",
+      eventTimeVal: "8:00 AM to 5:00 PM",
+      eventTimeSub: "Open to the public • Free admission",
       eventLocLabel: "Location",
       eventLocName: "SENAI College of Technology and School",
       eventLocUnit: "Antonio Adolpho Lobbe • São Carlos/SP",
@@ -134,6 +141,7 @@
       eventMapTitle: "📍 Location Map",
       eventViewRoute: "Open in Google Maps ↗",
       eventHeroBadgeDate: "December 2 & 3",
+      eventHeroBadgeTime: "8am – 5pm",
       eventHeroBadgeLoc: "SENAI São Carlos"
     }
   };
@@ -342,6 +350,8 @@
       '<div class="hero-event-pill">' +
         '<span class="hero-pill-icon">📅</span> <strong>' + T("eventHeroBadgeDate") + '</strong>' +
         '<span class="hero-pill-sep">•</span>' +
+        '<span class="hero-pill-icon">⏰</span> <strong>' + T("eventHeroBadgeTime") + '</strong>' +
+        '<span class="hero-pill-sep">•</span>' +
         '<span class="hero-pill-icon">📍</span> <a href="#local">' + T("eventHeroBadgeLoc") + '</a>' +
       '</div>' +
       '<p class="sub hero-sub-row">' +
@@ -376,6 +386,14 @@
               '<h3>' + T("eventDateLabel") + '</h3>' +
               '<p><strong>' + T("eventDateVal") + '</strong></p>' +
               '<span class="event-subtext">' + T("eventDateDays") + '</span>' +
+            '</div>' +
+          '</div>' +
+          '<div class="event-info-item">' +
+            '<div class="event-icon-box">⏰</div>' +
+            '<div>' +
+              '<h3>' + T("eventTimeLabel") + '</h3>' +
+              '<p><strong>' + T("eventTimeVal") + '</strong></p>' +
+              '<span class="event-subtext">' + T("eventTimeSub") + '</span>' +
             '</div>' +
           '</div>' +
           '<div class="event-info-item">' +

@@ -26,6 +26,7 @@ window.SITE = {
   /* Informações do Evento */
   evento: {
     data: "02 e 03 de Dezembro de 2026",
+    horario: "Das 08h às 17h",
     diasSemana: { pt: "Quarta e Quinta-feira", en: "Wednesday and Thursday" },
     local: "Faculdade de Tecnologia e Escola SENAI Antonio Adolpho Lobbe",
     endereco: "R. Cândido Padim, 25 - Vila Prado, São Carlos - SP",
@@ -107,8 +108,8 @@ window.SITE = {
   equipe: {
     lider: null,
     devs: [
-      { nome: "Wesley Pecoraro", instagram: "", github: "" },
-      { nome: "Rafael de Sena Selvagio", instagram: "", github: "" }
+      { nome: "Rafael de Sena Selvagio", instagram: "", github: "https://github.com/professor-rafael-selvagio" },
+      { nome: "Wesley Pecoraro", instagram: "", github: "https://github.com/wesleypec" }
     ]
   }
 };

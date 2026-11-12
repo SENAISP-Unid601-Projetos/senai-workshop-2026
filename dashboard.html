@@ -5,7 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SENAI Workshop 2026 — Rankings e Visitas</title>
   <meta name="description" content="Dashboard com rankings dos Top 5 mais e menos votados por turma e total de visitas na turma e projetos.">
-  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="icon" type="image/jpeg" href="img/favicon.jpeg">
+  <link rel="apple-touch-icon" href="img/favicon.jpeg">
+  <link rel="stylesheet" href="css/dashboard.css?v=2.2">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -40,9 +42,14 @@
             <span class="fs-icon">⛶</span> <span id="fs-label">Tela Cheia</span>
           </button>
 
-          <!-- Botão Idioma (PT / EN) -->
-          <button id="btn-lang" class="dash-btn" title="Mudar idioma / Switch language">
-            <span class="lang-icon">🌐</span> <span id="lang-label">EN</span>
+          <!-- Seletor de Idioma (Português / Inglês) -->
+          <button id="btn-lang" class="dash-btn dash-btn-lang" title="Alterar idioma: Português / English" aria-label="Alterar idioma: Português ou Inglês">
+            <span class="lang-icon">🌐</span>
+            <span class="lang-badges">
+              <span class="lang-badge active" id="lang-badge-pt">PT</span>
+              <span class="lang-divider">|</span>
+              <span class="lang-badge" id="lang-badge-en">EN</span>
+            </span>
           </button>
 
           <a href="index.html" class="dash-btn dash-btn-primary" id="btn-back">
@@ -108,7 +115,7 @@
         </div>
 
         <article class="dash-card center-card">
-          <!-- Mini Placar das Visitas -->
+          <!-- Mini Placar das Visitas (Apenas DS e Mecatrônica) -->
           <div class="center-kpi-row">
             <div class="center-kpi-item ds">
               <div class="center-kpi-label" id="kpi-ds-label">Dev. de Sistemas</div>
@@ -120,12 +127,6 @@
               <div class="center-kpi-label" id="kpi-mec-label">Mecatrônica</div>
               <div class="center-kpi-value" id="kpi-mec-visitas" style="color: #ff4d6a;">--</div>
               <div class="center-kpi-sub" id="kpi-mec-pct">--% das visitas</div>
-            </div>
-
-            <div class="center-kpi-item total">
-              <div class="center-kpi-label" id="kpi-total-label">Total Geral</div>
-              <div class="center-kpi-value" id="kpi-total-visitas" style="color: #10b981;">--</div>
-              <div class="center-kpi-sub" id="kpi-total-sub">Turma + Projetos</div>
             </div>
           </div>
 
@@ -184,8 +185,8 @@
   <!-- Chart.js via CDN -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <!-- Dados de Configuração do Projeto (SITE.googleSheetsUrl) -->
-  <script src="js/data.js"></script>
+  <script src="js/data.js?v=2.2"></script>
   <!-- Lógica e Dados dos Rankings (Consome API do Google Sheets via doGet) -->
-  <script src="js/dashboard.js"></script>
+  <script src="js/dashboard.js?v=2.2"></script>
 </body>
 </html>

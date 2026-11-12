@@ -42,7 +42,8 @@
       btnFullscreenTitle: "Alternar modo Tela Cheia",
       btnFullscreenExitTitle: "Sair do modo Tela Cheia (ESC)",
       btnBack: "← Voltar ao Site",
-      btnLangTitle: "Mudar idioma para Inglês / Switch to English",
+      btnLangTitle: "Alterar idioma: Português / English",
+      noProjects: "Sem projetos",
 
       // Colunas
       colDs: "💻 Dev. de Sistemas",
@@ -65,8 +66,6 @@
       // KPI Placar
       kpiDsLabel: "Dev. de Sistemas",
       kpiMecLabel: "Mecatrônica",
-      kpiTotalLabel: "Total Geral",
-      kpiTotalSub: "Turma + Projetos",
       kpiPctSub: "das visitas",
 
       // Gráficos
@@ -99,7 +98,8 @@
       btnFullscreenTitle: "Toggle Fullscreen mode",
       btnFullscreenExitTitle: "Exit Fullscreen mode (ESC)",
       btnBack: "← Back to Site",
-      btnLangTitle: "Mudar idioma para Português / Switch to Portuguese",
+      btnLangTitle: "Switch language: Portuguese / English",
+      noProjects: "No projects",
 
       // Colunas
       colDs: "💻 Systems Development",
@@ -122,8 +122,6 @@
       // KPI Placar
       kpiDsLabel: "Systems Dev.",
       kpiMecLabel: "Mechatronics",
-      kpiTotalLabel: "Overall Total",
-      kpiTotalSub: "Class + Projects",
       kpiPctSub: "of visits",
 
       // Gráficos
@@ -267,16 +265,14 @@
     const mecVal = (visitasData && Number(visitasData.mec)) || 0;
     const totalConsolidado = (dsVal + mecVal) || 1;
 
-    // Atualiza cards numéricos do placar
+    // Atualiza cards numéricos do placar (apenas DS e MEC)
     const dsEl = document.getElementById('kpi-ds-visitas');
     const mecEl = document.getElementById('kpi-mec-visitas');
-    const totEl = document.getElementById('kpi-total-visitas');
     const dsPctEl = document.getElementById('kpi-ds-pct');
     const mecPctEl = document.getElementById('kpi-mec-pct');
 
     if (dsEl) dsEl.textContent = dsVal.toLocaleString(locale);
     if (mecEl) mecEl.textContent = mecVal.toLocaleString(locale);
-    if (totEl) totEl.textContent = (dsVal + mecVal).toLocaleString(locale);
 
     if (dsPctEl) {
       dsPctEl.textContent = (dsVal + mecVal > 0)
@@ -356,7 +352,7 @@
     const colorSolucao = isTop ? '#06b6d4' : '#f97316';
 
     const count = (rankingData && rankingData.projetos) ? rankingData.projetos.length : 0;
-    const projetos = count > 0 ? rankingData.projetos : ['Sem projetos'];
+    const projetos = count > 0 ? rankingData.projetos : [t.noProjects || 'Sem projetos'];
     const apresentacao = (rankingData && rankingData.apresentacao && rankingData.apresentacao.length > 0)
       ? rankingData.apresentacao
       : new Array(projetos.length).fill(0);
@@ -742,11 +738,26 @@
     document.documentElement.lang = currentLang === "pt" ? "pt-BR" : "en";
     document.title = t.docTitle;
 
+    const badgePt = document.getElementById('lang-badge-pt');
+    const badgeEn = document.getElementById('lang-badge-en');
+    if (badgePt && badgeEn) {
+      if (currentLang === 'pt') {
+        badgePt.classList.add('active');
+        badgeEn.classList.remove('active');
+      } else {
+        badgePt.classList.remove('active');
+        badgeEn.classList.add('active');
+      }
+    }
+
     const langLabel = document.getElementById('lang-label');
     if (langLabel) langLabel.textContent = currentLang === "pt" ? "EN" : "PT";
 
     const btnLang = document.getElementById('btn-lang');
-    if (btnLang) btnLang.title = t.btnLangTitle;
+    if (btnLang) {
+      btnLang.title = t.btnLangTitle;
+      btnLang.setAttribute('aria-label', currentLang === 'pt' ? 'Idioma: Português (clique para alternar para Inglês)' : 'Language: English (click to switch to Portuguese)');
+    }
 
     const titleEl = document.getElementById('dash-title');
     if (titleEl) titleEl.textContent = t.headerTitle;
@@ -817,10 +828,6 @@
     if (kpiDs) kpiDs.textContent = t.kpiDsLabel;
     const kpiMec = document.getElementById('kpi-mec-label');
     if (kpiMec) kpiMec.textContent = t.kpiMecLabel;
-    const kpiTotal = document.getElementById('kpi-total-label');
-    if (kpiTotal) kpiTotal.textContent = t.kpiTotalLabel;
-    const kpiTotalSub = document.getElementById('kpi-total-sub');
-    if (kpiTotalSub) kpiTotalSub.textContent = t.kpiTotalSub;
 
     // Atualiza status badge
     updateConnectionBadge(lastIsLive, lastStatusKey);
@@ -833,6 +840,16 @@
 
   function toggleLanguage() {
     currentLang = currentLang === "pt" ? "en" : "pt";
+    try {
+      localStorage.setItem("lang", currentLang);
+    } catch (e) {}
+    applyLanguage();
+  }
+
+  function setLanguage(lang) {
+    if (lang !== "pt" && lang !== "en") return;
+    if (currentLang === lang) return;
+    currentLang = lang;
     try {
       localStorage.setItem("lang", currentLang);
     } catch (e) {}
@@ -869,8 +886,29 @@
 
     const btnLang = document.getElementById('btn-lang');
     if (btnLang) {
-      btnLang.addEventListener('click', toggleLanguage);
+      btnLang.addEventListener('click', function (e) {
+        const badgePt = document.getElementById('lang-badge-pt');
+        const badgeEn = document.getElementById('lang-badge-en');
+        if (e.target === badgePt) {
+          setLanguage('pt');
+        } else if (e.target === badgeEn) {
+          setLanguage('en');
+        } else {
+          toggleLanguage();
+        }
+      });
     }
+
+    // Sincronização em tempo real caso o usuário altere tema ou idioma no site principal em outra aba
+    window.addEventListener('storage', function (e) {
+      if (e.key === 'lang' && e.newValue && e.newValue !== currentLang) {
+        currentLang = e.newValue;
+        applyLanguage();
+      }
+      if (e.key === 'theme' && e.newValue) {
+        document.documentElement.setAttribute('data-theme', e.newValue);
+      }
+    });
 
     document.addEventListener('fullscreenchange', updateFullscreenButtonState);
     document.addEventListener('webkitfullscreenchange', updateFullscreenButtonState);

@@ -403,6 +403,59 @@ body.is-fullscreen .canvas-box-center {
   display: inline-block;
 }
 
+/* Botão Seletor de Idioma (PT / EN) */
+.dash-btn-lang {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 12px;
+}
+
+.lang-icon {
+  font-size: 0.95rem;
+  line-height: 1;
+}
+
+.lang-badges {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  user-select: none;
+}
+
+.lang-badge {
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 5px;
+  color: var(--dash-muted);
+  transition: var(--dash-transition);
+  line-height: 1.2;
+}
+
+.lang-badge.active {
+  background: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="light"] .lang-badge.active {
+  background: var(--dash-red);
+  color: #ffffff;
+}
+
+.lang-divider {
+  color: rgba(255, 255, 255, 0.25);
+  font-weight: 400;
+  font-size: 0.75rem;
+}
+
+[data-theme="light"] .lang-divider {
+  color: rgba(0, 0, 0, 0.25);
+}
+
 /* =====================================================================
    LAYOUT EM 3 COLUNAS (ESQUERDA DS | CENTRO VISITAS | DIREITA MEC)
    ===================================================================== */
@@ -597,10 +650,10 @@ body.is-fullscreen .canvas-box-center {
   display: block;
 }
 
-/* Placar do Centro */
+/* Placar do Centro (Apenas DS e MEC) */
 .center-kpi-row {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 1fr 1fr;
   gap: 12px;
   margin: 16px 0 20px;
 }

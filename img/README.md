@@ -8,6 +8,7 @@ Este diretório armazena as capas e materiais visuais do portal do Workshop SENA
 
 ```text
 img/
+├── favicon.jpeg       # Ícone do site / aba do navegador
 ├── turmas/        # Capas oficiais das turmas (DS e Mecatrônica)
 │   ├── ds.jpg           # (ou ds.png) Capa da turma de Desenvolvimento de Sistemas
 │   └── mecatronica.jpg  # (ou mecatronica.png) Capa da turma de Mecatrônica

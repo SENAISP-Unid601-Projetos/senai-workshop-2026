@@ -3,10 +3,12 @@
  * SENAI WORKSHOP 2026 — DASHBOARD DE AVALIAÇÕES E VISITAS
  * =====================================================================
  * Recursos:
+ * - Top 3 Mais Bem Votados & Top 3 Menos Votados (DS e MEC)
+ * - Fallback inteligente: se não houver dados no Sheets, lista os 3 primeiros
+ *   projetos por ordem alfabética
+ * - Total geral de visitas por turma no centro
  * - Atualização automática a cada 30 segundos com contador visual
- * - Botão de tela cheia (Fullscreen)
- * - Conexão ao Google Apps Script (doGet) com fallback mock
- * - Layout em 3 colunas: DS (esquerda) | Visitas (centro) | MEC (direita)
+ * - Modo Tela Cheia (Fullscreen)
  * =====================================================================
  */
 
@@ -17,48 +19,13 @@
   let countdownSeconds = REFRESH_INTERVAL_SECONDS;
   let countdownTimerId = null;
 
-  // Base de dados de contingência (caso a planilha esteja vazia ou offline)
-  const FALLBACK_MOCK = {
-    visitas: {
-      ds: 1024,
-      mec: 818,
-      total: 1842
-    },
-    ds: {
-      top4: {
-        projetos: ['1º DS-03: Smart Agri IoT', '2º DS-07: Logística Reversa', '3º DS-01: Portal IA Vagas', '4º DS-10: Visão Comp. EPI'],
-        apresentacao: [5.0, 4.9, 4.7, 4.8],
-        solucaoTecnica: [4.9, 4.8, 4.8, 4.6]
-      },
-      bottom4: {
-        projetos: ['11º DS-08: Monitor Energia', '12º DS-02: Gestão Manutenção', '13º DS-14: Assistente FAQ', '14º DS-11: Portal Legado'],
-        apresentacao: [3.7, 3.5, 3.4, 3.2],
-        solucaoTecnica: [3.5, 3.3, 3.1, 3.0]
-      },
-      totalAvaliados: 14
-    },
-    mec: {
-      top4: {
-        projetos: ['1º MEC-02: Braço Robótico', '2º MEC-05: Célula 4.0', '3º MEC-08: AGV com Lidar', '4º MEC-01: Esteira Seletora'],
-        apresentacao: [4.9, 4.7, 4.8, 4.6],
-        solucaoTecnica: [4.9, 4.9, 4.7, 4.7]
-      },
-      bottom4: {
-        projetos: ['13º MEC-06: Bancada Hidráulica', '14º MEC-10: Torno CNC Retrofit', '15º MEC-15: Solda Automática', '16º MEC-14: Testes Pneumáticos'],
-        apresentacao: [3.8, 3.6, 3.4, 3.3],
-        solucaoTecnica: [3.5, 3.3, 3.2, 3.0]
-      },
-      totalAvaliados: 16
-    }
-  };
-
   // Instâncias dos gráficos para limpeza
   let chartInstances = {
     visitasCenter: null,
-    dsTop4: null,
-    dsBottom4: null,
-    mecTop4: null,
-    mecBottom4: null
+    dsTop3: null,
+    dsBottom3: null,
+    mecTop3: null,
+    mecBottom3: null
   };
 
   function setupChartDefaults() {
@@ -79,7 +46,36 @@
     return "";
   }
 
-  // Atualiza badge de status de conexão
+  // Gera os 3 primeiros projetos ordenados alfabeticamente para quando não houver dados no Google Sheets
+  function getAlphabeticalFallback(courseKey) {
+    let nomes = [];
+
+    if (window.SITE && window.SITE.cursos && window.SITE.cursos[courseKey] && window.SITE.cursos[courseKey].projetos) {
+      nomes = window.SITE.cursos[courseKey].projetos
+        .map(p => (p.nome && p.nome.trim() ? p.nome.trim() : (p.id || "")))
+        .filter(n => n.length > 0);
+    }
+
+    if (nomes.length === 0) {
+      nomes = courseKey === 'ds'
+        ? ['Projeto DS 1', 'Projeto DS 2', 'Projeto DS 3']
+        : ['Projeto MEC 1', 'Projeto MEC 2', 'Projeto MEC 3'];
+    }
+
+    // Ordenação alfabética (com ordenação natural para números: DS 1, DS 2, DS 3...)
+    nomes.sort((a, b) => a.localeCompare(b, 'pt-BR', { numeric: true, sensitivity: 'base' }));
+
+    const primeiros3 = nomes.slice(0, 3);
+
+    return {
+      projetos: primeiros3.map((nome, idx) => `${idx + 1}º ${nome}`),
+      apresentacao: [0, 0, 0],
+      solucaoTecnica: [0, 0, 0],
+      isAlphabetical: true
+    };
+  }
+
+  // Atualiza badge de status de conexão no cabeçalho
   function updateConnectionBadge(isLive, labelText) {
     const badge = document.getElementById('badge-connection-status');
     if (!badge) return;
@@ -90,8 +86,8 @@
       badge.title = "Dados sincronizados com a planilha em tempo real";
     } else {
       badge.className = "badge-mock";
-      badge.innerHTML = `<span class="pulse-dot"></span> ${labelText || "Dados Simulados (Mock)"}`;
-      badge.title = "Exibindo dados de simulação";
+      badge.innerHTML = `<span class="pulse-dot"></span> ${labelText || "Ordem Alfabética"}`;
+      badge.title = "Aguardando avaliações na planilha";
     }
   }
 
@@ -103,8 +99,8 @@
     if (!ctx) return;
     if (chartInstances.visitasCenter) chartInstances.visitasCenter.destroy();
 
-    const dsVal = visitasData.ds || 0;
-    const mecVal = visitasData.mec || 0;
+    const dsVal = (visitasData && visitasData.ds) || 0;
+    const mecVal = (visitasData && visitasData.mec) || 0;
     const totalConsolidado = (dsVal + mecVal) || 1;
 
     // Atualiza cards numéricos do placar
@@ -118,8 +114,17 @@
     if (mecEl) mecEl.textContent = mecVal.toLocaleString('pt-BR');
     if (totEl) totEl.textContent = (dsVal + mecVal).toLocaleString('pt-BR');
 
-    if (dsPctEl) dsPctEl.textContent = `${((dsVal / totalConsolidado) * 100).toFixed(1)}% das visitas`;
-    if (mecPctEl) mecPctEl.textContent = `${((mecVal / totalConsolidado) * 100).toFixed(1)}% das visitas`;
+    if (dsPctEl) {
+      dsPctEl.textContent = (dsVal + mecVal > 0)
+        ? `${((dsVal / totalConsolidado) * 100).toFixed(1)}% das visitas`
+        : "0% das visitas";
+    }
+
+    if (mecPctEl) {
+      mecPctEl.textContent = (dsVal + mecVal > 0)
+        ? `${((mecVal / totalConsolidado) * 100).toFixed(1)}% das visitas`
+        : "0% das visitas";
+    }
 
     chartInstances.visitasCenter = new Chart(ctx, {
       type: 'bar',
@@ -149,7 +154,7 @@
             callbacks: {
               label: function (context) {
                 const val = context.parsed.y;
-                const pct = ((val / totalConsolidado) * 100).toFixed(1);
+                const pct = (dsVal + mecVal > 0) ? ((val / totalConsolidado) * 100).toFixed(1) : "0";
                 return ` Total: ${val.toLocaleString('pt-BR')} visitas (${pct}%)`;
               }
             }
@@ -175,7 +180,7 @@
   }
 
   // ===================================================================
-  // 2. FUNÇÃO REUTILIZÁVEL: RANKING DE 4 PROJETOS (2 CRITÉRIOS)
+  // 2. FUNÇÃO REUTILIZÁVEL: RANKING DE 3 PROJETOS (2 CRITÉRIOS)
   // ===================================================================
   function renderRankingChart(canvasId, instanceKey, rankingData, isTop) {
     const ctx = document.getElementById(canvasId);
@@ -186,16 +191,18 @@
     const colorSolucao = isTop ? '#06b6d4' : '#f97316';
 
     const projetos = (rankingData && rankingData.projetos && rankingData.projetos.length > 0)
-      ? rankingData.projetos
-      : ['Sem avaliações ainda'];
+      ? rankingData.projetos.slice(0, 3)
+      : ['Sem projetos'];
 
     const apresentacao = (rankingData && rankingData.apresentacao && rankingData.apresentacao.length > 0)
-      ? rankingData.apresentacao
-      : [0];
+      ? rankingData.apresentacao.slice(0, 3)
+      : [0, 0, 0];
 
     const solucaoTecnica = (rankingData && rankingData.solucaoTecnica && rankingData.solucaoTecnica.length > 0)
-      ? rankingData.solucaoTecnica
-      : [0];
+      ? rankingData.solucaoTecnica.slice(0, 3)
+      : [0, 0, 0];
+
+    const isAlpha = rankingData && rankingData.isAlphabetical;
 
     chartInstances[instanceKey] = new Chart(ctx, {
       type: 'bar',
@@ -242,9 +249,15 @@
             borderWidth: 1,
             callbacks: {
               label: function (context) {
+                if (isAlpha) {
+                  return ` ${context.dataset.label}: Sem votos ainda`;
+                }
                 return ` ${context.dataset.label}: ${context.parsed.x.toFixed(1)} / 5.0`;
               },
               afterBody: function (items) {
+                if (isAlpha) {
+                  return '\n(Exibindo em ordem alfabética)';
+                }
                 if (items.length >= 2) {
                   const media = ((items[0].parsed.x + items[1].parsed.x) / 2).toFixed(2);
                   return `\n⭐ Média Ponderada: ${media} / 5.0`;
@@ -276,23 +289,22 @@
   }
 
   // ===================================================================
-  // CARREGAMENTO DOS DADOS (API GOOGLE SHEETS COM FALLBACK MOCK)
+  // CARREGAMENTO DOS DADOS (API GOOGLE SHEETS COM FALLBACK ALFABÉTICO)
   // ===================================================================
   async function carregarDados() {
     setupChartDefaults();
     const apiUrl = getApiUrl();
 
+    // Se não houver URL da API configurada, usa ordem alfabética
     if (!apiUrl) {
-      console.warn("[Dashboard] URL da API do Google Sheets não encontrada. Usando dados mock.");
-      renderComDados(FALLBACK_MOCK, false, "Dados Simulados (Mock)");
+      console.warn("[Dashboard] URL do Google Sheets não configurada. Usando ordem alfabética.");
+      renderFallbackAlfabetico("Ordem Alfabética (Sem URL)");
       return;
     }
 
     try {
       updateConnectionBadge(false, "Sincronizando...");
-      const response = await fetch(apiUrl, {
-        method: "GET"
-      });
+      const response = await fetch(apiUrl, { method: "GET" });
 
       if (!response.ok) {
         throw new Error(`HTTP Error ${response.status}`);
@@ -301,45 +313,61 @@
       const json = await response.json();
 
       if (json && json.status === "success") {
-        console.log("[Dashboard] Dados reais recebidos do Google Sheets:", json);
+        console.log("[Dashboard] Dados recebidos do Google Sheets:", json);
 
-        const dadosReais = {
-          visitas: json.visitas || FALLBACK_MOCK.visitas,
+        const temVotosDS = json.ds && json.ds.totalAvaliados > 0 && json.ds.top3 && json.ds.top3.projetos && json.ds.top3.projetos.length > 0;
+        const temVotosMEC = json.mec && json.mec.totalAvaliados > 0 && json.mec.top3 && json.mec.top3.projetos && json.mec.top3.projetos.length > 0;
+
+        const dadosFinais = {
+          visitas: json.visitas || { ds: 0, mec: 0, total: 0 },
           ds: {
-            top4: (json.ds && json.ds.top4 && json.ds.top4.projetos && json.ds.top4.projetos.length > 0)
-              ? json.ds.top4
-              : FALLBACK_MOCK.ds.top4,
-            bottom4: (json.ds && json.ds.bottom4 && json.ds.bottom4.projetos && json.ds.bottom4.projetos.length > 0)
-              ? json.ds.bottom4
-              : FALLBACK_MOCK.ds.bottom4,
+            top3: temVotosDS ? json.ds.top3 : getAlphabeticalFallback('ds'),
+            bottom3: temVotosDS ? json.ds.bottom3 : getAlphabeticalFallback('ds'),
             totalAvaliados: (json.ds && json.ds.totalAvaliados) || 0
           },
           mec: {
-            top4: (json.mec && json.mec.top4 && json.mec.top4.projetos && json.mec.top4.projetos.length > 0)
-              ? json.mec.top4
-              : FALLBACK_MOCK.mec.top4,
-            bottom4: (json.mec && json.mec.bottom4 && json.mec.bottom4.projetos && json.mec.bottom4.projetos.length > 0)
-              ? json.mec.bottom4
-              : FALLBACK_MOCK.mec.bottom4,
+            top3: temVotosMEC ? json.mec.top3 : getAlphabeticalFallback('mecatronica'),
+            bottom3: temVotosMEC ? json.mec.bottom3 : getAlphabeticalFallback('mecatronica'),
             totalAvaliados: (json.mec && json.mec.totalAvaliados) || 0
           }
         };
 
-        renderComDados(dadosReais, true, "Google Sheets Ao Vivo");
+        const labelStatus = (temVotosDS || temVotosMEC)
+          ? "Google Sheets Ao Vivo"
+          : "Google Sheets Conectado (Sem votos ainda)";
+
+        renderComDados(dadosFinais, true, labelStatus);
         return;
 
       } else if (json && json.status === "empty") {
-        console.warn("[Dashboard] Planilha vazia. Usando mock.");
-        renderComDados(FALLBACK_MOCK, false, "Planilha Vazia (Usando Mock)");
+        console.warn("[Dashboard] Planilha vazia. Usando ordem alfabética dos 3 primeiros.");
+        renderFallbackAlfabetico("Planilha Vazia (Ordem Alfabética)");
         return;
       }
 
       throw new Error(json.message || "Resposta inválida da API");
 
     } catch (err) {
-      console.warn("[Dashboard] Erro ao buscar Google Sheets. Usando dados mock como fallback:", err);
-      renderComDados(FALLBACK_MOCK, false, "Offline (Modo Mock)");
+      console.warn("[Dashboard] Erro ao buscar Google Sheets. Usando ordem alfabética:", err);
+      renderFallbackAlfabetico("Offline (Ordem Alfabética)");
     }
+  }
+
+  function renderFallbackAlfabetico(badgeLabel) {
+    const fallbackData = {
+      visitas: { ds: 0, mec: 0, total: 0 },
+      ds: {
+        top3: getAlphabeticalFallback('ds'),
+        bottom3: getAlphabeticalFallback('ds'),
+        totalAvaliados: 0
+      },
+      mec: {
+        top3: getAlphabeticalFallback('mecatronica'),
+        bottom3: getAlphabeticalFallback('mecatronica'),
+        totalAvaliados: 0
+      }
+    };
+    renderComDados(fallbackData, false, badgeLabel);
   }
 
   function renderComDados(data, isLive, badgeLabel) {
@@ -348,23 +376,27 @@
     // 1. Centro: Visitas por Turma
     renderVisitasCenterChart(data.visitas);
 
-    // 2. Esquerda: Dev. de Sistemas
-    renderRankingChart('chart-ds-top4', 'dsTop4', data.ds.top4, true);
-    renderRankingChart('chart-ds-bottom4', 'dsBottom4', data.ds.bottom4, false);
+    // 2. Esquerda: Dev. de Sistemas (Top 3 Mais e Top 3 Menos)
+    renderRankingChart('chart-ds-top3', 'dsTop3', data.ds.top3, true);
+    renderRankingChart('chart-ds-bottom3', 'dsBottom3', data.ds.bottom3, false);
 
-    // 3. Direita: Mecatrônica
-    renderRankingChart('chart-mec-top4', 'mecTop4', data.mec.top4, true);
-    renderRankingChart('chart-mec-bottom4', 'mecBottom4', data.mec.bottom4, false);
+    // 3. Direita: Mecatrônica (Top 3 Mais e Top 3 Menos)
+    renderRankingChart('chart-mec-top3', 'mecTop3', data.mec.top3, true);
+    renderRankingChart('chart-mec-bottom3', 'mecBottom3', data.mec.bottom3, false);
 
     // Atualiza contadores de projetos avaliados nos cabeçalhos
     const dsCountEl = document.getElementById('count-ds-avaliados');
-    if (dsCountEl && data.ds.totalAvaliados !== undefined) {
-      dsCountEl.textContent = `${data.ds.totalAvaliados} Avaliados`;
+    if (dsCountEl) {
+      dsCountEl.textContent = data.ds.totalAvaliados > 0
+        ? `${data.ds.totalAvaliados} Avaliados`
+        : "Ordem Alfabética";
     }
 
     const mecCountEl = document.getElementById('count-mec-avaliados');
-    if (mecCountEl && data.mec.totalAvaliados !== undefined) {
-      mecCountEl.textContent = `${data.mec.totalAvaliados} Avaliados`;
+    if (mecCountEl) {
+      mecCountEl.textContent = data.mec.totalAvaliados > 0
+        ? `${data.mec.totalAvaliados} Avaliados`
+        : "Ordem Alfabética";
     }
   }
 
@@ -457,13 +489,9 @@
   // INICIALIZAÇÃO
   // ===================================================================
   function init() {
-    // 1. Carga inicial dos dados
     carregarDados();
-
-    // 2. Inicia contador de 30s
     startAutoRefreshTimer();
 
-    // 3. Evento do botão Atualizar (Manual)
     const btnRefresh = document.getElementById('btn-refresh-data');
     if (btnRefresh) {
       btnRefresh.addEventListener('click', function () {
@@ -471,7 +499,6 @@
       });
     }
 
-    // 4. Evento do botão Fullscreen
     const btnFullscreen = document.getElementById('btn-fullscreen');
     if (btnFullscreen) {
       btnFullscreen.addEventListener('click', toggleFullscreen);

@@ -42,8 +42,8 @@ window.SITE = {
         pt: "Projetos em desenvolvimento web full-stack, mobile, banco de dados, IoT e sistemas inteligentes criados pelos grupos de trabalho da turma.",
         en: "Projects in full-stack web, mobile, databases, IoT and intelligent systems created by the class work groups."
       },
-      // Capa da turma (local: "img/turmas/ds.jpg" ou "img/turmas/ds.png" / externa: URL https)
-      imagem: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1920&h=1080&fit=crop",
+      // Capa da turma (local: "img/turmas/ds.png" ou URL externa)
+      imagem: "img/turmas/ds.png",
       projetos: [
         { id: "ds-1", nome: "Projeto DS 1", subtitulo: "Frase de destaque do projeto", descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.", imagem: "", alunos: 0, landing: "", funcionamento: "", comercial: "" },
         { id: "ds-2", nome: "Projeto DS 2", subtitulo: "Frase de destaque do projeto", descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.", imagem: "", alunos: 0, landing: "", funcionamento: "", comercial: "" },
@@ -70,8 +70,8 @@ window.SITE = {
         pt: "Projetos integrando robótica, automação industrial, eletrônica e programação embarcada para soluções mecatrônicas.",
         en: "Projects integrating robotics, industrial automation, electronics and embedded programming for mechatronic solutions."
       },
-      // Capa da turma (local: "img/turmas/mecatronica.jpg" ou "img/turmas/mecatronica.png" / externa: URL https)
-      imagem: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=1920&h=1080&fit=crop",
+      // Capa da turma (local: "img/turmas/mec.png" ou URL externa)
+      imagem: "img/turmas/mec.png",
       projetos: [
         { id: "mec-1", nome: "Projeto MEC 1", subtitulo: "Frase de destaque do projeto", descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.", imagem: "", alunos: 0, landing: "", funcionamento: "", comercial: "" },
         { id: "mec-2", nome: "Projeto MEC 2", subtitulo: "Frase de destaque do projeto", descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.", imagem: "", alunos: 0, landing: "", funcionamento: "", comercial: "" },

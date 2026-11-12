@@ -2,6 +2,8 @@
 
 > **Portal oficial de apresentação e vitrine dos projetos dos formandos dos cursos técnicos em Desenvolvimento de Sistemas e Mecatrônica do SENAI São Carlos.**
 
+🔗 **Acesse o site oficial:** [https://senaisp-unid601-projetos.github.io/senai-workshop-2026/index.html](https://senaisp-unid601-projetos.github.io/senai-workshop-2026/index.html)
+
 ---
 
 ## 📌 Sumário
@@ -217,11 +219,11 @@ Instale a extensão **Live Server** e clique em **Go Live** no canto inferior.
    - Clique em **Save**.
 5. Em alguns instantes, o seu site estará publicado em:
    ```text
-   https://<seu-usuario>.github.io/<nome-do-repositorio>/
+   https://senaisp-unid601-projetos.github.io/senai-workshop-2026/index.html
    ```
-6. Opcionalmente, defina a URL base em `js/data.js`:
+6. URL base configurada em `js/data.js`:
    ```javascript
-   baseUrl: "https://<seu-usuario>.github.io/<nome-do-repositorio>"
+   baseUrl: "https://senaisp-unid601-projetos.github.io/senai-workshop-2026"
    ```
 
 ---

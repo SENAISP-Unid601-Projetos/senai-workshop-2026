@@ -109,7 +109,7 @@ window.SITE = {
     lider: null,
     devs: [
       { nome: "Rafael de Sena Selvagio", instagram: "", github: "https://github.com/professor-rafael-selvagio" },
-      { nome: "Wesley Pecoraro", instagram: "", github: "https://github.com/wesleypec" }
+      { nome: "Wesley Pecoraro", instagram: "", github: "https://github.com/Wesleypec" }
     ]
   }
 };

@@ -36,13 +36,45 @@
  * =====================================================================
  */
 
+function getWorkshopSheet(ss) {
+  var targetSs = ss;
+  if (!targetSs) {
+    try {
+      targetSs = SpreadsheetApp.getActiveSpreadsheet();
+    } catch (err) {
+      targetSs = null;
+    }
+  }
+
+  if (targetSs) {
+    var sByName = targetSs.getSheetByName("Leads Workshop 2026") || targetSs.getSheetByName("Leads");
+    if (sByName) return sByName;
+    try {
+      var sActive = targetSs.getActiveSheet();
+      if (sActive) return sActive;
+    } catch (e) {}
+    var allSheets = targetSs.getSheets();
+    if (allSheets && allSheets.length > 0) return allSheets[0];
+  }
+
+  try {
+    var directSheet = SpreadsheetApp.getActiveSheet();
+    if (directSheet) return directSheet;
+  } catch (e) {}
+
+  throw new Error("Planilha não encontrada. Certifique-se de que o script foi aberto a partir de Extensões > Apps Script na planilha.");
+}
+
 function doPost(e) {
+  e = e || {};
+  if (!e.parameter) e.parameter = {};
+
   var lock = LockService.getScriptLock();
   lock.tryLock(10000);
 
   try {
     var ss = SpreadsheetApp.getActiveSpreadsheet();
-    var sheet = ss.getActiveSheet();
+    var sheet = getWorkshopSheet(ss);
 
     if (sheet.getLastRow() === 0) {
       setupSheetHeaders(sheet);
@@ -129,9 +161,12 @@ function doPost(e) {
  * =====================================================================
  */
 function doGet(e) {
+  e = e || {};
+  if (!e.parameter) e.parameter = {};
+
   try {
     var ss = SpreadsheetApp.getActiveSpreadsheet();
-    var sheet = ss.getActiveSheet();
+    var sheet = getWorkshopSheet(ss);
 
     var lastRow = sheet.getLastRow();
     if (lastRow <= 1) {
@@ -140,13 +175,13 @@ function doGet(e) {
         mensagem: "A planilha ainda não possui registros de dados.",
         visitas: { ds: 0, mec: 0, total: 0 },
         ds: {
-          top5: { projetos: [], apresentacao: [], solucaoTecnica: [] },
-          bottom5: { projetos: [], apresentacao: [], solucaoTecnica: [] },
+          top5: { projetos: [], apresentacao: [], solucaoTecnica: [], medias: [], votos: [] },
+          bottom5: { projetos: [], apresentacao: [], solucaoTecnica: [], medias: [], votos: [] },
           totalAvaliados: 0
         },
         mec: {
-          top5: { projetos: [], apresentacao: [], solucaoTecnica: [] },
-          bottom5: { projetos: [], apresentacao: [], solucaoTecnica: [] },
+          top5: { projetos: [], apresentacao: [], solucaoTecnica: [], medias: [], votos: [] },
+          bottom5: { projetos: [], apresentacao: [], solucaoTecnica: [], medias: [], votos: [] },
           totalAvaliados: 0
         }
       });
@@ -156,7 +191,7 @@ function doGet(e) {
     var headerRow = values[0];
     var rows = values.slice(1);
 
-    // Mapeamento dinâmico dos cabeçalhos para evitar erro caso a ordem das colunas mude
+    // Mapeamento dinâmico e seguro dos cabeçalhos
     var colMap = {
       tipo: 1,
       turma: 2,
@@ -170,14 +205,29 @@ function doGet(e) {
 
     for (var c = 0; c < headerRow.length; c++) {
       var h = String(headerRow[c] || "").toLowerCase().trim();
-      if (h.indexOf("tipo") !== -1) colMap.tipo = c;
-      else if (h.indexOf("turma") !== -1) colMap.turma = c;
-      else if (h.indexOf("id") !== -1) colMap.projId = c;
-      else if (h.indexOf("nome") !== -1) colMap.projNome = c;
-      else if (h.indexOf("ação") !== -1 || h.indexOf("acao") !== -1) colMap.acao = c;
-      else if (h.indexOf("página") !== -1 || h.indexOf("pagina") !== -1) colMap.pagina = c;
-      else if (h.indexOf("apresenta") !== -1) colMap.notaAp = c;
-      else if (h.indexOf("solu") !== -1 || (h.indexOf("projeto") !== -1 && h.indexOf("nota") !== -1)) colMap.notaSol = c;
+
+      // 1. Colunas de Notas (testadas primeiro para evitar falso positivo com "ação" ou "id")
+      if (h.indexOf("apresenta") !== -1) {
+        colMap.notaAp = c;
+      } else if (h.indexOf("solu") !== -1 || h.indexOf("ideia") !== -1 || (h.indexOf("nota") !== -1 && h.indexOf("proj") !== -1)) {
+        colMap.notaSol = c;
+      }
+      // 2. Colunas de Projeto (evita que "ideia" ou "dispositivo" casem com "id")
+      else if (h === "id" || h === "id projeto" || h === "id do projeto" || (h.indexOf("id") !== -1 && h.indexOf("ideia") === -1 && h.indexOf("dispositivo") === -1)) {
+        colMap.projId = c;
+      } else if (h.indexOf("nome") !== -1) {
+        colMap.projNome = c;
+      }
+      // 3. Colunas de Turma, Tipo, Ação e Página
+      else if (h.indexOf("turma") !== -1 || h === "curso") {
+        colMap.turma = c;
+      } else if (h.indexOf("tipo") !== -1) {
+        colMap.tipo = c;
+      } else if ((h.indexOf("ação") !== -1 || h.indexOf("acao") !== -1 || h.indexOf("evento") !== -1) && h.indexOf("apresenta") === -1) {
+        colMap.acao = c;
+      } else if (h.indexOf("página") !== -1 || h.indexOf("pagina") !== -1) {
+        colMap.pagina = c;
+      }
     }
 
     var visitasDS = 0;
@@ -192,6 +242,30 @@ function doGet(e) {
       var clean = String(val).trim().replace(',', '.').replace(/[^0-9.]/g, '');
       var parsed = parseFloat(clean);
       return isNaN(parsed) ? 0 : parsed;
+    }
+
+    // Normalização inteligente de ID e Nome para agrupar variações (ex: "ds-2", "2", "Projeto DS 2")
+    function normalizarChaveProjeto(id, nome, turma, isDS, isMEC) {
+      var idClean = String(id || "").toLowerCase().trim();
+      var nomeClean = String(nome || "").toLowerCase().trim();
+      var turmaClean = String(turma || "").toLowerCase().trim();
+
+      var prefix = (isMEC || turmaClean.indexOf("meca") !== -1 || turmaClean === "mec" || idClean.indexOf("mec") !== -1 || nomeClean.indexOf("mec") !== -1) ? "mec" : "ds";
+
+      // 1. Extrai número do ID (ex: "ds-2", "ds2", "mec-1", "2")
+      var idNum = idClean.match(/(\d+)/);
+      if (idNum) {
+        return prefix + "-" + Number(idNum[1]);
+      }
+
+      // 2. Extrai número do Nome (ex: "Projeto DS 2", "Projeto 2", "Grupo 2")
+      var nomeNum = nomeClean.match(/(\d+)/);
+      if (nomeNum) {
+        return prefix + "-" + Number(nomeNum[1]);
+      }
+
+      var fallback = idClean && idClean !== "-" ? idClean : nomeClean;
+      return fallback || (prefix + "-projeto");
     }
 
     for (var i = 0; i < rows.length; i++) {
@@ -244,33 +318,33 @@ function doGet(e) {
       var temNotaSol = notaSol > 0;
 
       if (temNotaAp || temNotaSol) {
-        var key = projIdLower && projIdLower !== "-" ? projIdLower : projNomeLower;
-        if (key && key !== "-") {
-          var mapa = isDS ? mapaDS : (isMEC ? mapaMEC : null);
-          if (!mapa) {
-            mapa = (key.indexOf("ds") !== -1) ? mapaDS : mapaMEC;
-          }
+        var key = normalizarChaveProjeto(projId, projNome, turmaRaw, isDS, isMEC);
+        var mapa = isDS ? mapaDS : (isMEC ? mapaMEC : (key.indexOf("mec") === 0 ? mapaMEC : mapaDS));
 
-          if (!mapa[key]) {
-            var nomeFinal = projNome && projNome !== "-" ? projNome : (projId && projId !== "-" ? projId.toUpperCase() : "Projeto");
-            mapa[key] = {
-              id: projId,
-              nome: nomeFinal,
-              somaAp: 0,
-              qtdAp: 0,
-              somaSol: 0,
-              qtdSol: 0
-            };
-          }
+        if (!mapa[key]) {
+          var numKey = key.match(/(\d+)/);
+          var padraoNome = (isDS || key.indexOf("ds") === 0)
+            ? ("Projeto DS " + (numKey ? numKey[1] : ""))
+            : ("Projeto MEC " + (numKey ? numKey[1] : ""));
+          var nomeFinal = (projNome && projNome !== "-" && projNome.toLowerCase() !== "projeto") ? projNome : padraoNome;
 
-          if (temNotaAp) {
-            mapa[key].somaAp += notaAp;
-            mapa[key].qtdAp++;
-          }
-          if (temNotaSol) {
-            mapa[key].somaSol += notaSol;
-            mapa[key].qtdSol++;
-          }
+          mapa[key] = {
+            id: key,
+            nome: nomeFinal,
+            somaAp: 0,
+            qtdAp: 0,
+            somaSol: 0,
+            qtdSol: 0
+          };
+        }
+
+        if (temNotaAp) {
+          mapa[key].somaAp += notaAp;
+          mapa[key].qtdAp++;
+        }
+        if (temNotaSol) {
+          mapa[key].somaSol += notaSol;
+          mapa[key].qtdSol++;
         }
       }
     }
@@ -306,8 +380,11 @@ function doGet(e) {
         });
       }
 
-      // Ordena por maior média geral
-      lista.sort(function(a, b) { return b.mediaGeral - a.mediaGeral; });
+      // Ordena por maior média geral (desempate por maior número de votos)
+      lista.sort(function(a, b) {
+        if (b.mediaGeral !== a.mediaGeral) return b.mediaGeral - a.mediaGeral;
+        return b.totalVotos - a.totalVotos;
+      });
 
       var total = lista.length;
       var top5Raw = lista.slice(0, 5);
@@ -359,6 +436,35 @@ function doGet(e) {
       ds: dsProcessado,
       mec: mecProcessado
     };
+
+    // Modo debug para auditoria de linhas com avaliações na planilha (?debug=1)
+    if (e && e.parameter && (e.parameter.debug == "1" || e.parameter.debug == "true")) {
+      response.debug = {
+        planilhaNome: sheet.getName(),
+        totalLinhasPlanilha: rows.length,
+        colunasMapeadas: colMap,
+        avaliacoesEncontradas: rows.map(function(r, idx) {
+          var ap = parseRatingNumber(r[colMap.notaAp]);
+          var sol = parseRatingNumber(r[colMap.notaSol]);
+          var id = String(r[colMap.projId] || "").trim();
+          var nome = String(r[colMap.projNome] || "").trim();
+          var turma = String(r[colMap.turma] || "").trim();
+          var tipo = String(r[colMap.tipo] || "").trim();
+          return {
+            linha: idx + 2,
+            tipo: tipo,
+            turma: turma,
+            projId: id,
+            projNome: nome,
+            notaApresentacao: ap,
+            notaSolucao: sol,
+            chaveNormalizada: normalizarChaveProjeto(id, nome, turma, turma.toLowerCase().indexOf("ds") !== -1 || id.toLowerCase().indexOf("ds") !== -1, turma.toLowerCase().indexOf("mec") !== -1 || id.toLowerCase().indexOf("mec") !== -1)
+          };
+        }).filter(function(item) {
+          return item.notaApresentacao > 0 || item.notaSolucao > 0 || item.tipo.toLowerCase().indexOf("aval") !== -1;
+        })
+      };
+    }
 
     return buildApiResponse(e, response);
 
@@ -430,4 +536,13 @@ function ensureEvaluationHeaders(sheet) {
     sheet.setColumnWidth(11, 150);
     sheet.setColumnWidth(12, 170);
   }
+}
+
+/**
+ * Função utilitária para testar a execução direto pelo editor do Apps Script (botão Executar)
+ */
+function testarScript() {
+  var res = doGet({ parameter: { debug: "1" } });
+  Logger.log(res.getContent());
+  return res.getContent();
 }

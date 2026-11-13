@@ -841,19 +841,28 @@
         btn.style.transform = "scale(1.35)";
         setTimeout(function () { btn.style.transform = ""; }, 180);
 
-        // Opção 1: Só envia e só solta os fogos quando AMBOS os critérios estiverem avaliados (> 0)
+        // Só envia e solta fogos quando AMBOS os critérios estiverem avaliados (> 0)
         var hasApresentacao = Number(updated.apresentacao) > 0;
         var hasProjeto = Number(updated.projeto) > 0;
 
-        if (hasApresentacao && hasProjeto && !updated.submitted) {
-          markProjectRatingSubmitted(pid);
-          updated.submitted = true;
+        if (hasApresentacao && hasProjeto) {
+          // Evita envio duplicado do mesmo voto consecutivo, mas permite alteração de nota ou novo voto
+          var lastSentKey = "senai_last_eval_" + pid;
+          var evalFingerprint = updated.apresentacao + "-" + updated.projeto;
+          var lastSent = sessionStorage.getItem(lastSentKey);
 
-          // Dispara efeito visual de fogos de artifício na página toda (dura 2 segundos)
-          triggerFireworks();
+          if (lastSent !== evalFingerprint) {
+            sessionStorage.setItem(lastSentKey, evalFingerprint);
+            markProjectRatingSubmitted(pid);
+            updated.submitted = true;
 
-          if (window.Leads && typeof window.Leads.submitEvaluation === "function") {
-            window.Leads.submitEvaluation(p, courseKey, updated);
+            // Dispara efeito visual de fogos de artifício na página toda (dura 2 segundos)
+            triggerFireworks();
+            showToast(T("evalSaved") || "Avaliação salva! ⭐");
+
+            if (window.Leads && typeof window.Leads.submitEvaluation === "function") {
+              window.Leads.submitEvaluation(p, courseKey, updated);
+            }
           }
         }
       });

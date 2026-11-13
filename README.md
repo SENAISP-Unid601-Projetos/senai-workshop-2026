@@ -2,7 +2,8 @@
 
 > **Portal oficial de apresentação e vitrine dos projetos dos formandos dos cursos técnicos em Desenvolvimento de Sistemas e Mecatrônica do SENAI São Carlos.**
 
-🔗 **Acesse o site oficial:** [https://senaisp-unid601-projetos.github.io/senai-workshop-2026/index.html](https://senaisp-unid601-projetos.github.io/senai-workshop-2026/index.html)
+🔗 **Acesse o site oficial:** [https://senaisp-unid601-projetos.github.io/senai-workshop-2026/index.html](https://senaisp-unid601-projetos.github.io/senai-workshop-2026/index.html)  
+📊 **Planilha de Leads e Avaliações:** [https://docs.google.com/spreadsheets/d/11DWHuIwsztAHOcw_mdcIpGcUK3P-MieeVD3MCg4hF48/edit?usp=sharing](https://docs.google.com/spreadsheets/d/11DWHuIwsztAHOcw_mdcIpGcUK3P-MieeVD3MCg4hF48/edit?usp=sharing)
 
 ---
 
@@ -124,6 +125,9 @@ No hero da página inicial, ao lado do texto *"Mecatrônica e Desenvolvimento de
 ---
 
 ## 📊 Sistema de Leads e Google Sheets
+
+> 📄 **Planilha oficial com os dados e leads em tempo real:**  
+> [https://docs.google.com/spreadsheets/d/11DWHuIwsztAHOcw_mdcIpGcUK3P-MieeVD3MCg4hF48/edit?usp=sharing](https://docs.google.com/spreadsheets/d/11DWHuIwsztAHOcw_mdcIpGcUK3P-MieeVD3MCg4hF48/edit?usp=sharing)
 
 O sistema rastreia os seguintes eventos de forma anônima e transparente:
 

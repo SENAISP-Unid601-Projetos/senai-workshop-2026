@@ -26,10 +26,20 @@
     var custom = "";
     try { custom = localStorage.getItem("custom_sheets_url"); } catch (e) {}
     if (custom && custom.trim()) return custom.trim();
-    if (window.SITE && window.SITE.googleSheetsUrl && window.SITE.googleSheetsUrl.trim()) {
+    if (typeof window !== 'undefined' && window.SITE && window.SITE.googleSheetsUrl && window.SITE.googleSheetsUrl.trim()) {
       return window.SITE.googleSheetsUrl.trim();
     }
     return "";
+  }
+
+  function getNewsletterSheetsUrl() {
+    var custom = "";
+    try { custom = localStorage.getItem("custom_newsletter_url"); } catch (e) {}
+    if (custom && custom.trim()) return custom.trim();
+    if (typeof window !== 'undefined' && window.SITE && window.SITE.newsletterSheetsUrl && window.SITE.newsletterSheetsUrl.trim()) {
+      return window.SITE.newsletterSheetsUrl.trim();
+    }
+    return getSheetsUrl();
   }
 
   function getDeviceType() {
@@ -67,7 +77,7 @@
     }
   }
 
-  function sendLead(data) {
+  function sendLead(data, customEndpoint) {
     data = data || {};
     var payload = {
       timestamp: getFormattedDate(),
@@ -77,7 +87,8 @@
       projeto_nome: data.projeto_nome || "-",
       acao: data.acao || "-",
       nome: data.nome || "-",
-      contato: data.contato || "-",
+      email: data.email || data.contato || "-",
+      contato: data.contato || data.email || "-",
       empresa: data.empresa || data.perfil || "-",
       mensagem: data.mensagem || "-",
       nota_apresentacao: (data.nota_apresentacao && Number(data.nota_apresentacao) > 0) ? Number(data.nota_apresentacao) : "",
@@ -91,7 +102,7 @@
     console.log("[SENAI Lead Tracked]:", payload);
     saveLocalHistory(payload);
 
-    var endpoint = getSheetsUrl();
+    var endpoint = customEndpoint || getSheetsUrl();
     if (!endpoint) {
       // Endpoint ainda não configurado
       return Promise.resolve({ status: "local_only", data: payload });
@@ -273,7 +284,7 @@
       localStorage.setItem("senai_newsletter_subscribed", "true");
     } catch (e) {}
 
-    return sendLead(payload);
+    return sendLead(payload, getNewsletterSheetsUrl());
   }
 
   function getNewsletterSubscription() {
@@ -297,6 +308,7 @@
     getNewsletterSubscription: getNewsletterSubscription,
     isValidEmail: isValidEmail,
     getSheetsUrl: getSheetsUrl,
+    getNewsletterSheetsUrl: getNewsletterSheetsUrl,
     getLocalHistory: getLocalHistory
   };
 }));

@@ -44,6 +44,11 @@ window.SITE = {
      Exemplo: "https://script.google.com/macros/s/AKfycb.../exec" */
   googleSheetsUrl: "https://script.google.com/macros/s/AKfycbxDJNvpZ07fTokYSDry66IOgwjDwDDi9c6kkj7XAUI5aTm_f1zB1AllYS-fLcDsTag/exec",
 
+  /* URL do Web App dedicado para captura de e-mails e envio de lembretes (@docente.senai.br).
+     Se preenchido, os cadastros de lembretes irão direto para essa planilha separada.
+     Se deixado vazio (""), usará a googleSheetsUrl configurada acima. */
+  newsletterSheetsUrl: "",
+
   cursos: {
     ds: {
       pagina: "html/ds.html",

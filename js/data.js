@@ -47,7 +47,7 @@ window.SITE = {
   /* URL do Web App dedicado para captura de e-mails e envio de lembretes (@docente.senai.br).
      Se preenchido, os cadastros de lembretes irão direto para essa planilha separada.
      Se deixado vazio (""), usará a googleSheetsUrl configurada acima. */
-  newsletterSheetsUrl: "",
+  newsletterSheetsUrl: "https://script.google.com/macros/s/AKfycbzu86ZjQpd54ztK94HLCh08OZ9CaxacWdwruK3QmAuzt5Fwlefq8fQZnEqS2Iug_MKA/exec",
 
   cursos: {
     ds: {

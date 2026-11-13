@@ -72,7 +72,28 @@
       eventViewRoute: "Ver rota no Google Maps ↗",
       eventHeroBadgeDate: "02 e 03 de Dezembro",
       eventHeroBadgeTime: "08h às 17h",
-      eventHeroBadgeLoc: "SENAI São Carlos"
+      eventHeroBadgeLoc: "SENAI São Carlos",
+      newsBadge: "Lembrete do Evento",
+      newsTitle: "Não perca o Workshop SENAI 2026",
+      newsSub: "Cadastre seu e-mail para receber um aviso exclusivo antes do evento (02 e 03 de Dezembro) e o catálogo de projetos.",
+      newsNameLabel: "Seu Nome ou Empresa",
+      newsNamePlaceholder: "Ex: Carlos Mendes",
+      newsEmailLabel: "Seu E-mail",
+      newsEmailPlaceholder: "Ex: carlos@empresa.com.br",
+      newsProfileLabel: "Perfil de Visitante",
+      newsProfileVisitor: "Visitante / Comunidade",
+      newsProfileCompany: "Empresa / Recrutador",
+      newsProfileStudent: "Aluno / Ex-aluno",
+      newsProfileTeacher: "Professor / Educador",
+      newsSubmitBtn: "Receber Lembrete por E-mail",
+      newsSubmitting: "Confirmando inscrição...",
+      newsSuccessTitle: "Inscrição Confirmada!",
+      newsSuccessDesc: "Obrigado! Enviamos um e-mail com as informações do evento e avisaremos você antes do início.",
+      newsErrorInvalidEmail: "Por favor, informe um e-mail válido (ex: seu.nome@email.com).",
+      newsErrorSend: "Não foi possível enviar agora. Tente novamente mais tarde.",
+      newsAlreadySubscribed: "Você já está cadastrado para receber o lembrete!",
+      newsChangeEmail: "Cadastrar outro e-mail",
+      newsHeroBtn: "🔔 Receber Lembrete"
     },
     en: {
       theme: "Theme", back: "← Back", eyebrow: "São Carlos · Technology in Action",
@@ -142,7 +163,28 @@
       eventViewRoute: "Open in Google Maps ↗",
       eventHeroBadgeDate: "December 2 & 3",
       eventHeroBadgeTime: "8am – 5pm",
-      eventHeroBadgeLoc: "SENAI São Carlos"
+      eventHeroBadgeLoc: "SENAI São Carlos",
+      newsBadge: "Event Reminder",
+      newsTitle: "Don't Miss the SENAI Workshop 2026",
+      newsSub: "Sign up with your email to receive an exclusive reminder before the event (December 2 & 3) and the projects catalog.",
+      newsNameLabel: "Your Name or Company",
+      newsNamePlaceholder: "E.g., John Doe",
+      newsEmailLabel: "Your Email",
+      newsEmailPlaceholder: "E.g., john@company.com",
+      newsProfileLabel: "Visitor Profile",
+      newsProfileVisitor: "Visitor / Community",
+      newsProfileCompany: "Company / Recruiter",
+      newsProfileStudent: "Student / Alumni",
+      newsProfileTeacher: "Teacher / Educator",
+      newsSubmitBtn: "Get Reminder by Email",
+      newsSubmitting: "Confirming subscription...",
+      newsSuccessTitle: "Reminder Confirmed!",
+      newsSuccessDesc: "Thank you! We sent you an email with event details and will notify you right before the start.",
+      newsErrorInvalidEmail: "Please provide a valid email address (e.g., your.name@email.com).",
+      newsErrorSend: "Could not send right now. Please try again later.",
+      newsAlreadySubscribed: "You are already subscribed to receive event reminders!",
+      newsChangeEmail: "Register another email",
+      newsHeroBtn: "🔔 Get Reminder"
     }
   };
 
@@ -330,6 +372,161 @@
       (devCredits ? '<br>' + T("devBy") + ' ' + devCredits : '') + '</div></div></footer>';
   }
 
+  /* ----- SEÇÃO DE CAPTURA DE E-MAILS & LEMBRETE DO WORKSHOP ----- */
+  function renderNewsletterHTML(isCourse) {
+    var subInfo = (window.Leads && typeof window.Leads.getNewsletterSubscription === "function")
+      ? window.Leads.getNewsletterSubscription()
+      : { isSubscribed: false, email: "" };
+    var alreadySubscribed = subInfo.isSubscribed;
+    var savedEmail = esc(subInfo.email);
+
+    return '<section class="section newsletter-section" id="lembrete">' +
+      '<div class="container">' +
+        '<div class="newsletter-card reveal">' +
+          '<div class="newsletter-glow"></div>' +
+          '<div class="newsletter-grid">' +
+            '<div class="newsletter-info">' +
+              '<div class="newsletter-badge"><span class="pulse-bell">🔔</span> ' + T("newsBadge") + '</div>' +
+              '<h2 class="newsletter-title">' + T("newsTitle") + '</h2>' +
+              '<p class="newsletter-sub">' + T("newsSub") + '</p>' +
+              '<div class="newsletter-event-pill">' +
+                '<span class="newsletter-pill-item">📅 ' + T("eventHeroBadgeDate") + '</span>' +
+                '<span class="newsletter-pill-sep">•</span>' +
+                '<span class="newsletter-pill-item">⏰ ' + T("eventHeroBadgeTime") + '</span>' +
+                '<span class="newsletter-pill-sep">•</span>' +
+                '<span class="newsletter-pill-item">📍 ' + T("eventHeroBadgeLoc") + '</span>' +
+              '</div>' +
+            '</div>' +
+            '<div class="newsletter-form-wrapper" id="newsletterFormWrapper">' +
+              (alreadySubscribed
+                ? '<div class="newsletter-success-box">' +
+                    '<div class="newsletter-success-icon">🎉</div>' +
+                    '<h3>' + T("newsSuccessTitle") + '</h3>' +
+                    '<p>' + T("newsAlreadySubscribed") + '</p>' +
+                    '<div class="newsletter-confirmed-email">📧 ' + savedEmail + '</div>' +
+                    '<button type="button" class="btn-ghost newsletter-reset-btn" id="newsResetBtn">' + T("newsChangeEmail") + '</button>' +
+                  '</div>'
+                : '<form class="newsletter-form" id="newsletterForm" novalidate>' +
+                    '<div class="newsletter-field-group">' +
+                      '<div class="newsletter-field">' +
+                        '<label for="newsName" class="newsletter-label">' + T("newsNameLabel") + '</label>' +
+                        '<input type="text" id="newsName" name="name" class="newsletter-input" placeholder="' + esc(T("newsNamePlaceholder")) + '">' +
+                      '</div>' +
+                      '<div class="newsletter-field">' +
+                        '<label for="newsEmail" class="newsletter-label">' + T("newsEmailLabel") + ' *</label>' +
+                        '<input type="email" id="newsEmail" name="email" class="newsletter-input" placeholder="' + esc(T("newsEmailPlaceholder")) + '" required autocomplete="email">' +
+                      '</div>' +
+                    '</div>' +
+                    '<div class="newsletter-field-group newsletter-bottom-row">' +
+                      '<div class="newsletter-field newsletter-field-select">' +
+                        '<label for="newsProfile" class="newsletter-label">' + T("newsProfileLabel") + '</label>' +
+                        '<select id="newsProfile" name="profile" class="newsletter-select">' +
+                          '<option value="Visitante">' + T("newsProfileVisitor") + '</option>' +
+                          '<option value="Empresa">' + T("newsProfileCompany") + '</option>' +
+                          '<option value="Aluno">' + T("newsProfileStudent") + '</option>' +
+                          '<option value="Professor">' + T("newsProfileTeacher") + '</option>' +
+                        '</select>' +
+                      '</div>' +
+                      '<button type="submit" class="btn newsletter-submit-btn" id="newsSubmitBtn">' +
+                        '<span>' + T("newsSubmitBtn") + '</span>' +
+                        '<span class="go">→</span>' +
+                      '</button>' +
+                    '</div>' +
+                    '<div class="newsletter-feedback" id="newsFeedback" style="display:none;" aria-live="polite"></div>' +
+                  '</form>') +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+    '</section>';
+  }
+
+  function initNewsletterForm() {
+    var form = document.getElementById("newsletterForm");
+    var resetBtn = document.getElementById("newsResetBtn");
+
+    if (resetBtn) {
+      resetBtn.onclick = function () {
+        try {
+          localStorage.removeItem("senai_newsletter_subscribed");
+        } catch (e) {}
+        var section = document.getElementById("lembrete");
+        if (section) {
+          var isCourse = document.body ? (document.body.getAttribute("data-page") !== "home") : false;
+          var tmp = document.createElement("div");
+          tmp.innerHTML = renderNewsletterHTML(isCourse);
+          if (tmp.firstElementChild) {
+            section.parentNode.replaceChild(tmp.firstElementChild, section);
+            initNewsletterForm();
+          }
+        }
+      };
+    }
+
+    if (!form) return;
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var nameInp = document.getElementById("newsName");
+      var emailInp = document.getElementById("newsEmail");
+      var profileInp = document.getElementById("newsProfile");
+      var submitBtn = document.getElementById("newsSubmitBtn");
+      var feedback = document.getElementById("newsFeedback");
+
+      var nameVal = (nameInp ? nameInp.value : "").trim();
+      var emailVal = (emailInp ? emailInp.value : "").trim();
+      var profileVal = profileInp ? profileInp.value : "Visitante";
+
+      if (!window.Leads || typeof window.Leads.isValidEmail !== "function" || !window.Leads.isValidEmail(emailVal)) {
+        if (feedback) {
+          feedback.style.display = "block";
+          feedback.className = "newsletter-feedback error";
+          feedback.textContent = T("newsErrorInvalidEmail");
+        }
+        if (emailInp) emailInp.focus();
+        return;
+      }
+
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.classList.add("loading");
+        submitBtn.innerHTML = '<span>' + T("newsSubmitting") + '</span>';
+      }
+      if (feedback) feedback.style.display = "none";
+
+      window.Leads.submitNewsletterLead({
+        nome: nameVal,
+        email: emailVal,
+        perfil: profileVal,
+        pagina: document.body ? document.body.getAttribute("data-page") : "home"
+      }).then(function () {
+        if (typeof triggerFireworks === "function") triggerFireworks();
+        showToast(T("newsSuccessTitle") + " 🎉");
+        var wrapper = document.getElementById("newsletterFormWrapper");
+        if (wrapper) {
+          wrapper.innerHTML =
+            '<div class="newsletter-success-box">' +
+              '<div class="newsletter-success-icon">🎉</div>' +
+              '<h3>' + T("newsSuccessTitle") + '</h3>' +
+              '<p>' + T("newsSuccessDesc") + '</p>' +
+              '<div class="newsletter-confirmed-email">📧 ' + esc(emailVal) + '</div>' +
+            '</div>';
+        }
+      }).catch(function (err) {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.classList.remove("loading");
+          submitBtn.innerHTML = '<span>' + T("newsSubmitBtn") + '</span> <span class="go">→</span>';
+        }
+        if (feedback) {
+          feedback.style.display = "block";
+          feedback.className = "newsletter-feedback error";
+          feedback.textContent = T("newsErrorSend");
+        }
+      });
+    });
+  }
+
   /* ----- HOME ----- */
   function renderHome(root) {
     var np = 0, na = 0;
@@ -367,6 +564,7 @@
       '<div class="hero-cta">' +
         '<a class="btn" href="#turmas">' + T("seeClasses") + '</a>' +
         '<a class="hero-dash-btn" href="dashboard.html" title="' + esc(T("dashboardTitle")) + '">' + T("dashboardHero") + '</a>' +
+        '<a class="hero-news-btn" href="#lembrete" title="' + esc(T("newsTitle")) + '">' + T("newsHeroBtn") + '</a>' +
       '</div></div></section>' +
       '<section class="section" id="turmas"><div class="container"><h2 class="section-title">' + T("classesTitle") + '</h2><p class="section-sub">' + T("classesSub") + '</p><div class="class-grid">' + cards + '</div></div></section>' +
       '<section class="section about"><div class="container"><h2 class="section-title">' + T("aboutTitle") + '</h2><br><p class="about-text">' + T("aboutText") + '</p>' +
@@ -429,6 +627,7 @@
           '</div>' +
         '</div>' +
       '</div></div></section>' +
+      renderNewsletterHTML(false) +
       footerHTML(false);
 
     var heroQrBtn = document.getElementById("heroQrBtn");
@@ -438,6 +637,7 @@
       };
     }
 
+    initNewsletterForm();
     if (window.Leads) window.Leads.trackPageView("home");
   }
 
@@ -491,10 +691,12 @@
       '<div class="dots">' + dots + '</div><a class="scroll-down" href="#projetos" aria-label="Descer">↓</a></section>' +
       '<section class="section" id="projetos"><div class="container"><h2 class="section-title">' + T("ourProjects") + '</h2><p class="section-sub">' + T("ourProjectsSub") + '</p>' +
       (P.length ? '<div class="project-grid" id="projectGrid">' + cards + '</div>' : '<p class="section-sub">' + T("noProjects") + '</p>') + '</div></section>' +
+      renderNewsletterHTML(true) +
       footerHTML(true);
 
     initCarousel(P.length);
     initCardClicks(key, P);
+    initNewsletterForm();
 
     // Rastreia cliques no slide link do carrossel
     document.querySelectorAll(".slide-link").forEach(function (el) {

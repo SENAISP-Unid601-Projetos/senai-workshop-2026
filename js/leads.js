@@ -243,6 +243,49 @@
     });
   }
 
+  /* ----- Inscrição para Receber Lembretes do Workshop por E-mail ----- */
+  function isValidEmail(email) {
+    var re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(String(email || "").trim());
+  }
+
+  function submitNewsletterLead(formData) {
+    formData = formData || {};
+    var email = String(formData.email || "").trim();
+    if (!isValidEmail(email)) {
+      return Promise.reject(new Error("E-mail com formato inválido."));
+    }
+
+    var payload = {
+      tipo: "Newsletter Lembrete",
+      acao: "Inscrição Lembrete Workshop",
+      nome: formData.nome ? String(formData.nome).trim() : "Visitante",
+      email: email,
+      contato: email,
+      perfil: formData.perfil ? String(formData.perfil).trim() : "Visitante",
+      empresa: formData.perfil ? String(formData.perfil).trim() : "Visitante",
+      mensagem: "Inscrição para receber lembrete do evento (02 e 03 de Dezembro)",
+      pagina: formData.pagina || (document.body ? document.body.getAttribute("data-page") : "home") || "home"
+    };
+
+    try {
+      localStorage.setItem("senai_newsletter_email", email);
+      localStorage.setItem("senai_newsletter_subscribed", "true");
+    } catch (e) {}
+
+    return sendLead(payload);
+  }
+
+  function getNewsletterSubscription() {
+    try {
+      var isSubscribed = localStorage.getItem("senai_newsletter_subscribed") === "true";
+      var email = localStorage.getItem("senai_newsletter_email") || "";
+      return { isSubscribed: isSubscribed, email: email };
+    } catch (e) {
+      return { isSubscribed: false, email: "" };
+    }
+  }
+
   return {
     sendLead: sendLead,
     trackPageView: trackPageView,
@@ -250,6 +293,9 @@
     trackProjectAction: trackProjectAction,
     submitContactLead: submitContactLead,
     submitEvaluation: submitEvaluation,
+    submitNewsletterLead: submitNewsletterLead,
+    getNewsletterSubscription: getNewsletterSubscription,
+    isValidEmail: isValidEmail,
     getSheetsUrl: getSheetsUrl,
     getLocalHistory: getLocalHistory
   };

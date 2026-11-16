@@ -17,7 +17,7 @@
       statProjects: "Projetos Desenvolvidos", statStudents: "Alunos Participantes", statCourses: "Cursos Participantes", statDedication: "Dedicação e Inovação",
       ourProjects: "Nossos Projetos", ourProjectsSub: "Landing page, pitch técnico e pitch comercial de cada grupo.",
       tech: "Funcionamento", commercial: "Comercial", visit: "Visitar site", soon: "Em breve",
-      members: "integrantes",
+      members: "integrantes", groupMembers: "Integrantes:", turmaBadge: "Turma",
       fTitle: "SENAI São Carlos", fText: "Centro de referência em formação técnica e tecnológica, preparando profissionais para os desafios da Indústria 4.0.", fSlogan: "Formando o futuro da tecnologia",
       fClasses: "Turmas 2026", fTeam: "Equipe de Desenvolvimento", fDevs: "Desenvolvedores:", techLead: "Tech Lead",
       rights: "Serviço Nacional de Aprendizagem Industrial", copyright: "Todos os direitos reservados", devBy: "Desenvolvido por",
@@ -108,7 +108,7 @@
       statProjects: "Projects Developed", statStudents: "Participating Students", statCourses: "Participating Courses", statDedication: "Dedication & Innovation",
       ourProjects: "Our Projects", ourProjectsSub: "Landing page, technical pitch and commercial pitch of each group.",
       tech: "How it works", commercial: "Commercial", visit: "Visit site", soon: "Coming soon",
-      members: "members",
+      members: "members", groupMembers: "Team:", turmaBadge: "Class",
       fTitle: "SENAI São Carlos", fText: "A reference center in technical and technological education, preparing professionals for the challenges of Industry 4.0.", fSlogan: "Shaping the future of technology",
       fClasses: "Classes 2026", fTeam: "Development Team", fDevs: "Developers:", techLead: "Tech Lead",
       rights: "National Service for Industrial Training", copyright: "All rights reserved", devBy: "Developed by",
@@ -234,6 +234,38 @@
       .replace(/(^-|-$)+/g, "");
   }
 
+  function formatTurma(turmaVal) {
+    if (!turmaVal) return "";
+    if (typeof turmaVal === "object") return tr(turmaVal) || "";
+    return String(turmaVal).trim();
+  }
+
+  function formatMembers(p) {
+    if (!p) return "";
+    var list = p.integrantes || p.participantes;
+    if (Array.isArray(list)) {
+      return list.map(function (n) { return String(n).trim(); }).filter(Boolean).join(", ");
+    }
+    if (typeof list === "string" && list.trim()) {
+      return list.trim();
+    }
+    if (typeof p.alunos === "string" && isNaN(Number(p.alunos)) && p.alunos.trim()) {
+      return p.alunos.trim();
+    }
+    return "";
+  }
+
+  function getProjectStudentCount(p) {
+    if (!p) return 0;
+    if (Number(p.alunos) > 0) return Number(p.alunos);
+    var list = p.integrantes || p.participantes;
+    if (Array.isArray(list)) return list.filter(Boolean).length;
+    if (typeof list === "string" && list.trim()) {
+      return list.split(/[,;\n]+/).filter(function (s) { return s.trim().length > 0; }).length;
+    }
+    return 0;
+  }
+
   function getProjectId(p, courseKey, index) {
     return String((p && p.id) || (p && slugify(p.nome)) || (courseKey + "-" + (index + 1)));
   }
@@ -306,7 +338,7 @@
 
   var cursos = Object.keys(S.cursos).map(function (k) { return S.cursos[k]; });
   function totalProj(c) { return c.projetos.length; }
-  function totalAlunos(c) { return c.projetos.reduce(function (a, p) { return a + (Number(p.alunos) || 0); }, 0); }
+  function totalAlunos(c) { return c.projetos.reduce(function (a, p) { return a + getProjectStudentCount(p); }, 0); }
   function fmt(n) { return n > 0 ? n : "—"; }
 
   /* ----- header ----- */
@@ -660,9 +692,10 @@
     var slides = P.map(function (p, i) {
       var img = resolveImg(p.imagem || c.imagem);
       var has = !!img;
+      var turmaText = formatTurma(p.turma);
       return '<article class="slide' + (i === 0 ? " active" : "") + (has ? "" : " noimg") + '">' +
         '<div class="slide-bg"' + (has ? ' style="background-image:url(\'' + esc(img) + '\')"' : '') + '></div>' +
-        '<div class="slide-content"><span class="tag">' + esc(p.nome) + '</span>' +
+        '<div class="slide-content"><span class="tag">' + esc(p.nome) + (turmaText ? ' · ' + esc(turmaText) : '') + '</span>' +
         '<h1><a class="slide-link" ' + (safeUrl(p.landing) ? 'href="' + esc(safeUrl(p.landing)) + '" target="_blank" rel="noopener"' : 'href="#" data-empty="1"') + '>' + esc(p.nome) + ' <span class="go">↗</span></a></h1>' +
         '<h2>' + esc(p.subtitulo) + '</h2></div></article>';
     }).join("");
@@ -672,13 +705,35 @@
     var cards = P.map(function (p, i) {
       var pid = getProjectId(p, key, i);
       var u = resolveImg(p.imagem);
+      var turmaText = formatTurma(p.turma);
+      var membersText = formatMembers(p);
+
+      var membersHtml = "";
+      if (membersText) {
+        membersHtml = '<div class="project-members" title="' + esc(T("groupMembers") + ' ' + membersText) + '">' +
+          '<span class="members-icon" aria-hidden="true">👥</span>' +
+          '<div class="members-content">' +
+            '<span class="members-label">' + esc(T("groupMembers")) + '</span> ' +
+            '<span class="members-names">' + esc(membersText) + '</span>' +
+          '</div>' +
+        '</div>';
+      } else if (Number(p.alunos) > 0) {
+        membersHtml = '<span class="meta">' + p.alunos + ' ' + T("members") + '</span>';
+      }
+
       return '<article class="project-card reveal" id="proj-' + i + '" data-proj-id="' + esc(pid) + '" data-proj-idx="' + i + '" tabindex="0" role="button" aria-haspopup="dialog" aria-label="' + esc(p.nome) + '">' +
         '<div class="project-img">' + (u ? '<img src="' + esc(u) + '" alt="' + esc(p.nome) + '" loading="lazy">' : '<span class="ph">' + esc((p.nome || "?").charAt(0)) + '</span>') + '</div>' +
         '<div class="project-body">' +
-          '<div class="pheader"><span class="pname">' + esc(p.nome) + '</span><span class="card-hint">' + T("details") + ' ↗</span></div>' +
+          '<div class="pheader">' +
+            '<div class="ptags">' +
+              '<span class="pname">' + esc(p.nome) + '</span>' +
+              (turmaText ? '<span class="pturma">' + esc(turmaText) + '</span>' : '') +
+            '</div>' +
+            '<span class="card-hint">' + T("details") + ' ↗</span>' +
+          '</div>' +
           '<h3>' + esc(p.subtitulo) + '</h3>' +
           '<p>' + esc(p.descricao) + '</p>' +
-          (Number(p.alunos) > 0 ? '<span class="meta">' + p.alunos + ' ' + T("members") + '</span>' : '') +
+          membersHtml +
           '<div class="actions">' + act(p.funcionamento, T("tech")) + act(p.comercial, T("commercial")) + act(p.landing, T("visit"), true) + '</div>' +
         '</div>' +
       '</article>';
@@ -1087,6 +1142,8 @@
     var courseBadge = courseKey === "ds" ? "DS" : "MEC";
     var img = resolveImg(p.imagem);
     var currentRatings = getProjectRatings(pid);
+    var turmaText = formatTurma(p.turma);
+    var membersText = formatMembers(p);
 
     var m = ensureModal();
     var dialog = document.getElementById("modalDialog");
@@ -1108,8 +1165,9 @@
       '<div class="modal-scroll">' +
         '<div class="modal-meta-row">' +
           '<span class="modal-badge">' + courseBadge + ' · ' + esc(tr(c.turma)) + '</span>' +
+          (turmaText ? '<span class="modal-badge modal-badge-turma">' + esc(turmaText) + '</span>' : '') +
           '<span class="pname">' + esc(p.nome) + '</span>' +
-          (Number(p.alunos) > 0 ? '<span class="meta">' + p.alunos + ' ' + T("members") + '</span>' : '') +
+          (!membersText && Number(p.alunos) > 0 ? '<span class="meta">' + p.alunos + ' ' + T("members") + '</span>' : '') +
           '<button class="btn-qr-toggle" id="modalQrToggleBtn" aria-expanded="false" title="' + esc(T("qrToggle")) + '">' +
             '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>' +
             '<span id="modalQrToggleText">' + esc(T("qrToggle")) + '</span>' +
@@ -1117,6 +1175,15 @@
         '</div>' +
         '<h2 class="modal-title">' + esc(p.nome) + '</h2>' +
         '<h3 class="modal-sub">' + esc(p.subtitulo) + '</h3>' +
+        (membersText
+          ? '<div class="modal-members-box">' +
+              '<span class="modal-members-icon" aria-hidden="true">👥</span>' +
+              '<div class="modal-members-content">' +
+                '<span class="modal-members-label">' + esc(T("groupMembers")) + '</span>' +
+                '<span class="modal-members-list">' + esc(membersText) + '</span>' +
+              '</div>' +
+            '</div>'
+          : '') +
         '<p class="modal-desc">' + esc(p.descricao) + '</p>' +
         '<div class="modal-actions actions" id="modalActions">' +
           act(p.funcionamento, T("tech")) +

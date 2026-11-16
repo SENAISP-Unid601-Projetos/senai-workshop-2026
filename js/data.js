@@ -60,6 +60,19 @@ window.SITE = {
       },
       // Capa da turma (local: "img/turmas/ds.png" ou URL externa)
       imagem: "img/turmas/ds.png",
+      /* Campos suportados em cada projeto:
+         - id: identificador único (ex: "ds-1", "mec-1")
+         - nome: Nome do projeto
+         - turma: Turma específica (ex: "Turma A", "Turma B", "1º Termo", etc.)
+         - integrantes: Nomes dos participantes — aceita texto "Aluno 1, Aluno 2" ou lista ["Aluno 1", "Aluno 2"]
+         - subtitulo: Frase de destaque/slogan
+         - descricao: Resumo da solução e diferencial
+         - imagem: Caminho da imagem de capa (ex: "img/projetos/ds-1.jpeg")
+         - alunos: Quantidade de alunos (opcional se preencher integrantes)
+         - landing: Link da landing page
+         - funcionamento: Link do vídeo técnico (YouTube)
+         - comercial: Link do vídeo comercial (YouTube)
+      */
       projetos: [
         { id: "ds-1", nome: "Projeto DS 1", subtitulo: "Frase de destaque do projeto", descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.", imagem: "img/projetos/ds-1.jpeg", alunos: 0, landing: "", funcionamento: "", comercial: "" },
         { id: "ds-2", nome: "Projeto DS 2", subtitulo: "Frase de destaque do projeto", descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.", imagem: "img/projetos/ds-2.jpeg", alunos: 0, landing: "", funcionamento: "", comercial: "" },
@@ -89,15 +102,15 @@ window.SITE = {
       // Capa da turma (local: "img/turmas/mec.png" ou URL externa)
       imagem: "img/turmas/mec.png",
       projetos: [
-        { id: "mec-1", nome: "LatheVision", subtitulo: "LatheVision, sua produção, sempre à vista", descricao: "A LatheVision é uma solução de manutenção preditiva para tornos mecânicos, que monitora corrente, nível de óleo, rotação e vibração. Seu diferencial é integrar sensores em um único sistema, prevenindo falhas, reduzindo paradas e oferecendo um custo acessível às indústrias.", imagem: "img/projetos/mec-1.jpeg", alunos: 4, landing: "https://sites.google.com/aluno.senai.br/lathevision/in%C3%ADcio", funcionamento: "", comercial: "" },
+        { id: "mec-1", nome: "LatheVision", turma: "2IMEC-B", subtitulo: "LatheVision, sua produção, sempre à vista", descricao: "A LatheVision é uma solução de manutenção preditiva para tornos mecânicos, que monitora corrente, nível de óleo, rotação e vibração. Seu diferencial é integrar sensores em um único sistema, prevenindo falhas, reduzindo paradas e oferecendo um custo acessível às indústrias.", imagem: "img/projetos/mec-1.jpeg", alunos: 4, landing: "https://sites.google.com/aluno.senai.br/lathevision/in%C3%ADcio", funcionamento: "", comercial: "" },
         { id: "mec-2", nome: "Projeto MEC 2", subtitulo: "Frase de destaque do projeto", descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.", imagem: "img/projetos/mec-2.jpeg", alunos: 0, landing: "", funcionamento: "", comercial: "" },
 
-        { id: "mec-3", nome: "MecMonitor", subtitulo: "Transformando dados em decisões e equipamento em inteligência digital!", descricao: "A MecMonitor integra IoT e monitoramento inteligente para acompanhar equipamentos industriais, utilizando gêmeo digital e representação 3D para facilitar a visualização e análise de dados.", imagem: "img/projetos/mec-1.jpeg", alunos: 0, landing: "https://sites.google.com/aluno.senai.br/mecmonitor/in%C3%ADcio", funcionamento: "https://youtu.be/4OZV84CrP4Q", comercial: "https://youtu.be/pIhB30Ymmsg" },
+        { id: "mec-3", nome: "MecMonitor", turma: "2IMEC-B", subtitulo: "Transformando dados em decisões e equipamento em inteligência digital!", descricao: "A MecMonitor integra IoT e monitoramento inteligente para acompanhar equipamentos industriais, utilizando gêmeo digital e representação 3D para facilitar a visualização e análise de dados.", imagem: "img/projetos/mec-1.jpeg", alunos: 0, landing: "https://sites.google.com/aluno.senai.br/mecmonitor/in%C3%ADcio", funcionamento: "https://youtu.be/4OZV84CrP4Q", comercial: "https://youtu.be/pIhB30Ymmsg" },
 
         { id: "mec-4", nome: "Projeto MEC 4", subtitulo: "Frase de destaque do projeto", descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.", imagem: "img/projetos/mec-2.jpeg", alunos: 0, landing: "", funcionamento: "", comercial: "" },
         { id: "mec-5", nome: "Projeto MEC 5", subtitulo: "Frase de destaque do projeto", descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.", imagem: "img/projetos/mec-1.jpeg", alunos: 0, landing: "", funcionamento: "", comercial: "" },
 
-        { id: "mec-6", nome: "Smart Factory", subtitulo: "SmartFactory, Antecipe falhas. Potencialize resultados.", descricao: "A SmartFactory oferece monitoramento inteligente de equipamentos rotativos, acompanhando vibração, temperatura e corrente elétrica. Com tecnologia IoT, permite monitorar os equipamentos remotamente, por qualquer dispositivo conectado à internet, auxiliando na prevenção de até 80% das falhas.", imagem: "img/projetos/mec-6.jpg", alunos: 0, landing: "https://sites.google.com/aluno.senai.br/smartfactory/in%C3%ADcio", funcionamento: "", comercial: "https://youtu.be/DaIIry128DA" },
+        { id: "mec-6", nome: "Smart Factory", turma: "2IMEC-B", subtitulo: "SmartFactory, Antecipe falhas. Potencialize resultados.", descricao: "A SmartFactory oferece monitoramento inteligente de equipamentos rotativos, acompanhando vibração, temperatura e corrente elétrica. Com tecnologia IoT, permite monitorar os equipamentos remotamente, por qualquer dispositivo conectado à internet, auxiliando na prevenção de até 80% das falhas.", imagem: "img/projetos/mec-6.jpg", alunos: 0, landing: "https://sites.google.com/aluno.senai.br/smartfactory/in%C3%ADcio", funcionamento: "", comercial: "https://youtu.be/DaIIry128DA" },
 
         { id: "mec-7", nome: "Projeto MEC 7", subtitulo: "Frase de destaque do projeto", descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.", imagem: "img/projetos/mec-1.jpeg", alunos: 0, landing: "", funcionamento: "", comercial: "" },
         { id: "mec-8", nome: "Projeto MEC 8", subtitulo: "Frase de destaque do projeto", descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.", imagem: "img/projetos/mec-2.jpeg", alunos: 0, landing: "", funcionamento: "", comercial: "" },

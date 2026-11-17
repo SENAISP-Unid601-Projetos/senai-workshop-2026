@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html lang="pt-BR" data-theme="dark">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SENAI Workshop 2026 — Rankings e Visitas</title>
-  <meta name="description" content="Dashboard com rankings dos Top 5 mais e menos votados por turma e total de visitas na turma e projetos.">
-  <link rel="icon" type="image/jpeg" href="img/favicon.jpeg">
-  <link rel="apple-touch-icon" href="img/favicon.jpeg">
+  <meta name="description"
+    content="Dashboard com rankings dos Top 5 mais e menos votados por turma e total de visitas na turma e projetos.">
+  <link rel="icon" type="image/png" href="img/favicon.png">
+  <link rel="apple-touch-icon" href="img/favicon.png">
   <link rel="stylesheet" href="css/dashboard.css?v=2.3">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
+
 <body class="dashboard-body">
 
   <!-- CABEÇALHO DO PAINEL -->
@@ -34,7 +37,8 @@
 
           <!-- Botão Atualizar com Timer integrado de 30s -->
           <button id="btn-refresh-data" class="dash-btn" title="Atualizar dados agora (reseta o timer)">
-            <span class="refresh-icon">🔄</span> <span id="refresh-label">Atualizar</span> <span id="refresh-timer" class="dash-timer-pill">30s</span>
+            <span class="refresh-icon">🔄</span> <span id="refresh-label">Atualizar</span> <span id="refresh-timer"
+              class="dash-timer-pill">30s</span>
           </button>
 
           <!-- Botão Tela Cheia (Fullscreen) -->
@@ -43,7 +47,8 @@
           </button>
 
           <!-- Seletor de Idioma (Português / Inglês) -->
-          <button id="btn-lang" class="dash-btn dash-btn-lang" title="Alterar idioma: Português / English" aria-label="Alterar idioma: Português ou Inglês">
+          <button id="btn-lang" class="dash-btn dash-btn-lang" title="Alterar idioma: Português / English"
+            aria-label="Alterar idioma: Português ou Inglês">
             <span class="lang-icon">🌐</span>
             <span class="lang-badges">
               <span class="lang-badge active" id="lang-badge-pt">PT</span>
@@ -189,4 +194,5 @@
   <!-- Lógica e Dados dos Rankings (Consome API do Google Sheets via doGet) -->
   <script src="js/dashboard.js?v=2.3"></script>
 </body>
+
 </html>

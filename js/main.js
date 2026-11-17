@@ -96,7 +96,20 @@
       newsErrorSend: "Não foi possível enviar agora. Tente novamente mais tarde.",
       newsAlreadySubscribed: "Você já está cadastrado para receber o lembrete!",
       newsChangeEmail: "Cadastrar outro e-mail",
-      newsHeroBtn: "🔔 Receber Lembrete"
+      newsHeroBtn: "🔔 Receber Lembrete",
+      /* Convite da Direção */
+      directorBadge: "Palavra da Direção",
+      directorTitle: "Um Convite Especial da Direção",
+      directorSub: "Conectando nossos talentos industriais ao mercado e à comunidade de São Carlos.",
+      directorQuote: "É com grande satisfação que convidamos os empresários, parceiros industriais e toda a nossa comunidade a prestigiarem o Workshop SENAI 2026. Nossos formandos em Mecatrônica e Desenvolvimento de Sistemas prepararam projetos inovadores, conectando tecnologia de ponta e soluções práticas para a indústria. Venha nos visitar e conferir de perto o talento da nossa região!",
+      directorName: "Marcio Vieira Marinho",
+      directorRole: "Diretor da Escola e Faculdade SENAI São Carlos",
+      directorCta: "Confirmar Presença no Evento",
+      directorVideoBadge: "Vídeo Oficial",
+      directorVideoTitle: "Convite Oficial da Direção",
+      directorVideoSoon: "Vídeo em gravação com a mensagem do Diretor — em breve disponível!",
+      directorVideoCaption: "Mensagem oficial aos empresários e comunidade de São Carlos",
+      videoNotSupported: "Seu navegador não suporta a reprodução deste vídeo."
     },
     en: {
       theme: "Theme", back: "← Back", eyebrow: "São Carlos · Technology in Action",
@@ -190,7 +203,20 @@
       newsErrorSend: "Could not send right now. Please try again later.",
       newsAlreadySubscribed: "You are already subscribed to receive event reminders!",
       newsChangeEmail: "Register another email",
-      newsHeroBtn: "🔔 Get Reminder"
+      newsHeroBtn: "🔔 Get Reminder",
+      /* Director Invite */
+      directorBadge: "Message from the Board",
+      directorTitle: "A Special Invitation from the Director",
+      directorSub: "Connecting our industrial talents to the market and the São Carlos community.",
+      directorQuote: "It is with great pleasure that we invite entrepreneurs, industry partners and our community to attend the SENAI Workshop 2026. Our graduates in Mechatronics and Systems Development have prepared innovative projects connecting cutting-edge technology and practical solutions for industry. Come visit us and see our regional talent up close!",
+      directorName: "Marcio Vieira Marinho",
+      directorRole: "Director of SENAI São Carlos School and Faculty",
+      directorCta: "Confirm Your Attendance",
+      directorVideoBadge: "Official Video",
+      directorVideoTitle: "Official Invitation from the Director",
+      directorVideoSoon: "Video being recorded with Director's message — coming soon!",
+      directorVideoCaption: "Official message to entrepreneurs and the São Carlos community",
+      videoNotSupported: "Your browser does not support this video."
     }
   };
 
@@ -507,63 +533,63 @@
 
     return '<section class="section newsletter-section" id="lembrete">' +
       '<div class="container">' +
-        '<div class="newsletter-card reveal">' +
-          '<div class="newsletter-glow"></div>' +
-          '<div class="newsletter-grid">' +
-            '<div class="newsletter-info">' +
-              '<div class="newsletter-badge"><span class="pulse-bell">🔔</span> ' + T("newsBadge") + '</div>' +
-              '<h2 class="newsletter-title">' + T("newsTitle") + '</h2>' +
-              '<p class="newsletter-sub">' + T("newsSub") + '</p>' +
-              '<div class="newsletter-event-pill">' +
-                '<span class="newsletter-pill-item">📅 ' + T("eventHeroBadgeDate") + '</span>' +
-                '<span class="newsletter-pill-sep">•</span>' +
-                '<span class="newsletter-pill-item">⏰ ' + T("eventHeroBadgeTime") + '</span>' +
-                '<span class="newsletter-pill-sep">•</span>' +
-                '<span class="newsletter-pill-item">📍 ' + T("eventHeroBadgeLoc") + '</span>' +
-              '</div>' +
-            '</div>' +
-            '<div class="newsletter-form-wrapper" id="newsletterFormWrapper">' +
-              (alreadySubscribed
-                ? '<div class="newsletter-success-box">' +
-                    '<div class="newsletter-success-icon">🎉</div>' +
-                    '<h3>' + T("newsSuccessTitle") + '</h3>' +
-                    '<p>' + T("newsAlreadySubscribed") + '</p>' +
-                    '<div class="newsletter-confirmed-email">📧 ' + savedEmail + '</div>' +
-                    '<button type="button" class="btn-ghost newsletter-reset-btn" id="newsResetBtn">' + T("newsChangeEmail") + '</button>' +
-                  '</div>'
-                : '<form class="newsletter-form" id="newsletterForm" novalidate>' +
-                    '<div class="newsletter-field-group">' +
-                      '<div class="newsletter-field">' +
-                        '<label for="newsName" class="newsletter-label">' + T("newsNameLabel") + '</label>' +
-                        '<input type="text" id="newsName" name="name" class="newsletter-input" placeholder="' + esc(T("newsNamePlaceholder")) + '">' +
-                      '</div>' +
-                      '<div class="newsletter-field">' +
-                        '<label for="newsEmail" class="newsletter-label">' + T("newsEmailLabel") + ' *</label>' +
-                        '<input type="email" id="newsEmail" name="email" class="newsletter-input" placeholder="' + esc(T("newsEmailPlaceholder")) + '" required autocomplete="email">' +
-                      '</div>' +
-                    '</div>' +
-                    '<div class="newsletter-field-group newsletter-bottom-row">' +
-                      '<div class="newsletter-field newsletter-field-select">' +
-                        '<label for="newsProfile" class="newsletter-label">' + T("newsProfileLabel") + '</label>' +
-                        '<select id="newsProfile" name="profile" class="newsletter-select">' +
-                          '<option value="Visitante">' + T("newsProfileVisitor") + '</option>' +
-                          '<option value="Empresa">' + T("newsProfileCompany") + '</option>' +
-                          '<option value="Aluno">' + T("newsProfileStudent") + '</option>' +
-                          '<option value="Professor">' + T("newsProfileTeacher") + '</option>' +
-                        '</select>' +
-                      '</div>' +
-                      '<button type="submit" class="btn newsletter-submit-btn" id="newsSubmitBtn">' +
-                        '<span>' + T("newsSubmitBtn") + '</span>' +
-                        '<span class="go">→</span>' +
-                      '</button>' +
-                    '</div>' +
-                    '<div class="newsletter-feedback" id="newsFeedback" style="display:none;" aria-live="polite"></div>' +
-                  '</form>') +
-            '</div>' +
-          '</div>' +
-        '</div>' +
+      '<div class="newsletter-card reveal">' +
+      '<div class="newsletter-glow"></div>' +
+      '<div class="newsletter-grid">' +
+      '<div class="newsletter-info">' +
+      '<div class="newsletter-badge"><span class="pulse-bell">🔔</span> ' + T("newsBadge") + '</div>' +
+      '<h2 class="newsletter-title">' + T("newsTitle") + '</h2>' +
+      '<p class="newsletter-sub">' + T("newsSub") + '</p>' +
+      '<div class="newsletter-event-pill">' +
+      '<span class="newsletter-pill-item">📅 ' + T("eventHeroBadgeDate") + '</span>' +
+      '<span class="newsletter-pill-sep">•</span>' +
+      '<span class="newsletter-pill-item">⏰ ' + T("eventHeroBadgeTime") + '</span>' +
+      '<span class="newsletter-pill-sep">•</span>' +
+      '<span class="newsletter-pill-item">📍 ' + T("eventHeroBadgeLoc") + '</span>' +
       '</div>' +
-    '</section>';
+      '</div>' +
+      '<div class="newsletter-form-wrapper" id="newsletterFormWrapper">' +
+      (alreadySubscribed
+        ? '<div class="newsletter-success-box">' +
+        '<div class="newsletter-success-icon">🎉</div>' +
+        '<h3>' + T("newsSuccessTitle") + '</h3>' +
+        '<p>' + T("newsAlreadySubscribed") + '</p>' +
+        '<div class="newsletter-confirmed-email">📧 ' + savedEmail + '</div>' +
+        '<button type="button" class="btn-ghost newsletter-reset-btn" id="newsResetBtn">' + T("newsChangeEmail") + '</button>' +
+        '</div>'
+        : '<form class="newsletter-form" id="newsletterForm" novalidate>' +
+        '<div class="newsletter-field-group">' +
+        '<div class="newsletter-field">' +
+        '<label for="newsName" class="newsletter-label">' + T("newsNameLabel") + '</label>' +
+        '<input type="text" id="newsName" name="name" class="newsletter-input" placeholder="' + esc(T("newsNamePlaceholder")) + '">' +
+        '</div>' +
+        '<div class="newsletter-field">' +
+        '<label for="newsEmail" class="newsletter-label">' + T("newsEmailLabel") + ' *</label>' +
+        '<input type="email" id="newsEmail" name="email" class="newsletter-input" placeholder="' + esc(T("newsEmailPlaceholder")) + '" required autocomplete="email">' +
+        '</div>' +
+        '</div>' +
+        '<div class="newsletter-field-group newsletter-bottom-row">' +
+        '<div class="newsletter-field newsletter-field-select">' +
+        '<label for="newsProfile" class="newsletter-label">' + T("newsProfileLabel") + '</label>' +
+        '<select id="newsProfile" name="profile" class="newsletter-select">' +
+        '<option value="Visitante">' + T("newsProfileVisitor") + '</option>' +
+        '<option value="Empresa">' + T("newsProfileCompany") + '</option>' +
+        '<option value="Aluno">' + T("newsProfileStudent") + '</option>' +
+        '<option value="Professor">' + T("newsProfileTeacher") + '</option>' +
+        '</select>' +
+        '</div>' +
+        '<button type="submit" class="btn newsletter-submit-btn" id="newsSubmitBtn">' +
+        '<span>' + T("newsSubmitBtn") + '</span>' +
+        '<span class="go">→</span>' +
+        '</button>' +
+        '</div>' +
+        '<div class="newsletter-feedback" id="newsFeedback" style="display:none;" aria-live="polite"></div>' +
+        '</form>') +
+      '</div>' +
+      '</div>' +
+      '</div>' +
+      '</div>' +
+      '</section>';
   }
 
   function initNewsletterForm() {
@@ -574,7 +600,7 @@
       resetBtn.onclick = function () {
         try {
           localStorage.removeItem("senai_newsletter_subscribed");
-        } catch (e) {}
+        } catch (e) { }
         var section = document.getElementById("lembrete");
         if (section) {
           var isCourse = document.body ? (document.body.getAttribute("data-page") !== "home") : false;
@@ -631,10 +657,10 @@
         if (wrapper) {
           wrapper.innerHTML =
             '<div class="newsletter-success-box">' +
-              '<div class="newsletter-success-icon">🎉</div>' +
-              '<h3>' + T("newsSuccessTitle") + '</h3>' +
-              '<p>' + T("newsSuccessDesc") + '</p>' +
-              '<div class="newsletter-confirmed-email">📧 ' + esc(emailVal) + '</div>' +
+            '<div class="newsletter-success-icon">🎉</div>' +
+            '<h3>' + T("newsSuccessTitle") + '</h3>' +
+            '<p>' + T("newsSuccessDesc") + '</p>' +
+            '<div class="newsletter-confirmed-email">📧 ' + esc(emailVal) + '</div>' +
             '</div>';
         }
       }).catch(function (err) {
@@ -652,8 +678,107 @@
     });
   }
 
+  /* ----- SEÇÃO CONVITE DA DIREÇÃO (OPÇÃO 1) ----- */
+  function renderDirectorInviteHTML() {
+    var d = S.diretor || {};
+    var nome = esc(d.nome || T("directorName"));
+    var cargo = esc(tr(d.cargo) || T("directorRole"));
+    var mensagem = esc(tr(d.mensagem) || T("directorQuote"));
+    var destaque = d.destaque ? esc(tr(d.destaque)) : "";
+
+    // Foto do Diretor
+    var fotoUrl = d.foto ? resolveImg(d.foto) : "img/diretor-placeholder.svg";
+    var avatarHTML = '<div class="director-avatar-wrapper">' +
+      '<img class="director-avatar-img" src="' + esc(fotoUrl) + '" alt="' + nome + '" loading="lazy" onerror="this.src=\'img/diretor-placeholder.svg\'">' +
+      '<span class="director-avatar-badge" title="SENAI São Carlos">✓</span>' +
+      '</div>';
+
+    // Player de Vídeo ou Prévia Interativa
+    var videoHTML = "";
+    var vUrl = (d.videoUrl || "").trim();
+
+    // Detecção de YouTube
+    var ytMatch = vUrl.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+    if (ytMatch && ytMatch[1]) {
+      videoHTML = '<div class="director-video-frame">' +
+        '<iframe src="https://www.youtube-nocookie.com/embed/' + ytMatch[1] + '?rel=0" title="' + esc(T("directorVideoTitle")) + '" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>' +
+        '</div>';
+    } else if (vUrl && (vUrl.indexOf(".mp4") !== -1 || vUrl.indexOf(".webm") !== -1)) {
+      videoHTML = '<div class="director-video-frame">' +
+        '<video class="director-video-element" controls poster="' + esc(fotoUrl) + '" preload="metadata">' +
+        '<source src="' + esc(vUrl) + '" type="video/mp4">' +
+        T("videoNotSupported") +
+        '</video>' +
+        '</div>';
+    } else {
+      // Placeholder elegante e interativo (vídeo em gravação)
+      videoHTML = '<div class="director-video-placeholder reveal" id="directorVideoPlaceholder" role="button" tabindex="0" title="' + esc(T("directorVideoSoon")) + '" aria-label="' + esc(T("directorVideoSoon")) + '">' +
+        '<div class="director-video-glow"></div>' +
+        '<div class="director-video-thumb-bg"></div>' +
+        '<div class="director-video-overlay">' +
+        '<div class="director-video-play-btn" aria-hidden="true">' +
+        '<span class="director-play-icon">▶</span>' +
+        '<span class="director-play-pulse"></span>' +
+        '</div>' +
+        '<div class="director-video-info">' +
+        '<span class="director-video-badge">🎬 ' + esc(T("directorVideoBadge")) + '</span>' +
+        '<h3 class="director-video-title">' + esc(T("directorVideoTitle")) + '</h3>' +
+        '<p class="director-video-sub">' + esc(T("directorVideoSoon")) + '</p>' +
+        '</div>' +
+        '<span class="director-video-pill">⏱️ 01:30 min</span>' +
+        '</div>' +
+        '</div>';
+    }
+
+    return '<section class="section director-section" id="convite-direcao">' +
+      '<div class="container">' +
+      '<div class="director-grid">' +
+      '<div class="director-media-col">' +
+      '<div class="director-video-wrapper">' +
+      videoHTML +
+      '</div>' +
+      '<div class="director-video-caption">' +
+      '<span class="director-dot"></span> ' +
+      '<span>' + esc(T("directorVideoCaption")) + '</span>' +
+      '</div>' +
+      '</div>' +
+      '<div class="director-content-col reveal">' +
+      '<div class="director-badge"><span class="director-badge-icon">🏛️</span> ' + esc(T("directorBadge")) + '</div>' +
+      '<h2 class="director-title">' + esc(T("directorTitle")) + '</h2>' +
+      '<p class="director-subtitle">' + esc(T("directorSub")) + '</p>' +
+      '<div class="director-quote-box">' +
+      '<span class="director-quote-mark">“</span>' +
+      '<p class="director-quote-text">' + mensagem + '</p>' +
+      (destaque ? '<p class="director-quote-highlight"><strong>' + destaque + '</strong></p>' : '') +
+      '</div>' +
+      '<div class="director-profile-card">' +
+      avatarHTML +
+      '<div class="director-profile-info">' +
+      '<h4 class="director-profile-name">' + nome + '</h4>' +
+      '<p class="director-profile-role">' + cargo + '</p>' +
+      '<span class="director-profile-unit">SENAI São Carlos • Unidade 601</span>' +
+      '</div>' +
+      '</div>' +
+      '<div class="director-actions">' +
+      '<a class="btn director-cta-btn" href="#lembrete">' +
+      '<span>' + esc(T("directorCta")) + '</span>' +
+      '<span class="go">→</span>' +
+      '</a>' +
+      '<a class="btn-ghost director-location-btn" href="#local">' +
+      '<span>📍 ' + esc(T("eventHeroBadgeLoc")) + '</span>' +
+      '</a>' +
+      '</div>' +
+      '</div>' +
+      '</div>' +
+      '</div>' +
+      '</section>';
+  }
+
   /* ----- HOME ----- */
   function renderHome(root) {
+    var showDirector = (typeof window.SHOW_DIRECTOR_INVITE !== "undefined")
+      ? window.SHOW_DIRECTOR_INVITE
+      : (document.body && document.body.getAttribute("data-director-invite") === "true");
     var np = 0, na = 0;
     cursos.forEach(function (c) { np += totalProj(c); na += totalAlunos(c); });
     var cards = Object.keys(S.cursos).map(function (k) {
@@ -670,27 +795,27 @@
       '<section class="hero"><div class="container"><span class="eyebrow">' + T("eyebrow") + '</span>' +
       '<h1>' + T("heroTitle") + '</h1>' +
       '<div class="hero-event-pill">' +
-        '<span class="hero-pill-icon">📅</span> <strong>' + T("eventHeroBadgeDate") + '</strong>' +
-        '<span class="hero-pill-sep">•</span>' +
-        '<span class="hero-pill-icon">⏰</span> <strong>' + T("eventHeroBadgeTime") + '</strong>' +
-        '<span class="hero-pill-sep">•</span>' +
-        '<span class="hero-pill-icon">📍</span> <a href="#local">' + T("eventHeroBadgeLoc") + '</a>' +
+      '<span class="hero-pill-icon">📅</span> <strong>' + T("eventHeroBadgeDate") + '</strong>' +
+      '<span class="hero-pill-sep">•</span>' +
+      '<span class="hero-pill-icon">⏰</span> <strong>' + T("eventHeroBadgeTime") + '</strong>' +
+      '<span class="hero-pill-sep">•</span>' +
+      '<span class="hero-pill-icon">📍</span> <a href="#local">' + T("eventHeroBadgeLoc") + '</a>' +
       '</div>' +
       '<p class="sub hero-sub-row">' +
-        '<span>' + T("heroSub") + '</span>' +
-        '<button class="hero-qr-btn" id="heroQrBtn" type="button" title="' + esc(T("pageQrBtn")) + '" aria-label="' + esc(T("pageQrBtn")) + '">' +
-          '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
-            '<rect width="5" height="5" x="3" y="3" rx="1"/><rect width="5" height="5" x="16" y="3" rx="1"/><rect width="5" height="5" x="3" y="16" rx="1"/>' +
-            '<path d="M21 16h-3a2 2 0 0 0-2 2v3"/><path d="M21 21v.01"/><path d="M12 7v3a2 2 0 0 1-2 2H7"/>' +
-            '<path d="M3 12h.01"/><path d="M12 3h.01"/><path d="M12 16v.01"/><path d="M16 12h1"/><path d="M21 12v.01"/><path d="M12 21v-1"/>' +
-          '</svg>' +
-        '</button>' +
+      '<span>' + T("heroSub") + '</span>' +
+      '<button class="hero-qr-btn" id="heroQrBtn" type="button" title="' + esc(T("pageQrBtn")) + '" aria-label="' + esc(T("pageQrBtn")) + '">' +
+      '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+      '<rect width="5" height="5" x="3" y="3" rx="1"/><rect width="5" height="5" x="16" y="3" rx="1"/><rect width="5" height="5" x="3" y="16" rx="1"/>' +
+      '<path d="M21 16h-3a2 2 0 0 0-2 2v3"/><path d="M21 21v.01"/><path d="M12 7v3a2 2 0 0 1-2 2H7"/>' +
+      '<path d="M3 12h.01"/><path d="M12 3h.01"/><path d="M12 16v.01"/><path d="M16 12h1"/><path d="M21 12v.01"/><path d="M12 21v-1"/>' +
+      '</svg>' +
+      '</button>' +
       '</p>' +
       '<div class="hero-cta">' +
-        '<a class="btn" href="#turmas">' + T("seeClasses") + '</a>' +
-        '<a class="hero-dash-btn" href="dashboard.html" title="' + esc(T("dashboardTitle")) + '">' + T("dashboardHero") + '</a>' +
-        '<a class="hero-news-btn" href="#lembrete" title="' + esc(T("newsTitle")) + '">' + T("newsHeroBtn") + '</a>' +
+      '<a class="btn" href="#turmas">' + T("seeClasses") + '</a>' +
+      '<a class="hero-news-btn" href="#lembrete" title="' + esc(T("newsTitle")) + '">' + T("newsHeroBtn") + '</a>' +
       '</div></div></section>' +
+      (showDirector ? renderDirectorInviteHTML() : '') +
       '<section class="section" id="turmas"><div class="container"><h2 class="section-title">' + T("classesTitle") + '</h2><p class="section-sub">' + T("classesSub") + '</p><div class="class-grid">' + cards + '</div></div></section>' +
       '<section class="section about"><div class="container"><h2 class="section-title">' + T("aboutTitle") + '</h2><br><p class="about-text">' + T("aboutText") + '</p>' +
       '<div class="stat-grid">' +
@@ -702,55 +827,55 @@
       '<h2 class="section-title">' + T("eventTitle") + '</h2>' +
       '<p class="section-sub">' + T("eventSub") + '</p>' +
       '<div class="event-grid">' +
-        '<div class="event-card reveal">' +
-          '<div class="event-info-item">' +
-            '<div class="event-icon-box">📅</div>' +
-            '<div>' +
-              '<h3>' + T("eventDateLabel") + '</h3>' +
-              '<p><strong>' + T("eventDateVal") + '</strong></p>' +
-              '<span class="event-subtext">' + T("eventDateDays") + '</span>' +
-            '</div>' +
-          '</div>' +
-          '<div class="event-info-item">' +
-            '<div class="event-icon-box">⏰</div>' +
-            '<div>' +
-              '<h3>' + T("eventTimeLabel") + '</h3>' +
-              '<p><strong>' + T("eventTimeVal") + '</strong></p>' +
-              '<span class="event-subtext">' + T("eventTimeSub") + '</span>' +
-            '</div>' +
-          '</div>' +
-          '<div class="event-info-item">' +
-            '<div class="event-icon-box">📍</div>' +
-            '<div>' +
-              '<h3>' + T("eventLocLabel") + '</h3>' +
-              '<p><strong>' + T("eventLocName") + '</strong></p>' +
-              '<span class="event-subtext">' + T("eventLocUnit") + '</span>' +
-            '</div>' +
-          '</div>' +
-          '<div class="event-info-item">' +
-            '<div class="event-icon-box">🗺️</div>' +
-            '<div>' +
-              '<h3>' + T("eventAddrLabel") + '</h3>' +
-              '<p>' + T("eventAddrVal") + '</p>' +
-              '<span class="event-subtext">' + T("eventAddrCity") + '</span>' +
-            '</div>' +
-          '</div>' +
-          '<div class="event-actions">' +
-            '<a class="btn event-map-btn" href="https://maps.app.goo.gl/ERURVEKNRXTKch5o6" target="_blank" rel="noopener">' +
-              '<span>🗺️ ' + T("eventOpenMaps") + '</span>' +
-              '<span class="go">↗</span>' +
-            '</a>' +
-          '</div>' +
-        '</div>' +
-        '<div class="map-card reveal">' +
-          '<div class="map-header">' +
-            '<span class="map-title">' + T("eventMapTitle") + '</span>' +
-            '<a href="https://maps.app.goo.gl/ERURVEKNRXTKch5o6" target="_blank" rel="noopener" class="map-external-link">' + T("eventViewRoute") + '</a>' +
-          '</div>' +
-          '<div class="map-frame-wrapper">' +
-            '<iframe src="https://maps.google.com/maps?q=-22.0234009,-47.8972138&amp;hl=pt-BR&amp;z=16&amp;output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="' + esc(T("eventLocName")) + '"></iframe>' +
-          '</div>' +
-        '</div>' +
+      '<div class="event-card reveal">' +
+      '<div class="event-info-item">' +
+      '<div class="event-icon-box">📅</div>' +
+      '<div>' +
+      '<h3>' + T("eventDateLabel") + '</h3>' +
+      '<p><strong>' + T("eventDateVal") + '</strong></p>' +
+      '<span class="event-subtext">' + T("eventDateDays") + '</span>' +
+      '</div>' +
+      '</div>' +
+      '<div class="event-info-item">' +
+      '<div class="event-icon-box">⏰</div>' +
+      '<div>' +
+      '<h3>' + T("eventTimeLabel") + '</h3>' +
+      '<p><strong>' + T("eventTimeVal") + '</strong></p>' +
+      '<span class="event-subtext">' + T("eventTimeSub") + '</span>' +
+      '</div>' +
+      '</div>' +
+      '<div class="event-info-item">' +
+      '<div class="event-icon-box">📍</div>' +
+      '<div>' +
+      '<h3>' + T("eventLocLabel") + '</h3>' +
+      '<p><strong>' + T("eventLocName") + '</strong></p>' +
+      '<span class="event-subtext">' + T("eventLocUnit") + '</span>' +
+      '</div>' +
+      '</div>' +
+      '<div class="event-info-item">' +
+      '<div class="event-icon-box">🗺️</div>' +
+      '<div>' +
+      '<h3>' + T("eventAddrLabel") + '</h3>' +
+      '<p>' + T("eventAddrVal") + '</p>' +
+      '<span class="event-subtext">' + T("eventAddrCity") + '</span>' +
+      '</div>' +
+      '</div>' +
+      '<div class="event-actions">' +
+      '<a class="btn event-map-btn" href="https://maps.app.goo.gl/ERURVEKNRXTKch5o6" target="_blank" rel="noopener">' +
+      '<span>🗺️ ' + T("eventOpenMaps") + '</span>' +
+      '<span class="go">↗</span>' +
+      '</a>' +
+      '</div>' +
+      '</div>' +
+      '<div class="map-card reveal">' +
+      '<div class="map-header">' +
+      '<span class="map-title">' + T("eventMapTitle") + '</span>' +
+      '<a href="https://maps.app.goo.gl/ERURVEKNRXTKch5o6" target="_blank" rel="noopener" class="map-external-link">' + T("eventViewRoute") + '</a>' +
+      '</div>' +
+      '<div class="map-frame-wrapper">' +
+      '<iframe src="https://maps.google.com/maps?q=-22.0234009,-47.8972138&amp;hl=pt-BR&amp;z=16&amp;output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="' + esc(T("eventLocName")) + '"></iframe>' +
+      '</div>' +
+      '</div>' +
       '</div></div></section>' +
       renderNewsletterHTML(false) +
       footerHTML(false);
@@ -759,6 +884,19 @@
     if (heroQrBtn) {
       heroQrBtn.onclick = function () {
         openPageQrModal();
+      };
+    }
+
+    var dirVidBtn = document.getElementById("directorVideoPlaceholder");
+    if (dirVidBtn) {
+      dirVidBtn.onclick = function () {
+        showToast(T("directorVideoSoon"));
+      };
+      dirVidBtn.onkeydown = function (e) {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          showToast(T("directorVideoSoon"));
+        }
       };
     }
 
@@ -807,10 +945,10 @@
         membersHtml = '<div class="project-members" title="' + esc(T("groupMembers") + ' ' + membersText) + '">' +
           '<span class="members-icon" aria-hidden="true">👥</span>' +
           '<div class="members-content">' +
-            '<span class="members-label">' + esc(T("groupMembers")) + '</span> ' +
-            '<span class="members-names">' + esc(membersText) + '</span>' +
+          '<span class="members-label">' + esc(T("groupMembers")) + '</span> ' +
+          '<span class="members-names">' + esc(membersText) + '</span>' +
           '</div>' +
-        '</div>';
+          '</div>';
       } else if (Number(p.alunos) > 0) {
         membersHtml = '<span class="meta">' + p.alunos + ' ' + T("members") + '</span>';
       }
@@ -818,19 +956,19 @@
       return '<article class="project-card reveal" id="proj-' + i + '" data-proj-id="' + esc(pid) + '" data-proj-idx="' + i + '" tabindex="0" role="button" aria-haspopup="dialog" aria-label="' + esc(p.nome) + '">' +
         '<div class="project-img">' + (u ? '<img src="' + esc(u) + '" alt="' + esc(p.nome) + '" loading="lazy">' : '<span class="ph">' + esc((p.nome || "?").charAt(0)) + '</span>') + '</div>' +
         '<div class="project-body">' +
-          '<div class="pheader">' +
-            '<div class="ptags">' +
-              '<span class="pname">' + esc(p.nome) + '</span>' +
-              (turmaText ? '<span class="pturma">' + esc(turmaText) + '</span>' : '') +
-            '</div>' +
-            '<span class="card-hint">' + T("details") + ' ↗</span>' +
-          '</div>' +
-          '<h3>' + esc(p.subtitulo) + '</h3>' +
-          '<p>' + esc(p.descricao) + '</p>' +
-          membersHtml +
-          '<div class="actions">' + act(p.funcionamento, T("tech")) + act(p.comercial, T("commercial")) + act(p.landing, T("visit"), true) + '</div>' +
+        '<div class="pheader">' +
+        '<div class="ptags">' +
+        '<span class="pname">' + esc(p.nome) + '</span>' +
+        (turmaText ? '<span class="pturma">' + esc(turmaText) + '</span>' : '') +
         '</div>' +
-      '</article>';
+        '<span class="card-hint">' + T("details") + ' ↗</span>' +
+        '</div>' +
+        '<h3>' + esc(p.subtitulo) + '</h3>' +
+        '<p>' + esc(p.descricao) + '</p>' +
+        membersHtml +
+        '<div class="actions">' + act(p.funcionamento, T("tech")) + act(p.comercial, T("commercial")) + act(p.landing, T("visit"), true) + '</div>' +
+        '</div>' +
+        '</article>';
     }).join("");
 
     root.innerHTML = headerHTML(true) +
@@ -1259,93 +1397,93 @@
     dialog.innerHTML =
       '<button class="modal-close" id="modalCloseBtn" aria-label="' + esc(T("close")) + '">&times;</button>' +
       '<a class="modal-whatsapp-float" id="modalWhatsappFloatBtn" href="' + esc(waUrl) + '" target="_blank" rel="noopener" title="' + esc(T("shareWhatsapp")) + '" aria-label="' + esc(T("shareWhatsapp")) + '">' +
-        WA_ICON_SVG +
+      WA_ICON_SVG +
       '</a>' +
       '<div class="modal-cover">' +
-        (img
-          ? '<img src="' + esc(img) + '" alt="' + esc(p.nome) + '">'
-          : '<span class="ph">' + esc((p.nome || "?").charAt(0)) + '</span>') +
+      (img
+        ? '<img src="' + esc(img) + '" alt="' + esc(p.nome) + '">'
+        : '<span class="ph">' + esc((p.nome || "?").charAt(0)) + '</span>') +
       '</div>' +
       '<div class="modal-scroll">' +
-        '<div class="modal-meta-row">' +
-          '<span class="modal-badge">' + courseBadge + ' · ' + esc(tr(c.turma)) + '</span>' +
-          (turmaText ? '<span class="modal-badge modal-badge-turma">' + esc(turmaText) + '</span>' : '') +
-          (!membersText && Number(p.alunos) > 0 ? '<span class="meta">' + p.alunos + ' ' + T("members") + '</span>' : '') +
-          '<div class="modal-meta-actions">' +
-            '<a class="btn-whatsapp-share" id="modalWhatsappBtn" href="' + esc(waUrl) + '" target="_blank" rel="noopener" title="' + esc(T("shareWhatsapp")) + '">' +
-              WA_ICON_SVG +
-              '<span>WhatsApp</span>' +
-            '</a>' +
-            '<button class="btn-qr-toggle" id="modalQrToggleBtn" aria-expanded="false" title="' + esc(T("qrToggle")) + '">' +
-              '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>' +
-              '<span id="modalQrToggleText">' + esc(T("qrToggle")) + '</span>' +
-            '</button>' +
-          '</div>' +
+      '<div class="modal-meta-row">' +
+      '<span class="modal-badge">' + courseBadge + ' · ' + esc(tr(c.turma)) + '</span>' +
+      (turmaText ? '<span class="modal-badge modal-badge-turma">' + esc(turmaText) + '</span>' : '') +
+      (!membersText && Number(p.alunos) > 0 ? '<span class="meta">' + p.alunos + ' ' + T("members") + '</span>' : '') +
+      '<div class="modal-meta-actions">' +
+      '<a class="btn-whatsapp-share" id="modalWhatsappBtn" href="' + esc(waUrl) + '" target="_blank" rel="noopener" title="' + esc(T("shareWhatsapp")) + '">' +
+      WA_ICON_SVG +
+      '<span>WhatsApp</span>' +
+      '</a>' +
+      '<button class="btn-qr-toggle" id="modalQrToggleBtn" aria-expanded="false" title="' + esc(T("qrToggle")) + '">' +
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>' +
+      '<span id="modalQrToggleText">' + esc(T("qrToggle")) + '</span>' +
+      '</button>' +
+      '</div>' +
+      '</div>' +
+      '<h2 class="modal-title">' + esc(p.nome) + '</h2>' +
+      '<h3 class="modal-sub">' + esc(p.subtitulo) + '</h3>' +
+      '<p class="modal-desc">' + esc(p.descricao) + '</p>' +
+      (membersText
+        ? '<div class="modal-members-box">' +
+        '<span class="modal-members-icon" aria-hidden="true">👥</span>' +
+        '<div class="modal-members-content">' +
+        '<span class="modal-members-label">' + esc(T("groupMembers")) + '</span>' +
+        '<span class="modal-members-list">' + esc(membersText) + '</span>' +
         '</div>' +
-        '<h2 class="modal-title">' + esc(p.nome) + '</h2>' +
-        '<h3 class="modal-sub">' + esc(p.subtitulo) + '</h3>' +
-        '<p class="modal-desc">' + esc(p.descricao) + '</p>' +
-        (membersText
-          ? '<div class="modal-members-box">' +
-              '<span class="modal-members-icon" aria-hidden="true">👥</span>' +
-              '<div class="modal-members-content">' +
-                '<span class="modal-members-label">' + esc(T("groupMembers")) + '</span>' +
-                '<span class="modal-members-list">' + esc(membersText) + '</span>' +
-              '</div>' +
-            '</div>'
-          : '') +
-        '<div class="modal-actions actions" id="modalActions">' +
-          act(p.funcionamento, T("tech")) +
-          act(p.comercial, T("commercial")) +
-          act(p.landing, T("visit"), true) +
-        '</div>' +
-        '<div class="modal-eval-bar" id="modalEvalBar">' +
-          '<div class="eval-title">' +
-            '<span>' + T("evalTitle") + '</span>' +
-          '</div>' +
-          '<span class="eval-divider">-</span>' +
-          '<div class="eval-item">' +
-            '<span class="eval-label">' + T("evalApresentacao") + '</span>' +
-            renderStarsHTML("apresentacao", currentRatings.apresentacao) +
-          '</div>' +
-          '<span class="eval-divider">-</span>' +
-          '<div class="eval-item">' +
-            '<span class="eval-label">' + T("evalProjeto") + '</span>' +
-            renderStarsHTML("projeto", currentRatings.projeto) +
-          '</div>' +
-        '</div>' +
-        '<div class="modal-share" id="modalShareBox">' +
-          '<div class="modal-share-top">' +
-            '<div class="modal-share-title">' +
-              '<span>' + T("qrTitle") + '</span>' +
-              '<span class="modal-share-badge">#' + esc(pid) + '</span>' +
-            '</div>' +
-            '<span class="modal-share-sub">' + T("qrSub") + '</span>' +
-          '</div>' +
-          '<div class="modal-share-grid">' +
-            '<div class="modal-qr-frame" id="modalQrFrame">' + qrSvg + '</div>' +
-            '<div class="modal-share-info">' +
-              '<div class="modal-url-box">' +
-                '<input type="text" class="modal-url-input" id="modalUrlInput" value="' + esc(shareUrl) + '" readonly>' +
-                '<button class="modal-btn-copy" id="modalCopyBtn">' + T("copyLink") + '</button>' +
-              '</div>' +
-              '<div class="modal-share-buttons">' +
-                '<a class="btn-share-sec btn-share-wa" id="modalShareWaBtn" href="' + esc(waUrl) + '" target="_blank" rel="noopener">' + WA_ICON_SVG + ' WhatsApp</a>' +
-                '<button class="btn-share-sec" id="modalDownloadSvgBtn">📥 ' + T("downloadSvg") + '</button>' +
-                '<button class="btn-share-sec" id="modalDownloadPngBtn">🖼️ ' + T("downloadPng") + '</button>' +
-                '<a class="btn-share-sec" href="' + esc(shareUrl) + '" target="_blank" rel="noopener">↗ ' + T("openNewTab") + '</a>' +
-              '</div>' +
-              '<div class="modal-base-url-box" id="modalBaseUrlBox">' +
-                '<label>URL base no GitHub Pages (ex: https://usuario.github.io/senai-workshop-2026):</label>' +
-                '<div class="modal-base-url-row">' +
-                  '<input type="text" class="modal-base-url-input" id="modalBaseUrlInput" placeholder="https://seu-usuario.github.io/senai-workshop-2026" value="' + esc(customBase) + '">' +
-                  '<button class="modal-base-url-save" id="modalBaseUrlSave">' + T("save") + '</button>' +
-                  '<button class="btn-share-sec" id="modalBaseUrlReset" style="padding:4px 8px;font-size:.75rem">' + T("reset") + '</button>' +
-                '</div>' +
-              '</div>' +
-            '</div>' +
-          '</div>' +
-        '</div>' +
+        '</div>'
+        : '') +
+      '<div class="modal-actions actions" id="modalActions">' +
+      act(p.funcionamento, T("tech")) +
+      act(p.comercial, T("commercial")) +
+      act(p.landing, T("visit"), true) +
+      '</div>' +
+      '<div class="modal-eval-bar" id="modalEvalBar">' +
+      '<div class="eval-title">' +
+      '<span>' + T("evalTitle") + '</span>' +
+      '</div>' +
+      '<span class="eval-divider">-</span>' +
+      '<div class="eval-item">' +
+      '<span class="eval-label">' + T("evalApresentacao") + '</span>' +
+      renderStarsHTML("apresentacao", currentRatings.apresentacao) +
+      '</div>' +
+      '<span class="eval-divider">-</span>' +
+      '<div class="eval-item">' +
+      '<span class="eval-label">' + T("evalProjeto") + '</span>' +
+      renderStarsHTML("projeto", currentRatings.projeto) +
+      '</div>' +
+      '</div>' +
+      '<div class="modal-share" id="modalShareBox">' +
+      '<div class="modal-share-top">' +
+      '<div class="modal-share-title">' +
+      '<span>' + T("qrTitle") + '</span>' +
+      '<span class="modal-share-badge">#' + esc(pid) + '</span>' +
+      '</div>' +
+      '<span class="modal-share-sub">' + T("qrSub") + '</span>' +
+      '</div>' +
+      '<div class="modal-share-grid">' +
+      '<div class="modal-qr-frame" id="modalQrFrame">' + qrSvg + '</div>' +
+      '<div class="modal-share-info">' +
+      '<div class="modal-url-box">' +
+      '<input type="text" class="modal-url-input" id="modalUrlInput" value="' + esc(shareUrl) + '" readonly>' +
+      '<button class="modal-btn-copy" id="modalCopyBtn">' + T("copyLink") + '</button>' +
+      '</div>' +
+      '<div class="modal-share-buttons">' +
+      '<a class="btn-share-sec btn-share-wa" id="modalShareWaBtn" href="' + esc(waUrl) + '" target="_blank" rel="noopener">' + WA_ICON_SVG + ' WhatsApp</a>' +
+      '<button class="btn-share-sec" id="modalDownloadSvgBtn">📥 ' + T("downloadSvg") + '</button>' +
+      '<button class="btn-share-sec" id="modalDownloadPngBtn">🖼️ ' + T("downloadPng") + '</button>' +
+      '<a class="btn-share-sec" href="' + esc(shareUrl) + '" target="_blank" rel="noopener">↗ ' + T("openNewTab") + '</a>' +
+      '</div>' +
+      '<div class="modal-base-url-box" id="modalBaseUrlBox">' +
+      '<label>URL base no GitHub Pages (ex: https://usuario.github.io/senai-workshop-2026):</label>' +
+      '<div class="modal-base-url-row">' +
+      '<input type="text" class="modal-base-url-input" id="modalBaseUrlInput" placeholder="https://seu-usuario.github.io/senai-workshop-2026" value="' + esc(customBase) + '">' +
+      '<button class="modal-base-url-save" id="modalBaseUrlSave">' + T("save") + '</button>' +
+      '<button class="btn-share-sec" id="modalBaseUrlReset" style="padding:4px 8px;font-size:.75rem">' + T("reset") + '</button>' +
+      '</div>' +
+      '</div>' +
+      '</div>' +
+      '</div>' +
+      '</div>' +
       '</div>';
 
     // Handlers inside modal
@@ -1514,33 +1652,33 @@
     dialog.innerHTML =
       '<button class="modal-close" id="modalCloseBtn" aria-label="' + esc(T("close")) + '">&times;</button>' +
       '<a class="modal-whatsapp-float" id="pageQrWhatsappFloatBtn" href="' + esc(waPageUrl) + '" target="_blank" rel="noopener" title="' + esc(T("shareWhatsapp")) + '" aria-label="' + esc(T("shareWhatsapp")) + '">' +
-        WA_ICON_SVG +
+      WA_ICON_SVG +
       '</a>' +
       '<div class="page-qr-dialog-body">' +
-        '<div class="page-qr-header">' +
-          '<span class="modal-badge">SENAI SÃO CARLOS · 2026</span>' +
-          '<h2 class="page-qr-title">' + esc(T("pageQrTitle")) + '</h2>' +
-          '<p class="page-qr-sub">' + esc(T("pageQrSub")) + '</p>' +
-        '</div>' +
-        '<div class="page-qr-frame" id="pageQrFrame">' + qrSvg + '</div>' +
-        '<div class="modal-url-box page-qr-url-box">' +
-          '<input type="text" class="modal-url-input" id="pageQrUrlInput" value="' + esc(homeUrl) + '" readonly>' +
-          '<button class="modal-btn-copy" id="pageQrCopyBtn">' + T("copyLink") + '</button>' +
-        '</div>' +
-        '<div class="modal-share-buttons" style="justify-content:center">' +
-          '<a class="btn-share-sec btn-share-wa" id="pageQrShareWaBtn" href="' + esc(waPageUrl) + '" target="_blank" rel="noopener">' + WA_ICON_SVG + ' WhatsApp</a>' +
-          '<button class="btn-share-sec" id="pageQrDownloadSvgBtn">📥 ' + T("downloadSvg") + '</button>' +
-          '<button class="btn-share-sec" id="pageQrDownloadPngBtn">🖼️ ' + T("downloadPng") + '</button>' +
-          '<a class="btn-share-sec" href="' + esc(homeUrl) + '" target="_blank" rel="noopener">↗ ' + T("openNewTab") + '</a>' +
-        '</div>' +
-        '<div class="modal-base-url-box" id="pageQrBaseUrlBox">' +
-          '<label>URL base no GitHub Pages (ex: https://usuario.github.io/senai-workshop-2026):</label>' +
-          '<div class="modal-base-url-row">' +
-            '<input type="text" class="modal-base-url-input" id="pageQrBaseUrlInput" placeholder="https://seu-usuario.github.io/senai-workshop-2026" value="' + esc(customBase) + '">' +
-            '<button class="modal-base-url-save" id="pageQrBaseUrlSave">' + T("save") + '</button>' +
-            '<button class="btn-share-sec" id="pageQrBaseUrlReset" style="padding:4px 8px;font-size:.75rem">' + T("reset") + '</button>' +
-          '</div>' +
-        '</div>' +
+      '<div class="page-qr-header">' +
+      '<span class="modal-badge">SENAI SÃO CARLOS · 2026</span>' +
+      '<h2 class="page-qr-title">' + esc(T("pageQrTitle")) + '</h2>' +
+      '<p class="page-qr-sub">' + esc(T("pageQrSub")) + '</p>' +
+      '</div>' +
+      '<div class="page-qr-frame" id="pageQrFrame">' + qrSvg + '</div>' +
+      '<div class="modal-url-box page-qr-url-box">' +
+      '<input type="text" class="modal-url-input" id="pageQrUrlInput" value="' + esc(homeUrl) + '" readonly>' +
+      '<button class="modal-btn-copy" id="pageQrCopyBtn">' + T("copyLink") + '</button>' +
+      '</div>' +
+      '<div class="modal-share-buttons" style="justify-content:center">' +
+      '<a class="btn-share-sec btn-share-wa" id="pageQrShareWaBtn" href="' + esc(waPageUrl) + '" target="_blank" rel="noopener">' + WA_ICON_SVG + ' WhatsApp</a>' +
+      '<button class="btn-share-sec" id="pageQrDownloadSvgBtn">📥 ' + T("downloadSvg") + '</button>' +
+      '<button class="btn-share-sec" id="pageQrDownloadPngBtn">🖼️ ' + T("downloadPng") + '</button>' +
+      '<a class="btn-share-sec" href="' + esc(homeUrl) + '" target="_blank" rel="noopener">↗ ' + T("openNewTab") + '</a>' +
+      '</div>' +
+      '<div class="modal-base-url-box" id="pageQrBaseUrlBox">' +
+      '<label>URL base no GitHub Pages (ex: https://usuario.github.io/senai-workshop-2026):</label>' +
+      '<div class="modal-base-url-row">' +
+      '<input type="text" class="modal-base-url-input" id="pageQrBaseUrlInput" placeholder="https://seu-usuario.github.io/senai-workshop-2026" value="' + esc(customBase) + '">' +
+      '<button class="modal-base-url-save" id="pageQrBaseUrlSave">' + T("save") + '</button>' +
+      '<button class="btn-share-sec" id="pageQrBaseUrlReset" style="padding:4px 8px;font-size:.75rem">' + T("reset") + '</button>' +
+      '</div>' +
+      '</div>' +
       '</div>';
 
     document.getElementById("modalCloseBtn").onclick = function () { closeModal(false); };

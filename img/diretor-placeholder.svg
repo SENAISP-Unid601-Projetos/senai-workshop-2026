@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1a2336"/>
+      <stop offset="100%" stop-color="#0e1422"/>
+    </linearGradient>
+    <linearGradient id="borderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e4002b"/>
+      <stop offset="50%" stop-color="#ff3b57"/>
+      <stop offset="100%" stop-color="#0a6cff"/>
+    </linearGradient>
+    <linearGradient id="avatarGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#94a3b8"/>
+      <stop offset="100%" stop-color="#475569"/>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="6" stdDeviation="12" flood-color="#e4002b" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <!-- Fundo Circular com borda gradiente -->
+  <circle cx="200" cy="200" r="190" fill="url(#bgGrad)" stroke="url(#borderGrad)" stroke-width="6" filter="url(#glow)"/>
+
+  <!-- Padrão sutil geométrico -->
+  <circle cx="200" cy="200" r="150" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="1.5" stroke-dasharray="6,6"/>
+  <circle cx="200" cy="200" r="110" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1.5"/>
+
+  <!-- Silhueta da Cabeça -->
+  <circle cx="200" cy="145" r="56" fill="url(#avatarGrad)"/>
+
+  <!-- Silhueta dos Ombros e Terno -->
+  <path d="M105,325 C105,250 150,225 200,225 C250,225 295,250 295,325 C265,345 233,355 200,355 C167,355 135,345 105,325 Z" fill="url(#avatarGrad)"/>
+
+  <!-- Gola / Gravata estilizada -->
+  <polygon points="200,230 185,275 200,305 215,275" fill="#e2e8f0" opacity="0.9"/>
+  <polygon points="200,245 192,275 200,320 208,275" fill="#e4002b"/>
+
+  <!-- Selo "SENAI DIRETOR" na base -->
+  <rect x="110" y="325" width="180" height="34" rx="17" fill="#141b2b" stroke="url(#borderGrad)" stroke-width="2"/>
+  <text x="200" y="347" text-anchor="middle" fill="#eef2f8" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" letter-spacing="1.5">SENAI · DIREÇÃO</text>
+</svg>

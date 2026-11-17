@@ -420,7 +420,7 @@ window.SITE = {
           integrantes: ["Isis Cristina Segnini Brodowsky", "Lara Rodrigues Callegaro", "Miguel Henrique Gionimi Rodrigues", "Rafael Aalexandre Zani"],
           subtitulo: "Mais precisão, menos esforço, melhores resultados.",
           descricao: "A BRATORQ é um projeto desenvolvido por técnicos em Mecatrônica, que une tecnologia, inovação e automação para facilitar os processos de trabalho. O equipamento consiste em uma furadeira integrada a um braço articulado, proporcionando maior precisão, estabilidade e praticidade nas operações de perfuração. A proposta é reduzir o esforço físico do operador, facilitar o manuseio da ferramenta e otimizar as atividades, oferecendo uma solução versátil e eficiente para diferentes aplicações.",
-          imagem: "img/projetos/mec-2.jpeg",
+          imagem: "img/projetos/mec-10.jpg",
           alunos: 0,
           landing: "https://sites.google.com/aluno.senai.br/bratorq/in%C3%ADcio",
           funcionamento: "",

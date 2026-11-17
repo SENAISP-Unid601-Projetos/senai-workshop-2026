@@ -768,9 +768,10 @@
 
   function act(url, label, primary) {
     var u = safeUrl(url);
-    return u
-      ? '<a class="act' + (primary ? " primary" : "") + '" href="' + esc(u) + '" target="_blank" rel="noopener">' + label + '</a>'
-      : '<a class="act' + (primary ? " primary" : "") + '" href="#" data-empty="1">' + label + '</a>';
+    if (u) {
+      return '<a class="act' + (primary ? " primary" : "") + '" href="' + esc(u) + '" target="_blank" rel="noopener">' + label + '</a>';
+    }
+    return '<a class="act is-disabled' + (primary ? " primary" : "") + '" href="#" data-empty="1" aria-disabled="true" tabindex="-1" title="' + esc(T("soonMsg")) + '">' + label + '</a>';
   }
 
   /* ----- PÁGINA DE CURSO ----- */
@@ -1374,6 +1375,7 @@
       modalActions.addEventListener("click", function (e) {
         var a = e.target.closest ? e.target.closest("a") : null;
         if (!a) return;
+        if (a.hasAttribute("data-empty") || a.classList.contains("is-disabled")) return;
         var label = (a.textContent || "").trim().toLowerCase();
         var actType = "visitar_site";
         var actUrl = p.landing;
@@ -1689,6 +1691,9 @@
       // If clicking inside action buttons, let default link/toast handle it and track lead
       var actionBtn = e.target.closest ? e.target.closest(".actions a, .actions button") : null;
       if (actionBtn) {
+        if (actionBtn.hasAttribute("data-empty") || actionBtn.classList.contains("is-disabled")) {
+          return;
+        }
         var cardEl = e.target.closest ? e.target.closest(".project-card") : null;
         if (cardEl) {
           var idx = Number(cardEl.getAttribute("data-proj-idx"));

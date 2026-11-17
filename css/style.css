@@ -950,6 +950,31 @@ section {
   color: #fff
 }
 
+/* Botões de Ação Desabilitados (sem link) */
+.act.is-disabled,
+.act[data-empty="1"],
+.act[aria-disabled="true"] {
+  opacity: .36 !important;
+  cursor: not-allowed !important;
+  color: var(--muted) !important;
+  background: color-mix(in srgb, var(--card-2) 60%, transparent) !important;
+  border-color: color-mix(in srgb, var(--line) 60%, transparent) !important;
+  box-shadow: none !important;
+  transform: none !important;
+  filter: grayscale(80%) !important;
+}
+
+.act.is-disabled:hover,
+.act[data-empty="1"]:hover,
+.act[aria-disabled="true"]:hover {
+  color: var(--muted) !important;
+  background: color-mix(in srgb, var(--card-2) 60%, transparent) !important;
+  border-color: color-mix(in srgb, var(--line) 60%, transparent) !important;
+  transform: none !important;
+  box-shadow: none !important;
+  cursor: not-allowed !important;
+}
+
 .toast {
   position: fixed;
   left: 50%;

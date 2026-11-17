@@ -308,9 +308,94 @@
     return hrefClean;
   }
 
+  var courseShuffledProjects = {};
+
+  function shuffleArray(arr) {
+    if (!arr || !arr.length) return [];
+    var copy = arr.slice();
+    for (var i = copy.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var temp = copy[i];
+      copy[i] = copy[j];
+      copy[j] = temp;
+    }
+    return copy;
+  }
+
+  function shuffleInterleavedByTurma(arr) {
+    if (!arr || arr.length <= 1) return arr ? arr.slice() : [];
+
+    var buckets = {};
+    var namedKeys = [];
+    var hasUnnamed = false;
+
+    for (var i = 0; i < arr.length; i++) {
+      var p = arr[i];
+      var rawTurma = p && p.turma ? formatTurma(p.turma) : "";
+      var k = rawTurma ? rawTurma.toLowerCase() : "__sem_turma__";
+      if (!buckets[k]) {
+        buckets[k] = [];
+        if (k === "__sem_turma__") {
+          hasUnnamed = true;
+        } else {
+          namedKeys.push(k);
+        }
+      }
+      buckets[k].push(p);
+    }
+
+    // Se não há turmas ou só há 1 turma, faz shuffle simples
+    if (namedKeys.length === 0 || (namedKeys.length === 1 && !hasUnnamed)) {
+      return shuffleArray(arr);
+    }
+
+    // Embaralha internamente os projetos de cada turma
+    for (var key in buckets) {
+      buckets[key] = shuffleArray(buckets[key]);
+    }
+
+    // Sorteia qual turma começa primeiro para garantir equidade
+    namedKeys = shuffleArray(namedKeys);
+
+    var orderKeys = namedKeys.slice();
+    if (hasUnnamed) {
+      orderKeys.push("__sem_turma__");
+    }
+
+    // Intercala os projetos das turmas (round-robin)
+    var result = [];
+    var maxLen = 0;
+    for (var b = 0; b < orderKeys.length; b++) {
+      if (buckets[orderKeys[b]].length > maxLen) {
+        maxLen = buckets[orderKeys[b]].length;
+      }
+    }
+
+    for (var round = 0; round < maxLen; round++) {
+      for (var b = 0; b < orderKeys.length; b++) {
+        var item = buckets[orderKeys[b]][round];
+        if (item !== undefined) {
+          result.push(item);
+        }
+      }
+    }
+
+    return result;
+  }
+
+  function getShuffledProjects(key) {
+    if (!courseShuffledProjects[key]) {
+      var orig = (S.cursos[key] && S.cursos[key].projetos) || [];
+      courseShuffledProjects[key] = shuffleInterleavedByTurma(orig);
+    }
+    return courseShuffledProjects[key];
+  }
+
   function findProject(courseKey, idOrSlug) {
     if (!S.cursos[courseKey] || !S.cursos[courseKey].projetos) return null;
-    var list = S.cursos[courseKey].projetos;
+    var list = (courseShuffledProjects[courseKey] && courseShuffledProjects[courseKey].length)
+      ? courseShuffledProjects[courseKey]
+      : S.cursos[courseKey].projetos;
     var target = String(idOrSlug || "").trim().toLowerCase();
     if (!target) return null;
 
@@ -684,7 +769,7 @@
   var timer = null, current = 0;
   function renderCourse(root, key) {
     var c = S.cursos[key];
-    var P = c.projetos;
+    var P = getShuffledProjects(key);
     document.title = "SENAI - " + tr(c.nome) + " " + S.ano;
 
     var chips = P.map(function (p, i) { return '<button class="chip' + (i === 0 ? " active" : "") + '" data-go="' + i + '">' + esc(p.nome) + '</button>'; }).join("");
@@ -1175,6 +1260,7 @@
         '</div>' +
         '<h2 class="modal-title">' + esc(p.nome) + '</h2>' +
         '<h3 class="modal-sub">' + esc(p.subtitulo) + '</h3>' +
+        '<p class="modal-desc">' + esc(p.descricao) + '</p>' +
         (membersText
           ? '<div class="modal-members-box">' +
               '<span class="modal-members-icon" aria-hidden="true">👥</span>' +
@@ -1184,7 +1270,6 @@
               '</div>' +
             '</div>'
           : '') +
-        '<p class="modal-desc">' + esc(p.descricao) + '</p>' +
         '<div class="modal-actions actions" id="modalActions">' +
           act(p.funcionamento, T("tech")) +
           act(p.comercial, T("commercial")) +
@@ -1346,7 +1431,7 @@
     }
 
     // Scroll card into view in background
-    var cardEl = document.getElementById("proj-" + index);
+    var cardEl = document.querySelector('[data-proj-id="' + esc(pid) + '"]') || document.getElementById("proj-" + index);
     if (cardEl && cardEl.scrollIntoView) {
       cardEl.scrollIntoView({ behavior: "smooth", block: "center" });
     }

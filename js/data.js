@@ -446,7 +446,7 @@ window.SITE = {
           integrantes: "",
           subtitulo: "Transformando ideias em circuitos, com precisão e inovação.",
           descricao: "O projeto AFID Machining consiste no desenvolvimento de uma CNC Router voltada à fabricação e prototipagem de placas de circuito impresso (PCBs), com o objetivo de tornar esse processo mais acessível, prático e preciso. Desenvolvida por estudantes de Mecatrônica, a máquina utiliza três eixos de movimentação (X, Y e Z), motores de passo e um sistema de controle automatizado para executar trajetórias de usinagem a partir de comandos digitais. Atualmente em fase de desenvolvimento e montagem, o projeto busca integrar conhecimentos de mecânica, eletrônica e programação, oferecendo uma solução que facilite a criação de protótipos eletrônicos e incentive a inovação tecnológica.",
-          imagem: "img/projetos/mec-2.jpeg",
+          imagem: "img/projetos/mec-12.png",
           alunos: 0,
           landing: "",
           funcionamento: "https://www.youtube.com/watch?v=7AjiiXWqtWg",

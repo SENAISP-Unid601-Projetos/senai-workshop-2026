@@ -77,7 +77,7 @@ window.SITE = {
         {
           id: "ds-1",
           nome: "Projeto DS 1",
-          turma: "",
+          turma: "2IDS-A-SEDUC",
           integrantes: "",
           subtitulo: "Frase de destaque do projeto",
           descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.",
@@ -90,7 +90,7 @@ window.SITE = {
         {
           id: "ds-2",
           nome: "Projeto DS 2",
-          turma: "",
+          turma: "2IDS-A-SEDUC",
           integrantes: "",
           subtitulo: "Frase de destaque do projeto",
           descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.",
@@ -103,7 +103,7 @@ window.SITE = {
         {
           id: "ds-3",
           nome: "Projeto DS 3",
-          turma: "",
+          turma: "2IDS-A-SEDUC",
           integrantes: "",
           subtitulo: "Frase de destaque do projeto",
           descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.",
@@ -116,7 +116,7 @@ window.SITE = {
         {
           id: "ds-4",
           nome: "Projeto DS 4",
-          turma: "",
+          turma: "2IDS-A-SEDUC",
           integrantes: "",
           subtitulo: "Frase de destaque do projeto",
           descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.",
@@ -129,7 +129,7 @@ window.SITE = {
         {
           id: "ds-5",
           nome: "Projeto DS 5",
-          turma: "",
+          turma: "2IDS-A-SEDUC",
           integrantes: "",
           subtitulo: "Frase de destaque do projeto",
           descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.",
@@ -142,7 +142,7 @@ window.SITE = {
         {
           id: "ds-6",
           nome: "Projeto DS 6",
-          turma: "",
+          turma: "2IDS-A-SEDUC",
           integrantes: "",
           subtitulo: "Frase de destaque do projeto",
           descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.",
@@ -155,7 +155,7 @@ window.SITE = {
         {
           id: "ds-7",
           nome: "Projeto DS 7",
-          turma: "",
+          turma: "2IDS-SC",
           integrantes: "",
           subtitulo: "Frase de destaque do projeto",
           descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.",
@@ -168,7 +168,7 @@ window.SITE = {
         {
           id: "ds-8",
           nome: "Projeto DS 8",
-          turma: "",
+          turma: "2IDS-SC",
           integrantes: "",
           subtitulo: "Frase de destaque do projeto",
           descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.",
@@ -181,7 +181,7 @@ window.SITE = {
         {
           id: "ds-9",
           nome: "Projeto DS 9",
-          turma: "",
+          turma: "2IDS-SC",
           integrantes: "",
           subtitulo: "Frase de destaque do projeto",
           descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.",
@@ -194,7 +194,7 @@ window.SITE = {
         {
           id: "ds-10",
           nome: "Projeto DS 10",
-          turma: "",
+          turma: "2IDS-SC",
           integrantes: "",
           subtitulo: "Frase de destaque do projeto",
           descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.",
@@ -207,7 +207,7 @@ window.SITE = {
         {
           id: "ds-11",
           nome: "Projeto DS 11",
-          turma: "",
+          turma: "2IDS-SC",
           integrantes: "",
           subtitulo: "Frase de destaque do projeto",
           descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.",
@@ -220,7 +220,7 @@ window.SITE = {
         {
           id: "ds-12",
           nome: "Projeto DS 12",
-          turma: "",
+          turma: "2IDS-SC",
           integrantes: "",
           subtitulo: "Frase de destaque do projeto",
           descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.",
@@ -233,7 +233,7 @@ window.SITE = {
         {
           id: "ds-13",
           nome: "Projeto DS 13",
-          turma: "",
+          turma: "2IDS-SC",
           integrantes: "",
           subtitulo: "Frase de destaque do projeto",
           descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.",
@@ -246,7 +246,7 @@ window.SITE = {
         {
           id: "ds-14",
           nome: "Projeto DS 14",
-          turma: "",
+          turma: "2IDS-SC",
           integrantes: "",
           subtitulo: "Frase de destaque do projeto",
           descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.",

@@ -1049,6 +1049,39 @@ body.modal-open {
   transform: rotate(90deg)
 }
 
+.modal-whatsapp-float {
+  position: absolute;
+  top: 14px;
+  right: 58px;
+  z-index: 10;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, .25);
+  background: rgba(10, 14, 22, .65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #25d366;
+  display: grid;
+  place-items: center;
+  transition: all .2s ease;
+  text-decoration: none;
+}
+
+.modal-whatsapp-float:hover {
+  background: #25d366;
+  border-color: #25d366;
+  color: #fff;
+  transform: scale(1.08);
+  box-shadow: 0 4px 14px rgba(37, 211, 102, .45);
+}
+
+.modal-whatsapp-float svg {
+  width: 19px;
+  height: 19px;
+  fill: currentColor;
+}
+
 .modal-cover {
   width: 100%;
   aspect-ratio: 16 / 9;
@@ -1184,9 +1217,18 @@ body.modal-open {
   margin-top: 6px
 }
 
-/* QR Code no Meta Row */
-.modal-meta-row .btn-qr-toggle {
+/* Ações no Meta Row (WhatsApp + QR Code) */
+.modal-meta-actions {
   margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.modal-meta-row .btn-qr-toggle,
+.modal-meta-row .btn-whatsapp-share {
+  margin-left: 0;
   padding: 5px 13px;
   font-size: .76rem;
 }
@@ -1324,6 +1366,37 @@ body.modal-open {
   width: 14px;
   height: 14px;
   flex-shrink: 0
+}
+
+.btn-whatsapp-share {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 15px;
+  border-radius: 999px;
+  font-size: .8rem;
+  font-weight: 600;
+  color: #25d366;
+  background: var(--card-2);
+  border: 1px solid color-mix(in srgb, #25d366 40%, var(--line));
+  cursor: pointer;
+  text-decoration: none;
+  transition: all .2s ease;
+}
+
+.btn-whatsapp-share:hover {
+  color: #fff;
+  background: #25d366;
+  border-color: #25d366;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(37, 211, 102, .3);
+}
+
+.btn-whatsapp-share svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  fill: currentColor;
 }
 
 /* Modal QR & Share */
@@ -1473,6 +1546,25 @@ body.modal-open {
 .btn-share-sec:hover {
   border-color: var(--red);
   color: var(--red)
+}
+
+.btn-share-sec.btn-share-wa {
+  color: #25d366;
+  border-color: color-mix(in srgb, #25d366 40%, var(--line));
+}
+
+.btn-share-sec.btn-share-wa:hover {
+  background: #25d366;
+  color: #fff;
+  border-color: #25d366;
+  box-shadow: 0 4px 12px rgba(37, 211, 102, .3);
+}
+
+.btn-share-sec.btn-share-wa svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  fill: currentColor;
 }
 
 .modal-base-url-toggle {
@@ -2109,7 +2201,14 @@ body.modal-open {
     padding: 12px
   }
 
-  .modal-meta-row .btn-qr-toggle {
+  .modal-meta-actions {
+    margin-left: 0;
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .modal-meta-row .btn-qr-toggle,
+  .modal-meta-row .btn-whatsapp-share {
     margin-left: 0
   }
 

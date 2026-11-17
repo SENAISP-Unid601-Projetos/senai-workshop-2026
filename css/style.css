@@ -2212,29 +2212,66 @@ body.modal-open {
     margin-left: 0
   }
 
+  /* Barra de Avaliação no Mobile: 3 linhas verticais organizadas */
   .modal-eval-bar {
-    flex-wrap: nowrap !important;
-    gap: 6px !important;
-    padding: 8px 10px !important;
-    justify-content: flex-start !important;
-    overflow-x: auto !important;
-  }
-
-  .eval-title {
-    font-size: .76rem !important;
-  }
-
-  .eval-label {
-    font-size: .74rem !important;
-  }
-
-  .star-btn {
-    font-size: 1.15rem !important;
-    padding: 0 1px !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 10px !important;
+    padding: 12px 14px !important;
+    white-space: normal !important;
+    overflow-x: visible !important;
   }
 
   .eval-divider {
-    margin: 0 1px !important;
+    display: none !important;
+  }
+
+  .eval-title {
+    width: 100% !important;
+    justify-content: center !important;
+    text-align: center !important;
+    font-size: .88rem !important;
+    font-weight: 800 !important;
+    color: var(--text) !important;
+    padding-bottom: 6px !important;
+    border-bottom: 1px solid var(--line) !important;
+    margin-bottom: 2px !important;
+  }
+
+  .eval-item {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+    gap: 8px !important;
+    white-space: normal !important;
+  }
+
+  .eval-label {
+    font-size: .84rem !important;
+    font-weight: 600 !important;
+    color: var(--muted) !important;
+    line-height: 1.25 !important;
+    flex: 1 1 auto !important;
+  }
+
+  .eval-stars {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .star-btn {
+    font-size: 1.45rem !important;
+    padding: 2px 4px !important;
+    min-width: 28px !important;
+    min-height: 32px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    touch-action: manipulation !important;
   }
 }
 

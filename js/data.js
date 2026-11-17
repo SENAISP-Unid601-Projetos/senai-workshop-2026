@@ -352,14 +352,14 @@ window.SITE = {
           id: "mec-7",
           nome: "InkMix",
           turma: "2IMEC-B",
-          integrantes: "",
-          subtitulo: "Frase de destaque do projeto",
+          integrantes: ["Maria Clara Pereira", "Pedro Henrique Escapolli Motta", "Peterson Alessandro Junior", "Luiz Fernando Cardoso Pinto"],
+          subtitulo: "A cor certa na medida exata!",
           descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.",
           imagem: "img/projetos/mec-1.jpeg",
           alunos: 0,
           landing: "",
           funcionamento: "",
-          comercial: ""
+          comercial: "https://drive.google.com/file/d/1BhUOrYhmE34pne4HtjW9KkPUgVg5wC2R/view?usp=drivesdk"
         },
         {
           id: "mec-8",

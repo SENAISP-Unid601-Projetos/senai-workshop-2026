@@ -1472,7 +1472,11 @@ body.modal-open {
   display: grid;
   place-items: center;
   box-shadow: 0 4px 18px rgba(0, 0, 0, .15);
-  max-width: 160px
+  max-width: 160px;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
 }
 
 .modal-qr-frame svg,
@@ -1568,19 +1572,7 @@ body.modal-open {
 }
 
 .modal-base-url-toggle {
-  background: transparent;
-  border: 0;
-  color: var(--muted);
-  font-size: .76rem;
-  text-decoration: underline;
-  text-align: left;
-  cursor: pointer;
-  padding: 2px 0;
-  transition: .2s
-}
-
-.modal-base-url-toggle:hover {
-  color: var(--text)
+  display: none !important;
 }
 
 .modal-base-url-box {
@@ -1823,7 +1815,11 @@ body.modal-open {
   display: grid;
   place-items: center;
   margin: 4px auto;
-  flex-shrink: 0
+  flex-shrink: 0;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
 }
 
 .page-qr-frame svg,

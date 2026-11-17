@@ -1334,7 +1334,6 @@
                 '<button class="btn-share-sec" id="modalDownloadPngBtn">🖼️ ' + T("downloadPng") + '</button>' +
                 '<a class="btn-share-sec" href="' + esc(shareUrl) + '" target="_blank" rel="noopener">↗ ' + T("openNewTab") + '</a>' +
               '</div>' +
-              '<button class="modal-base-url-toggle" id="modalBaseUrlToggle">' + T("customBaseUrl") + '</button>' +
               '<div class="modal-base-url-box" id="modalBaseUrlBox">' +
                 '<label>URL base no GitHub Pages (ex: https://usuario.github.io/senai-workshop-2026):</label>' +
                 '<div class="modal-base-url-row">' +
@@ -1429,10 +1428,32 @@
       });
     };
 
-    // Base URL toggle & save
-    var toggleBtn = document.getElementById("modalBaseUrlToggle");
-    var baseBox = document.getElementById("modalBaseUrlBox");
-    toggleBtn.onclick = function () { baseBox.classList.toggle("is-open"); };
+    // 5 cliques rápidos no QR Code para abrir configuração oculta de URL base
+    var qrClickCount = 0;
+    var qrClickTimer = null;
+    var qrFrame = document.getElementById("modalQrFrame");
+    if (qrFrame) {
+      qrFrame.addEventListener("click", function () {
+        qrClickCount++;
+        clearTimeout(qrClickTimer);
+        qrClickTimer = setTimeout(function () { qrClickCount = 0; }, 1500);
+
+        if (qrClickCount >= 5) {
+          qrClickCount = 0;
+          clearTimeout(qrClickTimer);
+          var baseBox = document.getElementById("modalBaseUrlBox");
+          if (baseBox) {
+            var isOpen = baseBox.classList.toggle("is-open");
+            if (isOpen) {
+              showToast("⚙️ Configuração de URL ativada");
+              baseBox.scrollIntoView({ behavior: "smooth", block: "nearest" });
+              var input = document.getElementById("modalBaseUrlInput");
+              if (input) { input.focus(); input.select(); }
+            }
+          }
+        }
+      });
+    }
 
     document.getElementById("modalBaseUrlSave").onclick = function () {
       var v = document.getElementById("modalBaseUrlInput").value.trim().replace(/\/+$/, "");
@@ -1510,7 +1531,6 @@
           '<button class="btn-share-sec" id="pageQrDownloadPngBtn">🖼️ ' + T("downloadPng") + '</button>' +
           '<a class="btn-share-sec" href="' + esc(homeUrl) + '" target="_blank" rel="noopener">↗ ' + T("openNewTab") + '</a>' +
         '</div>' +
-        '<button class="modal-base-url-toggle" id="pageQrBaseUrlToggle">' + T("customBaseUrl") + '</button>' +
         '<div class="modal-base-url-box" id="pageQrBaseUrlBox">' +
           '<label>URL base no GitHub Pages (ex: https://usuario.github.io/senai-workshop-2026):</label>' +
           '<div class="modal-base-url-row">' +
@@ -1593,9 +1613,32 @@
       });
     };
 
-    var toggleBtn = document.getElementById("pageQrBaseUrlToggle");
-    var baseBox = document.getElementById("pageQrBaseUrlBox");
-    toggleBtn.onclick = function () { baseBox.classList.toggle("is-open"); };
+    // 5 cliques rápidos no QR Code da página para abrir configuração oculta de URL base
+    var pageQrClickCount = 0;
+    var pageQrClickTimer = null;
+    var pageQrFrame = document.getElementById("pageQrFrame");
+    if (pageQrFrame) {
+      pageQrFrame.addEventListener("click", function () {
+        pageQrClickCount++;
+        clearTimeout(pageQrClickTimer);
+        pageQrClickTimer = setTimeout(function () { pageQrClickCount = 0; }, 1500);
+
+        if (pageQrClickCount >= 5) {
+          pageQrClickCount = 0;
+          clearTimeout(pageQrClickTimer);
+          var baseBox = document.getElementById("pageQrBaseUrlBox");
+          if (baseBox) {
+            var isOpen = baseBox.classList.toggle("is-open");
+            if (isOpen) {
+              showToast("⚙️ Configuração de URL ativada");
+              baseBox.scrollIntoView({ behavior: "smooth", block: "nearest" });
+              var input = document.getElementById("pageQrBaseUrlInput");
+              if (input) { input.focus(); input.select(); }
+            }
+          }
+        }
+      });
+    }
 
     document.getElementById("pageQrBaseUrlSave").onclick = function () {
       var v = document.getElementById("pageQrBaseUrlInput").value.trim().replace(/\/+$/, "");

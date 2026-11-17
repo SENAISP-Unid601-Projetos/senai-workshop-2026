@@ -1269,7 +1269,6 @@
         '<div class="modal-meta-row">' +
           '<span class="modal-badge">' + courseBadge + ' · ' + esc(tr(c.turma)) + '</span>' +
           (turmaText ? '<span class="modal-badge modal-badge-turma">' + esc(turmaText) + '</span>' : '') +
-          '<span class="pname">' + esc(p.nome) + '</span>' +
           (!membersText && Number(p.alunos) > 0 ? '<span class="meta">' + p.alunos + ' ' + T("members") + '</span>' : '') +
           '<div class="modal-meta-actions">' +
             '<a class="btn-whatsapp-share" id="modalWhatsappBtn" href="' + esc(waUrl) + '" target="_blank" rel="noopener" title="' + esc(T("shareWhatsapp")) + '">' +

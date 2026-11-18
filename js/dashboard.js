@@ -77,7 +77,18 @@
       criteriaSolution: 'Ideia e Solução Técnica',
       chartTooltipNoVotes: 'Sem votos ainda',
       chartTooltipAlphabetical: '(Exibindo em ordem alfabética)',
-      chartTooltipAverage: 'Média Ponderada'
+      chartTooltipAverage: 'Média Ponderada',
+
+      // Autenticação
+      authTitle: "Painel de Rankings & Visitas",
+      authDesc: "Esta área é reservada à coordenação e organização do evento. Digite a senha para visualizar os rankings.",
+      authLabel: "Senha de Acesso",
+      authPlaceholder: "Digite a senha...",
+      authSubmit: "Acessar Painel",
+      authError: "Senha incorreta. Tente novamente.",
+      authBack: "← Voltar ao site principal",
+      btnLock: "Bloquear",
+      btnLockTitle: "Bloquear e sair do painel"
     },
     en: {
       docTitle: "SENAI Workshop 2026 — Rankings & Visits",
@@ -133,7 +144,18 @@
       criteriaSolution: 'Technical Idea & Solution',
       chartTooltipNoVotes: 'No votes yet',
       chartTooltipAlphabetical: '(Showing in alphabetical order)',
-      chartTooltipAverage: 'Weighted Average'
+      chartTooltipAverage: 'Weighted Average',
+
+      // Authentication
+      authTitle: "Rankings & Visits Dashboard",
+      authDesc: "This area is restricted to event coordination and staff. Enter the password to view rankings.",
+      authLabel: "Access Password",
+      authPlaceholder: "Enter password...",
+      authSubmit: "Access Dashboard",
+      authError: "Incorrect password. Try again.",
+      authBack: "← Back to main site",
+      btnLock: "Lock",
+      btnLockTitle: "Lock and exit dashboard"
     }
   };
 
@@ -829,6 +851,26 @@
     const kpiMec = document.getElementById('kpi-mec-label');
     if (kpiMec) kpiMec.textContent = t.kpiMecLabel;
 
+    // Elementos da Tela de Autenticação / Lock
+    const authTitle = document.getElementById('auth-title');
+    if (authTitle) authTitle.textContent = t.authTitle;
+    const authDesc = document.getElementById('auth-desc');
+    if (authDesc) authDesc.textContent = t.authDesc;
+    const authLabel = document.getElementById('auth-label');
+    if (authLabel) authLabel.textContent = t.authLabel;
+    const authPwd = document.getElementById('dash-auth-password');
+    if (authPwd) authPwd.placeholder = t.authPlaceholder;
+    const authBtn = document.getElementById('auth-btn-text');
+    if (authBtn) authBtn.textContent = t.authSubmit;
+    const authErrMsg = document.getElementById('auth-error-msg');
+    if (authErrMsg) authErrMsg.textContent = t.authError;
+    const authBack = document.getElementById('auth-back');
+    if (authBack) authBack.textContent = t.authBack;
+    const lockLabel = document.getElementById('lock-label');
+    if (lockLabel) lockLabel.textContent = t.btnLock;
+    const btnLock = document.getElementById('btn-lock-dash');
+    if (btnLock) btnLock.title = t.btnLockTitle;
+
     // Atualiza status badge
     updateConnectionBadge(lastIsLive, lastStatusKey);
 
@@ -857,8 +899,99 @@
   }
 
   // ===================================================================
-  // INICIALIZAÇÃO
+  // AUTENTICAÇÃO E INICIALIZAÇÃO
   // ===================================================================
+  const DASH_PASSWORD = "senai601";
+  const AUTH_KEY = "senai_dash_auth";
+  let dashboardInitialized = false;
+
+  function isUserAuthenticated() {
+    try {
+      return sessionStorage.getItem(AUTH_KEY) === "true";
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function setAuthenticated(val) {
+    try {
+      if (val) {
+        sessionStorage.setItem(AUTH_KEY, "true");
+      } else {
+        sessionStorage.removeItem(AUTH_KEY);
+      }
+    } catch (e) {}
+  }
+
+  function initDashboard() {
+    if (!dashboardInitialized) {
+      dashboardInitialized = true;
+
+      const btnRefresh = document.getElementById('btn-refresh-data');
+      if (btnRefresh) {
+        btnRefresh.addEventListener('click', function () {
+          triggerRefresh(true);
+        });
+      }
+
+      const btnFullscreen = document.getElementById('btn-fullscreen');
+      if (btnFullscreen) {
+        btnFullscreen.addEventListener('click', toggleFullscreen);
+      }
+
+      const btnLang = document.getElementById('btn-lang');
+      if (btnLang) {
+        btnLang.addEventListener('click', function (e) {
+          const badgePt = document.getElementById('lang-badge-pt');
+          const badgeEn = document.getElementById('lang-badge-en');
+          if (e.target === badgePt) {
+            setLanguage('pt');
+          } else if (e.target === badgeEn) {
+            setLanguage('en');
+          } else {
+            toggleLanguage();
+          }
+        });
+      }
+
+      // Sincronização em tempo real caso o usuário altere tema ou idioma no site principal em outra aba
+      window.addEventListener('storage', function (e) {
+        if (e.key === 'lang' && e.newValue && e.newValue !== currentLang) {
+          currentLang = e.newValue;
+          applyLanguage();
+        }
+        if (e.key === 'theme' && e.newValue) {
+          document.documentElement.setAttribute('data-theme', e.newValue);
+        }
+      });
+
+      document.addEventListener('fullscreenchange', updateFullscreenButtonState);
+      document.addEventListener('webkitfullscreenchange', updateFullscreenButtonState);
+
+      // Redimensionamento de janela com debounce
+      let winResizeTimer = null;
+      window.addEventListener('resize', () => {
+        if (winResizeTimer) clearTimeout(winResizeTimer);
+        winResizeTimer = setTimeout(triggerChartsResize, 100);
+      });
+
+      // ResizeObserver no container de layout para estabilizar dimensões automaticamente
+      if (window.ResizeObserver) {
+        let roTimer = null;
+        const ro = new ResizeObserver(() => {
+          if (roTimer) clearTimeout(roTimer);
+          roTimer = setTimeout(triggerChartsResize, 60);
+        });
+        const layoutEl = document.querySelector('.dash-trio-layout');
+        if (layoutEl) ro.observe(layoutEl);
+      }
+    }
+
+    applyLanguage();
+    carregarDados();
+    startAutoRefreshTimer();
+  }
+
   function init() {
     // Sincroniza tema dark/light salvo no site principal
     try {
@@ -869,66 +1002,89 @@
     // Aplica idioma inicial
     applyLanguage();
 
-    carregarDados();
-    startAutoRefreshTimer();
+    const authGate = document.getElementById('dash-auth-gate');
+    const protectedContent = document.getElementById('dash-protected-content');
+    const pwdInput = document.getElementById('dash-auth-password');
+    const authForm = document.getElementById('dash-auth-form');
+    const authError = document.getElementById('dash-auth-error');
+    const togglePwdBtn = document.getElementById('dash-auth-toggle-pwd');
+    const btnLock = document.getElementById('btn-lock-dash');
 
-    const btnRefresh = document.getElementById('btn-refresh-data');
-    if (btnRefresh) {
-      btnRefresh.addEventListener('click', function () {
-        triggerRefresh(true);
-      });
-    }
-
-    const btnFullscreen = document.getElementById('btn-fullscreen');
-    if (btnFullscreen) {
-      btnFullscreen.addEventListener('click', toggleFullscreen);
-    }
-
-    const btnLang = document.getElementById('btn-lang');
-    if (btnLang) {
-      btnLang.addEventListener('click', function (e) {
-        const badgePt = document.getElementById('lang-badge-pt');
-        const badgeEn = document.getElementById('lang-badge-en');
-        if (e.target === badgePt) {
-          setLanguage('pt');
-        } else if (e.target === badgeEn) {
-          setLanguage('en');
-        } else {
-          toggleLanguage();
+    // Botão Bloquear/Sair no cabeçalho
+    if (btnLock) {
+      btnLock.addEventListener('click', function () {
+        setAuthenticated(false);
+        if (countdownTimerId) clearInterval(countdownTimerId);
+        if (protectedContent) {
+          protectedContent.classList.remove('dash-revealed');
+          protectedContent.style.display = 'none';
+        }
+        if (authGate) {
+          authGate.style.display = 'flex';
+        }
+        if (pwdInput) {
+          pwdInput.value = '';
+          pwdInput.focus();
         }
       });
     }
 
-    // Sincronização em tempo real caso o usuário altere tema ou idioma no site principal em outra aba
-    window.addEventListener('storage', function (e) {
-      if (e.key === 'lang' && e.newValue && e.newValue !== currentLang) {
-        currentLang = e.newValue;
-        applyLanguage();
-      }
-      if (e.key === 'theme' && e.newValue) {
-        document.documentElement.setAttribute('data-theme', e.newValue);
-      }
-    });
-
-    document.addEventListener('fullscreenchange', updateFullscreenButtonState);
-    document.addEventListener('webkitfullscreenchange', updateFullscreenButtonState);
-
-    // Redimensionamento de janela com debounce
-    let winResizeTimer = null;
-    window.addEventListener('resize', () => {
-      if (winResizeTimer) clearTimeout(winResizeTimer);
-      winResizeTimer = setTimeout(triggerChartsResize, 100);
-    });
-
-    // ResizeObserver no container de layout para estabilizar dimensões automaticamente
-    if (window.ResizeObserver) {
-      let roTimer = null;
-      const ro = new ResizeObserver(() => {
-        if (roTimer) clearTimeout(roTimer);
-        roTimer = setTimeout(triggerChartsResize, 60);
+    // Alternar visibilidade da senha (olho)
+    if (togglePwdBtn && pwdInput) {
+      togglePwdBtn.addEventListener('click', function () {
+        if (pwdInput.type === 'password') {
+          pwdInput.type = 'text';
+          togglePwdBtn.textContent = '🙈';
+        } else {
+          pwdInput.type = 'password';
+          togglePwdBtn.textContent = '👁️';
+        }
       });
-      const layoutEl = document.querySelector('.dash-trio-layout');
-      if (layoutEl) ro.observe(layoutEl);
+    }
+
+    // Submissão do formulário de autenticação
+    if (authForm && pwdInput) {
+      authForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        const typed = (pwdInput.value || '').trim();
+        if (typed === DASH_PASSWORD) {
+          if (authError) authError.style.display = 'none';
+          setAuthenticated(true);
+          if (authGate) authGate.style.display = 'none';
+          if (protectedContent) {
+            protectedContent.classList.add('dash-revealed');
+            protectedContent.style.display = 'block';
+          }
+          initDashboard();
+        } else {
+          if (authError) authError.style.display = 'flex';
+          pwdInput.value = '';
+          pwdInput.focus();
+        }
+      });
+    }
+
+    // Verificação de autenticação inicial
+    if (isUserAuthenticated()) {
+      if (authGate) authGate.style.display = 'none';
+      if (protectedContent) {
+        protectedContent.classList.add('dash-revealed');
+        protectedContent.style.display = 'block';
+      }
+      initDashboard();
+    } else {
+      if (protectedContent) {
+        protectedContent.classList.remove('dash-revealed');
+        protectedContent.style.display = 'none';
+      }
+      if (authGate) {
+        authGate.style.display = 'flex';
+      }
+      if (pwdInput) {
+        setTimeout(function () {
+          try { pwdInput.focus(); } catch (err) {}
+        }, 100);
+      }
     }
   }
 

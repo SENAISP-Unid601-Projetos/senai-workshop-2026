@@ -1942,6 +1942,39 @@
     }
     initReveal();
     checkInitialRoute();
+    initFooterSecret();
+  }
+
+  /* ----- Acesso Secreto à Dashboard: 5 cliques no rodapé ----- */
+  var footerSecretClicks = 0;
+  var footerSecretTimer = null;
+
+  function initFooterSecret() {
+    var footer = document.querySelector(".footer");
+    if (!footer) return;
+
+    var copy = footer.querySelector(".copy");
+    if (copy) {
+      copy.style.userSelect = "none";
+      copy.style.webkitUserSelect = "none";
+    }
+
+    footer.onclick = function (e) {
+      if (e.target && e.target.closest("a, button, input, select, textarea")) return;
+
+      footerSecretClicks++;
+      clearTimeout(footerSecretTimer);
+      footerSecretTimer = setTimeout(function () {
+        footerSecretClicks = 0;
+      }, 3000);
+
+      if (footerSecretClicks >= 5) {
+        footerSecretClicks = 0;
+        var isCourse = document.body && document.body.getAttribute("data-page") !== "home";
+        var dashUrl = isCourse ? "../dashboard.html" : "dashboard.html";
+        window.location.href = dashUrl;
+      }
+    };
   }
 
   // Sincronização em tempo real entre abas/páginas (ex: dashboard vs site)

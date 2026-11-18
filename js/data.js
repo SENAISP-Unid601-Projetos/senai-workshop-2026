@@ -92,6 +92,10 @@ window.SITE = {
           alunos: 0,
           data: "",
           horario: "",
+          apresentacao: [
+            { data: "02/12/2026", horario: "das 8h às 17h" },
+            { data: "03/12/2026", horario: "das 8h às 17h" }
+          ],
           landing: "https://parksync-landing-page.onrender.com/",
           funcionamento: "",
           comercial: ""
@@ -107,6 +111,10 @@ window.SITE = {
           alunos: 0,
           data: "",
           horario: "",
+          apresentacao: [
+            { data: "02/12/2026", horario: "das 8h às 17h" },
+            { data: "03/12/2026", horario: "das 8h às 17h" }
+          ],
           landing: "https://ryan22-ai.github.io/AgroVision-Site/",
           funcionamento: "",
           comercial: ""
@@ -122,6 +130,10 @@ window.SITE = {
           alunos: 0,
           data: "",
           horario: "",
+          apresentacao: [
+            { data: "02/12/2026", horario: "das 8h às 17h" },
+            { data: "03/12/2026", horario: "das 8h às 17h" }
+          ],
           landing: "https://lorenaslima6-rgb.github.io/BitByte---PAGE/",
           funcionamento: "",
           comercial: ""
@@ -137,6 +149,10 @@ window.SITE = {
           alunos: 0,
           data: "",
           horario: "",
+          apresentacao: [
+            { data: "02/12/2026", horario: "das 8h às 17h" },
+            { data: "03/12/2026", horario: "das 8h às 17h" }
+          ],
           landing: "https://gabrieldasilvaviana.github.io/ReservaDeSala-System1/",
           funcionamento: "",
           comercial: ""
@@ -152,6 +168,10 @@ window.SITE = {
           alunos: 0,
           data: "",
           horario: "",
+          apresentacao: [
+            { data: "02/12/2026", horario: "das 8h às 17h" },
+            { data: "03/12/2026", horario: "das 8h às 17h" }
+          ],
           landing: "https://graceful-donut-514384.netlify.app/",
           funcionamento: "",
           comercial: ""
@@ -167,6 +187,10 @@ window.SITE = {
           alunos: 0,
           data: "",
           horario: "",
+          apresentacao: [
+            { data: "02/12/2026", horario: "das 8h às 17h" },
+            { data: "03/12/2026", horario: "das 8h às 17h" }
+          ],
           landing: "https://adriellyvis.github.io/Chamada-Senai-Landing/",
           funcionamento: "",
           comercial: ""
@@ -182,6 +206,10 @@ window.SITE = {
           alunos: 0,
           data: "",
           horario: "",
+          apresentacao: [
+            { data: "02/12/2026", horario: "das 8h às 17h" },
+            { data: "03/12/2026", horario: "das 13h às 17h" }
+          ],
           landing: "https://flaviaalmeiida.github.io/landing-page-/",
           funcionamento: "",
           comercial: ""
@@ -197,6 +225,10 @@ window.SITE = {
           alunos: 0,
           data: "",
           horario: "",
+          apresentacao: [
+            { data: "02/12/2026", horario: "das 8h às 17h" },
+            { data: "03/12/2026", horario: "das 13h às 17h" }
+          ],
           landing: "https://landingpageclearspaces.vercel.app/",
           funcionamento: "",
           comercial: ""
@@ -212,6 +244,10 @@ window.SITE = {
           alunos: 0,
           data: "",
           horario: "",
+          apresentacao: [
+            { data: "02/12/2026", horario: "das 8h às 17h" },
+            { data: "03/12/2026", horario: "das 13h às 17h" }
+          ],
           landing: "https://fredd-08.github.io/ajuda-landingpage/",
           funcionamento: "",
           comercial: ""
@@ -227,6 +263,10 @@ window.SITE = {
           alunos: 0,
           data: "",
           horario: "",
+          apresentacao: [
+            { data: "02/12/2026", horario: "das 8h às 17h" },
+            { data: "03/12/2026", horario: "das 13h às 17h" }
+          ],
           landing: "https://giulianodanellipau.github.io/HelpSanca-LandingPage/",
           funcionamento: "",
           comercial: ""
@@ -242,6 +282,10 @@ window.SITE = {
           alunos: 0,
           data: "",
           horario: "",
+          apresentacao: [
+            { data: "02/12/2026", horario: "das 8h às 17h" },
+            { data: "03/12/2026", horario: "das 13h às 17h" }
+          ],
           landing: "https://belugasite.vercel.app/",
           funcionamento: "",
           comercial: ""
@@ -257,6 +301,10 @@ window.SITE = {
           alunos: 0,
           data: "",
           horario: "",
+          apresentacao: [
+            { data: "02/12/2026", horario: "das 8h às 17h" },
+            { data: "03/12/2026", horario: "das 13h às 17h" }
+          ],
           landing: "https://kapooll.github.io/Landing-page-floodpath/",
           funcionamento: "",
           comercial: ""
@@ -272,6 +320,10 @@ window.SITE = {
           alunos: 0,
           data: "",
           horario: "",
+          apresentacao: [
+            { data: "02/12/2026", horario: "das 8h às 17h" },
+            { data: "03/12/2026", horario: "das 13h às 17h" }
+          ],
           landing: "https://ruanfernandesdasilva.github.io/landing-page/",
           funcionamento: "",
           comercial: ""
@@ -287,6 +339,10 @@ window.SITE = {
           alunos: 0,
           data: "",
           horario: "",
+          apresentacao: [
+            { data: "02/12/2026", horario: "das 8h às 17h" },
+            { data: "03/12/2026", horario: "das 13h às 17h" }
+          ],
           landing: "https://landing-page-wt6o.onrender.com/",
           funcionamento: "",
           comercial: ""

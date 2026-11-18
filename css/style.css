@@ -838,6 +838,42 @@ section {
   border-color: rgba(10, 108, 255, 0.25);
 }
 
+/* ---------- Horário de Apresentação no Card ---------- */
+.project-schedule {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: color-mix(in srgb, var(--card-2) 90%, transparent);
+  border: 1px solid var(--line);
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 0.76rem;
+  color: var(--text);
+  font-weight: 600;
+  width: fit-content;
+  margin-top: 1px;
+}
+
+.project-schedule .sched-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.project-schedule .sched-icon {
+  font-size: 0.85rem;
+}
+
+.project-schedule .sched-sep {
+  color: var(--muted);
+  opacity: 0.5;
+}
+
+[data-theme="light"] .project-schedule {
+  background: #f0f4fa;
+  border-color: rgba(16, 24, 40, 0.12);
+}
+
 .card-hint {
   font-size: .76rem;
   color: var(--muted);
@@ -1214,6 +1250,62 @@ body.modal-open {
 .modal-members-list {
   color: var(--muted);
   word-break: break-word;
+}
+
+/* ---------- Horário de Apresentação no Modal ---------- */
+.modal-schedule-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: color-mix(in srgb, var(--blue) 12%, var(--card-2));
+  border: 1px solid color-mix(in srgb, var(--blue) 35%, var(--line));
+  border-radius: 12px;
+  padding: 10px 16px;
+  margin: 4px 0 6px;
+}
+
+.modal-schedule-icon {
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+
+.modal-schedule-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.modal-schedule-label {
+  font-size: 0.74rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #58a6ff;
+}
+
+[data-theme="light"] .modal-schedule-label {
+  color: var(--blue);
+}
+
+.modal-schedule-pills {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.modal-sched-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.modal-sched-pill-icon {
+  font-size: 0.95rem;
 }
 
 .modal-title {

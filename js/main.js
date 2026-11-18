@@ -18,6 +18,7 @@
       ourProjects: "Nossos Projetos", ourProjectsSub: "Landing page, pitch técnico e pitch comercial de cada grupo.",
       tech: "Funcionamento", commercial: "Comercial", visit: "Visitar site", soon: "Em breve",
       members: "integrantes", groupMembers: "Integrantes:", turmaBadge: "Turma",
+      presentation: "Apresentação:", presentationDate: "Data:", presentationTime: "Horário:",
       fTitle: "SENAI São Carlos", fText: "Centro de referência em formação técnica e tecnológica, preparando profissionais para os desafios da Indústria 4.0.", fSlogan: "Formando o futuro da tecnologia",
       fClasses: "Turmas 2026", fTeam: "Equipe de Desenvolvimento", fDevs: "Desenvolvedores:", techLead: "Tech Lead",
       rights: "Serviço Nacional de Aprendizagem Industrial", copyright: "Todos os direitos reservados", devBy: "Desenvolvido por",
@@ -112,6 +113,7 @@
       ourProjects: "Our Projects", ourProjectsSub: "Landing page, technical pitch and commercial pitch of each group.",
       tech: "How it works", commercial: "Commercial", visit: "Visit site", soon: "Coming soon",
       members: "members", groupMembers: "Team:", turmaBadge: "Class",
+      presentation: "Presentation:", presentationDate: "Date:", presentationTime: "Time:",
       fTitle: "SENAI São Carlos", fText: "A reference center in technical and technological education, preparing professionals for the challenges of Industry 4.0.", fSlogan: "Shaping the future of technology",
       fClasses: "Classes 2026", fTeam: "Development Team", fDevs: "Developers:", techLead: "Tech Lead",
       rights: "National Service for Industrial Training", copyright: "All rights reserved", devBy: "Developed by",
@@ -272,6 +274,44 @@
       return list.split(/[,;\n]+/).filter(function (s) { return s.trim().length > 0; }).length;
     }
     return 0;
+  }
+
+  /* ----- Formatação de Data e Horário da Apresentação ----- */
+  function formatSchedule(p) {
+    if (!p) return null;
+    var d = tr(p.data || p.dataApresentacao);
+    var h = tr(p.horario || p.horarioApresentacao || p.hora);
+    d = String(d || "").trim();
+    h = String(h || "").trim();
+    if (!d && !h) return null;
+    return { data: d, horario: h };
+  }
+
+  function renderCardScheduleHTML(p) {
+    var s = formatSchedule(p);
+    if (!s) return "";
+    var parts = [];
+    if (s.data) parts.push('<span class="sched-item"><span class="sched-icon" aria-hidden="true">📅</span> ' + esc(s.data) + '</span>');
+    if (s.horario) parts.push('<span class="sched-item"><span class="sched-icon" aria-hidden="true">⏰</span> ' + esc(s.horario) + '</span>');
+    var fullText = (s.data ? s.data : "") + (s.data && s.horario ? " • " : "") + (s.horario ? s.horario : "");
+    return '<div class="project-schedule" title="' + esc(T("presentation") + " " + fullText) + '">' +
+      parts.join('<span class="sched-sep" aria-hidden="true">•</span>') +
+      '</div>';
+  }
+
+  function renderModalScheduleHTML(p) {
+    var s = formatSchedule(p);
+    if (!s) return "";
+    var parts = [];
+    if (s.data) parts.push('<span class="modal-sched-pill"><span class="modal-sched-pill-icon" aria-hidden="true">📅</span> ' + esc(s.data) + '</span>');
+    if (s.horario) parts.push('<span class="modal-sched-pill"><span class="modal-sched-pill-icon" aria-hidden="true">⏰</span> ' + esc(s.horario) + '</span>');
+    return '<div class="modal-schedule-box">' +
+      '<span class="modal-schedule-icon" aria-hidden="true">📅</span>' +
+      '<div class="modal-schedule-content">' +
+      '<span class="modal-schedule-label">' + esc(T("presentation")) + '</span>' +
+      '<div class="modal-schedule-pills">' + parts.join("") + '</div>' +
+      '</div>' +
+      '</div>';
   }
 
   function getProjectId(p, courseKey, index) {
@@ -817,6 +857,7 @@
         '</div>' +
         '<span class="card-hint">' + T("details") + ' ↗</span>' +
         '</div>' +
+        renderCardScheduleHTML(p) +
         '<h3>' + esc(p.subtitulo) + '</h3>' +
         '<p>' + esc(p.descricao) + '</p>' +
         membersHtml +
@@ -1276,6 +1317,7 @@
       '</div>' +
       '<h2 class="modal-title">' + esc(p.nome) + '</h2>' +
       '<h3 class="modal-sub">' + esc(p.subtitulo) + '</h3>' +
+      renderModalScheduleHTML(p) +
       '<p class="modal-desc">' + esc(p.descricao) + '</p>' +
       (membersText
         ? '<div class="modal-members-box">' +

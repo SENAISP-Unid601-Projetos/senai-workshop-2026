@@ -68,6 +68,8 @@ window.SITE = {
          - subtitulo: Frase de destaque/slogan
          - descricao: Resumo da solução e diferencial
          - imagem: Caminho da imagem de capa (ex: "img/projetos/ds-1.jpeg")
+         - data: Data da apresentação (ex: "02 de Dezembro" ou "02/12")
+         - horario: Horário da apresentação (ex: "09h30" ou "09h30 às 10h15")
          - alunos: Quantidade de alunos (opcional se preencher integrantes)
          - landing: Link da landing page
          - funcionamento: Link do vídeo técnico (YouTube)
@@ -83,6 +85,8 @@ window.SITE = {
           descricao: "O ParkSync é um sistema inteligente para gestão de estacionamentos em condomínios, que automatiza o acesso de moradores e o controle de vagas, proporcionando mais segurança, agilidade e organização, com monitoramento em tempo real pela portaria.",
           imagem: "img/projetos/ds-1.png",
           alunos: 0,
+          data: "",
+          horario: "",
           landing: "https://parksync-landing-page.onrender.com/",
           funcionamento: "",
           comercial: ""
@@ -96,6 +100,8 @@ window.SITE = {
           descricao: "Sistema de agricultura de precisão que integra visão computacional, inteligência artificial e mapeamento aéreo simulado por drone para monitorar plantações e identificar áreas que necessitam de intervenção.",
           imagem: "img/projetos/ds-2.png",
           alunos: 0,
+          data: "",
+          horario: "",
           landing: "https://ryan22-ai.github.io/AgroVision-Site/",
           funcionamento: "",
           comercial: ""
@@ -109,6 +115,8 @@ window.SITE = {
           descricao: "Desenvolvimento de um robô assistente físico com inteligência artificial para orientar usuários no preparo de receitas culinárias, oferecendo instruções interativas e personalizadas em tempo real, tornando a experiência de cozinhar mais prática, acessível e eficiente.",
           imagem: "img/projetos/ds-3.png",
           alunos: 0,
+          data: "",
+          horario: "",
           landing: "https://lorenaslima6-rgb.github.io/BitByte---PAGE/",
           funcionamento: "",
           comercial: ""
@@ -122,6 +130,8 @@ window.SITE = {
           descricao: "Sistema inteligente de reserva de salas integrado a um painel automatizado de chaves. O professor realiza a reserva antecipadamente e, no horário agendado, autentica sua identidade por biometria digital, reconhecimento facial ou crachá. A chave correspondente é liberada somente para usuários autorizados com reserva ativa, garantindo mais segurança, controle e praticidade.",
           imagem: "img/projetos/ds-4.png",
           alunos: 0,
+          data: "",
+          horario: "",
           landing: "https://gabrieldasilvaviana.github.io/ReservaDeSala-System1/",
           funcionamento: "",
           comercial: ""
@@ -135,6 +145,8 @@ window.SITE = {
           descricao: "O Old Fly é um sistema inteligente que integra aplicativo e dispenser automatizado para auxiliar idosos e cuidadores no gerenciamento de medicamentos. Permite controlar doses, horários, receitas e estoque, com alertas de reposição e acesso personalizado. O dispenser realiza a liberação programada dos medicamentos, utilizando alarmes para proporcionar mais segurança, organização e autonomia no tratamento.",
           imagem: "img/projetos/ds-5.png",
           alunos: 0,
+          data: "",
+          horario: "",
           landing: "https://graceful-donut-514384.netlify.app/",
           funcionamento: "",
           comercial: ""
@@ -148,6 +160,8 @@ window.SITE = {
           descricao: "O PreZence é uma plataforma inteligente de gestão de frequência escolar que utiliza reconhecimento facial (FaceScan) para automatizar o registro de presença dos alunos. Integra alunos, professores e gestores em um ambiente digital, permitindo monitorar frequências, consultar informações acadêmicas e gerenciar turmas com mais agilidade, praticidade e segurança.",
           imagem: "img/projetos/ds-6.png",
           alunos: 0,
+          data: "",
+          horario: "",
           landing: "https://adriellyvis.github.io/Chamada-Senai-Landing/",
           funcionamento: "",
           comercial: ""
@@ -161,6 +175,8 @@ window.SITE = {
           descricao: "O projeto tem como objetivo facilitar e automatizar a distribuição de EPIs por meio de pontos de retirada estratégicos, permitindo que gestores acompanhem o histórico de entregas e consultem, de forma centralizada, quem retirou, qual equipamento foi retirado e quando ocorreu a retirada, garantindo maior controle, rastreabilidade e eficiência.",
           imagem: "img/projetos/ds-7.png",
           alunos: 0,
+          data: "",
+          horario: "",
           landing: "https://flaviaalmeiida.github.io/landing-page-/",
           funcionamento: "",
           comercial: ""
@@ -174,6 +190,8 @@ window.SITE = {
           descricao: "A Clear Spaces é uma plataforma inteligente para gerenciamento de limpeza de ambientes corporativos. O sistema permite organizar tarefas, acompanhar serviços realizados, controlar cronogramas e monitorar a execução das atividades, proporcionando mais eficiência, praticidade e qualidade na gestão dos espaços.",
           imagem: "img/projetos/ds-8.png",
           alunos: 0,
+          data: "",
+          horario: "",
           landing: "https://landingpageclearspaces.vercel.app/",
           funcionamento: "",
           comercial: ""
@@ -187,6 +205,8 @@ window.SITE = {
           descricao: "O Ajuda+ é uma plataforma digital que reúne instituições de caridade em perfis detalhados e transparentes. A confiança do doador vem de extratos públicos que mostram toda a movimentação financeira de receitas e despesas de cada instituição. O sistema também facilita o ato de doar, com filtros por região e por tipo de apoio, e dá visibilidade às instituições com menos recursos, para que a ajuda seja distribuída de forma justa.",
           imagem: "img/projetos/ds-9.png",
           alunos: 0,
+          data: "",
+          horario: "",
           landing: "https://fredd-08.github.io/ajuda-landingpage/",
           funcionamento: "",
           comercial: ""
@@ -200,6 +220,8 @@ window.SITE = {
           descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.",
           imagem: "img/projetos/ds-10.png",
           alunos: 0,
+          data: "",
+          horario: "",
           landing: "https://giulianodanellipau.github.io/HelpSanca-LandingPage/",
           funcionamento: "",
           comercial: ""
@@ -213,6 +235,8 @@ window.SITE = {
           descricao: "O BELUGA é uma solução de tecnologia assistiva que utiliza inteligência artificial e visão computacional para identificar objetos por meio de uma câmera, transmitindo informações por áudio. A proposta é ampliar a autonomia, a acessibilidade e a independência dos colaboradores em seu ambiente de trabalho.",
           imagem: "img/projetos/ds-11.png",
           alunos: 0,
+          data: "",
+          horario: "",
           landing: "https://belugasite.vercel.app/",
           funcionamento: "",
           comercial: ""
@@ -226,6 +250,8 @@ window.SITE = {
           descricao: "O FloodPath é um sistema inteligente que identifica e mapeia pontos de alagamento em tempo real, auxiliando motoristas e pedestres a evitar áreas de risco e encontrar rotas mais seguras durante períodos de chuva.",
           imagem: "img/projetos/ds-12.jpeg",
           alunos: 0,
+          data: "",
+          horario: "",
           landing: "https://kapooll.github.io/Landing-page-floodpath/",
           funcionamento: "",
           comercial: ""
@@ -239,6 +265,8 @@ window.SITE = {
           descricao: "Aplicativo desenvolvido para auxiliar idosos nas atividades do dia a dia, permitindo acompanhar rotinas, organizar tarefas e enviar lembretes importantes. A solução promove mais autonomia, segurança e qualidade de vida para os idosos, além de proporcionar tranquilidade e confiança aos familiares e cuidadores.",
           imagem: "img/projetos/ds-13.jpg",
           alunos: 0,
+          data: "",
+          horario: "",
           landing: "https://ruanfernandesdasilva.github.io/landing-page/",
           funcionamento: "",
           comercial: ""
@@ -252,6 +280,8 @@ window.SITE = {
           descricao: "O BusPass é uma solução inteligente de mobilidade urbana que facilita o acesso a informações sobre linhas, rotas e serviços de transporte público. Integrando uma plataforma digital à tecnologia RFID, busca tornar a experiência dos usuários mais prática, acessível e eficiente, contribuindo para um transporte mais conectado e moderno.",
           imagem: "img/projetos/ds-14.png",
           alunos: 0,
+          data: "",
+          horario: "",
           landing: "https://landing-page-wt6o.onrender.com/",
           funcionamento: "",
           comercial: ""
@@ -279,6 +309,8 @@ window.SITE = {
           descricao: "A LatheVision é uma solução de manutenção preditiva para tornos mecânicos, que monitora corrente, nível de óleo, rotação e vibração. Seu diferencial é integrar sensores em um único sistema, prevenindo falhas, reduzindo paradas e oferecendo um custo acessível às indústrias.",
           imagem: "img/projetos/mec-1.jpeg",
           alunos: 4,
+          data: "",
+          horario: "",
           landing: "https://sites.google.com/aluno.senai.br/lathevision/in%C3%ADcio",
           funcionamento: "https://youtu.be/W4yv00il-30?si=Dj0v7-xhAh2rdR9b",
           comercial: ""
@@ -292,6 +324,8 @@ window.SITE = {
           descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.",
           imagem: "img/projetos/mec-2.jpeg",
           alunos: 0,
+          data: "",
+          horario: "",
           landing: "",
           funcionamento: "",
           comercial: ""
@@ -305,6 +339,8 @@ window.SITE = {
           descricao: "A MecMonitor integra IoT e monitoramento inteligente para acompanhar equipamentos industriais, utilizando gêmeo digital e representação 3D para facilitar a visualização e análise de dados.",
           imagem: "img/projetos/mec-3.jpg",
           alunos: 4,
+          data: "",
+          horario: "",
           landing: "https://sites.google.com/aluno.senai.br/mecmonitor/in%C3%ADcio",
           funcionamento: "https://youtu.be/aHWcUqvuHp4?si=6h6Z-o9V0vJpEK3F",
           comercial: "https://youtu.be/pIhB30Ymmsg"
@@ -318,6 +354,8 @@ window.SITE = {
           descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.",
           imagem: "img/projetos/mec-2.jpeg",
           alunos: 0,
+          data: "",
+          horario: "",
           landing: "",
           funcionamento: "",
           comercial: ""
@@ -331,6 +369,8 @@ window.SITE = {
           descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.",
           imagem: "img/projetos/mec-1.jpeg",
           alunos: 0,
+          data: "",
+          horario: "",
           landing: "",
           funcionamento: "",
           comercial: ""
@@ -344,6 +384,8 @@ window.SITE = {
           descricao: "A SmartFactory oferece monitoramento inteligente de equipamentos rotativos, acompanhando vibração, temperatura e corrente elétrica. Com tecnologia IoT, permite monitorar os equipamentos remotamente, por qualquer dispositivo conectado à internet, auxiliando na prevenção de até 80% das falhas.",
           imagem: "img/projetos/mec-6.jpg",
           alunos: 0,
+          data: "",
+          horario: "",
           landing: "https://sites.google.com/aluno.senai.br/smartfactory/in%C3%ADcio",
           funcionamento: "",
           comercial: "https://youtu.be/DaIIry128DA"
@@ -357,6 +399,8 @@ window.SITE = {
           descricao: "A ColorSync oferece praticidade e agilidade na produção de tintas. Permitindo que a produção seja feita a partir do reconhecimento da cor de um cartão, assim permitindo que qualquer pessoa seja capaz de produzir uma cor. Nosso produto também conta com monitoramento por IoT.",
           imagem: "img/projetos/mec-1.jpeg",
           alunos: 0,
+          data: "",
+          horario: "",
           landing: "",
           funcionamento: "https://drive.google.com/file/d/1a08d__SYs85vxcJWslz4OZZkziXFEHWV/view?usp=drive_link",
           comercial: "https://drive.google.com/file/d/1BhUOrYhmE34pne4HtjW9KkPUgVg5wC2R/view?usp=drivesdk"
@@ -370,6 +414,8 @@ window.SITE = {
           descricao: "O CompactMover, desenvolvido pela FlowBotics, é um AGV segue-linha equipado com sensores anticolisão, criado para eliminar os gargalos logísticos da movimentação manual de cargas. Uma solução autônoma e segura que otimiza o fluxo e a eficiência da sua operação.",
           imagem: "img/projetos/mec-8.jpg",
           alunos: 0,
+          data: "",
+          horario: "",
           landing: "https://sites.google.com/aluno.senai.br/cyberpipe/in%C3%ADcio",
           funcionamento: "",
           comercial: "https://youtu.be/EpUmotV35Mw?si=qxFlQ_I9Bm8GpOmi"
@@ -383,6 +429,8 @@ window.SITE = {
           descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.",
           imagem: "img/projetos/mec-1.jpeg",
           alunos: 0,
+          data: "",
+          horario: "",
           landing: "",
           funcionamento: "",
           comercial: ""
@@ -396,6 +444,8 @@ window.SITE = {
           descricao: "A BRATORQ é um projeto desenvolvido por técnicos em Mecatrônica, que une tecnologia, inovação e automação para facilitar os processos de trabalho. O equipamento consiste em uma furadeira integrada a um braço articulado, proporcionando maior precisão, estabilidade e praticidade nas operações de perfuração. A proposta é reduzir o esforço físico do operador, facilitar o manuseio da ferramenta e otimizar as atividades, oferecendo uma solução versátil e eficiente para diferentes aplicações.",
           imagem: "img/projetos/mec-10.jpg",
           alunos: 0,
+          data: "",
+          horario: "",
           landing: "https://sites.google.com/aluno.senai.br/bratorq/in%C3%ADcio",
           funcionamento: "",
           comercial: ""
@@ -409,6 +459,8 @@ window.SITE = {
           descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.",
           imagem: "img/projetos/mec-1.jpeg",
           alunos: 0,
+          data: "",
+          horario: "",
           landing: "",
           funcionamento: "",
           comercial: ""
@@ -422,6 +474,8 @@ window.SITE = {
           descricao: "O projeto AFID Machining consiste no desenvolvimento de uma CNC Router voltada à fabricação e prototipagem de placas de circuito impresso (PCBs), com o objetivo de tornar esse processo mais acessível, prático e preciso. Desenvolvida por estudantes de Mecatrônica, a máquina utiliza três eixos de movimentação (X, Y e Z), motores de passo e um sistema de controle automatizado para executar trajetórias de usinagem a partir de comandos digitais. Atualmente em fase de desenvolvimento e montagem, o projeto busca integrar conhecimentos de mecânica, eletrônica e programação, oferecendo uma solução que facilite a criação de protótipos eletrônicos e incentive a inovação tecnológica.",
           imagem: "img/projetos/mec-12.png",
           alunos: 0,
+          data: "",
+          horario: "",
           landing: "",
           funcionamento: "https://www.youtube.com/watch?v=7AjiiXWqtWg",
           comercial: "https://www.youtube.com/watch?v=lOqLGV1QoPs"
@@ -435,6 +489,8 @@ window.SITE = {
           descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.",
           imagem: "img/projetos/mec-1.jpeg",
           alunos: 0,
+          data: "",
+          horario: "",
           landing: "",
           funcionamento: "",
           comercial: ""
@@ -448,6 +504,8 @@ window.SITE = {
           descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.",
           imagem: "img/projetos/mec-2.jpeg",
           alunos: 0,
+          data: "",
+          horario: "",
           landing: "",
           funcionamento: "",
           comercial: ""
@@ -461,6 +519,8 @@ window.SITE = {
           descricao: "Desenvolver uma prensa pneumática didática, compacta e segura, com o objetivo de modernizar o ensino técnico, aproximando os estudantes da realidade industrial e proporcionando uma aprendizagem prática em pneumática, comandos elétricos e dispositivos de segurança, considerando os requisitos da NR-12.",
           imagem: "img/projetos/mec-1.jpeg",
           alunos: 0,
+          data: "",
+          horario: "",
           landing: "https://canva.link/ekrbuztgzn3y8ar",
           funcionamento: "https://youtu.be/M09hCnvOHok?si=JOSJQ7JFdF46fZkP",
           comercial: "https://youtu.be/cu7i8MbM_sY?si=wkAdPAHUDa35ExBD"
@@ -474,6 +534,8 @@ window.SITE = {
           descricao: "O SynchroArm tem como diferencial a integração entre robótica, automação e Realidade Virtual, utilizando um Gêmeo Digital para controlar e visualizar um braço robótico remotamente. Seu objetivo é tornar operações industriais mais seguras, reduzindo a exposição humana a ambientes de risco.",
           imagem: "img/projetos/mec-16.webp",
           alunos: 0,
+          data: "",
+          horario: "",
           landing: "https://sites.google.com/aluno.senai.br/nexusatlas/in%C3%ADcio",
           funcionamento: "https://youtu.be/DvtxMXHSbUc?feature=shared",
           comercial: ""

@@ -840,24 +840,38 @@ section {
 
 /* ---------- Horário de Apresentação no Card ---------- */
 .project-schedule {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
   background: color-mix(in srgb, var(--card-2) 90%, transparent);
   border: 1px solid var(--line);
-  padding: 4px 10px;
+  padding: 5px 10px;
   border-radius: 8px;
   font-size: 0.76rem;
   color: var(--text);
   font-weight: 600;
   width: fit-content;
+  max-width: 100%;
   margin-top: 1px;
+}
+
+.project-schedule-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.project-schedule-row + .project-schedule-row {
+  padding-top: 4px;
+  border-top: 1px dashed color-mix(in srgb, var(--line) 70%, transparent);
 }
 
 .project-schedule .sched-item {
   display: inline-flex;
   align-items: center;
   gap: 5px;
+  white-space: nowrap;
 }
 
 .project-schedule .sched-icon {
@@ -872,6 +886,10 @@ section {
 [data-theme="light"] .project-schedule {
   background: #f0f4fa;
   border-color: rgba(16, 24, 40, 0.12);
+}
+
+[data-theme="light"] .project-schedule-row + .project-schedule-row {
+  border-top-color: rgba(16, 24, 40, 0.1);
 }
 
 .card-hint {
@@ -1255,7 +1273,7 @@ body.modal-open {
 /* ---------- Horário de Apresentação no Modal ---------- */
 .modal-schedule-box {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 12px;
   background: color-mix(in srgb, var(--blue) 12%, var(--card-2));
   border: 1px solid color-mix(in srgb, var(--blue) 35%, var(--line));
@@ -1267,13 +1285,15 @@ body.modal-open {
 .modal-schedule-icon {
   font-size: 1.3rem;
   flex-shrink: 0;
+  margin-top: 2px;
 }
 
 .modal-schedule-content {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
   min-width: 0;
+  flex: 1;
 }
 
 .modal-schedule-label {
@@ -1288,11 +1308,22 @@ body.modal-open {
   color: var(--blue);
 }
 
-.modal-schedule-pills {
+.modal-schedule-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.modal-schedule-row {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   flex-wrap: wrap;
+}
+
+.modal-schedule-row + .modal-schedule-row {
+  padding-top: 6px;
+  border-top: 1px dashed color-mix(in srgb, var(--blue) 25%, var(--line));
 }
 
 .modal-sched-pill {
@@ -1302,6 +1333,7 @@ body.modal-open {
   font-size: 0.88rem;
   font-weight: 700;
   color: var(--text);
+  white-space: nowrap;
 }
 
 .modal-sched-pill-icon {

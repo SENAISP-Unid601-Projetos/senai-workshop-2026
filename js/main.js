@@ -18,7 +18,7 @@
       ourProjects: "Nossos Projetos", ourProjectsSub: "Landing page, pitch técnico e pitch comercial de cada grupo.",
       tech: "Funcionamento", commercial: "Comercial", visit: "Visitar site", soon: "Em breve",
       members: "integrantes", groupMembers: "Integrantes:", turmaBadge: "Turma",
-      presentation: "Apresentação:", presentationDate: "Data:", presentationTime: "Horário:",
+      presentation: "Apresentação:", presentations: "Apresentações:", presentationDate: "Data:", presentationTime: "Horário:",
       fTitle: "SENAI São Carlos", fText: "Centro de referência em formação técnica e tecnológica, preparando profissionais para os desafios da Indústria 4.0.", fSlogan: "Formando o futuro da tecnologia",
       fClasses: "Turmas 2026", fTeam: "Equipe de Desenvolvimento", fDevs: "Desenvolvedores:", techLead: "Tech Lead",
       rights: "Serviço Nacional de Aprendizagem Industrial", copyright: "Todos os direitos reservados", devBy: "Desenvolvido por",
@@ -113,7 +113,7 @@
       ourProjects: "Our Projects", ourProjectsSub: "Landing page, technical pitch and commercial pitch of each group.",
       tech: "How it works", commercial: "Commercial", visit: "Visit site", soon: "Coming soon",
       members: "members", groupMembers: "Team:", turmaBadge: "Class",
-      presentation: "Presentation:", presentationDate: "Date:", presentationTime: "Time:",
+      presentation: "Presentation:", presentations: "Presentations:", presentationDate: "Date:", presentationTime: "Time:",
       fTitle: "SENAI São Carlos", fText: "A reference center in technical and technological education, preparing professionals for the challenges of Industry 4.0.", fSlogan: "Shaping the future of technology",
       fClasses: "Classes 2026", fTeam: "Development Team", fDevs: "Developers:", techLead: "Tech Lead",
       rights: "National Service for Industrial Training", copyright: "All rights reserved", devBy: "Developed by",
@@ -278,38 +278,85 @@
 
   /* ----- Formatação de Data e Horário da Apresentação ----- */
   function formatSchedule(p) {
-    if (!p) return null;
-    var d = tr(p.data || p.dataApresentacao);
-    var h = tr(p.horario || p.horarioApresentacao || p.hora);
-    d = String(d || "").trim();
-    h = String(h || "").trim();
-    if (!d && !h) return null;
-    return { data: d, horario: h };
+    if (!p) return [];
+    var rawList = p.apresentacao || p.apresentacoes || p.schedules || p.dias;
+    if (Array.isArray(rawList) && rawList.length > 0) {
+      var list = [];
+      for (var i = 0; i < rawList.length; i++) {
+        var item = rawList[i];
+        if (!item) continue;
+        if (typeof item === "string") {
+          var str = String(tr(item) || "").trim();
+          if (str) list.push({ data: "", horario: str });
+        } else {
+          var d = tr(item.data || item.dataApresentacao || item.dia || "");
+          var h = tr(item.horario || item.horarioApresentacao || item.hora || "");
+          d = String(d || "").trim();
+          h = String(h || "").trim();
+          if (d || h) list.push({ data: d, horario: h });
+        }
+      }
+      if (list.length > 0) return list;
+    }
+
+    if (Array.isArray(p.data) || Array.isArray(p.horario)) {
+      var arrD = Array.isArray(p.data) ? p.data : (p.data ? [p.data] : []);
+      var arrH = Array.isArray(p.horario) ? p.horario : (p.horario ? [p.horario] : []);
+      var maxLen = Math.max(arrD.length, arrH.length);
+      var res = [];
+      for (var j = 0; j < maxLen; j++) {
+        var dj = String(tr(arrD[j]) || "").trim();
+        var hj = String(tr(arrH[j]) || "").trim();
+        if (dj || hj) res.push({ data: dj, horario: hj });
+      }
+      if (res.length > 0) return res;
+    }
+
+    var singleD = String(tr(p.data || p.dataApresentacao) || "").trim();
+    var singleH = String(tr(p.horario || p.horarioApresentacao || p.hora) || "").trim();
+    if (singleD || singleH) {
+      return [{ data: singleD, horario: singleH }];
+    }
+    return [];
   }
 
   function renderCardScheduleHTML(p) {
-    var s = formatSchedule(p);
-    if (!s) return "";
-    var parts = [];
-    if (s.data) parts.push('<span class="sched-item"><span class="sched-icon" aria-hidden="true">📅</span> ' + esc(s.data) + '</span>');
-    if (s.horario) parts.push('<span class="sched-item"><span class="sched-icon" aria-hidden="true">⏰</span> ' + esc(s.horario) + '</span>');
-    var fullText = (s.data ? s.data : "") + (s.data && s.horario ? " • " : "") + (s.horario ? s.horario : "");
-    return '<div class="project-schedule" title="' + esc(T("presentation") + " " + fullText) + '">' +
-      parts.join('<span class="sched-sep" aria-hidden="true">•</span>') +
+    var list = formatSchedule(p);
+    if (!list || list.length === 0) return "";
+    var rows = [];
+    var fullTitles = [];
+    for (var i = 0; i < list.length; i++) {
+      var s = list[i];
+      var parts = [];
+      if (s.data) parts.push('<span class="sched-item"><span class="sched-icon" aria-hidden="true">📅</span> ' + esc(s.data) + '</span>');
+      if (s.horario) parts.push('<span class="sched-item"><span class="sched-icon" aria-hidden="true">⏰</span> ' + esc(s.horario) + '</span>');
+      var rowText = (s.data ? s.data : "") + (s.data && s.horario ? " • " : "") + (s.horario ? s.horario : "");
+      if (rowText) fullTitles.push(rowText);
+      rows.push('<div class="project-schedule-row">' + parts.join('<span class="sched-sep" aria-hidden="true">•</span>') + '</div>');
+    }
+    var label = list.length > 1 ? (T("presentations") || T("presentation")) : T("presentation");
+    return '<div class="project-schedule" title="' + esc(label + " " + fullTitles.join(" | ")) + '">' +
+      rows.join("") +
       '</div>';
   }
 
   function renderModalScheduleHTML(p) {
-    var s = formatSchedule(p);
-    if (!s) return "";
-    var parts = [];
-    if (s.data) parts.push('<span class="modal-sched-pill"><span class="modal-sched-pill-icon" aria-hidden="true">📅</span> ' + esc(s.data) + '</span>');
-    if (s.horario) parts.push('<span class="modal-sched-pill"><span class="modal-sched-pill-icon" aria-hidden="true">⏰</span> ' + esc(s.horario) + '</span>');
+    var list = formatSchedule(p);
+    if (!list || list.length === 0) return "";
+    var label = list.length > 1 ? (T("presentations") || T("presentation")) : T("presentation");
+    var rows = [];
+    for (var i = 0; i < list.length; i++) {
+      var s = list[i];
+      var parts = [];
+      if (s.data) parts.push('<span class="modal-sched-pill"><span class="modal-sched-pill-icon" aria-hidden="true">📅</span> ' + esc(s.data) + '</span>');
+      if (s.horario) parts.push('<span class="modal-sched-pill"><span class="modal-sched-pill-icon" aria-hidden="true">⏰</span> ' + esc(s.horario) + '</span>');
+      rows.push('<div class="modal-schedule-row">' + parts.join("") + '</div>');
+    }
     return '<div class="modal-schedule-box">' +
       '<span class="modal-schedule-icon" aria-hidden="true">📅</span>' +
       '<div class="modal-schedule-content">' +
-      '<span class="modal-schedule-label">' + esc(T("presentation")) + '</span>' +
-      '<div class="modal-schedule-pills">' + parts.join("") + '</div>' +
+      '<span class="modal-schedule-label">' + esc(label) + '</span>' +
+      '<div class="modal-schedule-rows">' + rows.join("") + '</div>' +
       '</div>' +
       '</div>';
   }

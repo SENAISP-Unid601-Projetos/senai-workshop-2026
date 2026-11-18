@@ -68,8 +68,13 @@ window.SITE = {
          - subtitulo: Frase de destaque/slogan
          - descricao: Resumo da solução e diferencial
          - imagem: Caminho da imagem de capa (ex: "img/projetos/ds-1.jpeg")
-         - data: Data da apresentação (ex: "02 de Dezembro" ou "02/12")
-         - horario: Horário da apresentação (ex: "09h30" ou "09h30 às 10h15")
+         - data: Data da apresentação (ex: "02/12/2026")
+         - horario: Horário da apresentação (ex: "das 8h às 17h")
+         - apresentacao: Múltiplos dias/horários por projeto:
+             [
+               { data: "02/12/2026", horario: "das 8h às 17h" },
+               { data: "03/12/2026", horario: "das 13h às 17h" }
+             ]
          - alunos: Quantidade de alunos (opcional se preencher integrantes)
          - landing: Link da landing page
          - funcionamento: Link do vídeo técnico (YouTube)
@@ -311,6 +316,10 @@ window.SITE = {
           alunos: 4,
           data: "",
           horario: "",
+          apresentacao: [
+            { data: "02/12/2026", horario: "das 8h às 17h" },
+            { data: "03/12/2026", horario: "das 13h às 17h" }
+          ],
           landing: "https://sites.google.com/aluno.senai.br/lathevision/in%C3%ADcio",
           funcionamento: "https://youtu.be/W4yv00il-30?si=Dj0v7-xhAh2rdR9b",
           comercial: ""
@@ -326,6 +335,10 @@ window.SITE = {
           alunos: 0,
           data: "",
           horario: "",
+          apresentacao: [
+            { data: "02/12/2026", horario: "das 8h às 17h" },
+            { data: "03/12/2026", horario: "das 13h às 17h" }
+          ],
           landing: "",
           funcionamento: "",
           comercial: ""
@@ -341,6 +354,10 @@ window.SITE = {
           alunos: 4,
           data: "",
           horario: "",
+          apresentacao: [
+            { data: "02/12/2026", horario: "das 8h às 17h" },
+            { data: "03/12/2026", horario: "das 13h às 17h" }
+          ],
           landing: "https://sites.google.com/aluno.senai.br/mecmonitor/in%C3%ADcio",
           funcionamento: "https://youtu.be/aHWcUqvuHp4?si=6h6Z-o9V0vJpEK3F",
           comercial: "https://youtu.be/pIhB30Ymmsg"
@@ -356,6 +373,10 @@ window.SITE = {
           alunos: 0,
           data: "",
           horario: "",
+          apresentacao: [
+            { data: "02/12/2026", horario: "das 8h às 17h" },
+            { data: "03/12/2026", horario: "das 13h às 17h" }
+          ],
           landing: "",
           funcionamento: "",
           comercial: ""
@@ -371,6 +392,10 @@ window.SITE = {
           alunos: 0,
           data: "",
           horario: "",
+          apresentacao: [
+            { data: "02/12/2026", horario: "das 8h às 17h" },
+            { data: "03/12/2026", horario: "das 13h às 17h" }
+          ],
           landing: "",
           funcionamento: "",
           comercial: ""
@@ -386,6 +411,10 @@ window.SITE = {
           alunos: 0,
           data: "",
           horario: "",
+          apresentacao: [
+            { data: "02/12/2026", horario: "das 8h às 17h" },
+            { data: "03/12/2026", horario: "das 13h às 17h" }
+          ],
           landing: "https://sites.google.com/aluno.senai.br/smartfactory/in%C3%ADcio",
           funcionamento: "",
           comercial: "https://youtu.be/DaIIry128DA"
@@ -397,11 +426,15 @@ window.SITE = {
           integrantes: ["Maria Clara Pereira", "Pedro Henrique Escapolli Motta", "Peterson Alessandro Junior", "Luiz Fernando Cardoso Pinto"],
           subtitulo: "A cor certa na medida exata!",
           descricao: "A ColorSync oferece praticidade e agilidade na produção de tintas. Permitindo que a produção seja feita a partir do reconhecimento da cor de um cartão, assim permitindo que qualquer pessoa seja capaz de produzir uma cor. Nosso produto também conta com monitoramento por IoT.",
-          imagem: "img/projetos/mec-1.jpeg",
+          imagem: "img/projetos/mec-7.png",
           alunos: 0,
           data: "",
           horario: "",
-          landing: "",
+          apresentacao: [
+            { data: "02/12/2026", horario: "das 8h às 17h" },
+            { data: "03/12/2026", horario: "das 13h às 17h" }
+          ],
+          landing: "https://sites.google.com/aluno.senai.br/inkmix1/in%C3%ADcio",
           funcionamento: "https://drive.google.com/file/d/1a08d__SYs85vxcJWslz4OZZkziXFEHWV/view?usp=drive_link",
           comercial: "https://drive.google.com/file/d/1BhUOrYhmE34pne4HtjW9KkPUgVg5wC2R/view?usp=drivesdk"
         },
@@ -416,6 +449,10 @@ window.SITE = {
           alunos: 0,
           data: "",
           horario: "",
+          apresentacao: [
+            { data: "02/12/2026", horario: "das 8h às 17h" },
+            { data: "03/12/2026", horario: "das 13h às 17h" }
+          ],
           landing: "https://sites.google.com/aluno.senai.br/cyberpipe/in%C3%ADcio",
           funcionamento: "",
           comercial: "https://youtu.be/EpUmotV35Mw?si=qxFlQ_I9Bm8GpOmi"
@@ -431,6 +468,10 @@ window.SITE = {
           alunos: 0,
           data: "",
           horario: "",
+          apresentacao: [
+            { data: "02/12/2026", horario: "das 13h às 17h" },
+            { data: "03/12/2026", horario: "das 8h às 17h" }
+          ],
           landing: "",
           funcionamento: "",
           comercial: ""
@@ -446,6 +487,10 @@ window.SITE = {
           alunos: 0,
           data: "",
           horario: "",
+          apresentacao: [
+            { data: "02/12/2026", horario: "das 13h às 17h" },
+            { data: "03/12/2026", horario: "das 8h às 17h" }
+          ],
           landing: "https://sites.google.com/aluno.senai.br/bratorq/in%C3%ADcio",
           funcionamento: "",
           comercial: ""
@@ -461,6 +506,10 @@ window.SITE = {
           alunos: 0,
           data: "",
           horario: "",
+          apresentacao: [
+            { data: "02/12/2026", horario: "das 13h às 17h" },
+            { data: "03/12/2026", horario: "das 8h às 17h" }
+          ],
           landing: "",
           funcionamento: "",
           comercial: ""
@@ -476,7 +525,11 @@ window.SITE = {
           alunos: 0,
           data: "",
           horario: "",
-          landing: "",
+          apresentacao: [
+            { data: "02/12/2026", horario: "das 13h às 17h" },
+            { data: "03/12/2026", horario: "das 8h às 17h" }
+          ],
+          landing: "https://sites.google.com/aluno.senai.br/afidmachining/in%C3%ADcio",
           funcionamento: "https://www.youtube.com/watch?v=7AjiiXWqtWg",
           comercial: "https://www.youtube.com/watch?v=lOqLGV1QoPs"
         },
@@ -491,6 +544,10 @@ window.SITE = {
           alunos: 0,
           data: "",
           horario: "",
+          apresentacao: [
+            { data: "02/12/2026", horario: "das 13h às 17h" },
+            { data: "03/12/2026", horario: "das 8h às 17h" }
+          ],
           landing: "",
           funcionamento: "",
           comercial: ""
@@ -506,6 +563,10 @@ window.SITE = {
           alunos: 0,
           data: "",
           horario: "",
+          apresentacao: [
+            { data: "02/12/2026", horario: "das 13h às 17h" },
+            { data: "03/12/2026", horario: "das 8h às 17h" }
+          ],
           landing: "",
           funcionamento: "",
           comercial: ""
@@ -521,6 +582,10 @@ window.SITE = {
           alunos: 0,
           data: "",
           horario: "",
+          apresentacao: [
+            { data: "02/12/2026", horario: "das 13h às 17h" },
+            { data: "03/12/2026", horario: "das 8h às 17h" }
+          ],
           landing: "https://canva.link/ekrbuztgzn3y8ar",
           funcionamento: "https://youtu.be/M09hCnvOHok?si=JOSJQ7JFdF46fZkP",
           comercial: "https://youtu.be/cu7i8MbM_sY?si=wkAdPAHUDa35ExBD"
@@ -536,6 +601,10 @@ window.SITE = {
           alunos: 0,
           data: "",
           horario: "",
+          apresentacao: [
+            { data: "02/12/2026", horario: "das 13h às 17h" },
+            { data: "03/12/2026", horario: "das 8h às 17h" }
+          ],
           landing: "https://sites.google.com/aluno.senai.br/nexusatlas/in%C3%ADcio",
           funcionamento: "https://youtu.be/DvtxMXHSbUc?feature=shared",
           comercial: ""

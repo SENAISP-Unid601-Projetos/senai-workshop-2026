@@ -306,7 +306,7 @@ window.SITE = {
           imagem: "img/projetos/mec-1.jpeg",
           alunos: 4,
           landing: "https://sites.google.com/aluno.senai.br/lathevision/in%C3%ADcio",
-          funcionamento: "",
+          funcionamento: "https://youtu.be/W4yv00il-30?si=Dj0v7-xhAh2rdR9b",
           comercial: ""
         },
         {

@@ -463,13 +463,11 @@
   /* ----- header ----- */
   function headerHTML(isCourse) {
     var home = isCourse ? "../index.html" : "index.html";
-    var dashUrl = isCourse ? "../dashboard.html" : "dashboard.html";
     return '<header class="header"><div class="container">' +
       (isCourse
         ? '<a class="btn-ghost back" href="' + home + '">' + T("back") + '</a>'
         : '<a class="logo" href="' + home + '">SEN<span>AI</span></a>') +
       '<div class="header-actions">' +
-      '<a class="btn-ghost header-dash-btn" href="' + dashUrl + '" title="' + esc(T("dashboardTitle")) + '">📊 ' + T("dashboard") + '</a>' +
       '<button class="btn-ghost" id="themeBtn">' + T("theme") + ' ' + (theme === "dark" ? "☀" : "☾") + '</button>' +
       '<button class="btn-ghost btn-lang" id="langBtn" title="' + (lang === "pt" ? "Alterar idioma: Português / English" : "Switch language: Portuguese / English") + '" aria-label="' + (lang === "pt" ? "Idioma: Português selecionado" : "Language: English selected") + '">' +
       '<span class="lang-icon">🌐</span>' +
@@ -490,10 +488,6 @@
     return '<div class="person"><b>' + esc(p.nome) + '</b>' + (role ? '<small>' + role + '</small><br>' : '') + links + '</div>';
   }
   function footerHTML(isCourse) {
-    if (isCourse === undefined) {
-      isCourse = document.body ? (document.body.getAttribute("data-page") !== "home") : false;
-    }
-    var dashUrl = isCourse ? "../dashboard.html" : "dashboard.html";
     var eq = S.equipe || {};
     var team = "";
     if (eq.lider && eq.lider.nome) team += personHTML(eq.lider, T("techLead"));
@@ -518,7 +512,6 @@
       '<div><h4>' + T("fTitle") + '</h4><p>' + T("fText") + '</p><strong class="tf">' + T("fSlogan") + '</strong></div>' +
       '<div><h4>' + T("fClasses") + '</h4><ul>' + cursos.map(function (c) { return '<li>' + esc(tr(c.nome)) + ' — ' + esc(tr(c.turma)) + '</li>'; }).join("") + '</ul></div>' +
       (team ? '<div><h4>' + T("fTeam") + '</h4>' + team + '</div>' : '') +
-      '<div><h4>' + T("dashboardFooter") + '</h4><p>' + T("dashboardFooterDesc") + '</p><a class="footer-dash-link" href="' + dashUrl + '">📊 ' + T("dashboardFooterBtn") + ' →</a></div>' +
       '</div><div class="copy"><strong>SENAI São Carlos</strong> - ' + T("rights") + '<br>© ' + S.ano + ' ' + T("copyright") +
       (devCredits ? '<br>' + T("devBy") + ' ' + devCredits : '') + '</div></div></footer>';
   }

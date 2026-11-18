@@ -96,20 +96,7 @@
       newsErrorSend: "Não foi possível enviar agora. Tente novamente mais tarde.",
       newsAlreadySubscribed: "Você já está cadastrado para receber o lembrete!",
       newsChangeEmail: "Cadastrar outro e-mail",
-      newsHeroBtn: "🔔 Receber Lembrete",
-      /* Convite da Direção */
-      directorBadge: "Palavra da Direção",
-      directorTitle: "Um Convite Especial da Direção",
-      directorSub: "Conectando nossos talentos industriais ao mercado e à comunidade de São Carlos.",
-      directorQuote: "É com grande satisfação que convidamos os empresários, parceiros industriais e toda a nossa comunidade a prestigiarem o Workshop SENAI 2026. Nossos formandos em Mecatrônica e Desenvolvimento de Sistemas prepararam projetos inovadores, conectando tecnologia de ponta e soluções práticas para a indústria. Venha nos visitar e conferir de perto o talento da nossa região!",
-      directorName: "Marcio Vieira Marinho",
-      directorRole: "Diretor da Escola e Faculdade SENAI São Carlos",
-      directorCta: "Confirmar Presença no Evento",
-      directorVideoBadge: "Vídeo Oficial",
-      directorVideoTitle: "Convite Oficial da Direção",
-      directorVideoSoon: "Vídeo em gravação com a mensagem do Diretor — em breve disponível!",
-      directorVideoCaption: "Mensagem oficial aos empresários e comunidade de São Carlos",
-      videoNotSupported: "Seu navegador não suporta a reprodução deste vídeo."
+      newsHeroBtn: "🔔 Receber Lembrete"
     },
     en: {
       theme: "Theme", back: "← Back", eyebrow: "São Carlos · Technology in Action",
@@ -203,20 +190,7 @@
       newsErrorSend: "Could not send right now. Please try again later.",
       newsAlreadySubscribed: "You are already subscribed to receive event reminders!",
       newsChangeEmail: "Register another email",
-      newsHeroBtn: "🔔 Get Reminder",
-      /* Director Invite */
-      directorBadge: "Message from the Board",
-      directorTitle: "A Special Invitation from the Director",
-      directorSub: "Connecting our industrial talents to the market and the São Carlos community.",
-      directorQuote: "It is with great pleasure that we invite entrepreneurs, industry partners and our community to attend the SENAI Workshop 2026. Our graduates in Mechatronics and Systems Development have prepared innovative projects connecting cutting-edge technology and practical solutions for industry. Come visit us and see our regional talent up close!",
-      directorName: "Marcio Vieira Marinho",
-      directorRole: "Director of SENAI São Carlos School and Faculty",
-      directorCta: "Confirm Your Attendance",
-      directorVideoBadge: "Official Video",
-      directorVideoTitle: "Official Invitation from the Director",
-      directorVideoSoon: "Video being recorded with Director's message — coming soon!",
-      directorVideoCaption: "Official message to entrepreneurs and the São Carlos community",
-      videoNotSupported: "Your browser does not support this video."
+      newsHeroBtn: "🔔 Get Reminder"
     }
   };
 
@@ -671,107 +645,8 @@
     });
   }
 
-  /* ----- SEÇÃO CONVITE DA DIREÇÃO (OPÇÃO 1) ----- */
-  function renderDirectorInviteHTML() {
-    var d = S.diretor || {};
-    var nome = esc(d.nome || T("directorName"));
-    var cargo = esc(tr(d.cargo) || T("directorRole"));
-    var mensagem = esc(tr(d.mensagem) || T("directorQuote"));
-    var destaque = d.destaque ? esc(tr(d.destaque)) : "";
-
-    // Foto do Diretor
-    var fotoUrl = d.foto ? resolveImg(d.foto) : "img/diretor-placeholder.svg";
-    var avatarHTML = '<div class="director-avatar-wrapper">' +
-      '<img class="director-avatar-img" src="' + esc(fotoUrl) + '" alt="' + nome + '" loading="lazy" onerror="this.src=\'img/diretor-placeholder.svg\'">' +
-      '<span class="director-avatar-badge" title="SENAI São Carlos">✓</span>' +
-      '</div>';
-
-    // Player de Vídeo ou Prévia Interativa
-    var videoHTML = "";
-    var vUrl = (d.videoUrl || "").trim();
-
-    // Detecção de YouTube
-    var ytMatch = vUrl.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
-    if (ytMatch && ytMatch[1]) {
-      videoHTML = '<div class="director-video-frame">' +
-        '<iframe src="https://www.youtube-nocookie.com/embed/' + ytMatch[1] + '?rel=0" title="' + esc(T("directorVideoTitle")) + '" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>' +
-        '</div>';
-    } else if (vUrl && (vUrl.indexOf(".mp4") !== -1 || vUrl.indexOf(".webm") !== -1)) {
-      videoHTML = '<div class="director-video-frame">' +
-        '<video class="director-video-element" controls poster="' + esc(fotoUrl) + '" preload="metadata">' +
-        '<source src="' + esc(vUrl) + '" type="video/mp4">' +
-        T("videoNotSupported") +
-        '</video>' +
-        '</div>';
-    } else {
-      // Placeholder elegante e interativo (vídeo em gravação)
-      videoHTML = '<div class="director-video-placeholder reveal" id="directorVideoPlaceholder" role="button" tabindex="0" title="' + esc(T("directorVideoSoon")) + '" aria-label="' + esc(T("directorVideoSoon")) + '">' +
-        '<div class="director-video-glow"></div>' +
-        '<div class="director-video-thumb-bg"></div>' +
-        '<div class="director-video-overlay">' +
-        '<div class="director-video-play-btn" aria-hidden="true">' +
-        '<span class="director-play-icon">▶</span>' +
-        '<span class="director-play-pulse"></span>' +
-        '</div>' +
-        '<div class="director-video-info">' +
-        '<span class="director-video-badge">🎬 ' + esc(T("directorVideoBadge")) + '</span>' +
-        '<h3 class="director-video-title">' + esc(T("directorVideoTitle")) + '</h3>' +
-        '<p class="director-video-sub">' + esc(T("directorVideoSoon")) + '</p>' +
-        '</div>' +
-        '<span class="director-video-pill">⏱️ 01:30 min</span>' +
-        '</div>' +
-        '</div>';
-    }
-
-    return '<section class="section director-section" id="convite-direcao">' +
-      '<div class="container">' +
-      '<div class="director-grid">' +
-      '<div class="director-media-col">' +
-      '<div class="director-video-wrapper">' +
-      videoHTML +
-      '</div>' +
-      '<div class="director-video-caption">' +
-      '<span class="director-dot"></span> ' +
-      '<span>' + esc(T("directorVideoCaption")) + '</span>' +
-      '</div>' +
-      '</div>' +
-      '<div class="director-content-col reveal">' +
-      '<div class="director-badge"><span class="director-badge-icon">🏛️</span> ' + esc(T("directorBadge")) + '</div>' +
-      '<h2 class="director-title">' + esc(T("directorTitle")) + '</h2>' +
-      '<p class="director-subtitle">' + esc(T("directorSub")) + '</p>' +
-      '<div class="director-quote-box">' +
-      '<span class="director-quote-mark">“</span>' +
-      '<p class="director-quote-text">' + mensagem + '</p>' +
-      (destaque ? '<p class="director-quote-highlight"><strong>' + destaque + '</strong></p>' : '') +
-      '</div>' +
-      '<div class="director-profile-card">' +
-      avatarHTML +
-      '<div class="director-profile-info">' +
-      '<h4 class="director-profile-name">' + nome + '</h4>' +
-      '<p class="director-profile-role">' + cargo + '</p>' +
-      '<span class="director-profile-unit">SENAI São Carlos • Unidade 601</span>' +
-      '</div>' +
-      '</div>' +
-      '<div class="director-actions">' +
-      '<a class="btn director-cta-btn" href="#lembrete">' +
-      '<span>' + esc(T("directorCta")) + '</span>' +
-      '<span class="go">→</span>' +
-      '</a>' +
-      '<a class="btn-ghost director-location-btn" href="#local">' +
-      '<span>📍 ' + esc(T("eventHeroBadgeLoc")) + '</span>' +
-      '</a>' +
-      '</div>' +
-      '</div>' +
-      '</div>' +
-      '</div>' +
-      '</section>';
-  }
-
   /* ----- HOME ----- */
   function renderHome(root) {
-    var showDirector = (typeof window.SHOW_DIRECTOR_INVITE !== "undefined")
-      ? window.SHOW_DIRECTOR_INVITE
-      : (document.body && document.body.getAttribute("data-director-invite") === "true");
     var np = 0, na = 0;
     cursos.forEach(function (c) { np += totalProj(c); na += totalAlunos(c); });
     var cards = Object.keys(S.cursos).map(function (k) {
@@ -808,7 +683,6 @@
       '<a class="btn" href="#turmas">' + T("seeClasses") + '</a>' +
       '<a class="hero-news-btn" href="#lembrete" title="' + esc(T("newsTitle")) + '">' + T("newsHeroBtn") + '</a>' +
       '</div></div></section>' +
-      (showDirector ? renderDirectorInviteHTML() : '') +
       '<section class="section" id="turmas"><div class="container"><h2 class="section-title">' + T("classesTitle") + '</h2><p class="section-sub">' + T("classesSub") + '</p><div class="class-grid">' + cards + '</div></div></section>' +
       '<section class="section about"><div class="container"><h2 class="section-title">' + T("aboutTitle") + '</h2><br><p class="about-text">' + T("aboutText") + '</p>' +
       '<div class="stat-grid">' +
@@ -877,19 +751,6 @@
     if (heroQrBtn) {
       heroQrBtn.onclick = function () {
         openPageQrModal();
-      };
-    }
-
-    var dirVidBtn = document.getElementById("directorVideoPlaceholder");
-    if (dirVidBtn) {
-      dirVidBtn.onclick = function () {
-        showToast(T("directorVideoSoon"));
-      };
-      dirVidBtn.onkeydown = function (e) {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          showToast(T("directorVideoSoon"));
-        }
       };
     }
 

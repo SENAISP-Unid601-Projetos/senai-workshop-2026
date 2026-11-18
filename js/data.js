@@ -34,32 +34,6 @@ window.SITE = {
     mapsEmbedUrl: "https://maps.google.com/maps?q=-22.0234009,-47.8972138&hl=pt-BR&z=16&output=embed"
   },
 
-  /* Convite da Direção da Escola SENAI São Carlos (Opção 1)
-     - nome: Nome completo do Diretor
-     - cargo: Cargo institucional (suporta pt/en)
-     - foto: caminho da foto (ex: "img/diretor.jpg" ou "img/diretor.png") ou "" para usar o avatar ilustrado padrão
-     - videoUrl: link do YouTube (ex: "https://www.youtube.com/watch?v=...") ou MP4 local ("video/convite-diretor.mp4")
-                 ou "" para exibir o player de prévia ilustrado
-     - mensagem: texto do convite (pt/en)
-     - destaque: frase de destaque/slogan da direção (pt/en) */
-  diretor: {
-    nome: "Marcio Vieira Marinho",
-    cargo: {
-      pt: "Diretor da Escola e Faculdade SENAI São Carlos",
-      en: "Director of SENAI São Carlos School and Faculty"
-    },
-    foto: "",
-    videoUrl: "",
-    mensagem: {
-      pt: "É com grande satisfação que convidamos os empresários, parceiros industriais e toda a nossa comunidade a prestigiarem o Workshop SENAI 2026. Nossos formandos em Mecatrônica e Desenvolvimento de Sistemas prepararam projetos inovadores, conectando tecnologia de ponta e soluções reais para a indústria. Venha nos visitar e conferir de perto o talento da nossa região!",
-      en: "It is with great pleasure that we invite entrepreneurs, industry partners and our entire community to attend the SENAI Workshop 2026. Our graduates in Mechatronics and Systems Development have prepared innovative projects connecting cutting-edge technology and practical solutions for industry. Come visit us and see our regional talent up close!"
-    },
-    destaque: {
-      pt: "Inovação, tecnologia e formação profissional de excelência conectadas à indústria.",
-      en: "Innovation, technology, and excellent vocational training connected to industry."
-    }
-  },
-
   /* URL base para os links dos QR Codes (quando publicado no GitHub Pages).
      Deixe "" para autodetectar o endereço atual no navegador.
      Exemplo: "https://seu-usuario.github.io/senai-workshop-2026" */
@@ -384,7 +358,7 @@ window.SITE = {
           imagem: "img/projetos/mec-1.jpeg",
           alunos: 0,
           landing: "",
-          funcionamento: "",
+          funcionamento: "https://drive.google.com/file/d/1a08d__SYs85vxcJWslz4OZZkziXFEHWV/view?usp=drive_link",
           comercial: "https://drive.google.com/file/d/1BhUOrYhmE34pne4HtjW9KkPUgVg5wC2R/view?usp=drivesdk"
         },
         {

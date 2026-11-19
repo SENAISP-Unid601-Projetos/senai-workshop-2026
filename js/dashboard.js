@@ -300,6 +300,7 @@
 
     const t = getI18n();
     const locale = currentLang === "pt" ? "pt-BR" : "en-US";
+    const isFullscreen = !!(document.fullscreenElement || document.webkitFullscreenElement || (document.body && document.body.classList.contains('is-fullscreen')));
 
     const dsVal = (visitasData && Number(visitasData.ds)) || 0;
     const eleVal = (visitasData && (Number(visitasData.ele) || Number(visitasData.eletro) || Number(visitasData.eletroeletronica))) || 0;
@@ -347,7 +348,7 @@
           backgroundColor: ['#0a6cff', '#f59e0b', '#e4002b'],
           borderRadius: 10,
           borderSkipped: false,
-          maxBarThickness: 70
+          maxBarThickness: isFullscreen ? 36 : 70
         }]
       },
       options: {
@@ -374,12 +375,13 @@
         scales: {
           x: {
             grid: { display: false },
-            ticks: { font: { weight: '600', size: 12 } }
+            ticks: { font: { weight: '600', size: isFullscreen ? 9.5 : 12 } }
           },
           y: {
             beginAtZero: true,
             grid: { color: 'rgba(255, 255, 255, 0.05)' },
             ticks: {
+              font: { size: isFullscreen ? 8.5 : 11 },
               callback: function (val) {
                 return val.toLocaleString(locale);
               }
@@ -412,6 +414,7 @@
       : new Array(projetos.length).fill(0);
 
     const isAlpha = rankingData && rankingData.isAlphabetical;
+    const isFullscreen = !!(document.fullscreenElement || document.webkitFullscreenElement || (document.body && document.body.classList.contains('is-fullscreen')));
 
     chartInstances[instanceKey] = new Chart(ctx, {
       type: 'bar',
@@ -424,8 +427,8 @@
             backgroundColor: colorApresentacao,
             borderRadius: 6,
             borderSkipped: false,
-            barPercentage: 0.85,
-            categoryPercentage: 0.8
+            barPercentage: isFullscreen ? 0.9 : 0.85,
+            categoryPercentage: isFullscreen ? 0.85 : 0.8
           },
           {
             label: t.criteriaSolution,
@@ -433,8 +436,8 @@
             backgroundColor: colorSolucao,
             borderRadius: 6,
             borderSkipped: false,
-            barPercentage: 0.85,
-            categoryPercentage: 0.8
+            barPercentage: isFullscreen ? 0.9 : 0.85,
+            categoryPercentage: isFullscreen ? 0.85 : 0.8
           }
         ]
       },
@@ -446,9 +449,9 @@
           legend: {
             position: 'top',
             labels: {
-              boxWidth: 12,
-              padding: 10,
-              font: { size: 11, weight: '600' }
+              boxWidth: isFullscreen ? 8 : 12,
+              padding: isFullscreen ? 4 : 10,
+              font: { size: isFullscreen ? 9 : 11, weight: '600' }
             }
           },
           tooltip: {
@@ -489,13 +492,13 @@
             grid: { color: 'rgba(255, 255, 255, 0.05)' },
             ticks: {
               stepSize: 1,
-              font: { size: 10 }
+              font: { size: isFullscreen ? 8 : 10 }
             }
           },
           y: {
             grid: { display: false },
             ticks: {
-              font: { size: 10.5, weight: '500' }
+              font: { size: isFullscreen ? 8.8 : 10.5, weight: '500' }
             }
           }
         }
@@ -792,6 +795,10 @@
     document.documentElement.classList.toggle('is-fullscreen', isFullscreen);
     document.body.classList.toggle('is-fullscreen', isFullscreen);
 
+    if (isFullscreen) {
+      window.scrollTo(0, 0);
+    }
+
     const t = getI18n();
 
     if (isFullscreen) {
@@ -802,6 +809,11 @@
       if (labelEl) labelEl.textContent = t.btnFullscreen;
       if (iconEl) iconEl.textContent = "⛶";
       if (btn) btn.title = t.btnFullscreenTitle;
+    }
+
+    // Re-renderiza gráficos com dimensões e fontes ideais para o modo atual
+    if (lastLoadedData) {
+      renderComDados(lastLoadedData, lastIsLive, lastStatusKey);
     }
 
     // Redimensiona todos os gráficos Chart.js com escalonamento para garantir layout perfeito
@@ -1128,7 +1140,7 @@
           if (authGate) authGate.style.display = 'none';
           if (protectedContent) {
             protectedContent.classList.add('dash-revealed');
-            protectedContent.style.display = 'block';
+            protectedContent.style.display = '';
           }
           initDashboard();
         } else {
@@ -1144,7 +1156,7 @@
       if (authGate) authGate.style.display = 'none';
       if (protectedContent) {
         protectedContent.classList.add('dash-revealed');
-        protectedContent.style.display = 'block';
+        protectedContent.style.display = '';
       }
       initDashboard();
     } else {

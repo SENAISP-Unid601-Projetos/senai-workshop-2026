@@ -1123,66 +1123,112 @@
     ctx.fillStyle = "#ffffff";
     ctx.fillRect(0, 0, width, height);
 
-    // Moldura institucional (borda vermelha de 6px + linha fina interna)
+    // Moldura institucional dupla (borda externa 8px + linha fina interna)
     ctx.strokeStyle = "#e4002b";
-    ctx.lineWidth = 6;
-    ctx.strokeRect(28, 28, width - 56, height - 56);
+    ctx.lineWidth = 8;
+    ctx.strokeRect(26, 26, width - 52, height - 52);
 
     ctx.strokeStyle = "#cbd5e1";
-    ctx.lineWidth = 1.5;
-    ctx.strokeRect(36, 36, width - 72, height - 72);
+    ctx.lineWidth = 2;
+    ctx.strokeRect(38, 38, width - 76, height - 76);
 
-    // 1. Banner Superior Vermelho Institucional SENAI
-    var bannerY = 48;
-    var bannerH = 145;
-    var bannerW = width - 96;
-    var bannerX = 48;
+    // Cantoneiras institucionais nos 4 cantos
+    var cornerSize = 42;
+    var cornerOffset = 45;
+    ctx.strokeStyle = "#e4002b";
+    ctx.lineWidth = 4;
 
-    var grad = ctx.createLinearGradient(bannerX, bannerY, bannerX + bannerW, bannerY + bannerH);
-    grad.addColorStop(0, "#e4002b");
-    grad.addColorStop(1, "#b80022");
-    ctx.fillStyle = grad;
-    drawRoundRect(ctx, bannerX, bannerY, bannerW, bannerH, 14);
-    ctx.fill();
+    // Top-Left
+    ctx.beginPath();
+    ctx.moveTo(cornerOffset, cornerOffset + cornerSize);
+    ctx.lineTo(cornerOffset, cornerOffset);
+    ctx.lineTo(cornerOffset + cornerSize, cornerOffset);
+    ctx.stroke();
 
-    // Logo SENAI no Banner
-    var logoY = bannerY + 44;
-    ctx.font = "900 46px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+    // Top-Right
+    ctx.beginPath();
+    ctx.moveTo(width - cornerOffset - cornerSize, cornerOffset);
+    ctx.lineTo(width - cornerOffset, cornerOffset);
+    ctx.lineTo(width - cornerOffset, cornerOffset + cornerSize);
+    ctx.stroke();
+
+    // Bottom-Left
+    ctx.beginPath();
+    ctx.moveTo(cornerOffset, height - cornerOffset - cornerSize);
+    ctx.lineTo(cornerOffset, height - cornerOffset);
+    ctx.lineTo(cornerOffset + cornerSize, height - cornerOffset);
+    ctx.stroke();
+
+    // Bottom-Right
+    ctx.beginPath();
+    ctx.moveTo(width - cornerOffset - cornerSize, height - cornerOffset);
+    ctx.lineTo(width - cornerOffset, height - cornerOffset);
+    ctx.lineTo(width - cornerOffset, height - cornerOffset - cornerSize);
+    ctx.stroke();
+
+    // 1. Cabeçalho Institucional
+    var headerY = 70;
+
+    // Logo SENAI no canto esquerdo
+    ctx.textAlign = "left";
     ctx.textBaseline = "middle";
-
+    ctx.font = "900 48px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
     var textSen = "SEN";
     var textAi = "AI";
+    var logoX = 75;
+    var logoY = headerY + 28;
+    ctx.fillStyle = "#e4002b";
+    ctx.fillText(textSen, logoX, logoY);
     var wSen = ctx.measureText(textSen).width;
-    var wAi = ctx.measureText(textAi).width;
-    var startLogoX = (width / 2) - ((wSen + wAi) / 2);
-
-    ctx.textAlign = "left";
-    ctx.fillStyle = "#ffffff";
-    ctx.fillText(textSen, startLogoX, logoY);
     ctx.fillStyle = "#ffb703";
-    ctx.fillText(textAi, startLogoX + wSen, logoY);
+    ctx.fillText(textAi, logoX + wSen, logoY);
 
-    // Textos do Banner
-    ctx.textAlign = "center";
+    // Texto institucional no canto direito
+    ctx.textAlign = "right";
+    ctx.fillStyle = "#0f172a";
     ctx.font = "bold 15px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
-    ctx.fillStyle = "rgba(255, 255, 255, 0.95)";
-    ctx.fillText("FACULDADE DE TECNOLOGIA E ESCOLA SENAI ANTONIO ADOLPHO LOBBE", width / 2, bannerY + 84);
+    ctx.fillText("FACULDADE DE TECNOLOGIA E ESCOLA SENAI", width - 75, headerY + 18);
+    ctx.fillStyle = "#475569";
+    ctx.font = "600 14px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+    ctx.fillText("Antonio Adolpho Lobbe — São Carlos", width - 75, headerY + 40);
 
-    ctx.font = "800 13px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
-    ctx.fillStyle = "#ffd166";
-    ctx.fillText("WORKSHOP SENAI 2026 • 01, 02 E 03 DE DEZEMBRO • DAS 08H ÀS 17H", width / 2, bannerY + 112);
+    // Linha divisória do cabeçalho
+    var divY = headerY + 68;
+    ctx.strokeStyle = "#e2e8f0";
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(70, divY);
+    ctx.lineTo(width - 70, divY);
+    ctx.stroke();
+
+    // Badge "Workshop SENAI 2026"
+    var badgeEventY = divY + 18;
+    var badgeEventText = "WORKSHOP SENAI 2026";
+    ctx.font = "800 15px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+    var badgeEventW = ctx.measureText(badgeEventText).width + 36;
+    ctx.fillStyle = "#e4002b";
+    drawRoundRect(ctx, (width - badgeEventW) / 2, badgeEventY, badgeEventW, 32, 16);
+    ctx.fill();
+    ctx.textAlign = "center";
+    ctx.fillStyle = "#ffffff";
+    ctx.fillText(badgeEventText, width / 2, badgeEventY + 16);
+
+    // Subtítulo de data e local
+    ctx.font = "bold 14px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+    ctx.fillStyle = "#64748b";
+    ctx.fillText("01, 02 E 03 DE DEZEMBRO DE 2026 • DAS 08H ÀS 17H • ENTRADA GRATUITA", width / 2, badgeEventY + 54);
 
     // 2. Badge do Curso e Turma
     var cInfo = (S && S.cursos && S.cursos[courseKey]) ? S.cursos[courseKey] : null;
     var courseName = cInfo ? tr(cInfo.nome) : (courseKey === "ds" ? "Desenvolvimento de Sistemas" : (courseKey === "eletroeletronica" || courseKey === "ele" ? "Eletroeletrônica" : "Mecatrônica"));
     var turmaText = formatTurma(p.turma);
-    var badgeText = courseName.toUpperCase() + (turmaText ? (" • TURMA " + turmaText.toUpperCase()) : "");
+    var badgeText = "🎓 " + courseName.toUpperCase() + (turmaText ? (" • TURMA " + turmaText.toUpperCase()) : "");
 
-    var badgeY = 220;
-    ctx.font = "bold 17px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
-    var badgeW = Math.min(width - 120, ctx.measureText(badgeText).width + 36);
+    var badgeY = badgeEventY + 76;
+    ctx.font = "bold 15px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+    var badgeW = Math.min(width - 140, ctx.measureText(badgeText).width + 32);
     ctx.fillStyle = "#f1f5f9";
-    drawRoundRect(ctx, (width - badgeW) / 2, badgeY, badgeW, 36, 18);
+    drawRoundRect(ctx, (width - badgeW) / 2, badgeY, badgeW, 32, 16);
     ctx.fill();
     ctx.strokeStyle = "#cbd5e1";
     ctx.lineWidth = 1;
@@ -1190,32 +1236,34 @@
 
     ctx.fillStyle = "#334155";
     ctx.textAlign = "center";
-    ctx.fillText(badgeText, width / 2, badgeY + 19);
+    ctx.fillText(badgeText, width / 2, badgeY + 16);
 
     // 3. Nome do Projeto / Grupo
-    var titleY = 305;
-    ctx.font = "900 48px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+    var titleY = badgeY + 70;
+    ctx.font = "900 44px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
     ctx.fillStyle = "#0f172a";
     var projNome = p.nome || "Projeto";
     if (ctx.measureText(projNome).width > width - 160) {
-      ctx.font = "900 38px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+      ctx.font = "900 36px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
     }
     ctx.fillText(projNome, width / 2, titleY);
 
     // Subtítulo
-    var subY = titleY + 36;
+    var subY = titleY + 34;
+    var membersBoxStartY = subY + 20;
     if (p.subtitulo) {
-      ctx.font = "600 21px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+      ctx.font = "600 20px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
       ctx.fillStyle = "#475569";
-      drawWrappedText(ctx, p.subtitulo, width / 2, subY, width - 200, 28, "center");
+      var nextY = drawWrappedText(ctx, p.subtitulo, width / 2, subY, width - 200, 26, "center");
+      membersBoxStartY = Math.max(membersBoxStartY, nextY + 15);
     }
 
     // 4. Box de Integrantes da Equipe
     var membersText = formatMembers(p);
-    var boxY = 410;
+    var boxY = membersBoxStartY + 10;
     var boxW = width - 180;
     var boxX = (width - boxW) / 2;
-    var boxH = 95;
+    var boxH = 90;
 
     ctx.fillStyle = "#f8fafc";
     drawRoundRect(ctx, boxX, boxY, boxW, boxH, 10);
@@ -1230,28 +1278,28 @@
 
     ctx.textAlign = "left";
     ctx.fillStyle = "#e4002b";
-    ctx.font = "800 15px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
-    ctx.fillText("👥 INTEGRANTES DA EQUIPE:", boxX + 22, boxY + 28);
+    ctx.font = "800 14px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+    ctx.fillText("👥 INTEGRANTES DA EQUIPE:", boxX + 22, boxY + 26);
 
     ctx.fillStyle = "#1e293b";
-    ctx.font = "bold 19px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+    ctx.font = "bold 18px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
     var membersDisplay = membersText || (turmaText ? ("Alunos da Turma " + turmaText) : "Equipe do Projeto");
-    drawWrappedText(ctx, membersDisplay, boxX + 22, boxY + 56, boxW - 44, 24, "left");
+    drawWrappedText(ctx, membersDisplay, boxX + 22, boxY + 54, boxW - 44, 24, "left");
 
     // 5. Moldura Central do QR Code
-    var qrFrameY = 535;
-    var qrFrameSize = 560;
+    var qrFrameY = boxY + boxH + 30;
+    var qrFrameSize = 550;
     var qrFrameX = (width - qrFrameSize) / 2;
 
     ctx.fillStyle = "#ffffff";
-    drawRoundRect(ctx, qrFrameX, qrFrameY, qrFrameSize, qrFrameSize, 20);
+    drawRoundRect(ctx, qrFrameX, qrFrameY, qrFrameSize, qrFrameSize, 18);
     ctx.fill();
     ctx.strokeStyle = "#cbd5e1";
     ctx.lineWidth = 2;
     ctx.stroke();
 
     // Desenha o QR Code em alta resolução
-    var qrSize = 490;
+    var qrSize = 480;
     var qrX = qrFrameX + (qrFrameSize - qrSize) / 2;
     var qrY = qrFrameY + (qrFrameSize - qrSize) / 2;
 
@@ -1262,38 +1310,38 @@
     }
 
     // 6. Chamada de Avaliação ("AVALIE NOSSO PROJETO!")
-    var ctaY = 1130;
-    var ctaW = 680;
-    var ctaH = 62;
+    var ctaY = qrFrameY + qrFrameSize + 25;
+    var ctaW = 700;
+    var ctaH = 64;
     var ctaX = (width - ctaW) / 2;
 
     var ctaGrad = ctx.createLinearGradient(ctaX, ctaY, ctaX + ctaW, ctaY + ctaH);
     ctaGrad.addColorStop(0, "#e4002b");
     ctaGrad.addColorStop(1, "#b80022");
     ctx.fillStyle = ctaGrad;
-    drawRoundRect(ctx, ctaX, ctaY, ctaW, ctaH, 31);
+    drawRoundRect(ctx, ctaX, ctaY, ctaW, ctaH, 32);
     ctx.fill();
 
     ctx.textAlign = "center";
     ctx.fillStyle = "#ffffff";
-    ctx.font = "900 27px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+    ctx.font = "900 26px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
     ctx.fillText("⭐ AVALIE NOSSO PROJETO! ⭐", width / 2, ctaY + 34);
 
-    ctx.font = "bold 20px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+    ctx.font = "bold 19px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
     ctx.fillStyle = "#0f172a";
-    ctx.fillText("Aponte a câmera do seu celular para o QR Code acima", width / 2, ctaY + 98);
+    ctx.fillText("Aponte a câmera do seu celular para o QR Code acima", width / 2, ctaY + 96);
 
-    ctx.font = "500 17px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+    ctx.font = "500 16px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
     ctx.fillStyle = "#475569";
-    ctx.fillText("Conheça todos os detalhes do nosso projeto e registre sua avaliação com estrelas!", width / 2, ctaY + 128);
+    ctx.fillText("Conheça todos os detalhes do nosso projeto e registre sua avaliação com estrelas!", width / 2, ctaY + 124);
 
     // 7. Rodapé Institucional
     var footerY = 1600;
     ctx.strokeStyle = "#e2e8f0";
     ctx.lineWidth = 1.5;
     ctx.beginPath();
-    ctx.moveTo(90, footerY);
-    ctx.lineTo(width - 90, footerY);
+    ctx.moveTo(80, footerY);
+    ctx.lineTo(width - 80, footerY);
     ctx.stroke();
 
     ctx.strokeStyle = "#e4002b";
@@ -1317,6 +1365,133 @@
 
     if (callback) callback(canvas);
     return canvas;
+  }
+
+  /* =====================================================================
+     IMPRESSÃO ISOLADA DA FOLHA A4 (EXATAMENTE 1 PÁGINA)
+     ===================================================================== */
+  function printA4SheetElement(sheetElement) {
+    if (!sheetElement) return;
+
+    var iframe = document.getElementById("a4PrintFrame");
+    if (iframe) {
+      try {
+        iframe.parentNode.removeChild(iframe);
+      } catch (err) {}
+    }
+
+    iframe = document.createElement("iframe");
+    iframe.id = "a4PrintFrame";
+    iframe.setAttribute("style", "position:fixed;top:-9999px;left:-9999px;width:210mm;height:297mm;border:0;visibility:hidden;");
+    document.body.appendChild(iframe);
+
+    var frameDoc = iframe.contentWindow.document;
+    frameDoc.open();
+
+    var printStyles =
+      '@page {' +
+        'size: A4 portrait;' +
+        'margin: 0;' +
+      '}' +
+      '*, *::before, *::after {' +
+        'box-sizing: border-box !important;' +
+        '-webkit-print-color-adjust: exact !important;' +
+        'print-color-adjust: exact !important;' +
+      '}' +
+      'html, body {' +
+        'margin: 0 !important;' +
+        'padding: 0 !important;' +
+        'width: 210mm !important;' +
+        'height: 297mm !important;' +
+        'max-height: 297mm !important;' +
+        'overflow: hidden !important;' +
+        'background: #ffffff !important;' +
+        'font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;' +
+      '}' +
+      '.a4-sheet {' +
+        'width: 210mm !important;' +
+        'height: 297mm !important;' +
+        'max-height: 297mm !important;' +
+        'margin: 0 !important;' +
+        'padding: 13mm 15mm 11mm !important;' +
+        'position: relative !important;' +
+        'display: flex !important;' +
+        'flex-direction: column !important;' +
+        'text-align: center !important;' +
+        'background: #ffffff !important;' +
+        'color: #1e293b !important;' +
+        'border: 1.5mm solid #e4002b !important;' +
+        'box-sizing: border-box !important;' +
+        'page-break-inside: avoid !important;' +
+        'page-break-after: avoid !important;' +
+      '}' +
+      '.a4-inner-border {' +
+        'position: absolute !important;' +
+        'top: 2.5mm !important;' +
+        'left: 2.5mm !important;' +
+        'right: 2.5mm !important;' +
+        'bottom: 2.5mm !important;' +
+        'border: 0.5mm solid #cbd5e1 !important;' +
+        'border-radius: 2mm !important;' +
+        'pointer-events: none !important;' +
+        'z-index: 1 !important;' +
+      '}' +
+      '.a4-corner {' +
+        'position: absolute !important;' +
+        'width: 8mm !important;' +
+        'height: 8mm !important;' +
+        'pointer-events: none !important;' +
+        'z-index: 2 !important;' +
+      '}' +
+      '.a4-corner-tl { top: 4mm !important; left: 4mm !important; border-top: 1mm solid #e4002b !important; border-left: 1mm solid #e4002b !important; }' +
+      '.a4-corner-tr { top: 4mm !important; right: 4mm !important; border-top: 1mm solid #e4002b !important; border-right: 1mm solid #e4002b !important; }' +
+      '.a4-corner-bl { bottom: 4mm !important; left: 4mm !important; border-bottom: 1mm solid #e4002b !important; border-left: 1mm solid #e4002b !important; }' +
+      '.a4-corner-br { bottom: 4mm !important; right: 4mm !important; border-bottom: 1mm solid #e4002b !important; border-right: 1mm solid #e4002b !important; }' +
+      '.a4-header { border-bottom: 0.5mm solid #e2e8f0 !important; padding-bottom: 3.5mm !important; margin-bottom: 3.5mm !important; position: relative !important; z-index: 3 !important; }' +
+      '.a4-header-top { display: flex !important; align-items: center !important; justify-content: space-between !important; gap: 4mm !important; }' +
+      '.a4-logo { font-size: 26pt !important; font-weight: 900 !important; line-height: 1 !important; letter-spacing: -0.5px !important; }' +
+      '.a4-logo .sen { color: #e4002b !important; }' +
+      '.a4-logo .ai { color: #ffb703 !important; }' +
+      '.a4-header-inst { text-align: right !important; font-size: 8pt !important; font-weight: 700 !important; color: #475569 !important; line-height: 1.25 !important; text-transform: uppercase !important; }' +
+      '.a4-header-inst strong { color: #0f172a !important; }' +
+      '.a4-event-badge { display: inline-block !important; background: #e4002b !important; color: #ffffff !important; font-size: 10pt !important; font-weight: 800 !important; text-transform: uppercase !important; letter-spacing: 0.8px !important; padding: 2mm 5.5mm !important; border-radius: 999px !important; margin-top: 2.5mm !important; }' +
+      '.a4-event-sub { font-size: 8.5pt !important; font-weight: 700 !important; color: #64748b !important; margin-top: 1.5mm !important; }' +
+      '.a4-course-turma { display: inline-flex !important; align-items: center !important; justify-content: center !important; gap: 2.5mm !important; margin-top: 2mm !important; padding: 1.5mm 4.5mm !important; background: #f1f5f9 !important; border-radius: 2mm !important; font-size: 9pt !important; font-weight: 700 !important; color: #334155 !important; border: 0.3mm solid #cbd5e1 !important; }' +
+      '.a4-project-info { margin: 3.5mm 0 3mm !important; position: relative !important; z-index: 3 !important; }' +
+      '.a4-project-title { font-size: 24pt !important; font-weight: 900 !important; color: #0f172a !important; margin: 0 !important; line-height: 1.15 !important; letter-spacing: -0.5px !important; word-break: break-word !important; }' +
+      '.a4-project-sub { font-size: 10.5pt !important; color: #475569 !important; font-weight: 600 !important; margin: 2mm 0 0 !important; line-height: 1.35 !important; }' +
+      '.a4-members-box { background: #f8fafc !important; border: 0.4mm solid #e2e8f0 !important; border-left: 2mm solid #e4002b !important; border-radius: 2mm !important; padding: 2.5mm 4mm !important; margin-bottom: 3.5mm !important; text-align: left !important; position: relative !important; z-index: 3 !important; }' +
+      '.a4-members-label { display: block !important; font-size: 8.5pt !important; font-weight: 800 !important; text-transform: uppercase !important; color: #e4002b !important; letter-spacing: 0.5px !important; margin-bottom: 1mm !important; }' +
+      '.a4-members-list { font-size: 10.5pt !important; font-weight: 700 !important; color: #1e293b !important; line-height: 1.35 !important; word-break: break-word !important; }' +
+      '.a4-qr-wrapper { flex: 1 !important; display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important; margin-bottom: 3mm !important; position: relative !important; z-index: 3 !important; }' +
+      '.a4-qr-card { background: #ffffff !important; padding: 3mm !important; border-radius: 3mm !important; border: 0.6mm solid #cbd5e1 !important; display: inline-block !important; box-shadow: 0 2mm 5mm rgba(0, 0, 0, 0.06) !important; }' +
+      '.a4-qr-card svg { display: block !important; width: 62mm !important; height: 62mm !important; }' +
+      '.a4-eval-banner { background: linear-gradient(135deg, #e4002b, #b80022) !important; color: #ffffff !important; padding: 3mm 5mm !important; border-radius: 2.5mm !important; margin-top: 3mm !important; width: 100% !important; box-sizing: border-box !important; text-align: center !important; }' +
+      '.a4-eval-badge { font-size: 12pt !important; font-weight: 900 !important; letter-spacing: 0.5px !important; text-transform: uppercase !important; }' +
+      '.a4-eval-text { font-size: 9.5pt !important; font-weight: 600 !important; opacity: 0.95 !important; margin-top: 1mm !important; line-height: 1.3 !important; }' +
+      '.a4-footer { margin-top: auto !important; padding-top: 2.5mm !important; border-top: 0.4mm solid #e2e8f0 !important; font-size: 8pt !important; color: #64748b !important; line-height: 1.35 !important; position: relative !important; z-index: 3 !important; text-align: center !important; }' +
+      '.a4-footer-title { font-weight: 800 !important; color: #0f172a !important; font-size: 10pt !important; text-transform: uppercase !important; letter-spacing: 0.5px !important; }' +
+      '.a4-footer-sub { font-size: 8pt !important; color: #64748b !important; }';
+
+    var docHtml = '<!DOCTYPE html>' +
+      '<html><head><meta charset="utf-8">' +
+      '<title>Workshop SENAI 2026 - Folha A4</title>' +
+      '<style>' + printStyles + '</style>' +
+      '</head><body>' +
+      sheetElement.outerHTML +
+      '</body></html>';
+
+    frameDoc.write(docHtml);
+    frameDoc.close();
+
+    setTimeout(function () {
+      try {
+        iframe.contentWindow.focus();
+        iframe.contentWindow.print();
+      } catch (err) {
+        window.print();
+      }
+    }, 250);
   }
 
   function openA4PosterModal(p, courseKey, index) {
@@ -1366,6 +1541,11 @@
       '</div>' +
       '<div class="modal-poster-body">' +
         '<div class="a4-sheet" id="a4PosterSheet">' +
+          '<div class="a4-inner-border"></div>' +
+          '<div class="a4-corner a4-corner-tl"></div>' +
+          '<div class="a4-corner a4-corner-tr"></div>' +
+          '<div class="a4-corner a4-corner-bl"></div>' +
+          '<div class="a4-corner a4-corner-br"></div>' +
           '<div class="a4-header">' +
             '<div class="a4-header-top">' +
               '<div class="a4-logo"><span class="sen">SEN</span><span class="ai">AI</span></div>' +
@@ -1423,7 +1603,7 @@
 
     document.getElementById("posterPrintBtn").onclick = function () {
       if (window.Leads) window.Leads.trackProjectAction(p, courseKey, "imprimiu_folha_a4");
-      window.print();
+      printA4SheetElement(document.getElementById("a4PosterSheet"));
     };
 
     document.getElementById("posterDownloadQrPngBtn").onclick = function () {

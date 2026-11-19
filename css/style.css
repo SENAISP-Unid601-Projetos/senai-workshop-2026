@@ -2913,7 +2913,7 @@ body.modal-open {
   color: #1e293b;
   border-radius: 8px;
   box-shadow: 0 16px 45px rgba(0, 0, 0, 0.45);
-  border: 3px solid #e4002b;
+  border: 4px solid #e4002b;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -2922,12 +2922,63 @@ body.modal-open {
   text-align: center;
 }
 
+/* Moldura interna institucional refinada */
+.a4-inner-border {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  right: 6px;
+  bottom: 6px;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 4px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Cantoneiras decorativas institucionais nos 4 cantos */
+.a4-corner {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.a4-corner-tl {
+  top: 9px;
+  left: 9px;
+  border-top: 3px solid #e4002b;
+  border-left: 3px solid #e4002b;
+}
+
+.a4-corner-tr {
+  top: 9px;
+  right: 9px;
+  border-top: 3px solid #e4002b;
+  border-right: 3px solid #e4002b;
+}
+
+.a4-corner-bl {
+  bottom: 9px;
+  left: 9px;
+  border-bottom: 3px solid #e4002b;
+  border-left: 3px solid #e4002b;
+}
+
+.a4-corner-br {
+  bottom: 9px;
+  right: 9px;
+  border-bottom: 3px solid #e4002b;
+  border-right: 3px solid #e4002b;
+}
+
 /* Elementos internos da Folha A4 */
 .a4-header {
   border-bottom: 2px solid #e2e8f0;
   padding-bottom: 12px;
   margin-bottom: 12px;
   position: relative;
+  z-index: 3;
 }
 
 .a4-header-top {
@@ -2987,6 +3038,7 @@ body.modal-open {
   margin-top: 6px;
   padding: 3px 10px;
   background: #f1f5f9;
+  border: 1px solid #cbd5e1;
   border-radius: 6px;
   font-size: 0.72rem;
   font-weight: 700;
@@ -2995,6 +3047,8 @@ body.modal-open {
 
 .a4-project-info {
   margin: 10px 0 12px;
+  position: relative;
+  z-index: 3;
 }
 
 .a4-project-title {
@@ -3022,6 +3076,8 @@ body.modal-open {
   padding: 8px 12px;
   margin-bottom: 12px;
   text-align: left;
+  position: relative;
+  z-index: 3;
 }
 
 .a4-members-label {
@@ -3048,13 +3104,15 @@ body.modal-open {
   align-items: center;
   justify-content: center;
   margin-bottom: 10px;
+  position: relative;
+  z-index: 3;
 }
 
 .a4-qr-card {
   background: #ffffff;
   padding: 10px;
   border-radius: 12px;
-  border: 2px solid #e2e8f0;
+  border: 2px solid #cbd5e1;
   box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
   display: inline-block;
 }
@@ -3098,6 +3156,8 @@ body.modal-open {
   font-size: 0.65rem;
   color: #64748b;
   line-height: 1.35;
+  position: relative;
+  z-index: 3;
 }
 
 .a4-footer-title {
@@ -3108,44 +3168,59 @@ body.modal-open {
   letter-spacing: 0.5px;
 }
 
-/* @media print para impressão direta sem chrome do navegador */
+/* @media print para impressão direta (Ctrl+P / Cmd+P) garantindo 1 única página e fidelidade total */
 @media print {
   @page {
     size: A4 portrait;
-    margin: 8mm;
+    margin: 0;
   }
 
-  body * {
-    visibility: hidden !important;
+  *, *::before, *::after {
+    box-sizing: border-box !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
   }
 
-  #projectPosterModal,
-  #projectPosterModal .a4-sheet,
-  #projectPosterModal .a4-sheet * {
-    visibility: visible !important;
+  html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 210mm !important;
+    height: 297mm !important;
+    max-height: 297mm !important;
+    overflow: hidden !important;
+    background: #ffffff !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Remove completamente os demais elementos da página para NÃO gerar páginas adicionais vazias */
+  body > *:not(#projectPosterModal) {
+    display: none !important;
   }
 
   #projectPosterModal {
-    position: fixed !important;
-    left: 0 !important;
-    top: 0 !important;
-    width: 100vw !important;
-    height: 100vh !important;
-    background: #ffffff !important;
+    display: block !important;
+    position: static !important;
+    width: 210mm !important;
+    height: 297mm !important;
+    max-height: 297mm !important;
+    margin: 0 auto !important;
     padding: 0 !important;
-    margin: 0 !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    z-index: 999999 !important;
+    background: #ffffff !important;
+    overflow: hidden !important;
+    z-index: 1 !important;
   }
 
   .modal-poster-dialog {
+    display: block !important;
     border: none !important;
     box-shadow: none !important;
     background: transparent !important;
     max-width: none !important;
     width: 100% !important;
+    height: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
 
   .modal-poster-toolbar {
@@ -3153,26 +3228,278 @@ body.modal-open {
   }
 
   .modal-poster-body {
+    display: block !important;
     padding: 0 !important;
     background: transparent !important;
-    overflow: visible !important;
+    overflow: hidden !important;
+    width: 100% !important;
+    height: 100% !important;
   }
 
   .a4-sheet {
-    width: 194mm !important;
-    height: 281mm !important;
-    max-width: none !important;
-    min-height: none !important;
-    border: 3px solid #e4002b !important;
+    width: 210mm !important;
+    height: 297mm !important;
+    max-height: 297mm !important;
+    max-width: 210mm !important;
+    margin: 0 !important;
+    border: 1.5mm solid #e4002b !important;
+    border-radius: 0 !important;
     box-shadow: none !important;
-    padding: 16mm 14mm 12mm !important;
+    padding: 13mm 15mm 11mm !important;
+    box-sizing: border-box !important;
     page-break-inside: avoid !important;
+    page-break-after: avoid !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
 
+  .a4-inner-border {
+    position: absolute !important;
+    top: 2.5mm !important;
+    left: 2.5mm !important;
+    right: 2.5mm !important;
+    bottom: 2.5mm !important;
+    border: 0.5mm solid #cbd5e1 !important;
+    border-radius: 2mm !important;
+    pointer-events: none !important;
+    z-index: 1 !important;
+  }
+
+  .a4-corner {
+    position: absolute !important;
+    width: 8mm !important;
+    height: 8mm !important;
+    pointer-events: none !important;
+    z-index: 2 !important;
+  }
+
+  .a4-corner-tl {
+    top: 4mm !important;
+    left: 4mm !important;
+    border-top: 1mm solid #e4002b !important;
+    border-left: 1mm solid #e4002b !important;
+  }
+
+  .a4-corner-tr {
+    top: 4mm !important;
+    right: 4mm !important;
+    border-top: 1mm solid #e4002b !important;
+    border-right: 1mm solid #e4002b !important;
+  }
+
+  .a4-corner-bl {
+    bottom: 4mm !important;
+    left: 4mm !important;
+    border-bottom: 1mm solid #e4002b !important;
+    border-left: 1mm solid #e4002b !important;
+  }
+
+  .a4-corner-br {
+    bottom: 4mm !important;
+    right: 4mm !important;
+    border-bottom: 1mm solid #e4002b !important;
+    border-right: 1mm solid #e4002b !important;
+  }
+
+  .a4-header {
+    border-bottom: 0.5mm solid #e2e8f0 !important;
+    padding-bottom: 3.5mm !important;
+    margin-bottom: 3.5mm !important;
+    position: relative !important;
+    z-index: 3 !important;
+  }
+
+  .a4-header-top {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 4mm !important;
+  }
+
+  .a4-logo {
+    font-size: 26pt !important;
+    font-weight: 900 !important;
+    line-height: 1 !important;
+    letter-spacing: -0.5px !important;
+  }
+
+  .a4-logo .sen { color: #e4002b !important; }
+  .a4-logo .ai { color: #ffb703 !important; }
+
+  .a4-header-inst {
+    text-align: right !important;
+    font-size: 8pt !important;
+    font-weight: 700 !important;
+    color: #475569 !important;
+    line-height: 1.25 !important;
+    text-transform: uppercase !important;
+  }
+
+  .a4-header-inst strong { color: #0f172a !important; }
+
+  .a4-event-badge {
+    display: inline-block !important;
+    background: #e4002b !important;
+    color: #ffffff !important;
+    font-size: 10pt !important;
+    font-weight: 800 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.8px !important;
+    padding: 2mm 5.5mm !important;
+    border-radius: 999px !important;
+    margin-top: 2.5mm !important;
+  }
+
+  .a4-event-sub {
+    font-size: 8.5pt !important;
+    font-weight: 700 !important;
+    color: #64748b !important;
+    margin-top: 1.5mm !important;
+  }
+
+  .a4-course-turma {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 2.5mm !important;
+    margin-top: 2mm !important;
+    padding: 1.5mm 4.5mm !important;
+    background: #f1f5f9 !important;
+    border-radius: 2mm !important;
+    font-size: 9pt !important;
+    font-weight: 700 !important;
+    color: #334155 !important;
+    border: 0.3mm solid #cbd5e1 !important;
+  }
+
+  .a4-project-info {
+    margin: 3.5mm 0 3mm !important;
+    position: relative !important;
+    z-index: 3 !important;
+  }
+
+  .a4-project-title {
+    font-size: 24pt !important;
+    font-weight: 900 !important;
+    color: #0f172a !important;
+    margin: 0 !important;
+    line-height: 1.15 !important;
+    letter-spacing: -0.5px !important;
+    word-break: break-word !important;
+  }
+
+  .a4-project-sub {
+    font-size: 10.5pt !important;
+    color: #475569 !important;
+    font-weight: 600 !important;
+    margin: 2mm 0 0 !important;
+    line-height: 1.35 !important;
+  }
+
+  .a4-members-box {
+    background: #f8fafc !important;
+    border: 0.4mm solid #e2e8f0 !important;
+    border-left: 2mm solid #e4002b !important;
+    border-radius: 2mm !important;
+    padding: 2.5mm 4mm !important;
+    margin-bottom: 3.5mm !important;
+    text-align: left !important;
+    position: relative !important;
+    z-index: 3 !important;
+  }
+
+  .a4-members-label {
+    display: block !important;
+    font-size: 8.5pt !important;
+    font-weight: 800 !important;
+    text-transform: uppercase !important;
+    color: #e4002b !important;
+    letter-spacing: 0.5px !important;
+    margin-bottom: 1mm !important;
+  }
+
+  .a4-members-list {
+    font-size: 10.5pt !important;
+    font-weight: 700 !important;
+    color: #1e293b !important;
+    line-height: 1.35 !important;
+    word-break: break-word !important;
+  }
+
+  .a4-qr-wrapper {
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin-bottom: 3mm !important;
+    position: relative !important;
+    z-index: 3 !important;
+  }
+
+  .a4-qr-card {
+    background: #ffffff !important;
+    padding: 3mm !important;
+    border-radius: 3mm !important;
+    border: 0.6mm solid #cbd5e1 !important;
+    display: inline-block !important;
+    box-shadow: 0 2mm 5mm rgba(0, 0, 0, 0.06) !important;
+  }
+
   .a4-qr-card svg {
-    width: 65mm !important;
-    height: 65mm !important;
+    display: block !important;
+    width: 62mm !important;
+    height: 62mm !important;
+  }
+
+  .a4-eval-banner {
+    background: linear-gradient(135deg, #e4002b, #b80022) !important;
+    color: #ffffff !important;
+    padding: 3mm 5mm !important;
+    border-radius: 2.5mm !important;
+    margin-top: 3mm !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    text-align: center !important;
+  }
+
+  .a4-eval-badge {
+    font-size: 12pt !important;
+    font-weight: 900 !important;
+    letter-spacing: 0.5px !important;
+    text-transform: uppercase !important;
+  }
+
+  .a4-eval-text {
+    font-size: 9.5pt !important;
+    font-weight: 600 !important;
+    opacity: 0.95 !important;
+    margin-top: 1mm !important;
+    line-height: 1.3 !important;
+  }
+
+  .a4-footer {
+    margin-top: auto !important;
+    padding-top: 2.5mm !important;
+    border-top: 0.4mm solid #e2e8f0 !important;
+    font-size: 8pt !important;
+    color: #64748b !important;
+    line-height: 1.35 !important;
+    position: relative !important;
+    z-index: 3 !important;
+    text-align: center !important;
+  }
+
+  .a4-footer-title {
+    font-weight: 800 !important;
+    color: #0f172a !important;
+    font-size: 10pt !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+  }
+
+  .a4-footer-sub {
+    font-size: 8pt !important;
+    color: #64748b !important;
   }
 }

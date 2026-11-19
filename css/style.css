@@ -3007,42 +3007,23 @@ body.modal-open {
   color: #ff3b57;
 }
 
-/* 1. Bloco Editorial do Projeto (Opção 1: Tag + Título + Turma) */
+/* 1. Nome do Projeto em destaque puro */
 .a4-project-block {
-  margin: 2px 0 6px;
+  margin: 4px 0 8px;
   position: relative;
   z-index: 3;
   text-align: center;
 }
 
-.a4-project-tag {
-  display: block;
-  font-size: 0.65rem;
-  font-weight: 800;
-  letter-spacing: 2px;
-  color: #64748b;
-  text-transform: uppercase;
-  margin-bottom: 2px;
-}
-
 .a4-project-title {
   display: block;
-  font-size: 1.4rem;
+  font-size: 1.45rem;
   font-weight: 900;
   color: #0f172a;
   margin: 0;
   line-height: 1.15;
   letter-spacing: -0.4px;
   word-break: break-word;
-}
-
-.a4-project-turma {
-  display: block;
-  font-size: 0.72rem;
-  font-weight: 700;
-  color: #475569;
-  letter-spacing: 0.4px;
-  margin-top: 3px;
 }
 
 /* 2. QR Code Central (ampliado para leitura imediata) */
@@ -3281,40 +3262,21 @@ body.modal-open {
   }
 
   .a4-project-block {
-    margin: 1mm 0 2mm !important;
+    margin: 1.5mm 0 2mm !important;
     position: relative !important;
     z-index: 3 !important;
     text-align: center !important;
   }
 
-  .a4-project-tag {
-    display: block !important;
-    font-size: 7.5pt !important;
-    font-weight: 800 !important;
-    letter-spacing: 1.8px !important;
-    color: #64748b !important;
-    text-transform: uppercase !important;
-    margin-bottom: 0.6mm !important;
-  }
-
   .a4-project-title {
     display: block !important;
-    font-size: 15.5pt !important;
+    font-size: 16pt !important;
     font-weight: 900 !important;
     color: #0f172a !important;
     line-height: 1.15 !important;
     letter-spacing: -0.3px !important;
     word-break: break-word !important;
     margin: 0 !important;
-  }
-
-  .a4-project-turma {
-    display: block !important;
-    font-size: 8pt !important;
-    font-weight: 700 !important;
-    color: #475569 !important;
-    letter-spacing: 0.4px !important;
-    margin-top: 0.8mm !important;
   }
 
   .a4-qr-wrapper {

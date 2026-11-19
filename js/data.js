@@ -646,7 +646,7 @@ window.SITE = {
           id: "mec-9",
           nome: "PneuTech Automação",
           turma: "2IMEC-C",
-          integrantes: "",
+          integrantes: ["Manuella Da Silva Pradela", "Pedro Augusto Oliveiora De Lima", "Yasmin Vitória Vanzetto", "Victor Hugo Pessota"],
           subtitulo: "Frase de destaque do projeto",
           descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.",
           imagem: "img/projetos/mec-x.jpeg",
@@ -656,8 +656,8 @@ window.SITE = {
             { data: "03/12/2026", horario: "das 8h às 17h" }
           ],
           landing: "",
-          funcionamento: "",
-          comercial: ""
+          funcionamento: "https://youtu.be/rTpyQ92vSVU?si=RRCgzd6_5Qx03kZI",
+          comercial: "https://youtu.be/CPDIH-O03U4?si=Dg1QkZCEruu-SsML"
         },
         {
           id: "mec-10",

@@ -378,15 +378,15 @@ window.SITE = {
           ],
           landing: "https://sites.google.com/aluno.senai.br/lathevision/in%C3%ADcio",
           funcionamento: "https://youtu.be/W4yv00il-30?si=Dj0v7-xhAh2rdR9b",
-          comercial: ""
+          comercial: "https://youtu.be/uBuyZBMDfOs?si=8o5PJ-8WecO1SlDf"
         },
         {
           id: "mec-2",
           nome: "PrecisionTech",
           turma: "2IMEC-B",
-          integrantes: "",
-          subtitulo: "Frase de destaque do projeto",
-          descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.",
+          integrantes: ["Brenda Coelho Santos", "Guilherme Henrique Rosado", "Enzo Deresto", "Diego Montanari"],
+          subtitulo: "Transformando precisão em inteligência; Inovando o futuro da furação.",
+          descricao: "O objetivo do projeto é modernizar uma furadeira de bancada convencional por meio da automação e da tecnologia, tornando o processo de furação mais preciso, seguro e eficiente. Seu diferencial está na integração de sensores, laser e uma IHM, que permitem maior controle da operação, monitoramento das informações e facilidade de uso.",
           imagem: "img/projetos/mec-2.jpeg",
           alunos: 0,
           data: "",
@@ -395,9 +395,9 @@ window.SITE = {
             { data: "02/12/2026", horario: "das 8h às 17h" },
             { data: "03/12/2026", horario: "das 13h às 17h" }
           ],
-          landing: "",
-          funcionamento: "",
-          comercial: ""
+          landing: "https://sites.google.com/aluno.senai.br/precisiontech/in%C3%ADcio",
+          funcionamento: "https://youtu.be/1vd4hlzFCe0",
+          comercial: "https://youtu.be/OYfu8zbrp1Q"
         },
         {
           id: "mec-3",
@@ -422,10 +422,10 @@ window.SITE = {
           id: "mec-4",
           nome: "MicroWork",
           turma: "2IMEC-B",
-          integrantes: ["Hiago Carneiro" , "Arthur Matos" , "Gustavo Trindade" , "Andrey Tanan"],
-          subtitulo: "Frase de destaque do projeto",
-          descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.",
-          imagem: "img/projetos/mec-2.jpeg",
+          integrantes: ["Hiago Carneiro", "Arthur Matos", "Gustavo Trindade", "Andrey Tanan"],
+          subtitulo: "Tecnologia compacta. Controle completo.",
+          descricao: "O objetivo do MicroLogic é democratizar a automação para pequenas e médias empresas através de um CLP portátil e fácil de instalar. Seu principal diferencial é o preço bem menor que os modelos comuns, aliado ao código aberto sem licenças, acesso remoto em tempo real via IoT e controle de robôs.",
+          imagem: "img/projetos/mec-4.jpg",
           alunos: 0,
           data: "",
           horario: "",
@@ -433,9 +433,9 @@ window.SITE = {
             { data: "02/12/2026", horario: "das 8h às 17h" },
             { data: "03/12/2026", horario: "das 13h às 17h" }
           ],
-          landing: "",
-          funcionamento: "",
-          comercial: ""
+          landing: "https://sites.google.com/aluno.senai.br/micro-work/in%C3%ADcio",
+          funcionamento: "https://youtu.be/lofR74d96lU",
+          comercial: "https://youtu.be/67qOy0IFUao"
         },
         {
           id: "mec-5",
@@ -498,7 +498,7 @@ window.SITE = {
           id: "mec-8",
           nome: "CyberPipe",
           turma: "2IMEC-B",
-          integrantes: ["Lívia Cardoso" , "Lívia Caliel" , "Lívia Santos" , "Karyna Napolitano"],
+          integrantes: ["Lívia Cardoso", "Lívia Caliel", "Lívia Santos", "Karyna Napolitano"],
           subtitulo: "CompactMover, Movimentando de forma mais inteligente, reduzindo riscos , acelerando o crescimento.",
           descricao: "O CompactMover, desenvolvido pela FlowBotics, é um AGV segue-linha equipado com sensores anticolisão, criado para eliminar os gargalos logísticos da movimentação manual de cargas. Uma solução autônoma e segura que otimiza o fluxo e a eficiência da sua operação.",
           imagem: "img/projetos/mec-8.jpg",
@@ -510,7 +510,7 @@ window.SITE = {
             { data: "03/12/2026", horario: "das 13h às 17h" }
           ],
           landing: "https://sites.google.com/aluno.senai.br/cyberpipe/in%C3%ADcio",
-          funcionamento: "",
+          funcionamento: "https://youtu.be/ncgJ-N5UVG4",
           comercial: "https://youtu.be/EpUmotV35Mw?si=qxFlQ_I9Bm8GpOmi"
         },
         {
@@ -549,7 +549,7 @@ window.SITE = {
           ],
           landing: "https://sites.google.com/aluno.senai.br/bratorq/in%C3%ADcio",
           funcionamento: "",
-          comercial: ""
+          comercial: "https://youtu.be/Dss8px-Ml50?feature=shared"
         },
         {
           id: "mec-11",
@@ -663,7 +663,7 @@ window.SITE = {
           ],
           landing: "https://sites.google.com/aluno.senai.br/nexusatlas/in%C3%ADcio",
           funcionamento: "https://youtu.be/DvtxMXHSbUc?feature=shared",
-          comercial: ""
+          comercial: "https://youtu.be/BsbTm0gRNA4?si=xq8gCa8TSqMKgHJZ"
         }
       ]
     }

@@ -1168,27 +1168,65 @@
     ctx.lineTo(width - cornerOffset, height - cornerOffset - cornerSize);
     ctx.stroke();
 
-    // 1. Nome do Grupo / Projeto
+    // 0. Topo do Card - Evento Workshop SENAI 2026 (100% da horizontal com gradiente)
+    var headerBoxW = width - 120;
+    var headerBoxX = (width - headerBoxW) / 2;
+    var headerBoxY = 48;
+    var headerBoxH = 46;
+
+    ctx.fillStyle = "#0f172a";
+    drawRoundRect(ctx, headerBoxX, headerBoxY, headerBoxW, headerBoxH, 8);
+    ctx.fill();
+
+    ctx.font = "900 22px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+    var t1 = "WORKSHOP SENAI ";
+    var t2 = "2026";
+    var w1 = ctx.measureText(t1).width;
+    var w2 = ctx.measureText(t2).width;
+    var totalW = w1 + w2;
+    var textStartX = (width - totalW) / 2;
+    var textY = headerBoxY + (headerBoxH / 2);
+
+    ctx.textAlign = "left";
+    ctx.textBaseline = "middle";
+    ctx.fillStyle = "#ffffff";
+    ctx.fillText(t1, textStartX, textY);
+
+    var grad2026 = ctx.createLinearGradient(textStartX + w1, 0, textStartX + totalW, 0);
+    grad2026.addColorStop(0, "#ff3b57");
+    grad2026.addColorStop(0.4, "#ff6584");
+    grad2026.addColorStop(1, "#38bdf8");
+    ctx.fillStyle = grad2026;
+    ctx.fillText(t2, textStartX + w1, textY);
+
+    // 1. Nome do Grupo / Projeto (com fundo destacado)
     var projNome = (p && p.nome) ? p.nome : "Projeto";
-    var titleY = 115;
+    var boxW = width - 120;
+    var boxX = (width - boxW) / 2;
+    var boxY = headerBoxY + headerBoxH + 16;
+    var boxH = 88;
+
+    // Fundo do nome do grupo
+    ctx.fillStyle = "#f1f5f9";
+    drawRoundRect(ctx, boxX, boxY, boxW, boxH, 14);
+    ctx.fill();
+    ctx.strokeStyle = "#cbd5e1";
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.fillStyle = "#0f172a";
-    ctx.font = "900 36px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
-    if (ctx.measureText(projNome).width > width - 120) {
-      ctx.font = "900 28px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+    ctx.font = "900 34px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+    if (ctx.measureText(projNome).width > boxW - 40) {
+      ctx.font = "900 26px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
     }
-    var nextY = drawWrappedText(ctx, projNome, width / 2, titleY, width - 100, 36, "center");
+    drawWrappedText(ctx, projNome, width / 2, boxY + (boxH / 2), boxW - 30, 32, "center");
 
-    // 2. Moldura Central do QR Code
-    var qrFrameSize = 510;
+    // 2. Moldura Central do QR Code (ampliada)
+    var qrFrameSize = 560;
     var qrFrameX = (width - qrFrameSize) / 2;
-    var qrFrameY = 220;
-    if (nextY > titleY + 20) {
-      qrFrameY = nextY + 30;
-      qrFrameSize = 480;
-      qrFrameX = (width - qrFrameSize) / 2;
-    }
+    var qrFrameY = boxY + boxH + 22;
 
     ctx.fillStyle = "#ffffff";
     drawRoundRect(ctx, qrFrameX, qrFrameY, qrFrameSize, qrFrameSize, 16);
@@ -1198,9 +1236,9 @@
     ctx.stroke();
 
     // QR Code em alta resolução
-    var qrSize = qrFrameSize - 50;
-    var qrX = qrFrameX + 25;
-    var qrY = qrFrameY + 25;
+    var qrSize = 510;
+    var qrX = qrFrameX + (qrFrameSize - qrSize) / 2;
+    var qrY = qrFrameY + (qrFrameSize - qrSize) / 2;
 
     var tempCanvas = document.createElement("canvas");
     if (window.QRCode && typeof window.QRCode.drawCanvas === "function") {
@@ -1209,8 +1247,8 @@
     }
 
     // 3. Avalie nosso projeto
-    var ctaY = qrFrameY + qrFrameSize + 40;
-    var ctaW = width - 140;
+    var ctaY = qrFrameY + qrFrameSize + 30;
+    var ctaW = width - 120;
     var ctaH = 68;
     var ctaX = (width - ctaW) / 2;
 
@@ -1222,13 +1260,10 @@
     ctx.fill();
 
     ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
     ctx.fillStyle = "#ffffff";
     ctx.font = "900 24px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
-    ctx.fillText("⭐ AVALIE NOSSO PROJETO ⭐", width / 2, ctaY + 35);
-
-    ctx.font = "bold 15px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
-    ctx.fillStyle = "#475569";
-    ctx.fillText("Aponte a câmera do seu celular para o QR Code acima", width / 2, ctaY + 105);
+    ctx.fillText("⭐ AVALIE NOSSO PROJETO ⭐", width / 2, ctaY + (ctaH / 2));
 
     if (callback) callback(canvas);
     return canvas;
@@ -1394,11 +1429,14 @@
       '.a4-corner-tr { top: 2.8mm !important; right: 2.8mm !important; border-top: 0.7mm solid #e4002b !important; border-right: 0.7mm solid #e4002b !important; }' +
       '.a4-corner-bl { bottom: 2.8mm !important; left: 2.8mm !important; border-bottom: 0.7mm solid #e4002b !important; border-left: 0.7mm solid #e4002b !important; }' +
       '.a4-corner-br { bottom: 2.8mm !important; right: 2.8mm !important; border-bottom: 0.7mm solid #e4002b !important; border-right: 0.7mm solid #e4002b !important; }' +
-      '.a4-project-info { margin: 2mm 0 1mm !important; position: relative !important; z-index: 3 !important; }' +
-      '.a4-project-title { font-size: 15pt !important; font-weight: 900 !important; color: #0f172a !important; margin: 0 !important; line-height: 1.15 !important; letter-spacing: -0.3px !important; word-break: break-word !important; }' +
+      '.a4-header { position: relative !important; z-index: 3 !important; margin: 0 0 2mm !important; width: 100% !important; text-align: center !important; }' +
+      '.a4-event-badge { display: block !important; width: 100% !important; box-sizing: border-box !important; text-align: center !important; background: #0f172a !important; border: none !important; border-radius: 1.5mm !important; padding: 2mm 3mm !important; font-size: 10pt !important; font-weight: 900 !important; color: #ffffff !important; text-transform: uppercase !important; letter-spacing: 0.6px !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }' +
+      '.grad { background: linear-gradient(90deg, #ff3b57, #ff6584 40%, #38bdf8) !important; -webkit-background-clip: text !important; background-clip: text !important; -webkit-text-fill-color: transparent !important; color: #ff3b57 !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }' +
+      '.a4-project-info { background: #f1f5f9 !important; border: 0.4mm solid #cbd5e1 !important; border-radius: 2.5mm !important; padding: 2.5mm 4mm !important; margin: 1.5mm 0 2mm !important; position: relative !important; z-index: 3 !important; box-sizing: border-box !important; }' +
+      '.a4-project-title { font-size: 14pt !important; font-weight: 900 !important; color: #0f172a !important; margin: 0 !important; line-height: 1.15 !important; letter-spacing: -0.3px !important; word-break: break-word !important; }' +
       '.a4-qr-wrapper { flex: 1 !important; display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important; margin: 2mm 0 !important; position: relative !important; z-index: 3 !important; }' +
-      '.a4-qr-card { background: #ffffff !important; padding: 2.5mm !important; border-radius: 2mm !important; border: 0.4mm solid #cbd5e1 !important; display: inline-block !important; box-shadow: 0 1mm 3mm rgba(0, 0, 0, 0.05) !important; }' +
-      '.a4-qr-card svg { display: block !important; width: 55mm !important; height: 55mm !important; }' +
+      '.a4-qr-card { background: #ffffff !important; padding: 2mm !important; border-radius: 2mm !important; border: 0.4mm solid #cbd5e1 !important; display: inline-block !important; box-shadow: 0 1mm 3mm rgba(0, 0, 0, 0.05) !important; }' +
+      '.a4-qr-card svg { display: block !important; width: 68mm !important; height: 68mm !important; }' +
       '.a4-eval-banner { background: linear-gradient(135deg, #e4002b, #b80022) !important; color: #ffffff !important; padding: 2.5mm 4mm !important; border-radius: 2mm !important; width: 100% !important; box-sizing: border-box !important; text-align: center !important; position: relative !important; z-index: 3 !important; }' +
       '.a4-eval-badge { font-size: 9.5pt !important; font-weight: 900 !important; letter-spacing: 0.4px !important; text-transform: uppercase !important; }' +
       '.a4-eval-text { font-size: 7pt !important; font-weight: 600 !important; opacity: 0.95 !important; margin-top: 0.8mm !important; line-height: 1.2 !important; }';
@@ -1432,7 +1470,7 @@
 
     var qrSvg = "";
     if (window.QRCode && typeof window.QRCode.generateSVG === "function") {
-      qrSvg = window.QRCode.generateSVG(shareUrl, { size: 210, margin: 2 });
+      qrSvg = window.QRCode.generateSVG(shareUrl, { size: 260, margin: 2 });
     }
 
     var m = ensurePosterModal();
@@ -1476,6 +1514,9 @@
           '<div class="a4-corner a4-corner-tr"></div>' +
           '<div class="a4-corner a4-corner-bl"></div>' +
           '<div class="a4-corner a4-corner-br"></div>' +
+          '<div class="a4-header">' +
+            '<div class="a4-event-badge">Workshop SENAI <span class="grad">2026</span></div>' +
+          '</div>' +
           '<div class="a4-project-info">' +
             '<h1 class="a4-project-title">' + esc(p.nome) + '</h1>' +
           '</div>' +
@@ -1486,7 +1527,6 @@
           '</div>' +
           '<div class="a4-eval-banner">' +
             '<div class="a4-eval-badge">⭐ ' + esc(T("evalOurProject")) + ' ⭐</div>' +
-            '<div class="a4-eval-text">' + esc(T("evalOurProjectSub")) + '</div>' +
           '</div>' +
         '</div>' +
       '</div>';

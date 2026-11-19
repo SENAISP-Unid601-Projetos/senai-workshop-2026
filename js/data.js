@@ -288,7 +288,7 @@ window.SITE = {
           id: "ds-13",
           nome: "Zelo",
           turma: "2IDS-SC",
-          integrantes: ["Lara Corsic", "Ruan Fernandes da Silva", "Maria Isabelle", "Kevina Correa"],
+          integrantes: ["Lara Corsic", "Ruan Fernandes da Silva", "Maria Isabelle", "Kevin Correa"],
           subtitulo: "Autonomia para quem vive, tranquilidade para quem ama.",
           descricao: "Aplicativo desenvolvido para auxiliar idosos nas atividades do dia a dia, permitindo acompanhar rotinas, organizar tarefas e enviar lembretes importantes. A solução promove mais autonomia, segurança e qualidade de vida para os idosos, além de proporcionar tranquilidade e confiança aos familiares e cuidadores.",
           imagem: "img/projetos/ds-13.jpg",
@@ -680,18 +680,18 @@ window.SITE = {
           id: "mec-11",
           nome: "MotorTech",
           turma: "2IMEC-C",
-          integrantes: "",
-          subtitulo: "Frase de destaque do projeto",
-          descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.",
-          imagem: "img/projetos/mec-x.jpeg",
+          integrantes: ["Lorena Maria Franco Galera", "Izabela Niza de Oliveira", "Letícia Saraiva Ferreira da Silva", "Isadora Caroline Massambani"],
+          subtitulo: "Automação ao seu alcance!",
+          descricao: "A solução da MotorTech é utilizar um braço robótico com garra, programado para montagem e desmontagem de motores e uma linha de produção, sistema de parada e retomada do mesmo ponto e sem necessidade de interferência humana constante. Pelo tamanho reduzido do robô, a instalação é móvel e com menor custo, gerando mais custo benefício ao cliente.",
+          imagem: "img/projetos/mec-11.jpg",
           alunos: 0,
           apresentacao: [
             { data: "02/12/2026", horario: "das 13h às 17h" },
             { data: "03/12/2026", horario: "das 8h às 17h" }
           ],
-          landing: "",
+          landing: "https://sites.google.com/aluno.senai.br/motortech/p%C3%A1gina-inicial",
           funcionamento: "",
-          comercial: ""
+          comercial: "https://youtu.be/a3GSUYtcUbE?si=7_TwsibmukGdeyC3"
         },
         {
           id: "mec-12",
@@ -714,7 +714,7 @@ window.SITE = {
           id: "mec-13",
           nome: "MOLDCORE",
           turma: "2IMEC-C",
-          integrantes: ["Gustavo Micheletti","Aline Moraes","Andressa Sebin","Gustavo da Silva"],
+          integrantes: ["Gustavo Micheletti", "Aline Moraes", "Andressa Sebin", "Gustavo da Silva"],
           subtitulo: "Moldando o seu futuro.",
           descricao: "A MOLDCORE tem como objetivo desenvolver uma mini injetora plástica compacta, de baixo custo e fácil utilização.Seu diferencial está no controle eletrônico de temperatura, acionamento manual e uso de materias reutilizados, oferecendo uma alternativa acessível para a produção de pequenas peças plásticas.",
           imagem: "img/projetos/mec-13.png",

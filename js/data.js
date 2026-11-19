@@ -694,18 +694,18 @@ window.SITE = {
           id: "mec-13",
           nome: "MOLDCORE",
           turma: "2IMEC-C",
-          integrantes: "",
-          subtitulo: "Frase de destaque do projeto",
+          integrantes: ["Gustavo Micheletti","Aline Moraes","Andressa Sebin","Gustavo da Silva"],
+          subtitulo: "Moldando o seu futuro.",
           descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.",
-          imagem: "img/projetos/mec-x.jpeg",
+          imagem: "img/projetos/mec-13.png",
           alunos: 0,
           apresentacao: [
             { data: "02/12/2026", horario: "das 13h às 17h" },
             { data: "03/12/2026", horario: "das 8h às 17h" }
           ],
-          landing: "",
-          funcionamento: "",
-          comercial: ""
+          landing: "https://sites.google.com/aluno.senai.br/moldcore/in%C3%ADcio",
+          funcionamento: "https://www.youtube.com/watch?v=S1LuXnuzmKw",
+          comercial: "https://www.youtube.com/watch?v=wanKp92rB04"
         },
         {
           id: "mec-14",

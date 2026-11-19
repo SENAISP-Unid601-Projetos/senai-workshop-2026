@@ -696,7 +696,7 @@ window.SITE = {
           turma: "2IMEC-C",
           integrantes: ["Gustavo Micheletti","Aline Moraes","Andressa Sebin","Gustavo da Silva"],
           subtitulo: "Moldando o seu futuro.",
-          descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.",
+          descricao: "A MOLDCORE tem como objetivo desenvolver uma mini injetora plástica compacta, de baixo custo e fácil utilização.Seu diferencial está no controle eletrônico de temperatura, acionamento manual e uso de materias reutilizados, oferecendo uma alternativa acessível para a produção de pequenas peças plásticas.",
           imagem: "img/projetos/mec-13.png",
           alunos: 0,
           apresentacao: [

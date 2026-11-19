@@ -341,7 +341,9 @@ window.SITE = {
           descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.",
           imagem: "img/projetos/mec-x.jpeg",
           alunos: 0,
-          apresentacao: [],
+          apresentacao: [
+            { data: "01/12/2026", horario: "das 8h às 17h" }
+          ],
           landing: "",
           funcionamento: "",
           comercial: ""
@@ -355,7 +357,9 @@ window.SITE = {
           descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.",
           imagem: "img/projetos/mec-x.jpeg",
           alunos: 0,
-          apresentacao: [],
+          apresentacao: [
+            { data: "01/12/2026", horario: "das 8h às 17h" }
+          ],
           landing: "",
           funcionamento: "",
           comercial: ""
@@ -369,7 +373,9 @@ window.SITE = {
           descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.",
           imagem: "img/projetos/mec-x.jpeg",
           alunos: 0,
-          apresentacao: [],
+          apresentacao: [
+            { data: "01/12/2026", horario: "das 8h às 17h" }
+          ],
           landing: "",
           funcionamento: "",
           comercial: ""
@@ -383,7 +389,9 @@ window.SITE = {
           descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.",
           imagem: "img/projetos/mec-x.jpeg",
           alunos: 0,
-          apresentacao: [],
+          apresentacao: [
+            { data: "01/12/2026", horario: "das 8h às 17h" }
+          ],
           landing: "",
           funcionamento: "",
           comercial: ""
@@ -397,7 +405,9 @@ window.SITE = {
           descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.",
           imagem: "img/projetos/mec-x.jpeg",
           alunos: 0,
-          apresentacao: [],
+          apresentacao: [
+            { data: "01/12/2026", horario: "das 8h às 17h" }
+          ],
           landing: "",
           funcionamento: "",
           comercial: ""
@@ -411,7 +421,9 @@ window.SITE = {
           descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.",
           imagem: "img/projetos/mec-x.jpeg",
           alunos: 0,
-          apresentacao: [],
+          apresentacao: [
+            { data: "01/12/2026", horario: "das 8h às 17h" }
+          ],
           landing: "",
           funcionamento: "",
           comercial: ""
@@ -425,7 +437,9 @@ window.SITE = {
           descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.",
           imagem: "img/projetos/mec-x.jpeg",
           alunos: 0,
-          apresentacao: [],
+          apresentacao: [
+            { data: "02/12/2026", horario: "das 13:30h às 16:30h" }
+          ],
           landing: "",
           funcionamento: "",
           comercial: ""
@@ -439,7 +453,9 @@ window.SITE = {
           descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.",
           imagem: "img/projetos/mec-x.jpeg",
           alunos: 0,
-          apresentacao: [],
+          apresentacao: [
+            { data: "02/12/2026", horario: "das 13:30h às 16:30h" }
+          ],
           landing: "",
           funcionamento: "",
           comercial: ""
@@ -453,7 +469,9 @@ window.SITE = {
           descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.",
           imagem: "img/projetos/mec-x.jpeg",
           alunos: 0,
-          apresentacao: [],
+          apresentacao: [
+            { data: "02/12/2026", horario: "das 13:30h às 16:30h" }
+          ],
           landing: "",
           funcionamento: "",
           comercial: ""
@@ -467,7 +485,9 @@ window.SITE = {
           descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.",
           imagem: "img/projetos/mec-x.jpeg",
           alunos: 0,
-          apresentacao: [],
+          apresentacao: [
+            { data: "02/12/2026", horario: "das 13:30h às 16:30h" }
+          ],
           landing: "",
           funcionamento: "",
           comercial: ""

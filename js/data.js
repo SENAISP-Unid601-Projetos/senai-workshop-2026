@@ -330,7 +330,7 @@ window.SITE = {
         pt: "Manutenção, montagem e desenvolvimento de sistemas eletroeletrônicos industriais e prediais.",
         en: "Maintenance, assembly and development of industrial and building electrical and electronic systems."
       },
-      imagem: "img/turmas/ds.png",
+      imagem: "img/turmas/ele.jpeg",
       projetos: [
         {
           id: "ele-1",

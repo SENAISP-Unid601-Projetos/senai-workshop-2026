@@ -9,7 +9,7 @@
     content="Dashboard com rankings dos Top 5 mais e menos votados por turma e total de visitas na turma e projetos.">
   <link rel="icon" type="image/png" href="img/favicon.png">
   <link rel="apple-touch-icon" href="img/favicon.png">
-  <link rel="stylesheet" href="css/dashboard.css?v=2.4">
+  <link rel="stylesheet" href="css/dashboard.css?v=2.5">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -107,13 +107,55 @@
 
   <main class="dash-container">
 
-    <!-- LAYOUT EM 3 COLUNAS: ESQUERDA (DS) | CENTRO (VISITAS) | DIREITA (MEC) -->
-    <div class="dash-trio-layout">
+    <!-- ============================================================= -->
+    <!-- VISÃO GERAL / DESTAQUE: TOTAL DE VISITAS NA TURMA E PROJETOS  -->
+    <!-- ============================================================= -->
+    <section class="dash-overview-section">
+      <div class="column-header-pill center">
+        <span id="pill-center-label">📊 Visitas na Turma e Projetos</span>
+        <span class="pill-count" id="pill-center-sub">DS vs. ELE vs. Mecatrônica</span>
+      </div>
+
+      <article class="dash-card center-card">
+        <div class="center-card-grid">
+          <!-- Mini Placar das Visitas (DS, ELE e Mecatrônica) -->
+          <div class="center-kpi-row">
+            <div class="center-kpi-item ds">
+              <div class="center-kpi-label" id="kpi-ds-label">Dev. de Sistemas</div>
+              <div class="center-kpi-value" id="kpi-ds-visitas" style="color: #3b82f6;">--</div>
+              <div class="center-kpi-sub" id="kpi-ds-pct">--% das visitas</div>
+            </div>
+
+            <div class="center-kpi-item ele">
+              <div class="center-kpi-label" id="kpi-ele-label">Eletroeletrônica</div>
+              <div class="center-kpi-value" id="kpi-ele-visitas" style="color: #f59e0b;">--</div>
+              <div class="center-kpi-sub" id="kpi-ele-pct">--% das visitas</div>
+            </div>
+
+            <div class="center-kpi-item mec">
+              <div class="center-kpi-label" id="kpi-mec-label">Mecatrônica</div>
+              <div class="center-kpi-value" id="kpi-mec-visitas" style="color: #ff4d6a;">--</div>
+              <div class="center-kpi-sub" id="kpi-mec-pct">--% das visitas</div>
+            </div>
+          </div>
+
+          <!-- Canvas do Gráfico Central de Barras -->
+          <div class="canvas-box-center">
+            <canvas id="chart-visitas-center"></canvas>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- ============================================================= -->
+    <!-- RANKINGS DOS 3 CURSOS (DS | ELETROELETRÔNICA | MECATRÔNICA)   -->
+    <!-- ============================================================= -->
+    <div class="dash-courses-grid dash-trio-layout">
 
       <!-- ============================================================= -->
-      <!-- 1. COLUNA ESQUERDA: DESENVOLVIMENTO DE SISTEMAS (DS) -->
+      <!-- 1. COLUNA: DESENVOLVIMENTO DE SISTEMAS (DS) -->
       <!-- ============================================================= -->
-      <section class="dash-col-side">
+      <section class="dash-col-side dash-col-course">
         <div class="column-header-pill ds">
           <span id="pill-ds-label">💻 Dev. de Sistemas</span>
           <span class="pill-count" id="count-ds-avaliados">14 Projetos</span>
@@ -151,41 +193,49 @@
       </section>
 
       <!-- ============================================================= -->
-      <!-- 2. COLUNA CENTRAL: TOTAL DE VISITAS NA TURMA E PROJETOS -->
+      <!-- 2. COLUNA: ELETROELETRÔNICA (ELE) -->
       <!-- ============================================================= -->
-      <section class="dash-col-center">
-        <div class="column-header-pill center">
-          <span id="pill-center-label">📊 Visitas na Turma e Projetos</span>
-          <span class="pill-count" id="pill-center-sub">DS vs. Mecatrônica</span>
+      <section class="dash-col-side dash-col-course">
+        <div class="column-header-pill ele">
+          <span id="pill-ele-label">⚡ Eletroeletrônica</span>
+          <span class="pill-count" id="count-ele-avaliados">10 Projetos</span>
         </div>
 
-        <article class="dash-card center-card">
-          <!-- Mini Placar das Visitas (Apenas DS e Mecatrônica) -->
-          <div class="center-kpi-row">
-            <div class="center-kpi-item ds">
-              <div class="center-kpi-label" id="kpi-ds-label">Dev. de Sistemas</div>
-              <div class="center-kpi-value" id="kpi-ds-visitas" style="color: #3b82f6;">--</div>
-              <div class="center-kpi-sub" id="kpi-ds-pct">--% das visitas</div>
+        <!-- ELE: Top 5 Mais Bem Votados -->
+        <article class="dash-card card-best">
+          <div class="card-top">
+            <div class="card-title-group">
+              <h2 id="ele-best-title">Top 5 Mais Bem Votados</h2>
+              <div class="project-subtitle" id="ele-best-sub">Notas de 0 a 5.0 nos 2 critérios</div>
             </div>
-
-            <div class="center-kpi-item mec">
-              <div class="center-kpi-label" id="kpi-mec-label">Mecatrônica</div>
-              <div class="center-kpi-value" id="kpi-mec-visitas" style="color: #ff4d6a;">--</div>
-              <div class="center-kpi-sub" id="kpi-mec-pct">--% das visitas</div>
-            </div>
+            <span class="badge-tag best" id="ele-best-badge">🏆 Top 5</span>
           </div>
 
-          <!-- Canvas do Gráfico Central de Barras -->
-          <div class="canvas-box-center">
-            <canvas id="chart-visitas-center"></canvas>
+          <div class="canvas-box-ranking">
+            <canvas id="chart-ele-top5"></canvas>
+          </div>
+        </article>
+
+        <!-- ELE: Top 5 Menos Votados -->
+        <article class="dash-card card-worst">
+          <div class="card-top">
+            <div class="card-title-group">
+              <h2 id="ele-worst-title">Top 5 Menos Votados</h2>
+              <div class="project-subtitle" id="ele-worst-sub">Menores médias registradas</div>
+            </div>
+            <span class="badge-tag worst" id="ele-worst-badge">⚠️ Top 5 Menos Votados</span>
+          </div>
+
+          <div class="canvas-box-ranking">
+            <canvas id="chart-ele-bottom5"></canvas>
           </div>
         </article>
       </section>
 
       <!-- ============================================================= -->
-      <!-- 3. COLUNA DIREITA: MECATRÔNICA (MEC) -->
+      <!-- 3. COLUNA: MECATRÔNICA (MEC) -->
       <!-- ============================================================= -->
-      <section class="dash-col-side">
+      <section class="dash-col-side dash-col-course">
         <div class="column-header-pill mec">
           <span id="pill-mec-label">⚙️ Mecatrônica</span>
           <span class="pill-count" id="count-mec-avaliados">16 Projetos</span>
@@ -234,7 +284,7 @@
   <!-- Dados de Configuração do Projeto (SITE.googleSheetsUrl) -->
   <script src="js/data.js?v=2.3"></script>
   <!-- Lógica e Dados dos Rankings (Consome API do Google Sheets via doGet) -->
-  <script src="js/dashboard.js?v=2.4"></script>
+  <script src="js/dashboard.js?v=2.5"></script>
 </body>
 
 </html>

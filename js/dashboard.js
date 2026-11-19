@@ -47,9 +47,10 @@
 
       // Colunas
       colDs: "💻 Dev. de Sistemas",
+      colEle: "⚡ Eletroeletrônica",
       colMec: "⚙️ Mecatrônica",
       colCenter: "📊 Visitas na Turma e Projetos",
-      colCenterSub: "DS vs. Mecatrônica",
+      colCenterSub: "DS vs. ELE vs. Mecatrônica",
 
       // Rankings
       topBestTitle: "Top 5 Mais Bem Votados",
@@ -65,11 +66,12 @@
 
       // KPI Placar
       kpiDsLabel: "Dev. de Sistemas",
+      kpiEleLabel: "Eletroeletrônica",
       kpiMecLabel: "Mecatrônica",
       kpiPctSub: "das visitas",
 
       // Gráficos
-      chartCenterLabels: ['Dev. de Sistemas (DS)', 'Mecatrônica (MEC)'],
+      chartCenterLabels: ['Dev. de Sistemas (DS)', 'Eletroeletrônica (ELE)', 'Mecatrônica (MEC)'],
       chartCenterDataset: 'Visitas na Turma e Projetos',
       chartCenterTooltipTotal: 'Total',
       chartCenterTooltipVisits: 'visitas',
@@ -114,9 +116,10 @@
 
       // Colunas
       colDs: "💻 Systems Development",
+      colEle: "⚡ Electronics",
       colMec: "⚙️ Mechatronics",
       colCenter: "📊 Class & Project Visits",
-      colCenterSub: "DS vs. Mechatronics",
+      colCenterSub: "DS vs. ELE vs. Mechatronics",
 
       // Rankings
       topBestTitle: "Top 5 Highest Rated",
@@ -132,11 +135,12 @@
 
       // KPI Placar
       kpiDsLabel: "Systems Dev.",
+      kpiEleLabel: "Electronics",
       kpiMecLabel: "Mechatronics",
       kpiPctSub: "of visits",
 
       // Gráficos
-      chartCenterLabels: ['Systems Dev. (DS)', 'Mechatronics (MEC)'],
+      chartCenterLabels: ['Systems Dev. (DS)', 'Electronics (ELE)', 'Mechatronics (MEC)'],
       chartCenterDataset: 'Class and Project Visits',
       chartCenterTooltipTotal: 'Total',
       chartCenterTooltipVisits: 'visits',
@@ -179,6 +183,8 @@
     visitasCenter: null,
     dsTop5: null,
     dsBottom5: null,
+    eleTop5: null,
+    eleBottom5: null,
     mecTop5: null,
     mecBottom5: null
   };
@@ -205,16 +211,28 @@
   function getAlphabeticalFallback(courseKey) {
     let nomes = [];
 
-    if (window.SITE && window.SITE.cursos && window.SITE.cursos[courseKey] && window.SITE.cursos[courseKey].projetos) {
-      nomes = window.SITE.cursos[courseKey].projetos
-        .map(p => (p.nome && p.nome.trim() ? p.nome.trim() : (p.id || "")))
-        .filter(n => n.length > 0);
+    var lookupKey = courseKey;
+    if (window.SITE && window.SITE.cursos) {
+      if (window.SITE.cursos[lookupKey] && window.SITE.cursos[lookupKey].projetos) {
+        nomes = window.SITE.cursos[lookupKey].projetos
+          .map(p => (p.nome && p.nome.trim() ? p.nome.trim() : (p.id || "")))
+          .filter(n => n.length > 0);
+      } else if ((lookupKey === 'ele' || lookupKey === 'eletro' || lookupKey === 'eletroeletronica') &&
+                 window.SITE.cursos.eletroeletronica && window.SITE.cursos.eletroeletronica.projetos) {
+        nomes = window.SITE.cursos.eletroeletronica.projetos
+          .map(p => (p.nome && p.nome.trim() ? p.nome.trim() : (p.id || "")))
+          .filter(n => n.length > 0);
+      }
     }
 
     if (nomes.length === 0) {
-      nomes = courseKey === 'ds'
-        ? ['Projeto DS 1', 'Projeto DS 2', 'Projeto DS 3', 'Projeto DS 4', 'Projeto DS 5']
-        : ['Projeto MEC 1', 'Projeto MEC 2', 'Projeto MEC 3', 'Projeto MEC 4', 'Projeto MEC 5'];
+      if (courseKey === 'ds') {
+        nomes = ['Projeto DS 1', 'Projeto DS 2', 'Projeto DS 3', 'Projeto DS 4', 'Projeto DS 5'];
+      } else if (courseKey === 'ele' || courseKey === 'eletro' || courseKey === 'eletroeletronica') {
+        nomes = ['Projeto ELE 1', 'Projeto ELE 2', 'Projeto ELE 3', 'Projeto ELE 4', 'Projeto ELE 5'];
+      } else {
+        nomes = ['Projeto MEC 1', 'Projeto MEC 2', 'Projeto MEC 3', 'Projeto MEC 4', 'Projeto MEC 5'];
+      }
     }
 
     // Ordenação alfabética natural (DS 1, DS 2, DS 3...)
@@ -273,7 +291,7 @@
   }
 
   // ===================================================================
-  // 1. GRÁFICO CENTRAL: TOTAL DE VISITAS NA TURMA E PROJETOS (DS vs MEC)
+  // 1. GRÁFICO CENTRAL: TOTAL DE VISITAS NA TURMA E PROJETOS (DS vs ELE vs MEC)
   // ===================================================================
   function renderVisitasCenterChart(visitasData) {
     const ctx = document.getElementById('chart-visitas-center');
@@ -284,26 +302,37 @@
     const locale = currentLang === "pt" ? "pt-BR" : "en-US";
 
     const dsVal = (visitasData && Number(visitasData.ds)) || 0;
+    const eleVal = (visitasData && (Number(visitasData.ele) || Number(visitasData.eletro) || Number(visitasData.eletroeletronica))) || 0;
     const mecVal = (visitasData && Number(visitasData.mec)) || 0;
-    const totalConsolidado = (dsVal + mecVal) || 1;
+    const totalConsolidado = (dsVal + eleVal + mecVal) || 1;
+    const hasVisits = (dsVal + eleVal + mecVal) > 0;
 
-    // Atualiza cards numéricos do placar (apenas DS e MEC)
+    // Atualiza cards numéricos do placar (DS, ELE e MEC)
     const dsEl = document.getElementById('kpi-ds-visitas');
+    const eleEl = document.getElementById('kpi-ele-visitas');
     const mecEl = document.getElementById('kpi-mec-visitas');
     const dsPctEl = document.getElementById('kpi-ds-pct');
+    const elePctEl = document.getElementById('kpi-ele-pct');
     const mecPctEl = document.getElementById('kpi-mec-pct');
 
     if (dsEl) dsEl.textContent = dsVal.toLocaleString(locale);
+    if (eleEl) eleEl.textContent = eleVal.toLocaleString(locale);
     if (mecEl) mecEl.textContent = mecVal.toLocaleString(locale);
 
     if (dsPctEl) {
-      dsPctEl.textContent = (dsVal + mecVal > 0)
+      dsPctEl.textContent = hasVisits
         ? `${((dsVal / totalConsolidado) * 100).toFixed(1)}% ${t.kpiPctSub}`
         : `0% ${t.kpiPctSub}`;
     }
 
+    if (elePctEl) {
+      elePctEl.textContent = hasVisits
+        ? `${((eleVal / totalConsolidado) * 100).toFixed(1)}% ${t.kpiPctSub}`
+        : `0% ${t.kpiPctSub}`;
+    }
+
     if (mecPctEl) {
-      mecPctEl.textContent = (dsVal + mecVal > 0)
+      mecPctEl.textContent = hasVisits
         ? `${((mecVal / totalConsolidado) * 100).toFixed(1)}% ${t.kpiPctSub}`
         : `0% ${t.kpiPctSub}`;
     }
@@ -314,11 +343,11 @@
         labels: t.chartCenterLabels,
         datasets: [{
           label: t.chartCenterDataset,
-          data: [dsVal, mecVal],
-          backgroundColor: ['#0a6cff', '#e4002b'],
-          borderRadius: 12,
+          data: [dsVal, eleVal, mecVal],
+          backgroundColor: ['#0a6cff', '#f59e0b', '#e4002b'],
+          borderRadius: 10,
           borderSkipped: false,
-          maxBarThickness: 80
+          maxBarThickness: 70
         }]
       },
       options: {
@@ -336,7 +365,7 @@
             callbacks: {
               label: function (context) {
                 const val = context.parsed.y;
-                const pct = (dsVal + mecVal > 0) ? ((val / totalConsolidado) * 100).toFixed(1) : "0";
+                const pct = hasVisits ? ((val / totalConsolidado) * 100).toFixed(1) : "0";
                 return ` ${t.chartCenterTooltipTotal}: ${val.toLocaleString(locale)} ${t.chartCenterTooltipVisits} (${pct}%)`;
               }
             }
@@ -548,18 +577,29 @@
       // Suporta top5, top4 e top3 da API
       const dsRawTop = (json.ds && (json.ds.top5 || json.ds.top4 || json.ds.top3)) || null;
       const dsRawBottom = (json.ds && (json.ds.bottom5 || json.ds.bottom4 || json.ds.bottom3)) || null;
+
+      const eleJson = json.ele || json.eletro || json.eletroeletronica || null;
+      const eleRawTop = (eleJson && (eleJson.top5 || eleJson.top4 || eleJson.top3)) || null;
+      const eleRawBottom = (eleJson && (eleJson.bottom5 || eleJson.bottom4 || eleJson.bottom3)) || null;
+
       const mecRawTop = (json.mec && (json.mec.top5 || json.mec.top4 || json.mec.top3)) || null;
       const mecRawBottom = (json.mec && (json.mec.bottom5 || json.mec.bottom4 || json.mec.bottom3)) || null;
 
       const totalDsAvaliados = (json.ds && json.ds.totalAvaliados) || 0;
+      const totalEleAvaliados = (eleJson && eleJson.totalAvaliados) || 0;
       const totalMecAvaliados = (json.mec && json.mec.totalAvaliados) || 0;
 
       const dadosFinais = {
-        visitas: json.visitas || { ds: 0, mec: 0, total: 0 },
+        visitas: json.visitas || { ds: 0, ele: 0, mec: 0, total: 0 },
         ds: {
           top5: totalDsAvaliados > 0 ? normalizarRanking(dsRawTop, 'ds') : getAlphabeticalFallback('ds'),
           bottom5: totalDsAvaliados > 0 ? normalizarRanking(dsRawBottom, 'ds') : getAlphabeticalFallback('ds'),
           totalAvaliados: totalDsAvaliados
+        },
+        ele: {
+          top5: totalEleAvaliados > 0 ? normalizarRanking(eleRawTop, 'eletroeletronica') : getAlphabeticalFallback('eletroeletronica'),
+          bottom5: totalEleAvaliados > 0 ? normalizarRanking(eleRawBottom, 'eletroeletronica') : getAlphabeticalFallback('eletroeletronica'),
+          totalAvaliados: totalEleAvaliados
         },
         mec: {
           top5: totalMecAvaliados > 0 ? normalizarRanking(mecRawTop, 'mecatronica') : getAlphabeticalFallback('mecatronica'),
@@ -568,7 +608,7 @@
         }
       };
 
-      const statusKey = (totalDsAvaliados > 0 || totalMecAvaliados > 0)
+      const statusKey = (totalDsAvaliados > 0 || totalEleAvaliados > 0 || totalMecAvaliados > 0)
         ? "badgeLive"
         : "badgeConnectedNoVotes";
 
@@ -587,10 +627,15 @@
 
   function renderFallbackAlfabetico(statusKey) {
     const fallbackData = {
-      visitas: { ds: 0, mec: 0, total: 0 },
+      visitas: { ds: 0, ele: 0, mec: 0, total: 0 },
       ds: {
         top5: getAlphabeticalFallback('ds'),
         bottom5: getAlphabeticalFallback('ds'),
+        totalAvaliados: 0
+      },
+      ele: {
+        top5: getAlphabeticalFallback('eletroeletronica'),
+        bottom5: getAlphabeticalFallback('eletroeletronica'),
         totalAvaliados: 0
       },
       mec: {
@@ -611,14 +656,18 @@
 
     updateConnectionBadge(isLive, lastStatusKey);
 
-    // 1. Centro: Visitas por Turma (apenas acessos na turma e projetos)
+    // 1. Centro: Visitas por Turma (apenas acessos na turma e projetos: DS, ELE, MEC)
     renderVisitasCenterChart(data.visitas);
 
-    // 2. Esquerda: Dev. de Sistemas (Top 5 Mais e Top 5 Menos)
+    // 2. Coluna 1: Dev. de Sistemas (Top 5 Mais e Top 5 Menos)
     renderRankingChart('chart-ds-top5', 'dsTop5', data.ds.top5, true);
     renderRankingChart('chart-ds-bottom5', 'dsBottom5', data.ds.bottom5, false);
 
-    // 3. Direita: Mecatrônica (Top 5 Mais e Top 5 Menos)
+    // 3. Coluna 2: Eletroeletrônica (Top 5 Mais e Top 5 Menos)
+    renderRankingChart('chart-ele-top5', 'eleTop5', data.ele.top5, true);
+    renderRankingChart('chart-ele-bottom5', 'eleBottom5', data.ele.bottom5, false);
+
+    // 4. Coluna 3: Mecatrônica (Top 5 Mais e Top 5 Menos)
     renderRankingChart('chart-mec-top5', 'mecTop5', data.mec.top5, true);
     renderRankingChart('chart-mec-bottom5', 'mecBottom5', data.mec.bottom5, false);
 
@@ -627,6 +676,13 @@
     if (dsCountEl) {
       dsCountEl.textContent = data.ds.totalAvaliados > 0
         ? `${data.ds.totalAvaliados} ${t.evaluatedCount}`
+        : t.badgeAlphabetical;
+    }
+
+    const eleCountEl = document.getElementById('count-ele-avaliados');
+    if (eleCountEl) {
+      eleCountEl.textContent = data.ele.totalAvaliados > 0
+        ? `${data.ele.totalAvaliados} ${t.evaluatedCount}`
         : t.badgeAlphabetical;
     }
 
@@ -813,6 +869,9 @@
     const pillCenterSub = document.getElementById('pill-center-sub');
     if (pillCenterSub) pillCenterSub.textContent = t.colCenterSub;
 
+    const pillEle = document.getElementById('pill-ele-label');
+    if (pillEle) pillEle.textContent = t.colEle;
+
     const pillMec = document.getElementById('pill-mec-label');
     if (pillMec) pillMec.textContent = t.colMec;
 
@@ -831,6 +890,20 @@
     const dsWorstBadge = document.getElementById('ds-worst-badge');
     if (dsWorstBadge) dsWorstBadge.textContent = t.topWorstBadge;
 
+    const eleBestTitle = document.getElementById('ele-best-title');
+    if (eleBestTitle) eleBestTitle.textContent = t.topBestTitle;
+    const eleBestSub = document.getElementById('ele-best-sub');
+    if (eleBestSub) eleBestSub.textContent = t.topBestSub;
+    const eleBestBadge = document.getElementById('ele-best-badge');
+    if (eleBestBadge) eleBestBadge.textContent = t.topBestBadge;
+
+    const eleWorstTitle = document.getElementById('ele-worst-title');
+    if (eleWorstTitle) eleWorstTitle.textContent = t.topWorstTitle;
+    const eleWorstSub = document.getElementById('ele-worst-sub');
+    if (eleWorstSub) eleWorstSub.textContent = t.topWorstSub;
+    const eleWorstBadge = document.getElementById('ele-worst-badge');
+    if (eleWorstBadge) eleWorstBadge.textContent = t.topWorstBadge;
+
     const mecBestTitle = document.getElementById('mec-best-title');
     if (mecBestTitle) mecBestTitle.textContent = t.topBestTitle;
     const mecBestSub = document.getElementById('mec-best-sub');
@@ -848,6 +921,8 @@
     // KPI Labels
     const kpiDs = document.getElementById('kpi-ds-label');
     if (kpiDs) kpiDs.textContent = t.kpiDsLabel;
+    const kpiEle = document.getElementById('kpi-ele-label');
+    if (kpiEle) kpiEle.textContent = t.kpiEleLabel;
     const kpiMec = document.getElementById('kpi-mec-label');
     if (kpiMec) kpiMec.textContent = t.kpiMecLabel;
 

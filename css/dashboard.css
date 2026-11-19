@@ -112,40 +112,104 @@ body.is-fullscreen main.dash-container {
   flex-direction: column !important;
   min-height: 0 !important;
   overflow: hidden !important;
+  gap: 8px !important;
 }
 
+:fullscreen .dash-overview-section,
+:-webkit-full-screen .dash-overview-section,
+body.is-fullscreen .dash-overview-section {
+  flex-shrink: 0 !important;
+  margin-bottom: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 4px !important;
+}
+
+:fullscreen .center-card,
+:-webkit-full-screen .center-card,
+body.is-fullscreen .center-card {
+  padding: 6px 14px !important;
+  flex-shrink: 0 !important;
+}
+
+:fullscreen .center-card-grid,
+:-webkit-full-screen .center-card-grid,
+body.is-fullscreen .center-card-grid {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 14px !important;
+  align-items: center !important;
+}
+
+:fullscreen .center-kpi-row,
+:-webkit-full-screen .center-kpi-row,
+body.is-fullscreen .center-kpi-row {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 6px !important;
+  margin: 0 !important;
+  flex-shrink: 0 !important;
+}
+
+:fullscreen .center-kpi-item,
+:-webkit-full-screen .center-kpi-item,
+body.is-fullscreen .center-kpi-item {
+  padding: 4px 8px !important;
+}
+
+:fullscreen .center-kpi-value,
+:-webkit-full-screen .center-kpi-value,
+body.is-fullscreen .center-kpi-value {
+  font-size: 1.15rem !important;
+}
+
+:fullscreen .center-kpi-label,
+:-webkit-full-screen .center-kpi-label,
+body.is-fullscreen .center-kpi-label {
+  font-size: 0.68rem !important;
+}
+
+:fullscreen .center-kpi-sub,
+:-webkit-full-screen .center-kpi-sub,
+body.is-fullscreen .center-kpi-sub {
+  font-size: 0.65rem !important;
+}
+
+:fullscreen .canvas-box-center,
+:-webkit-full-screen .canvas-box-center,
+body.is-fullscreen .canvas-box-center {
+  height: 95px !important;
+  min-height: 95px !important;
+  max-height: 105px !important;
+  flex: 1 !important;
+}
+
+:fullscreen .dash-courses-grid,
 :fullscreen .dash-trio-layout,
+:-webkit-full-screen .dash-courses-grid,
 :-webkit-full-screen .dash-trio-layout,
+body.is-fullscreen .dash-courses-grid,
 body.is-fullscreen .dash-trio-layout {
   display: grid !important;
-  grid-template-columns: 1fr 1.2fr 1fr !important;
+  grid-template-columns: repeat(3, 1fr) !important;
   flex: 1 !important;
-  gap: 12px !important;
+  gap: 10px !important;
   min-height: 0 !important;
   height: 100% !important;
   align-items: stretch !important;
 }
 
 :fullscreen .dash-col-side,
+:fullscreen .dash-col-course,
 :-webkit-full-screen .dash-col-side,
-body.is-fullscreen .dash-col-side {
+:-webkit-full-screen .dash-col-course,
+body.is-fullscreen .dash-col-side,
+body.is-fullscreen .dash-col-course {
   display: flex !important;
   flex-direction: column !important;
-  gap: 8px !important;
+  gap: 6px !important;
   min-height: 0 !important;
   height: 100% !important;
-}
-
-:fullscreen .dash-col-center,
-:-webkit-full-screen .dash-col-center,
-body.is-fullscreen .dash-col-center {
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 8px !important;
-  min-height: 0 !important;
-  height: 100% !important;
-  grid-column: auto !important;
-  order: 0 !important;
 }
 
 :fullscreen .column-header-pill,
@@ -159,7 +223,7 @@ body.is-fullscreen .column-header-pill {
 :fullscreen .dash-card,
 :-webkit-full-screen .dash-card,
 body.is-fullscreen .dash-card {
-  padding: 10px 14px !important;
+  padding: 8px 12px !important;
   flex: 1 !important;
   display: flex !important;
   flex-direction: column !important;
@@ -170,57 +234,27 @@ body.is-fullscreen .dash-card {
 :fullscreen .card-top,
 :-webkit-full-screen .card-top,
 body.is-fullscreen .card-top {
-  margin-bottom: 4px !important;
+  margin-bottom: 2px !important;
   flex-shrink: 0 !important;
 }
 
 :fullscreen .card-title-group h2,
 :-webkit-full-screen .card-title-group h2,
 body.is-fullscreen .card-title-group h2 {
-  font-size: 0.88rem !important;
+  font-size: 0.85rem !important;
 }
 
 :fullscreen .card-title-group .project-subtitle,
 :-webkit-full-screen .card-title-group .project-subtitle,
 body.is-fullscreen .card-title-group .project-subtitle {
-  font-size: 0.7rem !important;
-}
-
-:fullscreen .center-kpi-row,
-:-webkit-full-screen .center-kpi-row,
-body.is-fullscreen .center-kpi-row {
-  margin: 4px 0 6px !important;
-  gap: 8px !important;
-  flex-shrink: 0 !important;
-}
-
-:fullscreen .center-kpi-item,
-:-webkit-full-screen .center-kpi-item,
-body.is-fullscreen .center-kpi-item {
-  padding: 6px 10px !important;
-}
-
-:fullscreen .center-kpi-value,
-:-webkit-full-screen .center-kpi-value,
-body.is-fullscreen .center-kpi-value {
-  font-size: 1.2rem !important;
+  font-size: 0.68rem !important;
 }
 
 :fullscreen .canvas-box-ranking,
 :-webkit-full-screen .canvas-box-ranking,
 body.is-fullscreen .canvas-box-ranking {
   flex: 1 !important;
-  height: auto !important;
-  min-height: 0 !important;
-  width: 100% !important;
-  overflow: hidden !important;
-}
-
-:fullscreen .canvas-box-center,
-:-webkit-full-screen .canvas-box-center,
-body.is-fullscreen .canvas-box-center {
-  flex: 1 !important;
-  height: auto !important;
+  height: 100% !important;
   min-height: 0 !important;
   width: 100% !important;
   overflow: hidden !important;
@@ -478,44 +512,65 @@ body.is-fullscreen .canvas-box-center {
 }
 
 /* =====================================================================
-   LAYOUT EM 3 COLUNAS (ESQUERDA DS | CENTRO VISITAS | DIREITA MEC)
+   SEÇÃO DE VISÃO GERAL (VISITAS NA TURMA E PROJETOS)
    ===================================================================== */
+.dash-overview-section {
+  margin-bottom: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.center-card-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  align-items: center;
+}
+
+@media (max-width: 992px) {
+  .center-card-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+/* =====================================================================
+   LAYOUT EM 3 COLUNAS DOS RANKINGS (DS | ELE | MEC)
+   ===================================================================== */
+.dash-courses-grid,
 .dash-trio-layout {
   display: grid;
-  grid-template-columns: 1fr 1.25fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
   gap: 22px;
   align-items: stretch;
   width: 100%;
 }
 
-@media (max-width: 992px) {
+@media (max-width: 1100px) {
+  .dash-courses-grid,
   .dash-trio-layout {
     grid-template-columns: 1fr 1fr;
-  }
-  .dash-col-center {
-    grid-column: span 2;
-    order: -1;
   }
 }
 
 @media (max-width: 768px) {
+  .dash-courses-grid,
   .dash-trio-layout {
     grid-template-columns: 1fr;
-  }
-  .dash-col-center {
-    grid-column: span 1;
-    order: -1;
   }
 }
 
 /* CRUCIAL: min-width: 0 impede que os gráficos Chart.js travem ou quebrem o grid */
 .dash-col-side,
+.dash-col-course,
 .dash-col-center {
   min-width: 0;
   box-sizing: border-box;
 }
 
-.dash-col-side {
+.dash-col-side,
+.dash-col-course {
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -542,6 +597,12 @@ body.is-fullscreen .canvas-box-center {
   background: rgba(10, 108, 255, 0.12);
   border: 1px solid rgba(10, 108, 255, 0.3);
   color: #3b82f6;
+}
+
+.column-header-pill.ele {
+  background: rgba(245, 158, 11, 0.12);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  color: #f59e0b;
 }
 
 .column-header-pill.mec {
@@ -656,9 +717,8 @@ body.is-fullscreen .canvas-box-center {
 }
 
 .canvas-box-center {
-  flex: 1;
-  min-height: 480px;
-  height: 100%;
+  height: 180px;
+  min-height: 180px;
 }
 
 /* Garante que o canvas nunca force a coluna do grid a se expandir */
@@ -671,12 +731,18 @@ body.is-fullscreen .canvas-box-center {
   display: block;
 }
 
-/* Placar do Centro (Apenas DS e MEC) */
+/* Placar de Visitas (DS, ELE e MEC) */
 .center-kpi-row {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
   gap: 12px;
-  margin: 16px 0 20px;
+  margin: 0;
+}
+
+@media (max-width: 600px) {
+  .center-kpi-row {
+    grid-template-columns: 1fr;
+  }
 }
 
 .center-kpi-item {
@@ -690,6 +756,10 @@ body.is-fullscreen .canvas-box-center {
 
 .center-kpi-item.ds {
   border-left: 4px solid var(--dash-blue);
+}
+
+.center-kpi-item.ele {
+  border-left: 4px solid var(--dash-amber);
 }
 
 .center-kpi-item.mec {

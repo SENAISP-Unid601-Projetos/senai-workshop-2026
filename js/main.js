@@ -1364,6 +1364,229 @@
     }, 250);
   }
 
+  /* =====================================================================
+     CARTAZ INSTITUCIONAL A4 DO EVENTO (VERSÃO CLEAN OFICIAL)
+     ===================================================================== */
+  function getMainA4PrintCss() {
+    return '.main-a4-sheet { width: 210mm !important; height: 297mm !important; max-width: 210mm !important; max-height: 297mm !important; margin: 0 !important; padding: 10mm 10mm 9mm !important; position: relative !important; display: flex !important; flex-direction: column !important; justify-content: space-between !important; text-align: center !important; background: #ffffff !important; color: #0f172a !important; border: 1.2mm solid #e4002b !important; box-sizing: border-box !important; page-break-inside: avoid !important; page-break-after: avoid !important; overflow: hidden !important; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important; }' +
+      '.main-a4-inner-border { position: absolute !important; top: 2.2mm !important; left: 2.2mm !important; right: 2.2mm !important; bottom: 2.2mm !important; border: 0.4mm solid #cbd5e1 !important; border-radius: 1.5mm !important; pointer-events: none !important; z-index: 1 !important; }' +
+      '.a4-corner { position: absolute !important; width: 8mm !important; height: 8mm !important; pointer-events: none !important; z-index: 2 !important; }' +
+      '.a4-corner-tl { top: 3.2mm !important; left: 3.2mm !important; border-top: 1mm solid #e4002b !important; border-left: 1mm solid #e4002b !important; }' +
+      '.a4-corner-tr { top: 3.2mm !important; right: 3.2mm !important; border-top: 1mm solid #e4002b !important; border-right: 1mm solid #e4002b !important; }' +
+      '.a4-corner-bl { bottom: 3.2mm !important; left: 3.2mm !important; border-bottom: 1mm solid #e4002b !important; border-left: 1mm solid #e4002b !important; }' +
+      '.a4-corner-br { bottom: 3.2mm !important; right: 3.2mm !important; border-bottom: 1mm solid #e4002b !important; border-right: 1mm solid #e4002b !important; }' +
+      '.grad { background: linear-gradient(90deg, #ff3b57, #ff6584 40%, #38bdf8) !important; -webkit-background-clip: text !important; background-clip: text !important; -webkit-text-fill-color: transparent !important; color: #ff3b57 !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }' +
+      '.main-a4-clean-header { position: relative !important; z-index: 3 !important; margin: 2mm 0 1mm !important; }' +
+      '.main-a4-clean-title { font-size: 34pt !important; font-weight: 900 !important; color: #0f172a !important; letter-spacing: -0.5px !important; margin: 0 0 1.5mm 0 !important; line-height: 1.1 !important; }' +
+      '.main-a4-clean-sub { font-size: 11.5pt !important; font-weight: 800 !important; color: #475569 !important; letter-spacing: 2px !important; text-transform: uppercase !important; }' +
+      '.main-a4-clean-qr-wrapper { position: relative !important; z-index: 3 !important; display: flex !important; flex-direction: column !important; align-items: center !important; margin: 2mm 0 !important; }' +
+      '.main-a4-clean-qr-frame { background: #ffffff !important; padding: 3mm !important; border-radius: 4mm !important; border: 0.6mm solid #cbd5e1 !important; display: inline-block !important; }' +
+      '.main-a4-clean-qr-frame svg { display: block !important; width: 156mm !important; height: 156mm !important; }' +
+      '.main-a4-clean-eval-banner { position: relative !important; z-index: 3 !important; background: linear-gradient(135deg, #e4002b, #b80022) !important; color: #ffffff !important; padding: 3.5mm 5mm !important; border-radius: 2mm !important; font-size: 11.5pt !important; font-weight: 900 !important; letter-spacing: 0.8px !important; text-transform: uppercase !important; margin: 2mm 0 !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }' +
+      '.main-a4-clean-footer { position: relative !important; z-index: 3 !important; text-align: center !important; margin-bottom: 2mm !important; }' +
+      '.main-a4-clean-courses-line { font-size: 9pt !important; font-weight: 800 !important; color: #1e293b !important; letter-spacing: 0.4px !important; margin-bottom: 1.5mm !important; }' +
+      '.main-a4-clean-event-line { font-size: 8pt !important; font-weight: 600 !important; color: #64748b !important; }';
+  }
+
+  function buildMainA4PosterHtml() {
+    var homeUrl = getHomePageShareUrl();
+    var qrSize = 800;
+    var qrSvg = "";
+    if (window.QRCode && typeof window.QRCode.generateSVG === "function") {
+      qrSvg = window.QRCode.generateSVG(homeUrl, { size: qrSize, margin: 2 });
+    }
+
+    return '<div class="main-a4-sheet main-a4-clean">' +
+      '<div class="main-a4-inner-border"></div>' +
+      '<div class="a4-corner a4-corner-tl"></div>' +
+      '<div class="a4-corner a4-corner-tr"></div>' +
+      '<div class="a4-corner a4-corner-bl"></div>' +
+      '<div class="a4-corner a4-corner-br"></div>' +
+      '<div class="main-a4-clean-header">' +
+        '<h1 class="main-a4-clean-title">WORKSHOP SENAI <span class="grad">2026</span></h1>' +
+        '<div class="main-a4-clean-sub">PORTAL OFICIAL DOS PROJETOS & VOTAÇÃO</div>' +
+      '</div>' +
+      '<div class="main-a4-clean-qr-wrapper">' +
+        '<div class="main-a4-clean-qr-frame">' +
+          qrSvg +
+        '</div>' +
+      '</div>' +
+      '<div class="main-a4-clean-eval-banner">' +
+        '⭐ CONHEÇA OS PROJETOS E AVALIE ⭐' +
+      '</div>' +
+      '<div class="main-a4-clean-footer">' +
+        '<div class="main-a4-clean-courses-line">' +
+          '💻 Desenvolvimento de Sistemas &nbsp;•&nbsp; ⚡ Eletroeletrônica &nbsp;•&nbsp; 🤖 Mecatrônica' +
+        '</div>' +
+        '<div class="main-a4-clean-event-line">' +
+          '📅 01, 02 e 03 de Dezembro • Das 08h às 17h • 📍 SENAI São Carlos • Entrada Gratuita' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }
+
+  function printMainA4Poster() {
+    var iframe = document.getElementById("a4PrintFrame");
+    if (iframe) {
+      try { iframe.parentNode.removeChild(iframe); } catch (err) {}
+    }
+
+    iframe = document.createElement("iframe");
+    iframe.id = "a4PrintFrame";
+    iframe.setAttribute("style", "position:fixed;top:-9999px;left:-9999px;width:210mm;height:297mm;border:0;visibility:hidden;");
+    document.body.appendChild(iframe);
+
+    var frameDoc = iframe.contentWindow.document;
+    frameDoc.open();
+
+    var posterHtml = buildMainA4PosterHtml();
+
+    var printStyles =
+      '@page { size: A4 portrait; margin: 0; }' +
+      '*, *::before, *::after { box-sizing: border-box !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }' +
+      'html, body { margin: 0 !important; padding: 0 !important; width: 210mm !important; height: 297mm !important; max-height: 297mm !important; overflow: hidden !important; background: #ffffff !important; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important; }' +
+      getMainA4PrintCss();
+
+    var docHtml = '<!DOCTYPE html>' +
+      '<html><head><meta charset="utf-8">' +
+      '<title>Workshop SENAI 2026 - Cartaz A4 Oficial</title>' +
+      '<style>' + printStyles + '</style>' +
+      '</head><body>' +
+      posterHtml +
+      '</body></html>';
+
+    frameDoc.write(docHtml);
+    frameDoc.close();
+
+    setTimeout(function () {
+      try {
+        iframe.contentWindow.focus();
+        iframe.contentWindow.print();
+      } catch (err) {
+        window.print();
+      }
+    }, 250);
+  }
+
+  function generateMainA4PosterCanvas(version) {
+    var homeUrl = getHomePageShareUrl();
+    var canvas = document.createElement("canvas");
+    var width = 1600;
+    var height = 2262;
+    canvas.width = width;
+    canvas.height = height;
+    var ctx = canvas.getContext("2d");
+    if (!ctx) return canvas;
+
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(0, 0, width, height);
+
+    ctx.strokeStyle = "#e4002b";
+    ctx.lineWidth = 14;
+    ctx.strokeRect(36, 36, width - 72, height - 72);
+
+    ctx.strokeStyle = "#cbd5e1";
+    ctx.lineWidth = 3;
+    ctx.strokeRect(52, 52, width - 104, height - 104);
+
+    var cSize = 56;
+    var cOff = 62;
+    ctx.strokeStyle = "#e4002b";
+    ctx.lineWidth = 6;
+    ctx.beginPath();
+    ctx.moveTo(cOff, cOff + cSize);
+    ctx.lineTo(cOff, cOff);
+    ctx.lineTo(cOff + cSize, cOff);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(width - cOff - cSize, cOff);
+    ctx.lineTo(width - cOff, cOff);
+    ctx.lineTo(width - cOff, cOff + cSize);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(cOff, height - cOff - cSize);
+    ctx.lineTo(cOff, height - cOff);
+    ctx.lineTo(cOff + cSize, height - cOff);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(width - cOff - cSize, height - cOff);
+    ctx.lineTo(width - cOff, height - cOff);
+    ctx.lineTo(width - cOff, height - cOff - cSize);
+    ctx.stroke();
+
+    ctx.font = "900 82px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+    var t1 = "WORKSHOP SENAI ";
+    var t2 = "2026";
+    var w1 = ctx.measureText(t1).width;
+    var w2 = ctx.measureText(t2).width;
+    var sX = (width - (w1 + w2)) / 2;
+    var titleY = 220;
+
+    ctx.textAlign = "left";
+    ctx.fillStyle = "#0f172a";
+    ctx.fillText(t1, sX, titleY);
+
+    var grad = ctx.createLinearGradient(sX + w1, 0, sX + w1 + w2, 0);
+    grad.addColorStop(0, "#ff3b57");
+    grad.addColorStop(0.4, "#ff6584");
+    grad.addColorStop(1, "#38bdf8");
+    ctx.fillStyle = grad;
+    ctx.fillText(t2, sX + w1, titleY);
+
+    ctx.textAlign = "center";
+    ctx.font = "800 32px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+    ctx.fillStyle = "#475569";
+    ctx.fillText("PORTAL OFICIAL DOS PROJETOS & VOTAÇÃO", width / 2, 295);
+
+    // QR Code aumentado em 25% (de 980 para 1220 / de 900 para 1120)
+    var qrBoxSize = 1220;
+    var qrBoxX = (width - qrBoxSize) / 2;
+    var qrBoxY = 360;
+    ctx.fillStyle = "#ffffff";
+    drawRoundRect(ctx, qrBoxX, qrBoxY, qrBoxSize, qrBoxSize, 32);
+    ctx.fill();
+    ctx.strokeStyle = "#cbd5e1";
+    ctx.lineWidth = 4;
+    ctx.stroke();
+
+    var qrSize = 1120;
+    var qrX = qrBoxX + (qrBoxSize - qrSize) / 2;
+    var qrY = qrBoxY + (qrBoxSize - qrSize) / 2;
+    var tempCanvas = document.createElement("canvas");
+    if (window.QRCode && typeof window.QRCode.drawCanvas === "function") {
+      window.QRCode.drawCanvas(tempCanvas, homeUrl, { size: qrSize, margin: 2 });
+      ctx.drawImage(tempCanvas, qrX, qrY, qrSize, qrSize);
+    }
+
+    var banW = width - 200;
+    var banH = 96;
+    var banX = (width - banW) / 2;
+    var banY = qrBoxY + qrBoxSize + 60;
+    var ctaGrad = ctx.createLinearGradient(banX, banY, banX + banW, banY + banH);
+    ctaGrad.addColorStop(0, "#e4002b");
+    ctaGrad.addColorStop(1, "#b80022");
+    ctx.fillStyle = ctaGrad;
+    drawRoundRect(ctx, banX, banY, banW, banH, 18);
+    ctx.fill();
+    ctx.fillStyle = "#ffffff";
+    ctx.font = "900 34px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+    ctx.fillText("⭐ CONHEÇA OS PROJETOS E AVALIE ⭐", width / 2, banY + banH / 2);
+
+    ctx.font = "800 28px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+    ctx.fillStyle = "#1e293b";
+    ctx.fillText("💻 Desenvolvimento de Sistemas  •  ⚡ Eletroeletrônica  •  🤖 Mecatrônica", width / 2, height - 200);
+
+    ctx.font = "600 24px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+    ctx.fillStyle = "#64748b";
+    ctx.fillText("📅 01, 02 e 03 de Dezembro • Das 08h às 17h • 📍 SENAI São Carlos • Entrada Gratuita", width / 2, height - 145);
+
+    return canvas;
+  }
+
+
   function openA4PosterModal(p, courseKey, index) {
     if (!p) return;
     var cInfo = (S && S.cursos && S.cursos[courseKey]) ? S.cursos[courseKey] : null;
@@ -2044,6 +2267,8 @@
     }
   }
 
+  var currentMainQrTab = "poster";
+
   function openPageQrModal() {
     var homeUrl = getHomePageShareUrl();
     var customBase = getCustomBase();
@@ -2052,7 +2277,7 @@
     dialog.className = "modal-dialog modal-dialog-page-qr";
     activeModalProject = null;
 
-    var waPageMsg = (T("whatsappPageShareMsg") || "Confira o Workshop SENAI São Carlos 2026 - Mecatrônica e Desenvolvimento de Sistemas:\n{url}")
+    var waPageMsg = (T("whatsappPageShareMsg") || "Confira o Workshop SENAI São Carlos 2026 - Desenvolvimento de Sistemas, Eletroeletrônica e Mecatrônica:\n{url}")
       .replace("{url}", homeUrl);
     var waPageUrl = "https://api.whatsapp.com/send?text=" + encodeURIComponent(waPageMsg);
 
@@ -2072,7 +2297,16 @@
       '<h2 class="page-qr-title">' + esc(T("pageQrTitle")) + '</h2>' +
       '<p class="page-qr-sub">' + esc(T("pageQrSub")) + '</p>' +
       '</div>' +
-      '<div class="page-qr-frame" id="pageQrFrame">' + qrSvg + '</div>' +
+      '<div class="page-qr-tabs-bar" role="tablist">' +
+      '<button type="button" class="page-qr-tab-btn' + (currentMainQrTab === "poster" ? " is-active" : "") + '" id="tabMainPoster" data-tab="poster">📄 Cartaz Oficial (A4)</button>' +
+      '<button type="button" class="page-qr-tab-btn' + (currentMainQrTab === "quick" ? " is-active" : "") + '" id="tabMainQuick" data-tab="quick">📱 Apenas QR Code</button>' +
+      '</div>' +
+      '<div class="modal-poster-actions" id="mainA4ActionsRow"' + (currentMainQrTab === "quick" ? ' style="display:none"' : '') + '>' +
+      '<button type="button" class="btn-poster-action btn-poster-primary" id="mainA4PrintBtn">🖨️ Imprimir Cartaz A4</button>' +
+      '<button type="button" class="btn-poster-action" id="mainA4DownloadPngBtn">🖼️ Baixar Cartaz (PNG Alta Resolução)</button>' +
+      '</div>' +
+      '<div id="mainQrContentArea" style="width:100%">' +
+      '</div>' +
       '<div class="modal-url-box page-qr-url-box">' +
       '<input type="text" class="modal-url-input" id="pageQrUrlInput" value="' + esc(homeUrl) + '" readonly>' +
       '<button class="modal-btn-copy" id="pageQrCopyBtn">' + T("copyLink") + '</button>' +
@@ -2165,12 +2399,49 @@
       });
     };
 
-    // 5 cliques rápidos no QR Code da página para abrir configuração oculta de URL base
+    var printBtn = document.getElementById("mainA4PrintBtn");
+    if (printBtn) {
+      printBtn.onclick = function () {
+        if (window.Leads) {
+          window.Leads.sendLead({
+            tipo: "Lead Cartaz A4",
+            pagina: "home",
+            turma: "Geral",
+            acao: "Imprimiu Cartaz A4 Oficial",
+            mensagem: "URL: " + homeUrl
+          });
+        }
+        printMainA4Poster();
+      };
+    }
+
+    var dlPosterBtn = document.getElementById("mainA4DownloadPngBtn");
+    if (dlPosterBtn) {
+      dlPosterBtn.onclick = function () {
+        if (window.Leads) {
+          window.Leads.sendLead({
+            tipo: "Lead Cartaz A4",
+            pagina: "home",
+            turma: "Geral",
+            acao: "Baixou Cartaz A4 Principal PNG",
+            mensagem: "URL: " + homeUrl
+          });
+        }
+        var canvas = generateMainA4PosterCanvas();
+        if (canvas) {
+          canvas.toBlob(function (blob) {
+            if (blob) downloadFile(blob, "cartaz-senai-workshop-2026.png");
+          });
+        }
+      };
+    }
+
     var pageQrClickCount = 0;
     var pageQrClickTimer = null;
-    var pageQrFrame = document.getElementById("pageQrFrame");
-    if (pageQrFrame) {
-      pageQrFrame.addEventListener("click", function () {
+    function attachQrSecretClick() {
+      var clickTarget = document.getElementById("pageQrFrame") || document.getElementById("mainA4PreviewStage");
+      if (!clickTarget) return;
+      clickTarget.addEventListener("click", function () {
         pageQrClickCount++;
         clearTimeout(pageQrClickTimer);
         pageQrClickTimer = setTimeout(function () { pageQrClickCount = 0; }, 1500);
@@ -2191,6 +2462,64 @@
         }
       });
     }
+
+    function renderMainQrContent() {
+      var contentArea = document.getElementById("mainQrContentArea");
+      var actionsRow = document.getElementById("mainA4ActionsRow");
+      var tabPoster = document.getElementById("tabMainPoster");
+      var tabQuick = document.getElementById("tabMainQuick");
+
+      if (tabPoster) tabPoster.classList.toggle("is-active", currentMainQrTab === "poster");
+      if (tabQuick) tabQuick.classList.toggle("is-active", currentMainQrTab === "quick");
+
+      if (actionsRow) {
+        actionsRow.style.display = (currentMainQrTab === "quick") ? "none" : "flex";
+      }
+
+      if (!contentArea) return;
+
+      if (currentMainQrTab === "quick") {
+        contentArea.innerHTML = '<div class="page-qr-frame" id="pageQrFrame">' + qrSvg + '</div>';
+      } else {
+        var posterHtml = buildMainA4PosterHtml();
+        contentArea.innerHTML = '<div class="main-a4-preview-stage" id="mainA4PreviewStage">' + posterHtml + '</div>';
+      }
+
+      attachQrSecretClick();
+    }
+
+    document.getElementById("tabMainPoster").onclick = function () {
+      currentMainQrTab = "poster";
+      renderMainQrContent();
+    };
+    document.getElementById("tabMainQuick").onclick = function () {
+      currentMainQrTab = "quick";
+      renderMainQrContent();
+    };
+
+    renderMainQrContent();
+
+    document.getElementById("pageQrBaseUrlSave").onclick = function () {
+      var v = document.getElementById("pageQrBaseUrlInput").value.trim().replace(/\/+$/, "");
+      if (v) {
+        store("custom_base_url", v);
+        showToast(T("baseUrlSaved"));
+      } else {
+        removeStore("custom_base_url");
+        showToast(T("baseUrlReset"));
+      }
+      openPageQrModal();
+    };
+
+    document.getElementById("pageQrBaseUrlReset").onclick = function () {
+      removeStore("custom_base_url");
+      showToast(T("baseUrlReset"));
+      openPageQrModal();
+    };
+
+    m.classList.add("is-open");
+    m.setAttribute("aria-hidden", "false");
+    document.body.classList.add("modal-open");
 
     document.getElementById("pageQrBaseUrlSave").onclick = function () {
       var v = document.getElementById("pageQrBaseUrlInput").value.trim().replace(/\/+$/, "");

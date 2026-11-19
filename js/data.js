@@ -112,7 +112,7 @@ window.SITE = {
           ],
           landing: "https://ryan22-ai.github.io/AgroVision-Site/",
           funcionamento: "",
-          comercial: ""
+          comercial: "https://youtu.be/s3CX23RGCdg"
         },
         {
           id: "ds-3",
@@ -742,7 +742,7 @@ window.SITE = {
           ],
           landing: "https://sites.google.com/aluno.senai.br/weldturn/in%C3%ADcio",
           funcionamento: "https://www.youtube.com/watch?v=IJF09taypvw",
-          comercial: ""
+          comercial: "https://www.youtube.com/watch?v=hvCYlfhIV3Q"
         },
         {
           id: "mec-15",

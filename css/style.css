@@ -1983,6 +1983,229 @@ body.modal-open {
   max-width: 500px
 }
 
+/* ---------- Abas e Preview de Cartazes A4 no Modal da Página Inicial ---------- */
+.page-qr-tabs-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  width: 100%;
+  margin: 4px 0 8px;
+}
+
+.page-qr-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: var(--card-2, #1b2234);
+  color: var(--muted, #94a3b8);
+  border: 1px solid var(--line, #334155);
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.page-qr-tab-btn:hover {
+  color: var(--text, #f8fafc);
+  border-color: var(--red, #e4002b);
+}
+
+.page-qr-tab-btn.is-active {
+  background: var(--red, #e4002b);
+  color: #ffffff;
+  border-color: var(--red, #e4002b);
+  box-shadow: 0 4px 14px rgba(228, 0, 43, 0.35);
+}
+
+.modal-poster-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.main-a4-preview-stage {
+  width: 100%;
+  max-width: 520px;
+  margin: 4px auto 10px;
+  background: #090d16;
+  border-radius: 16px;
+  border: 1px solid var(--line, #334155);
+  padding: 18px 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5);
+  box-sizing: border-box;
+}
+
+.main-a4-preview-stage .main-a4-sheet {
+  width: 100% !important;
+  max-width: 440px !important;
+  aspect-ratio: 210 / 297 !important;
+  min-height: 580px !important;
+  background: #ffffff !important;
+  color: #0f172a !important;
+  border-radius: 6px !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4) !important;
+  box-sizing: border-box !important;
+  position: relative !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  text-align: center !important;
+  border: 3.5px solid #e4002b !important;
+  overflow: hidden !important;
+}
+
+.main-a4-preview-stage .main-a4-inner-border {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  right: 5px;
+  bottom: 5px;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.main-a4-preview-stage .a4-corner {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.main-a4-preview-stage .a4-corner-tl {
+  top: 7px;
+  left: 7px;
+  border-top: 2.5px solid #e4002b;
+  border-left: 2.5px solid #e4002b;
+}
+
+.main-a4-preview-stage .a4-corner-tr {
+  top: 7px;
+  right: 7px;
+  border-top: 2.5px solid #e4002b;
+  border-right: 2.5px solid #e4002b;
+}
+
+.main-a4-preview-stage .a4-corner-bl {
+  bottom: 7px;
+  left: 7px;
+  border-bottom: 2.5px solid #e4002b;
+  border-left: 2.5px solid #e4002b;
+}
+
+.main-a4-preview-stage .a4-corner-br {
+  bottom: 7px;
+  right: 7px;
+  border-bottom: 2.5px solid #e4002b;
+  border-right: 2.5px solid #e4002b;
+}
+
+/* Versão Clean Oficial na tela */
+.main-a4-preview-stage .main-a4-clean {
+  padding: 24px 20px 20px !important;
+}
+
+.main-a4-preview-stage .main-a4-clean-header {
+  position: relative;
+  z-index: 3;
+  margin-bottom: 8px;
+}
+
+.main-a4-preview-stage .main-a4-clean-title {
+  font-size: 1.7rem;
+  font-weight: 900;
+  color: #0f172a;
+  letter-spacing: -0.5px;
+  margin: 0;
+  line-height: 1.1;
+}
+
+.main-a4-preview-stage .main-a4-clean-sub {
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 1.8px;
+  color: #475569;
+  margin-top: 4px;
+}
+
+.main-a4-preview-stage .main-a4-clean-qr-wrapper {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.main-a4-preview-stage .main-a4-clean-qr-frame {
+  width: min(265px, 62vw);
+  height: min(265px, 62vw);
+  background: #ffffff;
+  padding: 8px;
+  border-radius: 14px;
+  border: 1.5px solid #cbd5e1;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.main-a4-preview-stage .main-a4-clean-qr-frame svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.main-a4-preview-stage .main-a4-clean-eval-banner {
+  position: relative;
+  z-index: 3;
+  background: linear-gradient(135deg, #e4002b, #b80022);
+  color: #ffffff;
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.6px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  margin: 8px 0;
+}
+
+.main-a4-preview-stage .main-a4-clean-footer {
+  position: relative;
+  z-index: 3;
+  border-top: 1px solid #e2e8f0;
+  padding-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.main-a4-preview-stage .main-a4-clean-courses-line {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #334155;
+}
+
+.main-a4-preview-stage .main-a4-clean-event-line {
+  font-size: 0.62rem;
+  font-weight: 600;
+  color: #64748b;
+}
+}
+
 /* ---------- Footer ---------- */
 .footer {
   background: var(--bg-2);

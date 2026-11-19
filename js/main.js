@@ -32,12 +32,11 @@
       whatsappPageShareMsg: "Confira o Workshop SENAI São Carlos 2026 - Desenvolvimento de Sistemas, Eletroeletrônica e Mecatrônica:\n{url}",
       qrToggle: "QR Code do Projeto",
       qrToggleHide: "Ocultar QR Code",
-      openA4Poster: "Card de Mesa (1/4 A4)",
+      openA4Poster: "Card de Mesa com Abas (2 cm)",
       downloadA4: "Baixar Card (PNG)",
-      printA4: "Imprimir (1/4 A4)",
-      printA4Grid: "4 por Folha A4",
+      printA4: "Imprimir Card (com abas de 2 cm)",
       downloadQrOnly: "Apenas QR Code",
-      a4PosterTitle: "Card Minimalista (1/4 A4)",
+      a4PosterTitle: "Card de Mesa com Abas de 2 cm",
       evalOurProject: "AVALIE NOSSO PROJETO",
       evalOurProjectSub: "Aponte a câmera para o QR Code acima",
       qrTitle: "QR Code do Projeto",
@@ -135,12 +134,11 @@
       whatsappPageShareMsg: "Check out SENAI São Carlos Workshop 2026 - Systems Development, Electronics & Mechatronics:\n{url}",
       qrToggle: "Project QR Code",
       qrToggleHide: "Hide QR Code",
-      openA4Poster: "Table Card (1/4 A4)",
+      openA4Poster: "Table Card with Flaps (2 cm)",
       downloadA4: "Download Card (PNG)",
-      printA4: "Print (1/4 A4)",
-      printA4Grid: "4 per A4 Sheet",
+      printA4: "Print Card (with 2 cm flaps)",
       downloadQrOnly: "QR Code Only",
-      a4PosterTitle: "Minimalist Stand Card (1/4 A4)",
+      a4PosterTitle: "Table Card with 2 cm Flaps",
       evalOurProject: "RATE OUR PROJECT",
       evalOurProjectSub: "Point camera at the QR Code above",
       qrTitle: "Project QR Code",
@@ -1259,32 +1257,39 @@
   }
 
   /* =====================================================================
-     IMPRESSÃO ISOLADA DO CARD (1/4 DA FOLHA A4 OU GRADE 2x2 COM 4 CARDS)
+     IMPRESSÃO DO CARD CENTRALIZADO COM ABAS LATERAIS DE 2 CM PARA DOBRA
      ===================================================================== */
   function buildPrintCardHtml(projectName, qrSvgContent, evalLabel) {
-    return '<div class="a4-sheet">' +
-      '<div class="a4-inner-border"></div>' +
-      '<div class="a4-corner a4-corner-tl"></div>' +
-      '<div class="a4-corner a4-corner-tr"></div>' +
-      '<div class="a4-corner a4-corner-bl"></div>' +
-      '<div class="a4-corner a4-corner-br"></div>' +
-      '<div class="a4-header">' +
-        '<div class="a4-event-badge">Workshop SENAI <span class="grad">2026</span></div>' +
+    return '<div class="a4-display-assembly">' +
+      '<div class="a4-fold-flap a4-flap-left">' +
+        '<div class="a4-fold-label"><span>⤹ DOBRA (2 cm)</span></div>' +
       '</div>' +
-      '<div class="a4-project-block">' +
-        '<h1 class="a4-project-title">' + projectName + '</h1>' +
+      '<div class="a4-sheet">' +
+        '<div class="a4-inner-border"></div>' +
+        '<div class="a4-corner a4-corner-tl"></div>' +
+        '<div class="a4-corner a4-corner-tr"></div>' +
+        '<div class="a4-corner a4-corner-bl"></div>' +
+        '<div class="a4-corner a4-corner-br"></div>' +
+        '<div class="a4-header">' +
+          '<div class="a4-event-badge">Workshop SENAI <span class="grad">2026</span></div>' +
+        '</div>' +
+        '<div class="a4-project-block">' +
+          '<h1 class="a4-project-title">' + projectName + '</h1>' +
+        '</div>' +
+        '<div class="a4-qr-wrapper">' +
+          '<div class="a4-qr-card">' + qrSvgContent + '</div>' +
+        '</div>' +
+        '<div class="a4-eval-banner">' +
+          '<div class="a4-eval-badge">⭐ ' + evalLabel + ' ⭐</div>' +
+        '</div>' +
       '</div>' +
-      '<div class="a4-qr-wrapper">' +
-        '<div class="a4-qr-card">' + qrSvgContent + '</div>' +
-      '</div>' +
-      '<div class="a4-eval-banner">' +
-        '<div class="a4-eval-badge">⭐ ' + evalLabel + ' ⭐</div>' +
+      '<div class="a4-fold-flap a4-flap-right">' +
+        '<div class="a4-fold-label"><span>DOBRA (2 cm) ⤸</span></div>' +
       '</div>' +
     '</div>';
   }
 
-  function printA4Card(projectName, qrSvgContent, evalLabel, mode) {
-    var isGrid = (mode === "grid4");
+  function printA4Card(projectName, qrSvgContent, evalLabel) {
     var iframe = document.getElementById("a4PrintFrame");
     if (iframe) {
       try { iframe.parentNode.removeChild(iframe); } catch (err) {}
@@ -1298,37 +1303,28 @@
     var frameDoc = iframe.contentWindow.document;
     frameDoc.open();
 
-    var cardHtml = buildPrintCardHtml(projectName, qrSvgContent, evalLabel);
+    var assemblyHtml = buildPrintCardHtml(projectName, qrSvgContent, evalLabel);
 
-    var containerHtml = "";
-    if (isGrid) {
-      containerHtml =
-        '<div class="a4-print-grid-container">' +
-          cardHtml + cardHtml + cardHtml + cardHtml +
-          '<div class="a4-crop-line-v"></div>' +
-          '<div class="a4-crop-line-h"></div>' +
-        '</div>';
-    } else {
-      containerHtml =
-        '<div class="a4-print-single-container">' +
-          cardHtml +
-          '<div class="a4-crop-line-v"></div>' +
-          '<div class="a4-crop-line-h"></div>' +
-          '<div class="a4-crop-label">✂ Linha de corte (1/4 da folha A4 — 105 × 148,5 mm)</div>' +
-        '</div>';
-    }
+    var containerHtml =
+      '<div class="a4-print-page">' +
+        '<div class="a4-print-guide-top">✂ Linha de corte</div>' +
+        assemblyHtml +
+        '<div class="a4-print-instructions">✂ Recorte no contorno tracejado cinza e dobre nas linhas vermelhas (abas de 2 cm) para apoiar na mesa.</div>' +
+      '</div>';
 
     var printStyles =
-      /* Margem mínima para garantir que a borda não caia na área não-imprimível */
-      '@page { size: A4 portrait; margin: 3mm; }' +
+      '@page { size: A4 portrait; margin: 0; }' +
       '*, *::before, *::after { box-sizing: border-box !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }' +
-      'html, body { margin: 0 !important; padding: 0 !important; width: 204mm !important; height: 291mm !important; max-height: 291mm !important; overflow: hidden !important; background: #ffffff !important; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }' +
-      '.a4-print-single-container { width: 204mm !important; height: 291mm !important; position: relative !important; overflow: hidden !important; background: #ffffff !important; }' +
-      '.a4-print-grid-container { width: 204mm !important; height: 291mm !important; max-width: 204mm !important; max-height: 291mm !important; margin: 0 !important; padding: 0 !important; display: grid !important; grid-template-columns: 102mm 102mm !important; grid-template-rows: 145.5mm 145.5mm !important; position: relative !important; overflow: hidden !important; background: #ffffff !important; }' +
-      '.a4-crop-line-v { position: absolute !important; top: 0 !important; left: 102mm !important; width: 0 !important; height: 291mm !important; border-left: 1px dashed #cbd5e1 !important; pointer-events: none !important; }' +
-      '.a4-crop-line-h { position: absolute !important; top: 145.5mm !important; left: 0 !important; width: 204mm !important; height: 0 !important; border-top: 1px dashed #cbd5e1 !important; pointer-events: none !important; }' +
-      '.a4-crop-label { position: absolute !important; top: 150mm !important; left: 5mm !important; font-size: 7pt !important; color: #94a3b8 !important; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important; }' +
-      '.a4-sheet { width: 102mm !important; height: 145.5mm !important; max-width: 102mm !important; max-height: 145.5mm !important; margin: 0 !important; padding: 5.5mm 5mm 5.5mm !important; position: relative !important; display: flex !important; flex-direction: column !important; justify-content: space-between !important; text-align: center !important; background: #ffffff !important; color: #1e293b !important; border: 0.7mm solid #e4002b !important; box-sizing: border-box !important; page-break-inside: avoid !important; page-break-after: avoid !important; }' +
+      'html, body { margin: 0 !important; padding: 0 !important; width: 210mm !important; height: 297mm !important; max-height: 297mm !important; overflow: hidden !important; background: #ffffff !important; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }' +
+      '.a4-print-page { width: 210mm !important; height: 297mm !important; max-width: 210mm !important; max-height: 297mm !important; margin: 0 !important; padding: 0 !important; display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important; position: relative !important; background: #ffffff !important; overflow: hidden !important; }' +
+      '.a4-print-guide-top { font-size: 7.5pt !important; color: #94a3b8 !important; font-weight: 600 !important; letter-spacing: 0.5px !important; margin-bottom: 2mm !important; text-align: center !important; }' +
+      '.a4-display-assembly { width: 145mm !important; height: 148.5mm !important; display: flex !important; flex-direction: row !important; align-items: stretch !important; position: relative !important; background: #ffffff !important; box-sizing: border-box !important; }' +
+      '.a4-fold-flap { width: 20mm !important; height: 148.5mm !important; position: relative !important; display: flex !important; align-items: center !important; justify-content: center !important; background: #f8fafc !important; box-sizing: border-box !important; }' +
+      '.a4-flap-left { border-top: 0.35mm dashed #94a3b8 !important; border-bottom: 0.35mm dashed #94a3b8 !important; border-left: 0.35mm dashed #94a3b8 !important; border-right: 0.6mm dashed #e4002b !important; }' +
+      '.a4-flap-right { border-top: 0.35mm dashed #94a3b8 !important; border-bottom: 0.35mm dashed #94a3b8 !important; border-right: 0.35mm dashed #94a3b8 !important; border-left: 0.6mm dashed #e4002b !important; }' +
+      '.a4-fold-label { writing-mode: vertical-rl !important; text-orientation: mixed !important; font-size: 7.5pt !important; font-weight: 800 !important; color: #64748b !important; letter-spacing: 0.8px !important; text-transform: uppercase !important; display: flex !important; align-items: center !important; justify-content: center !important; height: 100% !important; }' +
+      '.a4-flap-left .a4-fold-label { transform: rotate(180deg) !important; }' +
+      '.a4-sheet { width: 105mm !important; height: 148.5mm !important; max-width: 105mm !important; max-height: 148.5mm !important; margin: 0 !important; padding: 5.5mm 5mm 5.5mm !important; position: relative !important; display: flex !important; flex-direction: column !important; justify-content: space-between !important; text-align: center !important; background: #ffffff !important; color: #1e293b !important; border-top: 0.7mm solid #e4002b !important; border-bottom: 0.7mm solid #e4002b !important; border-left: none !important; border-right: none !important; box-sizing: border-box !important; page-break-inside: avoid !important; page-break-after: avoid !important; }' +
       '.a4-inner-border { position: absolute !important; top: 1.8mm !important; left: 1.8mm !important; right: 1.8mm !important; bottom: 1.8mm !important; border: 0.35mm solid #cbd5e1 !important; border-radius: 1mm !important; pointer-events: none !important; z-index: 1 !important; }' +
       '.a4-corner { position: absolute !important; width: 5mm !important; height: 5mm !important; pointer-events: none !important; z-index: 2 !important; }' +
       '.a4-corner-tl { top: 2.8mm !important; left: 2.8mm !important; border-top: 0.7mm solid #e4002b !important; border-left: 0.7mm solid #e4002b !important; }' +
@@ -1344,11 +1340,12 @@
       '.a4-qr-card { background: #ffffff !important; padding: 2.2mm !important; border-radius: 2.5mm !important; border: 0.45mm solid #cbd5e1 !important; display: inline-block !important; }' +
       '.a4-qr-card svg { display: block !important; width: 82mm !important; height: 82mm !important; }' +
       '.a4-eval-banner { background: linear-gradient(135deg, #e4002b, #b80022) !important; color: #ffffff !important; padding: 3.5mm 4mm !important; border-radius: 2.5mm !important; width: 100% !important; box-sizing: border-box !important; text-align: center !important; position: relative !important; z-index: 3 !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }' +
-      '.a4-eval-badge { font-size: 11pt !important; font-weight: 900 !important; letter-spacing: 0.6px !important; text-transform: uppercase !important; }';
+      '.a4-eval-badge { font-size: 11pt !important; font-weight: 900 !important; letter-spacing: 0.6px !important; text-transform: uppercase !important; }' +
+      '.a4-print-instructions { margin-top: 5mm !important; font-size: 7.5pt !important; color: #64748b !important; font-weight: 600 !important; text-align: center !important; letter-spacing: 0.2px !important; }';
 
     var docHtml = '<!DOCTYPE html>' +
       '<html><head><meta charset="utf-8">' +
-      '<title>Workshop SENAI 2026 - Card ' + (isGrid ? '(4 por Folha A4)' : '(1/4 A4)') + '</title>' +
+      '<title>Workshop SENAI 2026 - Card de Mesa com Abas</title>' +
       '<style>' + printStyles + '</style>' +
       '</head><body>' +
       containerHtml +
@@ -1396,13 +1393,9 @@
             '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>' +
             '<span>' + esc(T("downloadA4")) + '</span>' +
           '</button>' +
-          '<button class="btn-poster-action" id="posterPrintSingleBtn" title="Imprimir 1 card (ocupa 1/4 da folha A4 com marcas de corte)">' +
+          '<button class="btn-poster-action" id="posterPrintSingleBtn" title="Imprimir card de mesa centralizado com abas de 2 cm para dobra">' +
             '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>' +
             '<span>' + esc(T("printA4")) + '</span>' +
-          '</button>' +
-          '<button class="btn-poster-action" id="posterPrintGridBtn" title="Imprimir folha A4 completa com 4 cards (grade 2x2 para recorte)">' +
-            '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>' +
-            '<span>' + esc(T("printA4Grid")) + '</span>' +
           '</button>' +
           '<button class="btn-poster-action" id="posterDownloadQrPngBtn" title="Baixar apenas o QR Code em PNG">' +
             '<span>QR PNG</span>' +
@@ -1414,25 +1407,33 @@
         '</div>' +
       '</div>' +
       '<div class="modal-poster-body">' +
-        '<div class="a4-sheet" id="a4PosterSheet">' +
-          '<div class="a4-inner-border"></div>' +
-          '<div class="a4-corner a4-corner-tl"></div>' +
-          '<div class="a4-corner a4-corner-tr"></div>' +
-          '<div class="a4-corner a4-corner-bl"></div>' +
-          '<div class="a4-corner a4-corner-br"></div>' +
-          '<div class="a4-header">' +
-            '<div class="a4-event-badge">Workshop SENAI <span class="grad">2026</span></div>' +
+        '<div class="a4-display-assembly-preview">' +
+          '<div class="a4-fold-flap a4-flap-left">' +
+            '<div class="a4-fold-label"><span>⤹ DOBRA (2 cm)</span></div>' +
           '</div>' +
-          '<div class="a4-project-block">' +
-            '<h1 class="a4-project-title">' + esc(p.nome) + '</h1>' +
-          '</div>' +
-          '<div class="a4-qr-wrapper">' +
-            '<div class="a4-qr-card">' +
-              qrSvg +
+          '<div class="a4-sheet" id="a4PosterSheet">' +
+            '<div class="a4-inner-border"></div>' +
+            '<div class="a4-corner a4-corner-tl"></div>' +
+            '<div class="a4-corner a4-corner-tr"></div>' +
+            '<div class="a4-corner a4-corner-bl"></div>' +
+            '<div class="a4-corner a4-corner-br"></div>' +
+            '<div class="a4-header">' +
+              '<div class="a4-event-badge">Workshop SENAI <span class="grad">2026</span></div>' +
+            '</div>' +
+            '<div class="a4-project-block">' +
+              '<h1 class="a4-project-title">' + esc(p.nome) + '</h1>' +
+            '</div>' +
+            '<div class="a4-qr-wrapper">' +
+              '<div class="a4-qr-card">' +
+                qrSvg +
+              '</div>' +
+            '</div>' +
+            '<div class="a4-eval-banner">' +
+              '<div class="a4-eval-badge">⭐ ' + esc(T("evalOurProject")) + ' ⭐</div>' +
             '</div>' +
           '</div>' +
-          '<div class="a4-eval-banner">' +
-            '<div class="a4-eval-badge">⭐ ' + esc(T("evalOurProject")) + ' ⭐</div>' +
+          '<div class="a4-fold-flap a4-flap-right">' +
+            '<div class="a4-fold-label"><span>DOBRA (2 cm) ⤸</span></div>' +
           '</div>' +
         '</div>' +
       '</div>';
@@ -1458,15 +1459,7 @@
       var qrSvgPrint = window.QRCode && typeof window.QRCode.generateSVG === "function"
         ? window.QRCode.generateSVG(shareUrl, { size: 400, margin: 2 })
         : "";
-      printA4Card(esc(p.nome), qrSvgPrint, esc(T("evalOurProject")), "single");
-    };
-
-    document.getElementById("posterPrintGridBtn").onclick = function () {
-      if (window.Leads) window.Leads.trackProjectAction(p, courseKey, "imprimiu_card_grid4");
-      var qrSvgPrint = window.QRCode && typeof window.QRCode.generateSVG === "function"
-        ? window.QRCode.generateSVG(shareUrl, { size: 400, margin: 2 })
-        : "";
-      printA4Card(esc(p.nome), qrSvgPrint, esc(T("evalOurProject")), "grid4");
+      printA4Card(esc(p.nome), qrSvgPrint, esc(T("evalOurProject")));
     };
 
     document.getElementById("posterDownloadQrPngBtn").onclick = function () {

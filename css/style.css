@@ -2904,6 +2904,65 @@ body.modal-open {
 }
 
 /* =====================================================================
+   MONTAGEM DO CARD DE MESA COM ABAS DE 2 CM PARA DOBRA
+   ===================================================================== */
+.a4-display-assembly-preview {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  max-width: 440px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.a4-display-assembly-preview .a4-fold-flap {
+  width: 50px;
+  background: #111827;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  border: 1.5px dashed #475569;
+  border-radius: 6px;
+}
+
+.a4-display-assembly-preview .a4-flap-left {
+  margin-right: 6px;
+  border-right: 2.5px dashed #e4002b;
+}
+
+.a4-display-assembly-preview .a4-flap-right {
+  margin-left: 6px;
+  border-left: 2.5px dashed #e4002b;
+}
+
+.a4-display-assembly-preview .a4-fold-label {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  user-select: none;
+}
+
+.a4-display-assembly-preview .a4-flap-left .a4-fold-label {
+  transform: rotate(180deg);
+}
+
+.a4-display-assembly-preview .a4-sheet {
+  flex: 1;
+  max-width: 310px;
+}
+
+/* =====================================================================
    CARD DE MESA MINIMALISTA (1/4 DA FOLHA A4 - FORMATO A6 / 105 x 148,5 mm)
    ===================================================================== */
 .a4-sheet {
@@ -3083,11 +3142,11 @@ body.modal-open {
   line-height: 1.25;
 }
 
-/* @media print para impressão direta (Ctrl+P / Cmd+P) ocupando 1/4 da folha A4 */
+/* @media print para impressão direta (Ctrl+P / Cmd+P) ocupando 1/4 da folha A4 com abas de 2 cm */
 @media print {
   @page {
     size: A4 portrait;
-    margin: 3mm;
+    margin: 0;
   }
 
   *, *::before, *::after {
@@ -3099,9 +3158,9 @@ body.modal-open {
   html, body {
     margin: 0 !important;
     padding: 0 !important;
-    width: 204mm !important;
-    height: 291mm !important;
-    max-height: 291mm !important;
+    width: 210mm !important;
+    height: 297mm !important;
+    max-height: 297mm !important;
     overflow: hidden !important;
     background: #ffffff !important;
     -webkit-print-color-adjust: exact !important;
@@ -3143,23 +3202,96 @@ body.modal-open {
   }
 
   .modal-poster-body {
-    display: block !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
     padding: 0 !important;
     background: transparent !important;
     overflow: hidden !important;
-    width: 100% !important;
-    height: 100% !important;
+    width: 210mm !important;
+    height: 297mm !important;
     position: relative !important;
   }
 
-  /* O card impresso ocupa exatamente 1/4 da folha A4 (105mm x 148.5mm) */
-  .a4-sheet {
-    width: 102mm !important;
-    height: 145.5mm !important;
-    max-width: 102mm !important;
-    max-height: 145.5mm !important;
+  /* Conjunto centralizado com abas de 2 cm */
+  .a4-display-assembly-preview,
+  .a4-display-assembly {
+    width: 145mm !important;
+    height: 148.5mm !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: stretch !important;
+    position: relative !important;
+    background: #ffffff !important;
+    box-sizing: border-box !important;
+    margin: auto !important;
+  }
+
+  .a4-display-assembly-preview .a4-fold-flap,
+  .a4-fold-flap {
+    width: 20mm !important;
+    height: 148.5mm !important;
+    position: relative !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: #f8fafc !important;
+    box-sizing: border-box !important;
+  }
+
+  .a4-display-assembly-preview .a4-flap-left,
+  .a4-flap-left {
     margin: 0 !important;
-    border: 0.7mm solid #e4002b !important;
+    border-top: 0.35mm dashed #94a3b8 !important;
+    border-bottom: 0.35mm dashed #94a3b8 !important;
+    border-left: 0.35mm dashed #94a3b8 !important;
+    border-right: 0.6mm dashed #e4002b !important;
+    border-radius: 0 !important;
+  }
+
+  .a4-display-assembly-preview .a4-flap-right,
+  .a4-flap-right {
+    margin: 0 !important;
+    border-top: 0.35mm dashed #94a3b8 !important;
+    border-bottom: 0.35mm dashed #94a3b8 !important;
+    border-right: 0.35mm dashed #94a3b8 !important;
+    border-left: 0.6mm dashed #e4002b !important;
+    border-radius: 0 !important;
+  }
+
+  .a4-display-assembly-preview .a4-fold-label,
+  .a4-fold-label {
+    writing-mode: vertical-rl !important;
+    text-orientation: mixed !important;
+    font-size: 7.5pt !important;
+    font-weight: 800 !important;
+    color: #64748b !important;
+    letter-spacing: 0.8px !important;
+    text-transform: uppercase !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    height: 100% !important;
+  }
+
+  .a4-display-assembly-preview .a4-flap-left .a4-fold-label,
+  .a4-flap-left .a4-fold-label {
+    transform: rotate(180deg) !important;
+  }
+
+  /* O card impresso ocupa exatamente 105mm x 148.5mm */
+  .a4-display-assembly-preview .a4-sheet,
+  .a4-sheet {
+    width: 105mm !important;
+    height: 148.5mm !important;
+    max-width: 105mm !important;
+    max-height: 148.5mm !important;
+    margin: 0 !important;
+    border-top: 0.7mm solid #e4002b !important;
+    border-bottom: 0.7mm solid #e4002b !important;
+    border-left: none !important;
+    border-right: none !important;
     border-radius: 0 !important;
     box-shadow: none !important;
     padding: 5.5mm 5mm 5.5mm !important;

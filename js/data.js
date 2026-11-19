@@ -776,7 +776,7 @@ window.SITE = {
           ],
           landing: "https://sites.google.com/aluno.senai.br/nexusatlas/in%C3%ADcio",
           funcionamento: "https://youtu.be/YWlLSevBkzs?si=VtKE27a8S4rMoRUP",
-          comercial: "https://youtu.be/BsbTm0gRNA4?si=xq8gCa8TSqMKgHJZ"
+          comercial: "https://youtu.be/AU6h155QdM8?si=qbYUoQfa07lO1pEw"
         }
       ]
     }

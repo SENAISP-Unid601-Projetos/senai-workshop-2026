@@ -1199,34 +1199,39 @@
     ctx.fillStyle = grad2026;
     ctx.fillText(t2, textStartX + w1, textY);
 
-    // 1. Nome do Grupo / Projeto (com fundo destacado)
+    // 1. Bloco Editorial do Projeto (Tag + Nome + Turma)
     var projNome = (p && p.nome) ? p.nome : "Projeto";
-    var boxW = width - 120;
-    var boxX = (width - boxW) / 2;
-    var boxY = headerBoxY + headerBoxH + 16;
-    var boxH = 88;
+    var turmaText = formatTurma(p ? p.turma : "");
+    var startBlockY = headerBoxY + headerBoxH + 26;
 
-    // Fundo do nome do grupo
-    ctx.fillStyle = "#f1f5f9";
-    drawRoundRect(ctx, boxX, boxY, boxW, boxH, 14);
-    ctx.fill();
-    ctx.strokeStyle = "#cbd5e1";
-    ctx.lineWidth = 2;
-    ctx.stroke();
-
+    // Mini-tag "PROJETO"
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
+    ctx.font = "800 13px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+    ctx.fillStyle = "#64748b";
+    ctx.fillText("— PROJETO —", width / 2, startBlockY);
+
+    // Nome do Projeto
+    var titleY = startBlockY + 28;
     ctx.fillStyle = "#0f172a";
-    ctx.font = "900 34px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
-    if (ctx.measureText(projNome).width > boxW - 40) {
-      ctx.font = "900 26px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+    ctx.font = "900 38px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+    if (ctx.measureText(projNome).width > width - 120) {
+      ctx.font = "900 30px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
     }
-    drawWrappedText(ctx, projNome, width / 2, boxY + (boxH / 2), boxW - 30, 32, "center");
+    var nextY = drawWrappedText(ctx, projNome, width / 2, titleY, width - 100, 40, "center");
+
+    var currentY = Math.max(titleY + 24, nextY + 14);
+    if (turmaText) {
+      ctx.font = "bold 15px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+      ctx.fillStyle = "#475569";
+      ctx.fillText("Turma " + turmaText, width / 2, currentY);
+      currentY += 22;
+    }
 
     // 2. Moldura Central do QR Code (ampliada)
     var qrFrameSize = 560;
     var qrFrameX = (width - qrFrameSize) / 2;
-    var qrFrameY = boxY + boxH + 22;
+    var qrFrameY = currentY + 16;
 
     ctx.fillStyle = "#ffffff";
     drawRoundRect(ctx, qrFrameX, qrFrameY, qrFrameSize, qrFrameSize, 16);
@@ -1432,8 +1437,10 @@
       '.a4-header { position: relative !important; z-index: 3 !important; margin: 0 0 2mm !important; width: 100% !important; text-align: center !important; }' +
       '.a4-event-badge { display: block !important; width: 100% !important; box-sizing: border-box !important; text-align: center !important; background: #0f172a !important; border: none !important; border-radius: 1.5mm !important; padding: 2mm 3mm !important; font-size: 10pt !important; font-weight: 900 !important; color: #ffffff !important; text-transform: uppercase !important; letter-spacing: 0.6px !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }' +
       '.grad { background: linear-gradient(90deg, #ff3b57, #ff6584 40%, #38bdf8) !important; -webkit-background-clip: text !important; background-clip: text !important; -webkit-text-fill-color: transparent !important; color: #ff3b57 !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }' +
-      '.a4-project-info { background: #f1f5f9 !important; border: 0.4mm solid #cbd5e1 !important; border-radius: 2.5mm !important; padding: 2.5mm 4mm !important; margin: 1.5mm 0 2mm !important; position: relative !important; z-index: 3 !important; box-sizing: border-box !important; }' +
-      '.a4-project-title { font-size: 14pt !important; font-weight: 900 !important; color: #0f172a !important; margin: 0 !important; line-height: 1.15 !important; letter-spacing: -0.3px !important; word-break: break-word !important; }' +
+      '.a4-project-block { margin: 1mm 0 2mm !important; position: relative !important; z-index: 3 !important; text-align: center !important; }' +
+      '.a4-project-tag { display: block !important; font-size: 7.5pt !important; font-weight: 800 !important; letter-spacing: 1.8px !important; color: #64748b !important; text-transform: uppercase !important; margin-bottom: 0.6mm !important; }' +
+      '.a4-project-title { display: block !important; font-size: 15.5pt !important; font-weight: 900 !important; color: #0f172a !important; line-height: 1.15 !important; letter-spacing: -0.3px !important; word-break: break-word !important; margin: 0 !important; }' +
+      '.a4-project-turma { display: block !important; font-size: 8pt !important; font-weight: 700 !important; color: #475569 !important; letter-spacing: 0.4px !important; margin-top: 0.8mm !important; }' +
       '.a4-qr-wrapper { flex: 1 !important; display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important; margin: 2mm 0 !important; position: relative !important; z-index: 3 !important; }' +
       '.a4-qr-card { background: #ffffff !important; padding: 2mm !important; border-radius: 2mm !important; border: 0.4mm solid #cbd5e1 !important; display: inline-block !important; box-shadow: 0 1mm 3mm rgba(0, 0, 0, 0.05) !important; }' +
       '.a4-qr-card svg { display: block !important; width: 68mm !important; height: 68mm !important; }' +
@@ -1467,6 +1474,7 @@
     var cInfo = (S && S.cursos && S.cursos[courseKey]) ? S.cursos[courseKey] : null;
     var pid = getProjectId(p, courseKey, index);
     var shareUrl = getProjectShareUrl(p, courseKey, index);
+    var turmaText = formatTurma(p ? p.turma : "");
 
     var qrSvg = "";
     if (window.QRCode && typeof window.QRCode.generateSVG === "function") {
@@ -1517,8 +1525,10 @@
           '<div class="a4-header">' +
             '<div class="a4-event-badge">Workshop SENAI <span class="grad">2026</span></div>' +
           '</div>' +
-          '<div class="a4-project-info">' +
+          '<div class="a4-project-block">' +
+            '<span class="a4-project-tag">PROJETO</span>' +
             '<h1 class="a4-project-title">' + esc(p.nome) + '</h1>' +
+            (turmaText ? '<span class="a4-project-turma">Turma ' + esc(turmaText) + '</span>' : '') +
           '</div>' +
           '<div class="a4-qr-wrapper">' +
             '<div class="a4-qr-card">' +
@@ -1873,6 +1883,7 @@
     var c = S.cursos[courseKey];
     var pid = getProjectId(p, courseKey, index);
     var shareUrl = getProjectShareUrl(p, courseKey, index);
+    var turmaText = formatTurma(p ? p.turma : "");
     var customBase = getCustomBase();
     var courseBadge = courseKey === "ds" ? "DS" : (courseKey === "eletroeletronica" || courseKey === "ele" ? "ELE" : "MEC");
     var img = resolveImg(p.imagem);

@@ -3007,26 +3007,42 @@ body.modal-open {
   color: #ff3b57;
 }
 
-/* 1. Nome do Grupo / Projeto com fundo destacado */
-.a4-project-info {
-  background: #f1f5f9;
-  border: 1.5px solid #cbd5e1;
-  border-radius: 8px;
-  padding: 8px 12px;
-  margin: 2px 0 8px;
+/* 1. Bloco Editorial do Projeto (Opção 1: Tag + Título + Turma) */
+.a4-project-block {
+  margin: 2px 0 6px;
   position: relative;
   z-index: 3;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+  text-align: center;
+}
+
+.a4-project-tag {
+  display: block;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: #64748b;
+  text-transform: uppercase;
+  margin-bottom: 2px;
 }
 
 .a4-project-title {
-  font-size: 1.25rem;
+  display: block;
+  font-size: 1.4rem;
   font-weight: 900;
   color: #0f172a;
   margin: 0;
-  line-height: 1.2;
-  letter-spacing: -0.3px;
+  line-height: 1.15;
+  letter-spacing: -0.4px;
   word-break: break-word;
+}
+
+.a4-project-turma {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #475569;
+  letter-spacing: 0.4px;
+  margin-top: 3px;
 }
 
 /* 2. QR Code Central (ampliado para leitura imediata) */
@@ -3264,25 +3280,41 @@ body.modal-open {
     print-color-adjust: exact !important;
   }
 
-  .a4-project-info {
-    background: #f1f5f9 !important;
-    border: 0.4mm solid #cbd5e1 !important;
-    border-radius: 2.5mm !important;
-    padding: 2.5mm 4mm !important;
-    margin: 1.5mm 0 2mm !important;
+  .a4-project-block {
+    margin: 1mm 0 2mm !important;
     position: relative !important;
     z-index: 3 !important;
-    box-sizing: border-box !important;
+    text-align: center !important;
+  }
+
+  .a4-project-tag {
+    display: block !important;
+    font-size: 7.5pt !important;
+    font-weight: 800 !important;
+    letter-spacing: 1.8px !important;
+    color: #64748b !important;
+    text-transform: uppercase !important;
+    margin-bottom: 0.6mm !important;
   }
 
   .a4-project-title {
-    font-size: 14pt !important;
+    display: block !important;
+    font-size: 15.5pt !important;
     font-weight: 900 !important;
     color: #0f172a !important;
-    margin: 0 !important;
     line-height: 1.15 !important;
     letter-spacing: -0.3px !important;
     word-break: break-word !important;
+    margin: 0 !important;
+  }
+
+  .a4-project-turma {
+    display: block !important;
+    font-size: 8pt !important;
+    font-weight: 700 !important;
+    color: #475569 !important;
+    letter-spacing: 0.4px !important;
+    margin-top: 0.8mm !important;
   }
 
   .a4-qr-wrapper {

@@ -2903,33 +2903,36 @@ body.modal-open {
   justify-content: center;
 }
 
-/* A Folha A4 (Proporção Retrato 1 : 1.4142) */
+/* =====================================================================
+   CARD DE MESA MINIMALISTA (1/4 DA FOLHA A4 - FORMATO A6 / 105 x 148,5 mm)
+   ===================================================================== */
 .a4-sheet {
   width: 100%;
-  max-width: 480px;
-  aspect-ratio: 1 / 1.4142;
-  min-height: 678px;
+  max-width: 320px;
+  aspect-ratio: 105 / 148.5;
+  min-height: 452px;
   background: #ffffff;
   color: #1e293b;
   border-radius: 8px;
   box-shadow: 0 16px 45px rgba(0, 0, 0, 0.45);
-  border: 4px solid #e4002b;
+  border: 3.5px solid #e4002b;
   position: relative;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   box-sizing: border-box;
-  padding: 24px 22px 18px;
+  padding: 18px 16px 16px;
   text-align: center;
 }
 
 /* Moldura interna institucional refinada */
 .a4-inner-border {
   position: absolute;
-  top: 6px;
-  left: 6px;
-  right: 6px;
-  bottom: 6px;
-  border: 1.5px solid #cbd5e1;
+  top: 5px;
+  left: 5px;
+  right: 5px;
+  bottom: 5px;
+  border: 1.2px solid #cbd5e1;
   border-radius: 4px;
   pointer-events: none;
   z-index: 1;
@@ -2938,172 +2941,65 @@ body.modal-open {
 /* Cantoneiras decorativas institucionais nos 4 cantos */
 .a4-corner {
   position: absolute;
-  width: 18px;
-  height: 18px;
+  width: 14px;
+  height: 14px;
   pointer-events: none;
   z-index: 2;
 }
 
 .a4-corner-tl {
-  top: 9px;
-  left: 9px;
-  border-top: 3px solid #e4002b;
-  border-left: 3px solid #e4002b;
+  top: 7px;
+  left: 7px;
+  border-top: 2.5px solid #e4002b;
+  border-left: 2.5px solid #e4002b;
 }
 
 .a4-corner-tr {
-  top: 9px;
-  right: 9px;
-  border-top: 3px solid #e4002b;
-  border-right: 3px solid #e4002b;
+  top: 7px;
+  right: 7px;
+  border-top: 2.5px solid #e4002b;
+  border-right: 2.5px solid #e4002b;
 }
 
 .a4-corner-bl {
-  bottom: 9px;
-  left: 9px;
-  border-bottom: 3px solid #e4002b;
-  border-left: 3px solid #e4002b;
+  bottom: 7px;
+  left: 7px;
+  border-bottom: 2.5px solid #e4002b;
+  border-left: 2.5px solid #e4002b;
 }
 
 .a4-corner-br {
-  bottom: 9px;
-  right: 9px;
-  border-bottom: 3px solid #e4002b;
-  border-right: 3px solid #e4002b;
+  bottom: 7px;
+  right: 7px;
+  border-bottom: 2.5px solid #e4002b;
+  border-right: 2.5px solid #e4002b;
 }
 
-/* Elementos internos da Folha A4 */
-.a4-header {
-  border-bottom: 2px solid #e2e8f0;
-  padding-bottom: 12px;
-  margin-bottom: 12px;
-  position: relative;
-  z-index: 3;
-}
-
-.a4-header-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-}
-
-.a4-logo {
-  font-size: 1.65rem;
-  font-weight: 900;
-  letter-spacing: -0.5px;
-  line-height: 1;
-}
-
-.a4-logo .sen { color: #e4002b; }
-.a4-logo .ai { color: #ffb703; }
-
-.a4-header-inst {
-  text-align: right;
-  font-size: 0.65rem;
-  font-weight: 700;
-  color: #475569;
-  line-height: 1.25;
-  text-transform: uppercase;
-}
-
-.a4-header-inst strong {
-  color: #0f172a;
-}
-
-.a4-event-badge {
-  display: inline-block;
-  background: #e4002b;
-  color: #ffffff;
-  font-size: 0.74rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-  padding: 4px 14px;
-  border-radius: 999px;
-  margin-top: 10px;
-}
-
-.a4-event-sub {
-  font-size: 0.68rem;
-  font-weight: 700;
-  color: #64748b;
-  margin-top: 4px;
-}
-
-.a4-course-turma {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  margin-top: 6px;
-  padding: 3px 10px;
-  background: #f1f5f9;
-  border: 1px solid #cbd5e1;
-  border-radius: 6px;
-  font-size: 0.72rem;
-  font-weight: 700;
-  color: #334155;
-}
-
+/* 1. Nome do Grupo / Projeto */
 .a4-project-info {
-  margin: 10px 0 12px;
+  margin: 4px 0 8px;
   position: relative;
   z-index: 3;
 }
 
 .a4-project-title {
-  font-size: 1.68rem;
+  font-size: 1.25rem;
   font-weight: 900;
   color: #0f172a;
   margin: 0;
-  line-height: 1.15;
-  letter-spacing: -0.5px;
+  line-height: 1.2;
+  letter-spacing: -0.3px;
+  word-break: break-word;
 }
 
-.a4-project-sub {
-  font-size: 0.84rem;
-  color: #475569;
-  font-weight: 600;
-  margin: 4px 0 0;
-  line-height: 1.35;
-}
-
-.a4-members-box {
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  border-left: 4px solid #e4002b;
-  border-radius: 6px;
-  padding: 8px 12px;
-  margin-bottom: 12px;
-  text-align: left;
-  position: relative;
-  z-index: 3;
-}
-
-.a4-members-label {
-  display: block;
-  font-size: 0.65rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  color: #e4002b;
-  letter-spacing: 0.5px;
-  margin-bottom: 2px;
-}
-
-.a4-members-list {
-  font-size: 0.78rem;
-  font-weight: 700;
-  color: #1e293b;
-  line-height: 1.35;
-}
-
+/* 2. QR Code Central */
 .a4-qr-wrapper {
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-bottom: 10px;
+  margin: 8px 0;
   position: relative;
   z-index: 3;
 }
@@ -3111,9 +3007,9 @@ body.modal-open {
 .a4-qr-card {
   background: #ffffff;
   padding: 10px;
-  border-radius: 12px;
-  border: 2px solid #cbd5e1;
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+  border-radius: 10px;
+  border: 1.5px solid #cbd5e1;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
   display: inline-block;
 }
 
@@ -3123,52 +3019,37 @@ body.modal-open {
   height: 175px;
 }
 
+/* 3. Avalie nosso projeto */
 .a4-eval-banner {
   background: linear-gradient(135deg, #e4002b, #b80022);
   color: #ffffff;
-  padding: 9px 14px;
+  padding: 8px 12px;
   border-radius: 8px;
-  margin-top: 10px;
+  margin-top: 6px;
   box-shadow: 0 4px 12px rgba(228, 0, 43, 0.25);
   width: 100%;
   box-sizing: border-box;
+  text-align: center;
+  position: relative;
+  z-index: 3;
 }
 
 .a4-eval-badge {
-  font-size: 0.92rem;
+  font-size: 0.88rem;
   font-weight: 900;
   letter-spacing: 0.5px;
   text-transform: uppercase;
 }
 
 .a4-eval-text {
-  font-size: 0.71rem;
+  font-size: 0.68rem;
   font-weight: 600;
   opacity: 0.95;
   margin-top: 2px;
-  line-height: 1.3;
+  line-height: 1.25;
 }
 
-.a4-footer {
-  margin-top: auto;
-  padding-top: 10px;
-  border-top: 1px solid #e2e8f0;
-  font-size: 0.65rem;
-  color: #64748b;
-  line-height: 1.35;
-  position: relative;
-  z-index: 3;
-}
-
-.a4-footer-title {
-  font-weight: 800;
-  color: #0f172a;
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-/* @media print para impressão direta (Ctrl+P / Cmd+P) garantindo 1 única página e fidelidade total */
+/* @media print para impressão direta (Ctrl+P / Cmd+P) ocupando 1/4 da folha A4 */
 @media print {
   @page {
     size: A4 portrait;
@@ -3193,7 +3074,7 @@ body.modal-open {
     print-color-adjust: exact !important;
   }
 
-  /* Remove completamente os demais elementos da página para NÃO gerar páginas adicionais vazias */
+  /* Oculta tudo fora do modal */
   body > *:not(#projectPosterModal) {
     display: none !important;
   }
@@ -3204,7 +3085,7 @@ body.modal-open {
     width: 210mm !important;
     height: 297mm !important;
     max-height: 297mm !important;
-    margin: 0 auto !important;
+    margin: 0 !important;
     padding: 0 !important;
     background: #ffffff !important;
     overflow: hidden !important;
@@ -3234,195 +3115,95 @@ body.modal-open {
     overflow: hidden !important;
     width: 100% !important;
     height: 100% !important;
+    position: relative !important;
   }
 
+  /* O card impresso ocupa exatamente 1/4 da folha A4 (105mm x 148.5mm) */
   .a4-sheet {
-    width: 210mm !important;
-    height: 297mm !important;
-    max-height: 297mm !important;
-    max-width: 210mm !important;
+    width: 105mm !important;
+    height: 148.5mm !important;
+    max-width: 105mm !important;
+    max-height: 148.5mm !important;
     margin: 0 !important;
-    border: 1.5mm solid #e4002b !important;
+    border: 1mm solid #e4002b !important;
     border-radius: 0 !important;
     box-shadow: none !important;
-    padding: 13mm 15mm 11mm !important;
+    padding: 8mm 7mm 7mm !important;
     box-sizing: border-box !important;
     page-break-inside: avoid !important;
     page-break-after: avoid !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    text-align: center !important;
   }
 
   .a4-inner-border {
     position: absolute !important;
-    top: 2.5mm !important;
-    left: 2.5mm !important;
-    right: 2.5mm !important;
-    bottom: 2.5mm !important;
-    border: 0.5mm solid #cbd5e1 !important;
-    border-radius: 2mm !important;
+    top: 1.8mm !important;
+    left: 1.8mm !important;
+    right: 1.8mm !important;
+    bottom: 1.8mm !important;
+    border: 0.35mm solid #cbd5e1 !important;
+    border-radius: 1mm !important;
     pointer-events: none !important;
     z-index: 1 !important;
   }
 
   .a4-corner {
     position: absolute !important;
-    width: 8mm !important;
-    height: 8mm !important;
+    width: 5mm !important;
+    height: 5mm !important;
     pointer-events: none !important;
     z-index: 2 !important;
   }
 
   .a4-corner-tl {
-    top: 4mm !important;
-    left: 4mm !important;
-    border-top: 1mm solid #e4002b !important;
-    border-left: 1mm solid #e4002b !important;
+    top: 2.8mm !important;
+    left: 2.8mm !important;
+    border-top: 0.7mm solid #e4002b !important;
+    border-left: 0.7mm solid #e4002b !important;
   }
 
   .a4-corner-tr {
-    top: 4mm !important;
-    right: 4mm !important;
-    border-top: 1mm solid #e4002b !important;
-    border-right: 1mm solid #e4002b !important;
+    top: 2.8mm !important;
+    right: 2.8mm !important;
+    border-top: 0.7mm solid #e4002b !important;
+    border-right: 0.7mm solid #e4002b !important;
   }
 
   .a4-corner-bl {
-    bottom: 4mm !important;
-    left: 4mm !important;
-    border-bottom: 1mm solid #e4002b !important;
-    border-left: 1mm solid #e4002b !important;
+    bottom: 2.8mm !important;
+    left: 2.8mm !important;
+    border-bottom: 0.7mm solid #e4002b !important;
+    border-left: 0.7mm solid #e4002b !important;
   }
 
   .a4-corner-br {
-    bottom: 4mm !important;
-    right: 4mm !important;
-    border-bottom: 1mm solid #e4002b !important;
-    border-right: 1mm solid #e4002b !important;
-  }
-
-  .a4-header {
-    border-bottom: 0.5mm solid #e2e8f0 !important;
-    padding-bottom: 3.5mm !important;
-    margin-bottom: 3.5mm !important;
-    position: relative !important;
-    z-index: 3 !important;
-  }
-
-  .a4-header-top {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: space-between !important;
-    gap: 4mm !important;
-  }
-
-  .a4-logo {
-    font-size: 26pt !important;
-    font-weight: 900 !important;
-    line-height: 1 !important;
-    letter-spacing: -0.5px !important;
-  }
-
-  .a4-logo .sen { color: #e4002b !important; }
-  .a4-logo .ai { color: #ffb703 !important; }
-
-  .a4-header-inst {
-    text-align: right !important;
-    font-size: 8pt !important;
-    font-weight: 700 !important;
-    color: #475569 !important;
-    line-height: 1.25 !important;
-    text-transform: uppercase !important;
-  }
-
-  .a4-header-inst strong { color: #0f172a !important; }
-
-  .a4-event-badge {
-    display: inline-block !important;
-    background: #e4002b !important;
-    color: #ffffff !important;
-    font-size: 10pt !important;
-    font-weight: 800 !important;
-    text-transform: uppercase !important;
-    letter-spacing: 0.8px !important;
-    padding: 2mm 5.5mm !important;
-    border-radius: 999px !important;
-    margin-top: 2.5mm !important;
-  }
-
-  .a4-event-sub {
-    font-size: 8.5pt !important;
-    font-weight: 700 !important;
-    color: #64748b !important;
-    margin-top: 1.5mm !important;
-  }
-
-  .a4-course-turma {
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 2.5mm !important;
-    margin-top: 2mm !important;
-    padding: 1.5mm 4.5mm !important;
-    background: #f1f5f9 !important;
-    border-radius: 2mm !important;
-    font-size: 9pt !important;
-    font-weight: 700 !important;
-    color: #334155 !important;
-    border: 0.3mm solid #cbd5e1 !important;
+    bottom: 2.8mm !important;
+    right: 2.8mm !important;
+    border-bottom: 0.7mm solid #e4002b !important;
+    border-right: 0.7mm solid #e4002b !important;
   }
 
   .a4-project-info {
-    margin: 3.5mm 0 3mm !important;
+    margin: 2mm 0 1mm !important;
     position: relative !important;
     z-index: 3 !important;
   }
 
   .a4-project-title {
-    font-size: 24pt !important;
+    font-size: 15pt !important;
     font-weight: 900 !important;
     color: #0f172a !important;
     margin: 0 !important;
     line-height: 1.15 !important;
-    letter-spacing: -0.5px !important;
-    word-break: break-word !important;
-  }
-
-  .a4-project-sub {
-    font-size: 10.5pt !important;
-    color: #475569 !important;
-    font-weight: 600 !important;
-    margin: 2mm 0 0 !important;
-    line-height: 1.35 !important;
-  }
-
-  .a4-members-box {
-    background: #f8fafc !important;
-    border: 0.4mm solid #e2e8f0 !important;
-    border-left: 2mm solid #e4002b !important;
-    border-radius: 2mm !important;
-    padding: 2.5mm 4mm !important;
-    margin-bottom: 3.5mm !important;
-    text-align: left !important;
-    position: relative !important;
-    z-index: 3 !important;
-  }
-
-  .a4-members-label {
-    display: block !important;
-    font-size: 8.5pt !important;
-    font-weight: 800 !important;
-    text-transform: uppercase !important;
-    color: #e4002b !important;
-    letter-spacing: 0.5px !important;
-    margin-bottom: 1mm !important;
-  }
-
-  .a4-members-list {
-    font-size: 10.5pt !important;
-    font-weight: 700 !important;
-    color: #1e293b !important;
-    line-height: 1.35 !important;
+    letter-spacing: -0.3px !important;
     word-break: break-word !important;
   }
 
@@ -3432,74 +3213,50 @@ body.modal-open {
     flex-direction: column !important;
     align-items: center !important;
     justify-content: center !important;
-    margin-bottom: 3mm !important;
+    margin: 2mm 0 !important;
     position: relative !important;
     z-index: 3 !important;
   }
 
   .a4-qr-card {
     background: #ffffff !important;
-    padding: 3mm !important;
-    border-radius: 3mm !important;
-    border: 0.6mm solid #cbd5e1 !important;
+    padding: 2.5mm !important;
+    border-radius: 2mm !important;
+    border: 0.4mm solid #cbd5e1 !important;
     display: inline-block !important;
-    box-shadow: 0 2mm 5mm rgba(0, 0, 0, 0.06) !important;
+    box-shadow: 0 1mm 3mm rgba(0, 0, 0, 0.05) !important;
   }
 
   .a4-qr-card svg {
     display: block !important;
-    width: 62mm !important;
-    height: 62mm !important;
+    width: 55mm !important;
+    height: 55mm !important;
   }
 
   .a4-eval-banner {
     background: linear-gradient(135deg, #e4002b, #b80022) !important;
     color: #ffffff !important;
-    padding: 3mm 5mm !important;
-    border-radius: 2.5mm !important;
-    margin-top: 3mm !important;
+    padding: 2.5mm 4mm !important;
+    border-radius: 2mm !important;
     width: 100% !important;
     box-sizing: border-box !important;
     text-align: center !important;
+    position: relative !important;
+    z-index: 3 !important;
   }
 
   .a4-eval-badge {
-    font-size: 12pt !important;
+    font-size: 9.5pt !important;
     font-weight: 900 !important;
-    letter-spacing: 0.5px !important;
+    letter-spacing: 0.4px !important;
     text-transform: uppercase !important;
   }
 
   .a4-eval-text {
-    font-size: 9.5pt !important;
+    font-size: 7pt !important;
     font-weight: 600 !important;
     opacity: 0.95 !important;
-    margin-top: 1mm !important;
-    line-height: 1.3 !important;
-  }
-
-  .a4-footer {
-    margin-top: auto !important;
-    padding-top: 2.5mm !important;
-    border-top: 0.4mm solid #e2e8f0 !important;
-    font-size: 8pt !important;
-    color: #64748b !important;
-    line-height: 1.35 !important;
-    position: relative !important;
-    z-index: 3 !important;
-    text-align: center !important;
-  }
-
-  .a4-footer-title {
-    font-weight: 800 !important;
-    color: #0f172a !important;
-    font-size: 10pt !important;
-    text-transform: uppercase !important;
-    letter-spacing: 0.5px !important;
-  }
-
-  .a4-footer-sub {
-    font-size: 8pt !important;
-    color: #64748b !important;
+    margin-top: 0.8mm !important;
+    line-height: 1.2 !important;
   }
 }

@@ -775,7 +775,7 @@ window.SITE = {
             { data: "03/12/2026", horario: "das 8h às 17h" }
           ],
           landing: "https://sites.google.com/aluno.senai.br/nexusatlas/in%C3%ADcio",
-          funcionamento: "https://youtu.be/DvtxMXHSbUc?feature=shared",
+          funcionamento: "https://youtu.be/YWlLSevBkzs?si=VtKE27a8S4rMoRUP",
           comercial: "https://youtu.be/BsbTm0gRNA4?si=xq8gCa8TSqMKgHJZ"
         }
       ]

@@ -32,13 +32,14 @@
       whatsappPageShareMsg: "Confira o Workshop SENAI São Carlos 2026 - Desenvolvimento de Sistemas, Eletroeletrônica e Mecatrônica:\n{url}",
       qrToggle: "QR Code do Projeto",
       qrToggleHide: "Ocultar QR Code",
-      openA4Poster: "Ver Arte Folha A4",
-      downloadA4: "Baixar Folha A4",
-      printA4: "Imprimir A4",
-      downloadQrOnly: "Apenas QR Code (PNG)",
-      a4PosterTitle: "Folha A4 para Impressão",
-      evalOurProject: "AVALIE NOSSO PROJETO!",
-      evalOurProjectSub: "Aponte a câmera do seu celular para o QR Code acima, explore nossa solução e registre sua avaliação com estrelas!",
+      openA4Poster: "Card de Mesa (1/4 A4)",
+      downloadA4: "Baixar Card (PNG)",
+      printA4: "Imprimir (1/4 A4)",
+      printA4Grid: "4 por Folha A4",
+      downloadQrOnly: "Apenas QR Code",
+      a4PosterTitle: "Card Minimalista (1/4 A4)",
+      evalOurProject: "AVALIE NOSSO PROJETO",
+      evalOurProjectSub: "Aponte a câmera para o QR Code acima",
       qrTitle: "QR Code do Projeto",
       qrSub: "Aponte a câmera do celular para abrir direto neste projeto.",
       copyLink: "Copiar link",
@@ -134,13 +135,14 @@
       whatsappPageShareMsg: "Check out SENAI São Carlos Workshop 2026 - Systems Development, Electronics & Mechatronics:\n{url}",
       qrToggle: "Project QR Code",
       qrToggleHide: "Hide QR Code",
-      openA4Poster: "View A4 Poster Art",
-      downloadA4: "Download A4 Poster",
-      printA4: "Print A4 Poster",
-      downloadQrOnly: "QR Code Only (PNG)",
-      a4PosterTitle: "Printable A4 Poster Sheet",
-      evalOurProject: "RATE OUR PROJECT!",
-      evalOurProjectSub: "Point your phone camera at the QR Code above to explore our solution and leave your star rating!",
+      openA4Poster: "Table Card (1/4 A4)",
+      downloadA4: "Download Card (PNG)",
+      printA4: "Print (1/4 A4)",
+      printA4Grid: "4 per A4 Sheet",
+      downloadQrOnly: "QR Code Only",
+      a4PosterTitle: "Minimalist Stand Card (1/4 A4)",
+      evalOurProject: "RATE OUR PROJECT",
+      evalOurProjectSub: "Point camera at the QR Code above",
       qrTitle: "Project QR Code",
       qrSub: "Scan with your phone to open directly to this project.",
       copyLink: "Copy link",
@@ -1111,8 +1113,8 @@
   }
 
   function generateA4PosterCanvas(p, courseKey, index, shareUrl, callback) {
-    var width = 1240;
-    var height = 1754; // Proporção exata da folha A4 em 150 DPI
+    var width = 800;
+    var height = 1131; // Proporção exata de 1/4 da folha A4 (Formato A6 / 105 x 148,5 mm)
     var canvas = document.createElement("canvas");
     canvas.width = width;
     canvas.height = height;
@@ -1123,20 +1125,20 @@
     ctx.fillStyle = "#ffffff";
     ctx.fillRect(0, 0, width, height);
 
-    // Moldura institucional dupla (borda externa 8px + linha fina interna)
+    // Moldura institucional dupla (borda externa vermelha + linha fina interna)
     ctx.strokeStyle = "#e4002b";
-    ctx.lineWidth = 8;
-    ctx.strokeRect(26, 26, width - 52, height - 52);
+    ctx.lineWidth = 6;
+    ctx.strokeRect(18, 18, width - 36, height - 36);
 
     ctx.strokeStyle = "#cbd5e1";
-    ctx.lineWidth = 2;
-    ctx.strokeRect(38, 38, width - 76, height - 76);
+    ctx.lineWidth = 1.5;
+    ctx.strokeRect(26, 26, width - 52, height - 52);
 
     // Cantoneiras institucionais nos 4 cantos
-    var cornerSize = 42;
-    var cornerOffset = 45;
+    var cornerSize = 28;
+    var cornerOffset = 30;
     ctx.strokeStyle = "#e4002b";
-    ctx.lineWidth = 4;
+    ctx.lineWidth = 3;
 
     // Top-Left
     ctx.beginPath();
@@ -1166,142 +1168,39 @@
     ctx.lineTo(width - cornerOffset, height - cornerOffset - cornerSize);
     ctx.stroke();
 
-    // 1. Cabeçalho Institucional
-    var headerY = 70;
-
-    // Logo SENAI no canto esquerdo
-    ctx.textAlign = "left";
+    // 1. Nome do Grupo / Projeto
+    var projNome = (p && p.nome) ? p.nome : "Projeto";
+    var titleY = 115;
+    ctx.textAlign = "center";
     ctx.textBaseline = "middle";
-    ctx.font = "900 48px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
-    var textSen = "SEN";
-    var textAi = "AI";
-    var logoX = 75;
-    var logoY = headerY + 28;
-    ctx.fillStyle = "#e4002b";
-    ctx.fillText(textSen, logoX, logoY);
-    var wSen = ctx.measureText(textSen).width;
-    ctx.fillStyle = "#ffb703";
-    ctx.fillText(textAi, logoX + wSen, logoY);
-
-    // Texto institucional no canto direito
-    ctx.textAlign = "right";
     ctx.fillStyle = "#0f172a";
-    ctx.font = "bold 15px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
-    ctx.fillText("FACULDADE DE TECNOLOGIA E ESCOLA SENAI", width - 75, headerY + 18);
-    ctx.fillStyle = "#475569";
-    ctx.font = "600 14px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
-    ctx.fillText("Antonio Adolpho Lobbe — São Carlos", width - 75, headerY + 40);
-
-    // Linha divisória do cabeçalho
-    var divY = headerY + 68;
-    ctx.strokeStyle = "#e2e8f0";
-    ctx.lineWidth = 1.5;
-    ctx.beginPath();
-    ctx.moveTo(70, divY);
-    ctx.lineTo(width - 70, divY);
-    ctx.stroke();
-
-    // Badge "Workshop SENAI 2026"
-    var badgeEventY = divY + 18;
-    var badgeEventText = "WORKSHOP SENAI 2026";
-    ctx.font = "800 15px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
-    var badgeEventW = ctx.measureText(badgeEventText).width + 36;
-    ctx.fillStyle = "#e4002b";
-    drawRoundRect(ctx, (width - badgeEventW) / 2, badgeEventY, badgeEventW, 32, 16);
-    ctx.fill();
-    ctx.textAlign = "center";
-    ctx.fillStyle = "#ffffff";
-    ctx.fillText(badgeEventText, width / 2, badgeEventY + 16);
-
-    // Subtítulo de data e local
-    ctx.font = "bold 14px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
-    ctx.fillStyle = "#64748b";
-    ctx.fillText("01, 02 E 03 DE DEZEMBRO DE 2026 • DAS 08H ÀS 17H • ENTRADA GRATUITA", width / 2, badgeEventY + 54);
-
-    // 2. Badge do Curso e Turma
-    var cInfo = (S && S.cursos && S.cursos[courseKey]) ? S.cursos[courseKey] : null;
-    var courseName = cInfo ? tr(cInfo.nome) : (courseKey === "ds" ? "Desenvolvimento de Sistemas" : (courseKey === "eletroeletronica" || courseKey === "ele" ? "Eletroeletrônica" : "Mecatrônica"));
-    var turmaText = formatTurma(p.turma);
-    var badgeText = "🎓 " + courseName.toUpperCase() + (turmaText ? (" • TURMA " + turmaText.toUpperCase()) : "");
-
-    var badgeY = badgeEventY + 76;
-    ctx.font = "bold 15px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
-    var badgeW = Math.min(width - 140, ctx.measureText(badgeText).width + 32);
-    ctx.fillStyle = "#f1f5f9";
-    drawRoundRect(ctx, (width - badgeW) / 2, badgeY, badgeW, 32, 16);
-    ctx.fill();
-    ctx.strokeStyle = "#cbd5e1";
-    ctx.lineWidth = 1;
-    ctx.stroke();
-
-    ctx.fillStyle = "#334155";
-    ctx.textAlign = "center";
-    ctx.fillText(badgeText, width / 2, badgeY + 16);
-
-    // 3. Nome do Projeto / Grupo
-    var titleY = badgeY + 70;
-    ctx.font = "900 44px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
-    ctx.fillStyle = "#0f172a";
-    var projNome = p.nome || "Projeto";
-    if (ctx.measureText(projNome).width > width - 160) {
-      ctx.font = "900 36px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+    ctx.font = "900 36px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+    if (ctx.measureText(projNome).width > width - 120) {
+      ctx.font = "900 28px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
     }
-    ctx.fillText(projNome, width / 2, titleY);
+    var nextY = drawWrappedText(ctx, projNome, width / 2, titleY, width - 100, 36, "center");
 
-    // Subtítulo
-    var subY = titleY + 34;
-    var membersBoxStartY = subY + 20;
-    if (p.subtitulo) {
-      ctx.font = "600 20px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
-      ctx.fillStyle = "#475569";
-      var nextY = drawWrappedText(ctx, p.subtitulo, width / 2, subY, width - 200, 26, "center");
-      membersBoxStartY = Math.max(membersBoxStartY, nextY + 15);
-    }
-
-    // 4. Box de Integrantes da Equipe
-    var membersText = formatMembers(p);
-    var boxY = membersBoxStartY + 10;
-    var boxW = width - 180;
-    var boxX = (width - boxW) / 2;
-    var boxH = 90;
-
-    ctx.fillStyle = "#f8fafc";
-    drawRoundRect(ctx, boxX, boxY, boxW, boxH, 10);
-    ctx.fill();
-    ctx.strokeStyle = "#e2e8f0";
-    ctx.lineWidth = 1.5;
-    ctx.stroke();
-
-    ctx.fillStyle = "#e4002b";
-    drawRoundRect(ctx, boxX, boxY, 8, boxH, { tl: 10, bl: 10, tr: 0, br: 0 });
-    ctx.fill();
-
-    ctx.textAlign = "left";
-    ctx.fillStyle = "#e4002b";
-    ctx.font = "800 14px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
-    ctx.fillText("👥 INTEGRANTES DA EQUIPE:", boxX + 22, boxY + 26);
-
-    ctx.fillStyle = "#1e293b";
-    ctx.font = "bold 18px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
-    var membersDisplay = membersText || (turmaText ? ("Alunos da Turma " + turmaText) : "Equipe do Projeto");
-    drawWrappedText(ctx, membersDisplay, boxX + 22, boxY + 54, boxW - 44, 24, "left");
-
-    // 5. Moldura Central do QR Code
-    var qrFrameY = boxY + boxH + 30;
-    var qrFrameSize = 550;
+    // 2. Moldura Central do QR Code
+    var qrFrameSize = 510;
     var qrFrameX = (width - qrFrameSize) / 2;
+    var qrFrameY = 220;
+    if (nextY > titleY + 20) {
+      qrFrameY = nextY + 30;
+      qrFrameSize = 480;
+      qrFrameX = (width - qrFrameSize) / 2;
+    }
 
     ctx.fillStyle = "#ffffff";
-    drawRoundRect(ctx, qrFrameX, qrFrameY, qrFrameSize, qrFrameSize, 18);
+    drawRoundRect(ctx, qrFrameX, qrFrameY, qrFrameSize, qrFrameSize, 16);
     ctx.fill();
     ctx.strokeStyle = "#cbd5e1";
-    ctx.lineWidth = 2;
+    ctx.lineWidth = 1.5;
     ctx.stroke();
 
-    // Desenha o QR Code em alta resolução
-    var qrSize = 480;
-    var qrX = qrFrameX + (qrFrameSize - qrSize) / 2;
-    var qrY = qrFrameY + (qrFrameSize - qrSize) / 2;
+    // QR Code em alta resolução
+    var qrSize = qrFrameSize - 50;
+    var qrX = qrFrameX + 25;
+    var qrY = qrFrameY + 25;
 
     var tempCanvas = document.createElement("canvas");
     if (window.QRCode && typeof window.QRCode.drawCanvas === "function") {
@@ -1309,70 +1208,39 @@
       ctx.drawImage(tempCanvas, qrX, qrY, qrSize, qrSize);
     }
 
-    // 6. Chamada de Avaliação ("AVALIE NOSSO PROJETO!")
-    var ctaY = qrFrameY + qrFrameSize + 25;
-    var ctaW = 700;
-    var ctaH = 64;
+    // 3. Avalie nosso projeto
+    var ctaY = qrFrameY + qrFrameSize + 40;
+    var ctaW = width - 140;
+    var ctaH = 68;
     var ctaX = (width - ctaW) / 2;
 
     var ctaGrad = ctx.createLinearGradient(ctaX, ctaY, ctaX + ctaW, ctaY + ctaH);
     ctaGrad.addColorStop(0, "#e4002b");
     ctaGrad.addColorStop(1, "#b80022");
     ctx.fillStyle = ctaGrad;
-    drawRoundRect(ctx, ctaX, ctaY, ctaW, ctaH, 32);
+    drawRoundRect(ctx, ctaX, ctaY, ctaW, ctaH, 12);
     ctx.fill();
 
     ctx.textAlign = "center";
     ctx.fillStyle = "#ffffff";
-    ctx.font = "900 26px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
-    ctx.fillText("⭐ AVALIE NOSSO PROJETO! ⭐", width / 2, ctaY + 34);
-
-    ctx.font = "bold 19px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
-    ctx.fillStyle = "#0f172a";
-    ctx.fillText("Aponte a câmera do seu celular para o QR Code acima", width / 2, ctaY + 96);
-
-    ctx.font = "500 16px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
-    ctx.fillStyle = "#475569";
-    ctx.fillText("Conheça todos os detalhes do nosso projeto e registre sua avaliação com estrelas!", width / 2, ctaY + 124);
-
-    // 7. Rodapé Institucional
-    var footerY = 1600;
-    ctx.strokeStyle = "#e2e8f0";
-    ctx.lineWidth = 1.5;
-    ctx.beginPath();
-    ctx.moveTo(80, footerY);
-    ctx.lineTo(width - 80, footerY);
-    ctx.stroke();
-
-    ctx.strokeStyle = "#e4002b";
-    ctx.lineWidth = 4;
-    ctx.beginPath();
-    ctx.moveTo((width / 2) - 60, footerY);
-    ctx.lineTo((width / 2) + 60, footerY);
-    ctx.stroke();
-
     ctx.font = "900 24px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
-    ctx.fillStyle = "#0f172a";
-    ctx.fillText("WORKSHOP SENAI 2026", width / 2, footerY + 38);
+    ctx.fillText("⭐ AVALIE NOSSO PROJETO ⭐", width / 2, ctaY + 35);
 
-    ctx.font = "600 15px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
-    ctx.fillStyle = "#64748b";
-    ctx.fillText("Faculdade de Tecnologia e Escola SENAI Antonio Adolpho Lobbe — São Carlos/SP", width / 2, footerY + 68);
-
-    ctx.font = "500 13px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
-    ctx.fillStyle = "#94a3b8";
-    ctx.fillText("Serviço Nacional de Aprendizagem Industrial • Todos os direitos reservados © 2026", width / 2, footerY + 92);
+    ctx.font = "bold 15px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+    ctx.fillStyle = "#475569";
+    ctx.fillText("Aponte a câmera do seu celular para o QR Code acima", width / 2, ctaY + 105);
 
     if (callback) callback(canvas);
     return canvas;
   }
 
   /* =====================================================================
-     IMPRESSÃO ISOLADA DA FOLHA A4 (EXATAMENTE 1 PÁGINA)
+     IMPRESSÃO ISOLADA DO CARD (1/4 DA FOLHA A4 OU GRADE 2x2 COM 4 CARDS)
      ===================================================================== */
-  function printA4SheetElement(sheetElement) {
+  function printA4SheetElement(sheetElement, mode) {
     if (!sheetElement) return;
 
+    var isGrid = (mode === "grid4");
     var iframe = document.getElementById("a4PrintFrame");
     if (iframe) {
       try {
@@ -1387,6 +1255,29 @@
 
     var frameDoc = iframe.contentWindow.document;
     frameDoc.open();
+
+    var cardHtml = sheetElement.outerHTML;
+
+    var containerHtml = "";
+    if (isGrid) {
+      containerHtml =
+        '<div class="a4-print-grid-container">' +
+          cardHtml +
+          cardHtml +
+          cardHtml +
+          cardHtml +
+          '<div class="a4-crop-line-v"></div>' +
+          '<div class="a4-crop-line-h"></div>' +
+        '</div>';
+    } else {
+      containerHtml =
+        '<div class="a4-print-single-container">' +
+          cardHtml +
+          '<div class="a4-crop-line-v"></div>' +
+          '<div class="a4-crop-line-h"></div>' +
+          '<div class="a4-crop-label">✂ Linha de corte (1/4 da folha A4 — 105 × 148,5 mm)</div>' +
+        '</div>';
+    }
 
     var printStyles =
       '@page {' +
@@ -1408,77 +1299,116 @@
         'background: #ffffff !important;' +
         'font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;' +
       '}' +
-      '.a4-sheet {' +
+      '.a4-print-single-container {' +
         'width: 210mm !important;' +
         'height: 297mm !important;' +
+        'position: relative !important;' +
+        'overflow: hidden !important;' +
+        'background: #ffffff !important;' +
+      '}' +
+      '.a4-print-single-container .a4-sheet {' +
+        'width: 105mm !important;' +
+        'height: 148.5mm !important;' +
+        'position: absolute !important;' +
+        'top: 0 !important;' +
+        'left: 0 !important;' +
+      '}' +
+      '.a4-print-grid-container {' +
+        'width: 210mm !important;' +
+        'height: 297mm !important;' +
+        'max-width: 210mm !important;' +
         'max-height: 297mm !important;' +
         'margin: 0 !important;' +
-        'padding: 13mm 15mm 11mm !important;' +
+        'padding: 0 !important;' +
+        'display: grid !important;' +
+        'grid-template-columns: 105mm 105mm !important;' +
+        'grid-template-rows: 148.5mm 148.5mm !important;' +
+        'position: relative !important;' +
+        'overflow: hidden !important;' +
+        'background: #ffffff !important;' +
+      '}' +
+      '.a4-crop-line-v {' +
+        'position: absolute !important;' +
+        'top: 0 !important;' +
+        'left: 105mm !important;' +
+        'width: 0 !important;' +
+        'height: 297mm !important;' +
+        'border-left: 1px dashed #cbd5e1 !important;' +
+        'pointer-events: none !important;' +
+      '}' +
+      '.a4-crop-line-h {' +
+        'position: absolute !important;' +
+        'top: 148.5mm !important;' +
+        'left: 0 !important;' +
+        'width: 210mm !important;' +
+        'height: 0 !important;' +
+        'border-top: 1px dashed #cbd5e1 !important;' +
+        'pointer-events: none !important;' +
+      '}' +
+      '.a4-crop-label {' +
+        'position: absolute !important;' +
+        'top: 154mm !important;' +
+        'left: 8mm !important;' +
+        'font-size: 8pt !important;' +
+        'color: #94a3b8 !important;' +
+        'font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;' +
+      '}' +
+      '.a4-sheet {' +
+        'width: 105mm !important;' +
+        'height: 148.5mm !important;' +
+        'max-width: 105mm !important;' +
+        'max-height: 148.5mm !important;' +
+        'margin: 0 !important;' +
+        'padding: 8mm 7mm 7mm !important;' +
         'position: relative !important;' +
         'display: flex !important;' +
         'flex-direction: column !important;' +
+        'justify-content: space-between !important;' +
         'text-align: center !important;' +
         'background: #ffffff !important;' +
         'color: #1e293b !important;' +
-        'border: 1.5mm solid #e4002b !important;' +
+        'border: 1mm solid #e4002b !important;' +
         'box-sizing: border-box !important;' +
         'page-break-inside: avoid !important;' +
         'page-break-after: avoid !important;' +
       '}' +
       '.a4-inner-border {' +
         'position: absolute !important;' +
-        'top: 2.5mm !important;' +
-        'left: 2.5mm !important;' +
-        'right: 2.5mm !important;' +
-        'bottom: 2.5mm !important;' +
-        'border: 0.5mm solid #cbd5e1 !important;' +
-        'border-radius: 2mm !important;' +
+        'top: 1.8mm !important;' +
+        'left: 1.8mm !important;' +
+        'right: 1.8mm !important;' +
+        'bottom: 1.8mm !important;' +
+        'border: 0.35mm solid #cbd5e1 !important;' +
+        'border-radius: 1mm !important;' +
         'pointer-events: none !important;' +
         'z-index: 1 !important;' +
       '}' +
       '.a4-corner {' +
         'position: absolute !important;' +
-        'width: 8mm !important;' +
-        'height: 8mm !important;' +
+        'width: 5mm !important;' +
+        'height: 5mm !important;' +
         'pointer-events: none !important;' +
         'z-index: 2 !important;' +
       '}' +
-      '.a4-corner-tl { top: 4mm !important; left: 4mm !important; border-top: 1mm solid #e4002b !important; border-left: 1mm solid #e4002b !important; }' +
-      '.a4-corner-tr { top: 4mm !important; right: 4mm !important; border-top: 1mm solid #e4002b !important; border-right: 1mm solid #e4002b !important; }' +
-      '.a4-corner-bl { bottom: 4mm !important; left: 4mm !important; border-bottom: 1mm solid #e4002b !important; border-left: 1mm solid #e4002b !important; }' +
-      '.a4-corner-br { bottom: 4mm !important; right: 4mm !important; border-bottom: 1mm solid #e4002b !important; border-right: 1mm solid #e4002b !important; }' +
-      '.a4-header { border-bottom: 0.5mm solid #e2e8f0 !important; padding-bottom: 3.5mm !important; margin-bottom: 3.5mm !important; position: relative !important; z-index: 3 !important; }' +
-      '.a4-header-top { display: flex !important; align-items: center !important; justify-content: space-between !important; gap: 4mm !important; }' +
-      '.a4-logo { font-size: 26pt !important; font-weight: 900 !important; line-height: 1 !important; letter-spacing: -0.5px !important; }' +
-      '.a4-logo .sen { color: #e4002b !important; }' +
-      '.a4-logo .ai { color: #ffb703 !important; }' +
-      '.a4-header-inst { text-align: right !important; font-size: 8pt !important; font-weight: 700 !important; color: #475569 !important; line-height: 1.25 !important; text-transform: uppercase !important; }' +
-      '.a4-header-inst strong { color: #0f172a !important; }' +
-      '.a4-event-badge { display: inline-block !important; background: #e4002b !important; color: #ffffff !important; font-size: 10pt !important; font-weight: 800 !important; text-transform: uppercase !important; letter-spacing: 0.8px !important; padding: 2mm 5.5mm !important; border-radius: 999px !important; margin-top: 2.5mm !important; }' +
-      '.a4-event-sub { font-size: 8.5pt !important; font-weight: 700 !important; color: #64748b !important; margin-top: 1.5mm !important; }' +
-      '.a4-course-turma { display: inline-flex !important; align-items: center !important; justify-content: center !important; gap: 2.5mm !important; margin-top: 2mm !important; padding: 1.5mm 4.5mm !important; background: #f1f5f9 !important; border-radius: 2mm !important; font-size: 9pt !important; font-weight: 700 !important; color: #334155 !important; border: 0.3mm solid #cbd5e1 !important; }' +
-      '.a4-project-info { margin: 3.5mm 0 3mm !important; position: relative !important; z-index: 3 !important; }' +
-      '.a4-project-title { font-size: 24pt !important; font-weight: 900 !important; color: #0f172a !important; margin: 0 !important; line-height: 1.15 !important; letter-spacing: -0.5px !important; word-break: break-word !important; }' +
-      '.a4-project-sub { font-size: 10.5pt !important; color: #475569 !important; font-weight: 600 !important; margin: 2mm 0 0 !important; line-height: 1.35 !important; }' +
-      '.a4-members-box { background: #f8fafc !important; border: 0.4mm solid #e2e8f0 !important; border-left: 2mm solid #e4002b !important; border-radius: 2mm !important; padding: 2.5mm 4mm !important; margin-bottom: 3.5mm !important; text-align: left !important; position: relative !important; z-index: 3 !important; }' +
-      '.a4-members-label { display: block !important; font-size: 8.5pt !important; font-weight: 800 !important; text-transform: uppercase !important; color: #e4002b !important; letter-spacing: 0.5px !important; margin-bottom: 1mm !important; }' +
-      '.a4-members-list { font-size: 10.5pt !important; font-weight: 700 !important; color: #1e293b !important; line-height: 1.35 !important; word-break: break-word !important; }' +
-      '.a4-qr-wrapper { flex: 1 !important; display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important; margin-bottom: 3mm !important; position: relative !important; z-index: 3 !important; }' +
-      '.a4-qr-card { background: #ffffff !important; padding: 3mm !important; border-radius: 3mm !important; border: 0.6mm solid #cbd5e1 !important; display: inline-block !important; box-shadow: 0 2mm 5mm rgba(0, 0, 0, 0.06) !important; }' +
-      '.a4-qr-card svg { display: block !important; width: 62mm !important; height: 62mm !important; }' +
-      '.a4-eval-banner { background: linear-gradient(135deg, #e4002b, #b80022) !important; color: #ffffff !important; padding: 3mm 5mm !important; border-radius: 2.5mm !important; margin-top: 3mm !important; width: 100% !important; box-sizing: border-box !important; text-align: center !important; }' +
-      '.a4-eval-badge { font-size: 12pt !important; font-weight: 900 !important; letter-spacing: 0.5px !important; text-transform: uppercase !important; }' +
-      '.a4-eval-text { font-size: 9.5pt !important; font-weight: 600 !important; opacity: 0.95 !important; margin-top: 1mm !important; line-height: 1.3 !important; }' +
-      '.a4-footer { margin-top: auto !important; padding-top: 2.5mm !important; border-top: 0.4mm solid #e2e8f0 !important; font-size: 8pt !important; color: #64748b !important; line-height: 1.35 !important; position: relative !important; z-index: 3 !important; text-align: center !important; }' +
-      '.a4-footer-title { font-weight: 800 !important; color: #0f172a !important; font-size: 10pt !important; text-transform: uppercase !important; letter-spacing: 0.5px !important; }' +
-      '.a4-footer-sub { font-size: 8pt !important; color: #64748b !important; }';
+      '.a4-corner-tl { top: 2.8mm !important; left: 2.8mm !important; border-top: 0.7mm solid #e4002b !important; border-left: 0.7mm solid #e4002b !important; }' +
+      '.a4-corner-tr { top: 2.8mm !important; right: 2.8mm !important; border-top: 0.7mm solid #e4002b !important; border-right: 0.7mm solid #e4002b !important; }' +
+      '.a4-corner-bl { bottom: 2.8mm !important; left: 2.8mm !important; border-bottom: 0.7mm solid #e4002b !important; border-left: 0.7mm solid #e4002b !important; }' +
+      '.a4-corner-br { bottom: 2.8mm !important; right: 2.8mm !important; border-bottom: 0.7mm solid #e4002b !important; border-right: 0.7mm solid #e4002b !important; }' +
+      '.a4-project-info { margin: 2mm 0 1mm !important; position: relative !important; z-index: 3 !important; }' +
+      '.a4-project-title { font-size: 15pt !important; font-weight: 900 !important; color: #0f172a !important; margin: 0 !important; line-height: 1.15 !important; letter-spacing: -0.3px !important; word-break: break-word !important; }' +
+      '.a4-qr-wrapper { flex: 1 !important; display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important; margin: 2mm 0 !important; position: relative !important; z-index: 3 !important; }' +
+      '.a4-qr-card { background: #ffffff !important; padding: 2.5mm !important; border-radius: 2mm !important; border: 0.4mm solid #cbd5e1 !important; display: inline-block !important; box-shadow: 0 1mm 3mm rgba(0, 0, 0, 0.05) !important; }' +
+      '.a4-qr-card svg { display: block !important; width: 55mm !important; height: 55mm !important; }' +
+      '.a4-eval-banner { background: linear-gradient(135deg, #e4002b, #b80022) !important; color: #ffffff !important; padding: 2.5mm 4mm !important; border-radius: 2mm !important; width: 100% !important; box-sizing: border-box !important; text-align: center !important; position: relative !important; z-index: 3 !important; }' +
+      '.a4-eval-badge { font-size: 9.5pt !important; font-weight: 900 !important; letter-spacing: 0.4px !important; text-transform: uppercase !important; }' +
+      '.a4-eval-text { font-size: 7pt !important; font-weight: 600 !important; opacity: 0.95 !important; margin-top: 0.8mm !important; line-height: 1.2 !important; }';
 
     var docHtml = '<!DOCTYPE html>' +
       '<html><head><meta charset="utf-8">' +
-      '<title>Workshop SENAI 2026 - Folha A4</title>' +
+      '<title>Workshop SENAI 2026 - Card ' + (isGrid ? '(4 por Folha A4)' : '(1/4 A4)') + '</title>' +
       '<style>' + printStyles + '</style>' +
       '</head><body>' +
-      sheetElement.outerHTML +
+      containerHtml +
       '</body></html>';
 
     frameDoc.write(docHtml);
@@ -1499,9 +1429,6 @@
     var cInfo = (S && S.cursos && S.cursos[courseKey]) ? S.cursos[courseKey] : null;
     var pid = getProjectId(p, courseKey, index);
     var shareUrl = getProjectShareUrl(p, courseKey, index);
-    var courseName = cInfo ? tr(cInfo.nome) : (courseKey === "ds" ? "Desenvolvimento de Sistemas" : (courseKey === "eletroeletronica" || courseKey === "ele" ? "Eletroeletrônica" : "Mecatrônica"));
-    var turmaText = formatTurma(p.turma);
-    var membersText = formatMembers(p);
 
     var qrSvg = "";
     if (window.QRCode && typeof window.QRCode.generateSVG === "function") {
@@ -1521,20 +1448,23 @@
           '<span class="poster-toolbar-tag">#' + esc(pid) + '</span>' +
         '</div>' +
         '<div class="modal-poster-toolbar-actions">' +
-          '<button class="btn-poster-action btn-poster-primary" id="posterDownloadA4Btn" title="Baixar a folha completa em tamanho A4 (PNG de alta resolução)">' +
+          '<button class="btn-poster-action btn-poster-primary" id="posterDownloadA4Btn" title="Baixar card minimalista em PNG de alta resolução">' +
             '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>' +
             '<span>' + esc(T("downloadA4")) + '</span>' +
           '</button>' +
-          '<button class="btn-poster-action" id="posterPrintBtn" title="Imprimir em folha A4">' +
+          '<button class="btn-poster-action" id="posterPrintSingleBtn" title="Imprimir 1 card (ocupa 1/4 da folha A4 com marcas de corte)">' +
             '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>' +
             '<span>' + esc(T("printA4")) + '</span>' +
           '</button>' +
-          '<button class="btn-poster-action" id="posterDownloadQrPngBtn" title="Baixar apenas o QR Code em PNG">' +
+          '<button class="btn-poster-action" id="posterPrintGridBtn" title="Imprimir folha A4 completa com 4 cards (grade 2x2 para recorte)">' +
             '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>' +
-            '<span>' + esc(T("downloadQrOnly")) + '</span>' +
+            '<span>' + esc(T("printA4Grid")) + '</span>' +
+          '</button>' +
+          '<button class="btn-poster-action" id="posterDownloadQrPngBtn" title="Baixar apenas o QR Code em PNG">' +
+            '<span>QR PNG</span>' +
           '</button>' +
           '<button class="btn-poster-action" id="posterDownloadQrSvgBtn" title="Baixar apenas o QR Code em SVG">' +
-            '<span>SVG</span>' +
+            '<span>QR SVG</span>' +
           '</button>' +
           '<button class="modal-poster-close-btn" id="posterCloseBtn" aria-label="' + esc(T("close")) + '">&times;</button>' +
         '</div>' +
@@ -1546,41 +1476,17 @@
           '<div class="a4-corner a4-corner-tr"></div>' +
           '<div class="a4-corner a4-corner-bl"></div>' +
           '<div class="a4-corner a4-corner-br"></div>' +
-          '<div class="a4-header">' +
-            '<div class="a4-header-top">' +
-              '<div class="a4-logo"><span class="sen">SEN</span><span class="ai">AI</span></div>' +
-              '<div class="a4-header-inst">' +
-                '<strong>Faculdade de Tecnologia e Escola SENAI</strong><br>' +
-                'Antonio Adolpho Lobbe — São Carlos' +
-              '</div>' +
-            '</div>' +
-            '<div class="a4-event-badge">Workshop SENAI 2026</div>' +
-            '<div class="a4-event-sub">01, 02 e 03 de Dezembro de 2026 • Das 08h às 17h • Entrada Gratuita</div>' +
-            '<div class="a4-course-turma">' +
-              '<span>🎓 ' + esc(courseName) + '</span>' +
-              (turmaText ? '<span>• Turma ' + esc(turmaText) + '</span>' : '') +
-            '</div>' +
-          '</div>' +
           '<div class="a4-project-info">' +
             '<h1 class="a4-project-title">' + esc(p.nome) + '</h1>' +
-            (p.subtitulo ? '<p class="a4-project-sub">' + esc(p.subtitulo) + '</p>' : '') +
-          '</div>' +
-          '<div class="a4-members-box">' +
-            '<span class="a4-members-label">👥 Integrantes da Equipe:</span>' +
-            '<span class="a4-members-list">' + esc(membersText || (turmaText ? ("Alunos da Turma " + turmaText) : "Equipe do Projeto")) + '</span>' +
           '</div>' +
           '<div class="a4-qr-wrapper">' +
             '<div class="a4-qr-card">' +
               qrSvg +
             '</div>' +
-            '<div class="a4-eval-banner">' +
-              '<div class="a4-eval-badge">⭐ ' + esc(T("evalOurProject")) + ' ⭐</div>' +
-              '<div class="a4-eval-text">' + esc(T("evalOurProjectSub")) + '</div>' +
-            '</div>' +
           '</div>' +
-          '<div class="a4-footer">' +
-            '<div class="a4-footer-title">Workshop SENAI 2026</div>' +
-            '<div class="a4-footer-sub">Serviço Nacional de Aprendizagem Industrial • Escola SENAI São Carlos</div>' +
+          '<div class="a4-eval-banner">' +
+            '<div class="a4-eval-badge">⭐ ' + esc(T("evalOurProject")) + ' ⭐</div>' +
+            '<div class="a4-eval-text">' + esc(T("evalOurProjectSub")) + '</div>' +
           '</div>' +
         '</div>' +
       '</div>';
@@ -1588,22 +1494,27 @@
     document.getElementById("posterCloseBtn").onclick = closePosterModal;
 
     document.getElementById("posterDownloadA4Btn").onclick = function () {
-      if (window.Leads) window.Leads.trackProjectAction(p, courseKey, "baixou_folha_a4");
-      showToast("⏳ Gerando arte A4 em alta resolução...");
+      if (window.Leads) window.Leads.trackProjectAction(p, courseKey, "baixou_card_a6");
+      showToast("⏳ Gerando card em alta resolução...");
       setTimeout(function () {
         var canvas = generateA4PosterCanvas(p, courseKey, index, shareUrl);
         canvas.toBlob(function (blob) {
           if (blob) {
-            downloadFile(blob, "folha-a4-" + safeProjectName + ".png");
-            showToast("📄 Folha A4 baixada com sucesso!");
+            downloadFile(blob, "card-" + safeProjectName + ".png");
+            showToast("📄 Card baixado com sucesso!");
           }
         }, "image/png");
       }, 50);
     };
 
-    document.getElementById("posterPrintBtn").onclick = function () {
-      if (window.Leads) window.Leads.trackProjectAction(p, courseKey, "imprimiu_folha_a4");
-      printA4SheetElement(document.getElementById("a4PosterSheet"));
+    document.getElementById("posterPrintSingleBtn").onclick = function () {
+      if (window.Leads) window.Leads.trackProjectAction(p, courseKey, "imprimiu_card_single");
+      printA4SheetElement(document.getElementById("a4PosterSheet"), "single");
+    };
+
+    document.getElementById("posterPrintGridBtn").onclick = function () {
+      if (window.Leads) window.Leads.trackProjectAction(p, courseKey, "imprimiu_card_grid4");
+      printA4SheetElement(document.getElementById("a4PosterSheet"), "grid4");
     };
 
     document.getElementById("posterDownloadQrPngBtn").onclick = function () {
@@ -1631,7 +1542,7 @@
     m.classList.add("is-open");
     m.setAttribute("aria-hidden", "false");
     document.body.classList.add("modal-open");
-    if (window.Leads) window.Leads.trackProjectAction(p, courseKey, "abriu_arte_folha_a4");
+    if (window.Leads) window.Leads.trackProjectAction(p, courseKey, "abriu_card_a6");
   }
 
   function downloadFile(blob, filename) {

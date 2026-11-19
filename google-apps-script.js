@@ -709,7 +709,7 @@ function gerarHtmlEmail(tipo, nome, perfil) {
               '<p style="margin:0 0 24px;color:#475569;font-size:14px;line-height:1.6;">' + mensagemPrincipal + '</p>' +
               '<table width="100%" cellpadding="0" cellspacing="0" style="background:#f8fafc;border:1px solid #e2e8f0;border-left:5px solid #e4002b;border-radius:8px;margin-bottom:26px;">' +
                 '<tr><td style="padding:18px 20px;">' +
-                  '<p style="margin:0 0 8px;font-size:14px;color:#0f172a;"><strong>📅 Data:</strong> 02 e 03 de Dezembro de 2026</p>' +
+                  '<p style="margin:0 0 8px;font-size:14px;color:#0f172a;"><strong>📅 Data:</strong> 01, 02 e 03 de Dezembro de 2026</p>' +
                   '<p style="margin:0 0 8px;font-size:14px;color:#0f172a;"><strong>⏰ Horário:</strong> Das 08h às 17h • Entrada Gratuita</p>' +
                   '<p style="margin:0 0 8px;font-size:14px;color:#0f172a;"><strong>📍 Local:</strong> Escola SENAI Antonio Adolpho Lobbe</p>' +
                   '<p style="margin:0;font-size:13px;color:#64748b;">R. Cândido Padim, 25 - Vila Prado, São Carlos - SP</p>' +

@@ -7,10 +7,10 @@
     pt: {
       theme: "Tema", back: "← Voltar", eyebrow: "São Carlos · Tecnologia em Ação",
       heroTitle: 'Workshop SENAI <span class="grad">2026</span>',
-      heroSub: "Mecatrônica e Desenvolvimento de Sistemas",
+      heroSub: "Desenvolvimento de Sistemas, Eletroeletrônica e Mecatrônica",
       seeClasses: "Conheça as turmas",
       classesTitle: "Turmas SENAI São Carlos 2026",
-      classesSub: "Dois cursos, dezenas de ideias que viram solução.",
+      classesSub: "Três cursos, dezenas de ideias que viram solução.",
       projects: "Projetos", students: "Alunos", seeProjects: "Ver Projetos",
       aboutTitle: "Sobre o SENAI São Carlos",
       aboutText: "O SENAI São Carlos é referência em formação técnica e tecnológica na região, preparando profissionais para os desafios da Indústria 4.0. Nossos alunos desenvolvem projetos inovadores que conectam teoria e prática, criando soluções reais para problemas do mercado de trabalho.",
@@ -29,7 +29,7 @@
       close: "Fechar",
       shareWhatsapp: "Compartilhar no WhatsApp",
       whatsappShareMsg: "Confira o projeto *{nome}*{turma} do Workshop SENAI 2026:\n{url}",
-      whatsappPageShareMsg: "Confira o Workshop SENAI São Carlos 2026 - Mecatrônica e Desenvolvimento de Sistemas:\n{url}",
+      whatsappPageShareMsg: "Confira o Workshop SENAI São Carlos 2026 - Desenvolvimento de Sistemas, Eletroeletrônica e Mecatrônica:\n{url}",
       qrToggle: "QR Code do Projeto",
       qrToggleHide: "Ocultar QR Code",
       qrTitle: "QR Code do Projeto",
@@ -60,8 +60,8 @@
       eventTitle: "Data e Local do Evento",
       eventSub: "Venha prestigiar os projetos inovadores e soluções desenvolvidas pelos nossos alunos.",
       eventDateLabel: "Data do Evento",
-      eventDateVal: "02 e 03 de Dezembro de 2026",
-      eventDateDays: "Quarta e Quinta-feira • Projetos em Exposição",
+      eventDateVal: "01, 02 e 03 de Dezembro de 2026",
+      eventDateDays: "Terça, Quarta e Quinta-feira • Projetos em Exposição",
       eventTimeLabel: "Horário",
       eventTimeVal: "Das 08h às 17h",
       eventTimeSub: "Aberto ao público • Entrada gratuita",
@@ -74,12 +74,12 @@
       eventOpenMaps: "Abrir no Google Maps",
       eventMapTitle: "📍 Mapa de Localização",
       eventViewRoute: "Ver rota no Google Maps ↗",
-      eventHeroBadgeDate: "02 e 03 de Dezembro",
+      eventHeroBadgeDate: "01, 02 e 03 de Dezembro",
       eventHeroBadgeTime: "08h às 17h",
       eventHeroBadgeLoc: "SENAI São Carlos",
       newsBadge: "Lembrete do Evento",
       newsTitle: "Não perca o Workshop SENAI 2026",
-      newsSub: "Cadastre seu e-mail para receber um aviso exclusivo antes do evento (02 e 03 de Dezembro) e o catálogo de projetos.",
+      newsSub: "Cadastre seu e-mail para receber avisos exclusivos antes do evento (01, 02 e 03 de Dezembro) e o catálogo de projetos.",
       newsNameLabel: "Seu Nome ou Empresa",
       newsNamePlaceholder: "Ex: Carlos Mendes",
       newsEmailLabel: "Seu E-mail",
@@ -102,10 +102,10 @@
     en: {
       theme: "Theme", back: "← Back", eyebrow: "São Carlos · Technology in Action",
       heroTitle: 'SENAI Workshop <span class="grad">2026</span>',
-      heroSub: "Mechatronics and Systems Development",
+      heroSub: "Systems Development, Electronics and Mechatronics",
       seeClasses: "Meet the classes",
       classesTitle: "SENAI São Carlos Classes 2026",
-      classesSub: "Two courses, dozens of ideas turned into solutions.",
+      classesSub: "Three courses, dozens of ideas turned into solutions.",
       projects: "Projects", students: "Students", seeProjects: "See Projects",
       aboutTitle: "About SENAI São Carlos",
       aboutText: "SENAI São Carlos is a regional reference in technical and technological education, preparing professionals for the challenges of Industry 4.0. Our students develop innovative projects that connect theory and practice, creating real solutions for real market problems.",
@@ -124,7 +124,7 @@
       close: "Close",
       shareWhatsapp: "Share on WhatsApp",
       whatsappShareMsg: "Check out the project *{nome}*{turma} from SENAI Workshop 2026:\n{url}",
-      whatsappPageShareMsg: "Check out SENAI São Carlos Workshop 2026 - Mechatronics & Systems Development:\n{url}",
+      whatsappPageShareMsg: "Check out SENAI São Carlos Workshop 2026 - Systems Development, Electronics & Mechatronics:\n{url}",
       qrToggle: "Project QR Code",
       qrToggleHide: "Hide QR Code",
       qrTitle: "Project QR Code",
@@ -155,8 +155,8 @@
       eventTitle: "Event Date & Location",
       eventSub: "Come check out the innovative projects and solutions developed by our students.",
       eventDateLabel: "Event Date",
-      eventDateVal: "December 2 & 3, 2026",
-      eventDateDays: "Wednesday & Thursday • Projects on Display",
+      eventDateVal: "December 1, 2 & 3, 2026",
+      eventDateDays: "Tuesday, Wednesday & Thursday • Projects on Display",
       eventTimeLabel: "Hours",
       eventTimeVal: "8:00 AM to 5:00 PM",
       eventTimeSub: "Open to the public • Free admission",
@@ -169,12 +169,12 @@
       eventOpenMaps: "Open in Google Maps",
       eventMapTitle: "📍 Location Map",
       eventViewRoute: "Open in Google Maps ↗",
-      eventHeroBadgeDate: "December 2 & 3",
+      eventHeroBadgeDate: "December 1, 2 & 3",
       eventHeroBadgeTime: "8am – 5pm",
       eventHeroBadgeLoc: "SENAI São Carlos",
       newsBadge: "Event Reminder",
       newsTitle: "Don't Miss the SENAI Workshop 2026",
-      newsSub: "Sign up with your email to receive an exclusive reminder before the event (December 2 & 3) and the projects catalog.",
+      newsSub: "Register your email to receive exclusive notices before the event (December 1, 2 & 3) and the project catalog.",
       newsNameLabel: "Your Name or Company",
       newsNamePlaceholder: "E.g., John Doe",
       newsEmailLabel: "Your Email",
@@ -738,7 +738,7 @@
     cursos.forEach(function (c) { np += totalProj(c); na += totalAlunos(c); });
     var cards = Object.keys(S.cursos).map(function (k) {
       var c = S.cursos[k];
-      var sigla = k === "ds" ? "DS" : "MEC";
+      var sigla = k === "ds" ? "DS" : (k === "eletroeletronica" || k === "ele" ? "ELE" : "MEC");
       return '<article class="class-card reveal">' +
         '<div class="class-img"><img src="' + esc(resolveImg(c.imagem)) + '" alt="' + esc(tr(c.nome)) + '" loading="lazy"><span class="badge">' + sigla + '</span></div>' +
         '<div class="class-body"><h3>' + esc(tr(c.nome)) + ' · ' + esc(tr(c.turma)) + '</h3><p>' + esc(tr(c.descricao)) + '</p>' +
@@ -1313,7 +1313,7 @@
     var pid = getProjectId(p, courseKey, index);
     var shareUrl = getProjectShareUrl(p, courseKey, index);
     var customBase = getCustomBase();
-    var courseBadge = courseKey === "ds" ? "DS" : "MEC";
+    var courseBadge = courseKey === "ds" ? "DS" : (courseKey === "eletroeletronica" || courseKey === "ele" ? "ELE" : "MEC");
     var img = resolveImg(p.imagem);
     var currentRatings = getProjectRatings(pid);
     var turmaText = formatTurma(p.turma);

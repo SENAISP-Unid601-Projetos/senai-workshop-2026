@@ -165,7 +165,7 @@
   function trackProjectAction(project, courseKey, action, extra) {
     if (!project) return;
     extra = extra || {};
-    var turmaNome = courseKey === "ds" ? "Desenvolvimento de Sistemas" : (courseKey === "mecatronica" ? "Mecatrônica" : courseKey);
+    var turmaNome = courseKey === "ds" ? "Desenvolvimento de Sistemas" : (courseKey === "mecatronica" ? "Mecatrônica" : (courseKey === "eletroeletronica" ? "Eletroeletrônica" : courseKey));
     var pid = project.id || (project.nome ? project.nome.toLowerCase().replace(/\s+/g, '-') : "-");
 
     var acaoFormatada = action;
@@ -232,7 +232,7 @@
   function submitEvaluation(project, courseKey, ratings) {
     if (!project) return;
     ratings = ratings || {};
-    var turmaNome = courseKey === "ds" ? "Desenvolvimento de Sistemas" : (courseKey === "mecatronica" ? "Mecatrônica" : courseKey);
+    var turmaNome = courseKey === "ds" ? "Desenvolvimento de Sistemas" : (courseKey === "mecatronica" ? "Mecatrônica" : (courseKey === "eletroeletronica" ? "Eletroeletrônica" : courseKey));
     var pid = project.id || (project.nome ? project.nome.toLowerCase().replace(/\s+/g, '-') : "-");
     var ap = Number(ratings.apresentacao) || 0;
     var proj = Number(ratings.projeto) || 0;
@@ -275,7 +275,7 @@
       contato: email,
       perfil: formData.perfil ? String(formData.perfil).trim() : "Visitante",
       empresa: formData.perfil ? String(formData.perfil).trim() : "Visitante",
-      mensagem: "Inscrição para receber lembrete do evento (02 e 03 de Dezembro)",
+      mensagem: "Inscrição para receber lembrete do evento (01, 02 e 03 de Dezembro)",
       pagina: formData.pagina || (document.body ? document.body.getAttribute("data-page") : "home") || "home"
     };
 

@@ -1169,16 +1169,16 @@
     ctx.stroke();
 
     // 0. Topo do Card - Evento Workshop SENAI 2026 (100% da horizontal com gradiente)
-    var headerBoxW = width - 120;
+    var headerBoxW = width - 80;
     var headerBoxX = (width - headerBoxW) / 2;
-    var headerBoxY = 48;
-    var headerBoxH = 46;
+    var headerBoxY = 44;
+    var headerBoxH = 56;
 
     ctx.fillStyle = "#0f172a";
-    drawRoundRect(ctx, headerBoxX, headerBoxY, headerBoxW, headerBoxH, 8);
+    drawRoundRect(ctx, headerBoxX, headerBoxY, headerBoxW, headerBoxH, 10);
     ctx.fill();
 
-    ctx.font = "900 22px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+    ctx.font = "900 28px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
     var t1 = "WORKSHOP SENAI ";
     var t2 = "2026";
     var w1 = ctx.measureText(t1).width;
@@ -1199,33 +1199,33 @@
     ctx.fillStyle = grad2026;
     ctx.fillText(t2, textStartX + w1, textY);
 
-    // 1. Nome do Projeto (apenas o nome, em destaque limpo)
+    // 1. Nome do Projeto (apenas o nome, em destaque limpo e amplo)
     var projNome = (p && p.nome) ? p.nome : "Projeto";
-    var titleY = headerBoxY + headerBoxH + 34;
+    var titleY = headerBoxY + headerBoxH + 36;
 
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.fillStyle = "#0f172a";
-    ctx.font = "900 40px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
-    if (ctx.measureText(projNome).width > width - 120) {
-      ctx.font = "900 32px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+    ctx.font = "900 50px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+    if (ctx.measureText(projNome).width > width - 100) {
+      ctx.font = "900 38px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
     }
-    var nextY = drawWrappedText(ctx, projNome, width / 2, titleY, width - 100, 42, "center");
+    var nextY = drawWrappedText(ctx, projNome, width / 2, titleY, width - 80, 52, "center");
 
-    // 2. Moldura Central do QR Code (ampliada)
-    var qrFrameSize = 560;
+    // 2. Moldura Central do QR Code (ampliada preenchendo o espaço)
+    var qrFrameSize = 640;
     var qrFrameX = (width - qrFrameSize) / 2;
-    var qrFrameY = Math.max(titleY + 36, nextY + 22);
+    var qrFrameY = Math.max(titleY + 38, nextY + 22);
 
     ctx.fillStyle = "#ffffff";
-    drawRoundRect(ctx, qrFrameX, qrFrameY, qrFrameSize, qrFrameSize, 16);
+    drawRoundRect(ctx, qrFrameX, qrFrameY, qrFrameSize, qrFrameSize, 18);
     ctx.fill();
     ctx.strokeStyle = "#cbd5e1";
-    ctx.lineWidth = 1.5;
+    ctx.lineWidth = 2;
     ctx.stroke();
 
     // QR Code em alta resolução
-    var qrSize = 510;
+    var qrSize = 580;
     var qrX = qrFrameX + (qrFrameSize - qrSize) / 2;
     var qrY = qrFrameY + (qrFrameSize - qrSize) / 2;
 
@@ -1235,23 +1235,23 @@
       ctx.drawImage(tempCanvas, qrX, qrY, qrSize, qrSize);
     }
 
-    // 3. Avalie nosso projeto
-    var ctaY = qrFrameY + qrFrameSize + 30;
-    var ctaW = width - 120;
-    var ctaH = 68;
+    // 3. Avalie nosso projeto (preenchimento harmonioso)
+    var ctaY = qrFrameY + qrFrameSize + 26;
+    var ctaW = width - 80;
+    var ctaH = 76;
     var ctaX = (width - ctaW) / 2;
 
     var ctaGrad = ctx.createLinearGradient(ctaX, ctaY, ctaX + ctaW, ctaY + ctaH);
     ctaGrad.addColorStop(0, "#e4002b");
     ctaGrad.addColorStop(1, "#b80022");
     ctx.fillStyle = ctaGrad;
-    drawRoundRect(ctx, ctaX, ctaY, ctaW, ctaH, 12);
+    drawRoundRect(ctx, ctaX, ctaY, ctaW, ctaH, 14);
     ctx.fill();
 
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.fillStyle = "#ffffff";
-    ctx.font = "900 24px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+    ctx.font = "900 28px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
     ctx.fillText("⭐ AVALIE NOSSO PROJETO ⭐", width / 2, ctaY + (ctaH / 2));
 
     if (callback) callback(canvas);
@@ -1261,15 +1261,33 @@
   /* =====================================================================
      IMPRESSÃO ISOLADA DO CARD (1/4 DA FOLHA A4 OU GRADE 2x2 COM 4 CARDS)
      ===================================================================== */
-  function printA4SheetElement(sheetElement, mode) {
-    if (!sheetElement) return;
+  function buildPrintCardHtml(projectName, qrSvgContent, evalLabel) {
+    return '<div class="a4-sheet">' +
+      '<div class="a4-inner-border"></div>' +
+      '<div class="a4-corner a4-corner-tl"></div>' +
+      '<div class="a4-corner a4-corner-tr"></div>' +
+      '<div class="a4-corner a4-corner-bl"></div>' +
+      '<div class="a4-corner a4-corner-br"></div>' +
+      '<div class="a4-header">' +
+        '<div class="a4-event-badge">Workshop SENAI <span class="grad">2026</span></div>' +
+      '</div>' +
+      '<div class="a4-project-block">' +
+        '<h1 class="a4-project-title">' + projectName + '</h1>' +
+      '</div>' +
+      '<div class="a4-qr-wrapper">' +
+        '<div class="a4-qr-card">' + qrSvgContent + '</div>' +
+      '</div>' +
+      '<div class="a4-eval-banner">' +
+        '<div class="a4-eval-badge">⭐ ' + evalLabel + ' ⭐</div>' +
+      '</div>' +
+    '</div>';
+  }
 
+  function printA4Card(projectName, qrSvgContent, evalLabel, mode) {
     var isGrid = (mode === "grid4");
     var iframe = document.getElementById("a4PrintFrame");
     if (iframe) {
-      try {
-        iframe.parentNode.removeChild(iframe);
-      } catch (err) {}
+      try { iframe.parentNode.removeChild(iframe); } catch (err) {}
     }
 
     iframe = document.createElement("iframe");
@@ -1280,16 +1298,13 @@
     var frameDoc = iframe.contentWindow.document;
     frameDoc.open();
 
-    var cardHtml = sheetElement.outerHTML;
+    var cardHtml = buildPrintCardHtml(projectName, qrSvgContent, evalLabel);
 
     var containerHtml = "";
     if (isGrid) {
       containerHtml =
         '<div class="a4-print-grid-container">' +
-          cardHtml +
-          cardHtml +
-          cardHtml +
-          cardHtml +
+          cardHtml + cardHtml + cardHtml + cardHtml +
           '<div class="a4-crop-line-v"></div>' +
           '<div class="a4-crop-line-h"></div>' +
         '</div>';
@@ -1304,131 +1319,31 @@
     }
 
     var printStyles =
-      '@page {' +
-        'size: A4 portrait;' +
-        'margin: 0;' +
-      '}' +
-      '*, *::before, *::after {' +
-        'box-sizing: border-box !important;' +
-        '-webkit-print-color-adjust: exact !important;' +
-        'print-color-adjust: exact !important;' +
-      '}' +
-      'html, body {' +
-        'margin: 0 !important;' +
-        'padding: 0 !important;' +
-        'width: 210mm !important;' +
-        'height: 297mm !important;' +
-        'max-height: 297mm !important;' +
-        'overflow: hidden !important;' +
-        'background: #ffffff !important;' +
-        'font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;' +
-      '}' +
-      '.a4-print-single-container {' +
-        'width: 210mm !important;' +
-        'height: 297mm !important;' +
-        'position: relative !important;' +
-        'overflow: hidden !important;' +
-        'background: #ffffff !important;' +
-      '}' +
-      '.a4-print-single-container .a4-sheet {' +
-        'width: 105mm !important;' +
-        'height: 148.5mm !important;' +
-        'position: absolute !important;' +
-        'top: 0 !important;' +
-        'left: 0 !important;' +
-      '}' +
-      '.a4-print-grid-container {' +
-        'width: 210mm !important;' +
-        'height: 297mm !important;' +
-        'max-width: 210mm !important;' +
-        'max-height: 297mm !important;' +
-        'margin: 0 !important;' +
-        'padding: 0 !important;' +
-        'display: grid !important;' +
-        'grid-template-columns: 105mm 105mm !important;' +
-        'grid-template-rows: 148.5mm 148.5mm !important;' +
-        'position: relative !important;' +
-        'overflow: hidden !important;' +
-        'background: #ffffff !important;' +
-      '}' +
-      '.a4-crop-line-v {' +
-        'position: absolute !important;' +
-        'top: 0 !important;' +
-        'left: 105mm !important;' +
-        'width: 0 !important;' +
-        'height: 297mm !important;' +
-        'border-left: 1px dashed #cbd5e1 !important;' +
-        'pointer-events: none !important;' +
-      '}' +
-      '.a4-crop-line-h {' +
-        'position: absolute !important;' +
-        'top: 148.5mm !important;' +
-        'left: 0 !important;' +
-        'width: 210mm !important;' +
-        'height: 0 !important;' +
-        'border-top: 1px dashed #cbd5e1 !important;' +
-        'pointer-events: none !important;' +
-      '}' +
-      '.a4-crop-label {' +
-        'position: absolute !important;' +
-        'top: 154mm !important;' +
-        'left: 8mm !important;' +
-        'font-size: 8pt !important;' +
-        'color: #94a3b8 !important;' +
-        'font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;' +
-      '}' +
-      '.a4-sheet {' +
-        'width: 105mm !important;' +
-        'height: 148.5mm !important;' +
-        'max-width: 105mm !important;' +
-        'max-height: 148.5mm !important;' +
-        'margin: 0 !important;' +
-        'padding: 8mm 7mm 7mm !important;' +
-        'position: relative !important;' +
-        'display: flex !important;' +
-        'flex-direction: column !important;' +
-        'justify-content: space-between !important;' +
-        'text-align: center !important;' +
-        'background: #ffffff !important;' +
-        'color: #1e293b !important;' +
-        'border: 1mm solid #e4002b !important;' +
-        'box-sizing: border-box !important;' +
-        'page-break-inside: avoid !important;' +
-        'page-break-after: avoid !important;' +
-      '}' +
-      '.a4-inner-border {' +
-        'position: absolute !important;' +
-        'top: 1.8mm !important;' +
-        'left: 1.8mm !important;' +
-        'right: 1.8mm !important;' +
-        'bottom: 1.8mm !important;' +
-        'border: 0.35mm solid #cbd5e1 !important;' +
-        'border-radius: 1mm !important;' +
-        'pointer-events: none !important;' +
-        'z-index: 1 !important;' +
-      '}' +
-      '.a4-corner {' +
-        'position: absolute !important;' +
-        'width: 5mm !important;' +
-        'height: 5mm !important;' +
-        'pointer-events: none !important;' +
-        'z-index: 2 !important;' +
-      '}' +
+      '@page { size: A4 portrait; margin: 0; }' +
+      '*, *::before, *::after { box-sizing: border-box !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }' +
+      'html, body { margin: 0 !important; padding: 0 !important; width: 210mm !important; height: 297mm !important; max-height: 297mm !important; overflow: hidden !important; background: #ffffff !important; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }' +
+      '.a4-print-single-container { width: 210mm !important; height: 297mm !important; position: relative !important; overflow: hidden !important; background: #ffffff !important; }' +
+      '.a4-print-grid-container { width: 210mm !important; height: 297mm !important; max-width: 210mm !important; max-height: 297mm !important; margin: 0 !important; padding: 0 !important; display: grid !important; grid-template-columns: 105mm 105mm !important; grid-template-rows: 148.5mm 148.5mm !important; position: relative !important; overflow: hidden !important; background: #ffffff !important; }' +
+      '.a4-crop-line-v { position: absolute !important; top: 0 !important; left: 105mm !important; width: 0 !important; height: 297mm !important; border-left: 1px dashed #cbd5e1 !important; pointer-events: none !important; }' +
+      '.a4-crop-line-h { position: absolute !important; top: 148.5mm !important; left: 0 !important; width: 210mm !important; height: 0 !important; border-top: 1px dashed #cbd5e1 !important; pointer-events: none !important; }' +
+      '.a4-crop-label { position: absolute !important; top: 154mm !important; left: 8mm !important; font-size: 8pt !important; color: #94a3b8 !important; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important; }' +
+      '.a4-sheet { width: 105mm !important; height: 148.5mm !important; max-width: 105mm !important; max-height: 148.5mm !important; margin: 0 !important; padding: 5.5mm 5mm 5.5mm !important; position: relative !important; display: flex !important; flex-direction: column !important; justify-content: space-between !important; text-align: center !important; background: #ffffff !important; color: #1e293b !important; border: 1mm solid #e4002b !important; box-sizing: border-box !important; page-break-inside: avoid !important; page-break-after: avoid !important; }' +
+      '.a4-inner-border { position: absolute !important; top: 1.8mm !important; left: 1.8mm !important; right: 1.8mm !important; bottom: 1.8mm !important; border: 0.35mm solid #cbd5e1 !important; border-radius: 1mm !important; pointer-events: none !important; z-index: 1 !important; }' +
+      '.a4-corner { position: absolute !important; width: 5mm !important; height: 5mm !important; pointer-events: none !important; z-index: 2 !important; }' +
       '.a4-corner-tl { top: 2.8mm !important; left: 2.8mm !important; border-top: 0.7mm solid #e4002b !important; border-left: 0.7mm solid #e4002b !important; }' +
       '.a4-corner-tr { top: 2.8mm !important; right: 2.8mm !important; border-top: 0.7mm solid #e4002b !important; border-right: 0.7mm solid #e4002b !important; }' +
       '.a4-corner-bl { bottom: 2.8mm !important; left: 2.8mm !important; border-bottom: 0.7mm solid #e4002b !important; border-left: 0.7mm solid #e4002b !important; }' +
       '.a4-corner-br { bottom: 2.8mm !important; right: 2.8mm !important; border-bottom: 0.7mm solid #e4002b !important; border-right: 0.7mm solid #e4002b !important; }' +
-      '.a4-header { position: relative !important; z-index: 3 !important; margin: 0 0 2mm !important; width: 100% !important; text-align: center !important; }' +
-      '.a4-event-badge { display: block !important; width: 100% !important; box-sizing: border-box !important; text-align: center !important; background: #0f172a !important; border: none !important; border-radius: 1.5mm !important; padding: 2mm 3mm !important; font-size: 10pt !important; font-weight: 900 !important; color: #ffffff !important; text-transform: uppercase !important; letter-spacing: 0.6px !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }' +
+      '.a4-header { position: relative !important; z-index: 3 !important; margin: 0 0 1.5mm !important; width: 100% !important; text-align: center !important; }' +
+      '.a4-event-badge { display: block !important; width: 100% !important; box-sizing: border-box !important; text-align: center !important; background: #0f172a !important; border: none !important; border-radius: 2mm !important; padding: 3mm 4mm !important; font-size: 13.5pt !important; font-weight: 900 !important; color: #ffffff !important; text-transform: uppercase !important; letter-spacing: 0.9px !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }' +
       '.grad { background: linear-gradient(90deg, #ff3b57, #ff6584 40%, #38bdf8) !important; -webkit-background-clip: text !important; background-clip: text !important; -webkit-text-fill-color: transparent !important; color: #ff3b57 !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }' +
       '.a4-project-block { margin: 1.5mm 0 2mm !important; position: relative !important; z-index: 3 !important; text-align: center !important; }' +
-      '.a4-project-title { display: block !important; font-size: 16pt !important; font-weight: 900 !important; color: #0f172a !important; line-height: 1.15 !important; letter-spacing: -0.3px !important; word-break: break-word !important; margin: 0 !important; }' +
-      '.a4-qr-wrapper { flex: 1 !important; display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important; margin: 2mm 0 !important; position: relative !important; z-index: 3 !important; }' +
-      '.a4-qr-card { background: #ffffff !important; padding: 2mm !important; border-radius: 2mm !important; border: 0.4mm solid #cbd5e1 !important; display: inline-block !important; box-shadow: 0 1mm 3mm rgba(0, 0, 0, 0.05) !important; }' +
-      '.a4-qr-card svg { display: block !important; width: 68mm !important; height: 68mm !important; }' +
-      '.a4-eval-banner { background: linear-gradient(135deg, #e4002b, #b80022) !important; color: #ffffff !important; padding: 2.5mm 4mm !important; border-radius: 2mm !important; width: 100% !important; box-sizing: border-box !important; text-align: center !important; position: relative !important; z-index: 3 !important; }' +
-      '.a4-eval-badge { font-size: 9.5pt !important; font-weight: 900 !important; letter-spacing: 0.4px !important; text-transform: uppercase !important; }' +
-      '.a4-eval-text { font-size: 7pt !important; font-weight: 600 !important; opacity: 0.95 !important; margin-top: 0.8mm !important; line-height: 1.2 !important; }';
+      '.a4-project-title { display: block !important; font-size: 22pt !important; font-weight: 900 !important; color: #0f172a !important; line-height: 1.15 !important; letter-spacing: -0.4px !important; word-break: break-word !important; margin: 0 !important; }' +
+      '.a4-qr-wrapper { flex: 1 !important; display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important; margin: 1.5mm 0 !important; position: relative !important; z-index: 3 !important; }' +
+      '.a4-qr-card { background: #ffffff !important; padding: 2.2mm !important; border-radius: 2.5mm !important; border: 0.45mm solid #cbd5e1 !important; display: inline-block !important; }' +
+      '.a4-qr-card svg { display: block !important; width: 82mm !important; height: 82mm !important; }' +
+      '.a4-eval-banner { background: linear-gradient(135deg, #e4002b, #b80022) !important; color: #ffffff !important; padding: 3.5mm 4mm !important; border-radius: 2.5mm !important; width: 100% !important; box-sizing: border-box !important; text-align: center !important; position: relative !important; z-index: 3 !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }' +
+      '.a4-eval-badge { font-size: 11pt !important; font-weight: 900 !important; letter-spacing: 0.6px !important; text-transform: uppercase !important; }';
 
     var docHtml = '<!DOCTYPE html>' +
       '<html><head><meta charset="utf-8">' +
@@ -1460,7 +1375,7 @@
 
     var qrSvg = "";
     if (window.QRCode && typeof window.QRCode.generateSVG === "function") {
-      qrSvg = window.QRCode.generateSVG(shareUrl, { size: 260, margin: 2 });
+      qrSvg = window.QRCode.generateSVG(shareUrl, { size: 320, margin: 2 });
     }
 
     var m = ensurePosterModal();
@@ -1539,12 +1454,18 @@
 
     document.getElementById("posterPrintSingleBtn").onclick = function () {
       if (window.Leads) window.Leads.trackProjectAction(p, courseKey, "imprimiu_card_single");
-      printA4SheetElement(document.getElementById("a4PosterSheet"), "single");
+      var qrSvgPrint = window.QRCode && typeof window.QRCode.generateSVG === "function"
+        ? window.QRCode.generateSVG(shareUrl, { size: 400, margin: 2 })
+        : "";
+      printA4Card(esc(p.nome), qrSvgPrint, esc(T("evalOurProject")), "single");
     };
 
     document.getElementById("posterPrintGridBtn").onclick = function () {
       if (window.Leads) window.Leads.trackProjectAction(p, courseKey, "imprimiu_card_grid4");
-      printA4SheetElement(document.getElementById("a4PosterSheet"), "grid4");
+      var qrSvgPrint = window.QRCode && typeof window.QRCode.generateSVG === "function"
+        ? window.QRCode.generateSVG(shareUrl, { size: 400, margin: 2 })
+        : "";
+      printA4Card(esc(p.nome), qrSvgPrint, esc(T("evalOurProject")), "grid4");
     };
 
     document.getElementById("posterDownloadQrPngBtn").onclick = function () {

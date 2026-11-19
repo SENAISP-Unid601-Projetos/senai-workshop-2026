@@ -32,6 +32,13 @@
       whatsappPageShareMsg: "Confira o Workshop SENAI São Carlos 2026 - Desenvolvimento de Sistemas, Eletroeletrônica e Mecatrônica:\n{url}",
       qrToggle: "QR Code do Projeto",
       qrToggleHide: "Ocultar QR Code",
+      openA4Poster: "Ver Arte Folha A4",
+      downloadA4: "Baixar Folha A4",
+      printA4: "Imprimir A4",
+      downloadQrOnly: "Apenas QR Code (PNG)",
+      a4PosterTitle: "Folha A4 para Impressão",
+      evalOurProject: "AVALIE NOSSO PROJETO!",
+      evalOurProjectSub: "Aponte a câmera do seu celular para o QR Code acima, explore nossa solução e registre sua avaliação com estrelas!",
       qrTitle: "QR Code do Projeto",
       qrSub: "Aponte a câmera do celular para abrir direto neste projeto.",
       copyLink: "Copiar link",
@@ -127,6 +134,13 @@
       whatsappPageShareMsg: "Check out SENAI São Carlos Workshop 2026 - Systems Development, Electronics & Mechatronics:\n{url}",
       qrToggle: "Project QR Code",
       qrToggleHide: "Hide QR Code",
+      openA4Poster: "View A4 Poster Art",
+      downloadA4: "Download A4 Poster",
+      printA4: "Print A4 Poster",
+      downloadQrOnly: "QR Code Only (PNG)",
+      a4PosterTitle: "Printable A4 Poster Sheet",
+      evalOurProject: "RATE OUR PROJECT!",
+      evalOurProjectSub: "Point your phone camera at the QR Code above to explore our solution and leave your star rating!",
       qrTitle: "Project QR Code",
       qrSub: "Scan with your phone to open directly to this project.",
       copyLink: "Copy link",
@@ -1024,6 +1038,422 @@
     }
   }
 
+  /* =====================================================================
+     MODAL DE ARTE PARA IMPRESSÃO EM FOLHA A4 & QR CODE
+     ===================================================================== */
+  function ensurePosterModal() {
+    var m = document.getElementById("projectPosterModal");
+    if (!m) {
+      m = document.createElement("div");
+      m.id = "projectPosterModal";
+      m.className = "modal-backdrop modal-poster-backdrop";
+      m.setAttribute("aria-hidden", "true");
+      m.innerHTML = '<div class="modal-poster-dialog" role="dialog" aria-modal="true" id="posterDialog"></div>';
+      document.body.appendChild(m);
+
+      m.addEventListener("click", function (e) {
+        if (e.target === m) closePosterModal();
+      });
+    }
+    return m;
+  }
+
+  function closePosterModal() {
+    var m = document.getElementById("projectPosterModal");
+    if (!m || !m.classList.contains("is-open")) return;
+    m.classList.remove("is-open");
+    m.setAttribute("aria-hidden", "true");
+    var pm = document.getElementById("projectModal");
+    if (!pm || !pm.classList.contains("is-open")) {
+      document.body.classList.remove("modal-open");
+    }
+  }
+
+  function drawRoundRect(ctx, x, y, w, h, r) {
+    var rad = typeof r === "number" ? { tl: r, tr: r, br: r, bl: r } : (r || { tl: 0, tr: 0, br: 0, bl: 0 });
+    ctx.beginPath();
+    ctx.moveTo(x + rad.tl, y);
+    ctx.lineTo(x + w - rad.tr, y);
+    ctx.quadraticCurveTo(x + w, y, x + w, y + rad.tr);
+    ctx.lineTo(x + w, y + h - rad.br);
+    ctx.quadraticCurveTo(x + w, y + h, x + w - rad.br, y + h);
+    ctx.lineTo(x + rad.bl, y + h);
+    ctx.quadraticCurveTo(x, y + h, x, y + h - rad.bl);
+    ctx.lineTo(x, y + rad.tl);
+    ctx.quadraticCurveTo(x, y, x + rad.tl, y);
+    ctx.closePath();
+  }
+
+  function drawWrappedText(ctx, text, x, y, maxWidth, lineHeight, align) {
+    if (!text) return y;
+    var words = String(text).split(/\s+/);
+    var line = "";
+    var currentY = y;
+    var origAlign = ctx.textAlign;
+    if (align) ctx.textAlign = align;
+
+    for (var i = 0; i < words.length; i++) {
+      var testLine = line + (line ? " " : "") + words[i];
+      var metrics = ctx.measureText(testLine);
+      if (metrics.width > maxWidth && i > 0) {
+        ctx.fillText(line, x, currentY);
+        line = words[i];
+        currentY += lineHeight;
+      } else {
+        line = testLine;
+      }
+    }
+    if (line) {
+      ctx.fillText(line, x, currentY);
+    }
+    if (align) ctx.textAlign = origAlign;
+    return currentY;
+  }
+
+  function generateA4PosterCanvas(p, courseKey, index, shareUrl, callback) {
+    var width = 1240;
+    var height = 1754; // Proporção exata da folha A4 em 150 DPI
+    var canvas = document.createElement("canvas");
+    canvas.width = width;
+    canvas.height = height;
+    var ctx = canvas.getContext("2d");
+    if (!ctx) return canvas;
+
+    // Fundo branco papel puro
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(0, 0, width, height);
+
+    // Moldura institucional (borda vermelha de 6px + linha fina interna)
+    ctx.strokeStyle = "#e4002b";
+    ctx.lineWidth = 6;
+    ctx.strokeRect(28, 28, width - 56, height - 56);
+
+    ctx.strokeStyle = "#cbd5e1";
+    ctx.lineWidth = 1.5;
+    ctx.strokeRect(36, 36, width - 72, height - 72);
+
+    // 1. Banner Superior Vermelho Institucional SENAI
+    var bannerY = 48;
+    var bannerH = 145;
+    var bannerW = width - 96;
+    var bannerX = 48;
+
+    var grad = ctx.createLinearGradient(bannerX, bannerY, bannerX + bannerW, bannerY + bannerH);
+    grad.addColorStop(0, "#e4002b");
+    grad.addColorStop(1, "#b80022");
+    ctx.fillStyle = grad;
+    drawRoundRect(ctx, bannerX, bannerY, bannerW, bannerH, 14);
+    ctx.fill();
+
+    // Logo SENAI no Banner
+    var logoY = bannerY + 44;
+    ctx.font = "900 46px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+    ctx.textBaseline = "middle";
+
+    var textSen = "SEN";
+    var textAi = "AI";
+    var wSen = ctx.measureText(textSen).width;
+    var wAi = ctx.measureText(textAi).width;
+    var startLogoX = (width / 2) - ((wSen + wAi) / 2);
+
+    ctx.textAlign = "left";
+    ctx.fillStyle = "#ffffff";
+    ctx.fillText(textSen, startLogoX, logoY);
+    ctx.fillStyle = "#ffb703";
+    ctx.fillText(textAi, startLogoX + wSen, logoY);
+
+    // Textos do Banner
+    ctx.textAlign = "center";
+    ctx.font = "bold 15px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+    ctx.fillStyle = "rgba(255, 255, 255, 0.95)";
+    ctx.fillText("FACULDADE DE TECNOLOGIA E ESCOLA SENAI ANTONIO ADOLPHO LOBBE", width / 2, bannerY + 84);
+
+    ctx.font = "800 13px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+    ctx.fillStyle = "#ffd166";
+    ctx.fillText("WORKSHOP SENAI 2026 • 01, 02 E 03 DE DEZEMBRO • DAS 08H ÀS 17H", width / 2, bannerY + 112);
+
+    // 2. Badge do Curso e Turma
+    var cInfo = (S && S.cursos && S.cursos[courseKey]) ? S.cursos[courseKey] : null;
+    var courseName = cInfo ? tr(cInfo.nome) : (courseKey === "ds" ? "Desenvolvimento de Sistemas" : (courseKey === "eletroeletronica" || courseKey === "ele" ? "Eletroeletrônica" : "Mecatrônica"));
+    var turmaText = formatTurma(p.turma);
+    var badgeText = courseName.toUpperCase() + (turmaText ? (" • TURMA " + turmaText.toUpperCase()) : "");
+
+    var badgeY = 220;
+    ctx.font = "bold 17px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+    var badgeW = Math.min(width - 120, ctx.measureText(badgeText).width + 36);
+    ctx.fillStyle = "#f1f5f9";
+    drawRoundRect(ctx, (width - badgeW) / 2, badgeY, badgeW, 36, 18);
+    ctx.fill();
+    ctx.strokeStyle = "#cbd5e1";
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
+    ctx.fillStyle = "#334155";
+    ctx.textAlign = "center";
+    ctx.fillText(badgeText, width / 2, badgeY + 19);
+
+    // 3. Nome do Projeto / Grupo
+    var titleY = 305;
+    ctx.font = "900 48px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+    ctx.fillStyle = "#0f172a";
+    var projNome = p.nome || "Projeto";
+    if (ctx.measureText(projNome).width > width - 160) {
+      ctx.font = "900 38px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+    }
+    ctx.fillText(projNome, width / 2, titleY);
+
+    // Subtítulo
+    var subY = titleY + 36;
+    if (p.subtitulo) {
+      ctx.font = "600 21px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+      ctx.fillStyle = "#475569";
+      drawWrappedText(ctx, p.subtitulo, width / 2, subY, width - 200, 28, "center");
+    }
+
+    // 4. Box de Integrantes da Equipe
+    var membersText = formatMembers(p);
+    var boxY = 410;
+    var boxW = width - 180;
+    var boxX = (width - boxW) / 2;
+    var boxH = 95;
+
+    ctx.fillStyle = "#f8fafc";
+    drawRoundRect(ctx, boxX, boxY, boxW, boxH, 10);
+    ctx.fill();
+    ctx.strokeStyle = "#e2e8f0";
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+
+    ctx.fillStyle = "#e4002b";
+    drawRoundRect(ctx, boxX, boxY, 8, boxH, { tl: 10, bl: 10, tr: 0, br: 0 });
+    ctx.fill();
+
+    ctx.textAlign = "left";
+    ctx.fillStyle = "#e4002b";
+    ctx.font = "800 15px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+    ctx.fillText("👥 INTEGRANTES DA EQUIPE:", boxX + 22, boxY + 28);
+
+    ctx.fillStyle = "#1e293b";
+    ctx.font = "bold 19px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+    var membersDisplay = membersText || (turmaText ? ("Alunos da Turma " + turmaText) : "Equipe do Projeto");
+    drawWrappedText(ctx, membersDisplay, boxX + 22, boxY + 56, boxW - 44, 24, "left");
+
+    // 5. Moldura Central do QR Code
+    var qrFrameY = 535;
+    var qrFrameSize = 560;
+    var qrFrameX = (width - qrFrameSize) / 2;
+
+    ctx.fillStyle = "#ffffff";
+    drawRoundRect(ctx, qrFrameX, qrFrameY, qrFrameSize, qrFrameSize, 20);
+    ctx.fill();
+    ctx.strokeStyle = "#cbd5e1";
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    // Desenha o QR Code em alta resolução
+    var qrSize = 490;
+    var qrX = qrFrameX + (qrFrameSize - qrSize) / 2;
+    var qrY = qrFrameY + (qrFrameSize - qrSize) / 2;
+
+    var tempCanvas = document.createElement("canvas");
+    if (window.QRCode && typeof window.QRCode.drawCanvas === "function") {
+      window.QRCode.drawCanvas(tempCanvas, shareUrl, { size: qrSize, margin: 2 });
+      ctx.drawImage(tempCanvas, qrX, qrY, qrSize, qrSize);
+    }
+
+    // 6. Chamada de Avaliação ("AVALIE NOSSO PROJETO!")
+    var ctaY = 1130;
+    var ctaW = 680;
+    var ctaH = 62;
+    var ctaX = (width - ctaW) / 2;
+
+    var ctaGrad = ctx.createLinearGradient(ctaX, ctaY, ctaX + ctaW, ctaY + ctaH);
+    ctaGrad.addColorStop(0, "#e4002b");
+    ctaGrad.addColorStop(1, "#b80022");
+    ctx.fillStyle = ctaGrad;
+    drawRoundRect(ctx, ctaX, ctaY, ctaW, ctaH, 31);
+    ctx.fill();
+
+    ctx.textAlign = "center";
+    ctx.fillStyle = "#ffffff";
+    ctx.font = "900 27px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+    ctx.fillText("⭐ AVALIE NOSSO PROJETO! ⭐", width / 2, ctaY + 34);
+
+    ctx.font = "bold 20px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+    ctx.fillStyle = "#0f172a";
+    ctx.fillText("Aponte a câmera do seu celular para o QR Code acima", width / 2, ctaY + 98);
+
+    ctx.font = "500 17px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+    ctx.fillStyle = "#475569";
+    ctx.fillText("Conheça todos os detalhes do nosso projeto e registre sua avaliação com estrelas!", width / 2, ctaY + 128);
+
+    // 7. Rodapé Institucional
+    var footerY = 1600;
+    ctx.strokeStyle = "#e2e8f0";
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(90, footerY);
+    ctx.lineTo(width - 90, footerY);
+    ctx.stroke();
+
+    ctx.strokeStyle = "#e4002b";
+    ctx.lineWidth = 4;
+    ctx.beginPath();
+    ctx.moveTo((width / 2) - 60, footerY);
+    ctx.lineTo((width / 2) + 60, footerY);
+    ctx.stroke();
+
+    ctx.font = "900 24px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+    ctx.fillStyle = "#0f172a";
+    ctx.fillText("WORKSHOP SENAI 2026", width / 2, footerY + 38);
+
+    ctx.font = "600 15px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+    ctx.fillStyle = "#64748b";
+    ctx.fillText("Faculdade de Tecnologia e Escola SENAI Antonio Adolpho Lobbe — São Carlos/SP", width / 2, footerY + 68);
+
+    ctx.font = "500 13px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+    ctx.fillStyle = "#94a3b8";
+    ctx.fillText("Serviço Nacional de Aprendizagem Industrial • Todos os direitos reservados © 2026", width / 2, footerY + 92);
+
+    if (callback) callback(canvas);
+    return canvas;
+  }
+
+  function openA4PosterModal(p, courseKey, index) {
+    if (!p) return;
+    var cInfo = (S && S.cursos && S.cursos[courseKey]) ? S.cursos[courseKey] : null;
+    var pid = getProjectId(p, courseKey, index);
+    var shareUrl = getProjectShareUrl(p, courseKey, index);
+    var courseName = cInfo ? tr(cInfo.nome) : (courseKey === "ds" ? "Desenvolvimento de Sistemas" : (courseKey === "eletroeletronica" || courseKey === "ele" ? "Eletroeletrônica" : "Mecatrônica"));
+    var turmaText = formatTurma(p.turma);
+    var membersText = formatMembers(p);
+
+    var qrSvg = "";
+    if (window.QRCode && typeof window.QRCode.generateSVG === "function") {
+      qrSvg = window.QRCode.generateSVG(shareUrl, { size: 210, margin: 2 });
+    }
+
+    var m = ensurePosterModal();
+    var dialog = document.getElementById("posterDialog");
+    if (!dialog) return;
+
+    var safeProjectName = (p.nome || pid || "projeto").toLowerCase().replace(/[^a-z0-9_-]+/g, "-").replace(/^-+|-+$/g, "");
+
+    dialog.innerHTML =
+      '<div class="modal-poster-toolbar">' +
+        '<div class="modal-poster-toolbar-left">' +
+          '<span class="poster-toolbar-title">📄 ' + esc(T("a4PosterTitle")) + '</span>' +
+          '<span class="poster-toolbar-tag">#' + esc(pid) + '</span>' +
+        '</div>' +
+        '<div class="modal-poster-toolbar-actions">' +
+          '<button class="btn-poster-action btn-poster-primary" id="posterDownloadA4Btn" title="Baixar a folha completa em tamanho A4 (PNG de alta resolução)">' +
+            '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>' +
+            '<span>' + esc(T("downloadA4")) + '</span>' +
+          '</button>' +
+          '<button class="btn-poster-action" id="posterPrintBtn" title="Imprimir em folha A4">' +
+            '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>' +
+            '<span>' + esc(T("printA4")) + '</span>' +
+          '</button>' +
+          '<button class="btn-poster-action" id="posterDownloadQrPngBtn" title="Baixar apenas o QR Code em PNG">' +
+            '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>' +
+            '<span>' + esc(T("downloadQrOnly")) + '</span>' +
+          '</button>' +
+          '<button class="btn-poster-action" id="posterDownloadQrSvgBtn" title="Baixar apenas o QR Code em SVG">' +
+            '<span>SVG</span>' +
+          '</button>' +
+          '<button class="modal-poster-close-btn" id="posterCloseBtn" aria-label="' + esc(T("close")) + '">&times;</button>' +
+        '</div>' +
+      '</div>' +
+      '<div class="modal-poster-body">' +
+        '<div class="a4-sheet" id="a4PosterSheet">' +
+          '<div class="a4-header">' +
+            '<div class="a4-header-top">' +
+              '<div class="a4-logo"><span class="sen">SEN</span><span class="ai">AI</span></div>' +
+              '<div class="a4-header-inst">' +
+                '<strong>Faculdade de Tecnologia e Escola SENAI</strong><br>' +
+                'Antonio Adolpho Lobbe — São Carlos' +
+              '</div>' +
+            '</div>' +
+            '<div class="a4-event-badge">Workshop SENAI 2026</div>' +
+            '<div class="a4-event-sub">01, 02 e 03 de Dezembro de 2026 • Das 08h às 17h • Entrada Gratuita</div>' +
+            '<div class="a4-course-turma">' +
+              '<span>🎓 ' + esc(courseName) + '</span>' +
+              (turmaText ? '<span>• Turma ' + esc(turmaText) + '</span>' : '') +
+            '</div>' +
+          '</div>' +
+          '<div class="a4-project-info">' +
+            '<h1 class="a4-project-title">' + esc(p.nome) + '</h1>' +
+            (p.subtitulo ? '<p class="a4-project-sub">' + esc(p.subtitulo) + '</p>' : '') +
+          '</div>' +
+          '<div class="a4-members-box">' +
+            '<span class="a4-members-label">👥 Integrantes da Equipe:</span>' +
+            '<span class="a4-members-list">' + esc(membersText || (turmaText ? ("Alunos da Turma " + turmaText) : "Equipe do Projeto")) + '</span>' +
+          '</div>' +
+          '<div class="a4-qr-wrapper">' +
+            '<div class="a4-qr-card">' +
+              qrSvg +
+            '</div>' +
+            '<div class="a4-eval-banner">' +
+              '<div class="a4-eval-badge">⭐ ' + esc(T("evalOurProject")) + ' ⭐</div>' +
+              '<div class="a4-eval-text">' + esc(T("evalOurProjectSub")) + '</div>' +
+            '</div>' +
+          '</div>' +
+          '<div class="a4-footer">' +
+            '<div class="a4-footer-title">Workshop SENAI 2026</div>' +
+            '<div class="a4-footer-sub">Serviço Nacional de Aprendizagem Industrial • Escola SENAI São Carlos</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+
+    document.getElementById("posterCloseBtn").onclick = closePosterModal;
+
+    document.getElementById("posterDownloadA4Btn").onclick = function () {
+      if (window.Leads) window.Leads.trackProjectAction(p, courseKey, "baixou_folha_a4");
+      showToast("⏳ Gerando arte A4 em alta resolução...");
+      setTimeout(function () {
+        var canvas = generateA4PosterCanvas(p, courseKey, index, shareUrl);
+        canvas.toBlob(function (blob) {
+          if (blob) {
+            downloadFile(blob, "folha-a4-" + safeProjectName + ".png");
+            showToast("📄 Folha A4 baixada com sucesso!");
+          }
+        }, "image/png");
+      }, 50);
+    };
+
+    document.getElementById("posterPrintBtn").onclick = function () {
+      if (window.Leads) window.Leads.trackProjectAction(p, courseKey, "imprimiu_folha_a4");
+      window.print();
+    };
+
+    document.getElementById("posterDownloadQrPngBtn").onclick = function () {
+      if (window.Leads) window.Leads.trackProjectAction(p, courseKey, "baixou_qr_png");
+      if (!window.QRCode) return;
+      var canvas = document.createElement("canvas");
+      window.QRCode.drawCanvas(canvas, shareUrl, { size: 800, margin: 4 });
+      canvas.toBlob(function (blob) {
+        if (blob) {
+          downloadFile(blob, "qrcode-" + pid + ".png");
+          showToast("🖼️ QR Code baixado com sucesso!");
+        }
+      });
+    };
+
+    document.getElementById("posterDownloadQrSvgBtn").onclick = function () {
+      if (window.Leads) window.Leads.trackProjectAction(p, courseKey, "baixou_qr_svg");
+      if (!window.QRCode) return;
+      var svgCode = window.QRCode.generateSVG(shareUrl, { size: 480, margin: 3 });
+      var blob = new Blob([svgCode], { type: "image/svg+xml;charset=utf-8" });
+      downloadFile(blob, "qrcode-" + pid + ".svg");
+      showToast("📥 QR Code SVG baixado!");
+    };
+
+    m.classList.add("is-open");
+    m.setAttribute("aria-hidden", "false");
+    document.body.classList.add("modal-open");
+    if (window.Leads) window.Leads.trackProjectAction(p, courseKey, "abriu_arte_folha_a4");
+  }
+
   function downloadFile(blob, filename) {
     var url = URL.createObjectURL(blob);
     var a = document.createElement("a");
@@ -1411,6 +1841,7 @@
       '<button class="modal-btn-copy" id="modalCopyBtn">' + T("copyLink") + '</button>' +
       '</div>' +
       '<div class="modal-share-buttons">' +
+      '<button class="btn-share-sec btn-share-a4" id="modalOpenA4PosterBtn">📄 ' + esc(T("openA4Poster")) + '</button>' +
       '<a class="btn-share-sec btn-share-wa" id="modalShareWaBtn" href="' + esc(waUrl) + '" target="_blank" rel="noopener">' + WA_ICON_SVG + ' WhatsApp</a>' +
       '<button class="btn-share-sec" id="modalDownloadSvgBtn">📥 ' + T("downloadSvg") + '</button>' +
       '<button class="btn-share-sec" id="modalDownloadPngBtn">🖼️ ' + T("downloadPng") + '</button>' +
@@ -1437,16 +1868,17 @@
     var shareBox = document.getElementById("modalShareBox");
     var qrToggleText = document.getElementById("modalQrToggleText");
 
-    if (qrToggleBtn && shareBox) {
+    if (qrToggleBtn) {
       qrToggleBtn.onclick = function () {
-        var isOpen = shareBox.classList.toggle("is-open");
-        qrToggleBtn.classList.toggle("is-active", isOpen);
-        qrToggleBtn.setAttribute("aria-expanded", isOpen ? "true" : "false");
-        if (qrToggleText) qrToggleText.textContent = isOpen ? T("qrToggleHide") : T("qrToggle");
-        if (isOpen) {
-          if (window.Leads) window.Leads.trackProjectAction(p, courseKey, "abriu_qr_code");
-          shareBox.scrollIntoView({ behavior: "smooth", block: "nearest" });
-        }
+        if (window.Leads) window.Leads.trackProjectAction(p, courseKey, "abriu_qr_code");
+        openA4PosterModal(p, courseKey, index);
+      };
+    }
+
+    var openA4Btn = document.getElementById("modalOpenA4PosterBtn");
+    if (openA4Btn) {
+      openA4Btn.onclick = function () {
+        openA4PosterModal(p, courseKey, index);
       };
     }
 
@@ -1815,7 +2247,14 @@
 
   /* Listeners globais para Modal (Esc e histórico) */
   document.addEventListener("keydown", function (e) {
-    if (e.key === "Escape") closeModal(true);
+    if (e.key === "Escape") {
+      var posterM = document.getElementById("projectPosterModal");
+      if (posterM && posterM.classList.contains("is-open")) {
+        closePosterModal();
+        return;
+      }
+      closeModal(true);
+    }
   });
 
   window.addEventListener("hashchange", function () {

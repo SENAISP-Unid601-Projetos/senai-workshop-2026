@@ -184,6 +184,15 @@
       case "abriu_qr_code":
         acaoFormatada = "Visualizou QR Code do Projeto";
         break;
+      case "abriu_arte_folha_a4":
+        acaoFormatada = "Visualizou Arte Folha A4 para Impressão";
+        break;
+      case "baixou_folha_a4":
+        acaoFormatada = "Baixou Folha A4 de Impressão (PNG)";
+        break;
+      case "imprimiu_folha_a4":
+        acaoFormatada = "Imprimiu Folha A4 de Impressão";
+        break;
       case "acesso_via_qr_code":
         acaoFormatada = "Acesso Direto via QR Code / Link Único";
         tipoLead = "Lead QR Code";

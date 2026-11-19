@@ -2748,3 +2748,431 @@ body.modal-open {
     font-size: .76rem;
   }
 }
+
+/* =====================================================================
+   NOVO MODAL: ARTE FOLHA A4 PARA IMPRESSÃO & QR CODE DO PROJETO
+   ===================================================================== */
+.modal-poster-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 10050;
+  background: rgba(5, 8, 15, 0.9);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  overflow-y: auto;
+}
+
+.modal-poster-backdrop.is-open {
+  display: flex;
+}
+
+.modal-poster-dialog {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 680px;
+  max-height: 94vh;
+  background: var(--bg, #0d111a);
+  border: 1px solid var(--line, #334155);
+  border-radius: 16px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.65);
+  overflow: hidden;
+  animation: posterModalIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes posterModalIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.modal-poster-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 18px;
+  background: var(--card, #131926);
+  border-bottom: 1px solid var(--line, #334155);
+  flex-wrap: wrap;
+  z-index: 2;
+}
+
+.modal-poster-toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.poster-toolbar-title {
+  font-weight: 800;
+  font-size: 0.92rem;
+  color: var(--text, #f8fafc);
+}
+
+.poster-toolbar-tag {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--red, #e4002b) 18%, transparent);
+  color: var(--red-2, #ff4d6d);
+  border: 1px solid color-mix(in srgb, var(--red, #e4002b) 35%, transparent);
+}
+
+.modal-poster-toolbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.btn-poster-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 13px;
+  border-radius: 8px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text, #f8fafc);
+  background: var(--card-2, #1b2234);
+  border: 1px solid var(--line, #334155);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-poster-action:hover {
+  background: var(--hover, #242e47);
+  border-color: var(--red, #e4002b);
+  transform: translateY(-1px);
+}
+
+.btn-poster-action.btn-poster-primary {
+  background: var(--red, #e4002b);
+  color: #ffffff;
+  border-color: var(--red, #e4002b);
+  box-shadow: 0 4px 14px rgba(228, 0, 43, 0.35);
+}
+
+.btn-poster-action.btn-poster-primary:hover {
+  background: #b80022;
+  border-color: #b80022;
+}
+
+.modal-poster-close-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: transparent;
+  border: 1px solid var(--line, #334155);
+  color: var(--muted, #94a3b8);
+  font-size: 1.2rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  margin-left: 2px;
+}
+
+.modal-poster-close-btn:hover {
+  color: #ffffff;
+  background: var(--red, #e4002b);
+  border-color: var(--red, #e4002b);
+}
+
+/* Área de Rolagem do Preview da Folha A4 */
+.modal-poster-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px 16px;
+  background: #090d16;
+  display: flex;
+  justify-content: center;
+}
+
+/* A Folha A4 (Proporção Retrato 1 : 1.4142) */
+.a4-sheet {
+  width: 100%;
+  max-width: 480px;
+  aspect-ratio: 1 / 1.4142;
+  min-height: 678px;
+  background: #ffffff;
+  color: #1e293b;
+  border-radius: 8px;
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.45);
+  border: 3px solid #e4002b;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  padding: 24px 22px 18px;
+  text-align: center;
+}
+
+/* Elementos internos da Folha A4 */
+.a4-header {
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 12px;
+  margin-bottom: 12px;
+  position: relative;
+}
+
+.a4-header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.a4-logo {
+  font-size: 1.65rem;
+  font-weight: 900;
+  letter-spacing: -0.5px;
+  line-height: 1;
+}
+
+.a4-logo .sen { color: #e4002b; }
+.a4-logo .ai { color: #ffb703; }
+
+.a4-header-inst {
+  text-align: right;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #475569;
+  line-height: 1.25;
+  text-transform: uppercase;
+}
+
+.a4-header-inst strong {
+  color: #0f172a;
+}
+
+.a4-event-badge {
+  display: inline-block;
+  background: #e4002b;
+  color: #ffffff;
+  font-size: 0.74rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  padding: 4px 14px;
+  border-radius: 999px;
+  margin-top: 10px;
+}
+
+.a4-event-sub {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #64748b;
+  margin-top: 4px;
+}
+
+.a4-course-turma {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+  padding: 3px 10px;
+  background: #f1f5f9;
+  border-radius: 6px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #334155;
+}
+
+.a4-project-info {
+  margin: 10px 0 12px;
+}
+
+.a4-project-title {
+  font-size: 1.68rem;
+  font-weight: 900;
+  color: #0f172a;
+  margin: 0;
+  line-height: 1.15;
+  letter-spacing: -0.5px;
+}
+
+.a4-project-sub {
+  font-size: 0.84rem;
+  color: #475569;
+  font-weight: 600;
+  margin: 4px 0 0;
+  line-height: 1.35;
+}
+
+.a4-members-box {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-left: 4px solid #e4002b;
+  border-radius: 6px;
+  padding: 8px 12px;
+  margin-bottom: 12px;
+  text-align: left;
+}
+
+.a4-members-label {
+  display: block;
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #e4002b;
+  letter-spacing: 0.5px;
+  margin-bottom: 2px;
+}
+
+.a4-members-list {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #1e293b;
+  line-height: 1.35;
+}
+
+.a4-qr-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.a4-qr-card {
+  background: #ffffff;
+  padding: 10px;
+  border-radius: 12px;
+  border: 2px solid #e2e8f0;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+  display: inline-block;
+}
+
+.a4-qr-card svg {
+  display: block;
+  width: 175px;
+  height: 175px;
+}
+
+.a4-eval-banner {
+  background: linear-gradient(135deg, #e4002b, #b80022);
+  color: #ffffff;
+  padding: 9px 14px;
+  border-radius: 8px;
+  margin-top: 10px;
+  box-shadow: 0 4px 12px rgba(228, 0, 43, 0.25);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.a4-eval-badge {
+  font-size: 0.92rem;
+  font-weight: 900;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.a4-eval-text {
+  font-size: 0.71rem;
+  font-weight: 600;
+  opacity: 0.95;
+  margin-top: 2px;
+  line-height: 1.3;
+}
+
+.a4-footer {
+  margin-top: auto;
+  padding-top: 10px;
+  border-top: 1px solid #e2e8f0;
+  font-size: 0.65rem;
+  color: #64748b;
+  line-height: 1.35;
+}
+
+.a4-footer-title {
+  font-weight: 800;
+  color: #0f172a;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* @media print para impressão direta sem chrome do navegador */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 8mm;
+  }
+
+  body * {
+    visibility: hidden !important;
+  }
+
+  #projectPosterModal,
+  #projectPosterModal .a4-sheet,
+  #projectPosterModal .a4-sheet * {
+    visibility: visible !important;
+  }
+
+  #projectPosterModal {
+    position: fixed !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    background: #ffffff !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    z-index: 999999 !important;
+  }
+
+  .modal-poster-dialog {
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    max-width: none !important;
+    width: 100% !important;
+  }
+
+  .modal-poster-toolbar {
+    display: none !important;
+  }
+
+  .modal-poster-body {
+    padding: 0 !important;
+    background: transparent !important;
+    overflow: visible !important;
+  }
+
+  .a4-sheet {
+    width: 194mm !important;
+    height: 281mm !important;
+    max-width: none !important;
+    min-height: none !important;
+    border: 3px solid #e4002b !important;
+    box-shadow: none !important;
+    padding: 16mm 14mm 12mm !important;
+    page-break-inside: avoid !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .a4-qr-card svg {
+    width: 65mm !important;
+    height: 65mm !important;
+  }
+}

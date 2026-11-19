@@ -3,9 +3,9 @@
  * SENAI WORKSHOP 2026 — SÃO CARLOS
  * BACKEND DA PLANILHA DE E-MAILS & RÉGUA OFICIAL DE 5 LEMBRETES
  * =====================================================================
- * Este script deve ser instalado na PLANILHA DE E-MAILS / NEWSLETTER.
- * (Gerencia a captura de e-mails de visitantes/empresas e o envio da régua
- *  oficial de 5 e-mails via conta @docente.senai.br).
+ * Este script gerencia EXCLUSIVAMENTE a PLANILHA DE E-MAILS / NEWSLETTER.
+ * (Nesta planilha NÃO existem as colunas K 'Nota Apresentação' e L 'Nota Ideia e Solução'.
+ *  As notas e visitas pertencem à Planilha de Leads gerenciada por google-apps-script.js).
  *
  * Evento Oficial: 01, 02 e 03 de Dezembro de 2026 (08h às 17h)
  * Cursos Técnicos Apresentados:
@@ -14,24 +14,24 @@
  *  - Mecatrônica (MEC)
  * Local: Escola SENAI Antonio Adolpho Lobbe — São Carlos/SP
  *
- * Régua Oficial de 5 E-mails:
- *  1. No cadastro (imediato): Confirmação de inscrição e boas-vindas
- *  2. 30/11 às 08h: "Faltam 2 dias! O Workshop SENAI 2026 começa nesta terça-feira (01/12)"
- *  3. 01/12 às 07h: "É hoje! O 1º dia do Workshop SENAI 2026 começou — Venha prestigiar!"
- *  4. 02/12 às 07h: "2º Dia! O Workshop SENAI 2026 continua com novos projetos e bancas"
- *  5. 03/12 às 07h: "Último dia! Grande encerramento e premiação do Workshop SENAI 2026"
+ * Estrutura Oficial das 10 Colunas (Colunas A até J):
+ *   Col 1 (A): Data e Hora
+ *   Col 2 (B): Nome
+ *   Col 3 (C): E-mail
+ *   Col 4 (D): Perfil / Segmento
+ *   Col 5 (E): Origem / Página
+ *   Col 6 (F): E-mail 1 (Cadastro)
+ *   Col 7 (G): E-mail 2 (Véspera 30/11 08h)
+ *   Col 8 (H): E-mail 3 (Dia 1 01/12 07h)
+ *   Col 9 (I): E-mail 4 (Dia 2 02/12 07h)
+ *  Col 10 (J): E-mail 5 (Dia 3 03/12 07h)
  *
- * Estrutura das 10 Colunas na Planilha ("Inscritos Lembrete"):
- *   1. Data e Hora
- *   2. Nome
- *   3. E-mail
- *   4. Perfil / Segmento
- *   5. Origem / Página
- *   6. E-mail 1 (Cadastro - Imediato)
- *   7. E-mail 2 (30/11 08h)
- *   8. E-mail 3 (01/12 07h - Dia 1)
- *   9. E-mail 4 (02/12 07h - Dia 2)
- *  10. E-mail 5 (03/12 07h - Dia 3)
+ * Régua Oficial dos 5 Disparos:
+ *  1. No cadastro (imediato): Confirmação de inscrição e boas-vindas
+ *  2. 30/11 às 08h00: "Faltam 2 dias! O Workshop SENAI 2026 começa nesta terça-feira (01/12)"
+ *  3. 01/12 às 07h00: "É hoje! O 1º dia do Workshop SENAI 2026 começou — Venha prestigiar!"
+ *  4. 02/12 às 07h00: "2º Dia! O Workshop SENAI 2026 continua com novos projetos e bancas"
+ *  5. 03/12 às 07h00: "Último dia! Grande encerramento e premiação do Workshop SENAI 2026"
  *
  * --- COMO ATUALIZAR NO GOOGLE APPS SCRIPT ---
  * 1. Abra a Planilha de E-mails/Inscritos no Google Sheets.
@@ -43,12 +43,14 @@
  *    - Em "Versão", selecione "Nova versão" (New version).
  *    - Em "Quem pode acessar", selecione "Qualquer pessoa" (Anyone).
  * 7. Clique em "Implantar" (Deploy).
+ * 8. Na planilha, use o menu "🔔 Workshop 2026 — Lembretes" >
+ *    "🔧 Atualizar Cabeçalhos e Remover Colunas K/L (10 Colunas)".
  * =====================================================================
  */
 
 /**
  * =====================================================================
- * GESTÃO DA ABA DE INSCRITOS
+ * GESTÃO DA ABA DE INSCRITOS E CABEÇALHOS (10 COLUNAS EXATAS)
  * =====================================================================
  */
 
@@ -82,27 +84,38 @@ function getNewsletterSheet(ss) {
 }
 
 /**
- * Configura os cabeçalhos oficiais da régua de 5 e-mails (10 Colunas)
+ * Retorna os 10 cabeçalhos oficiais da régua de e-mails
  */
-function setupNewsletterHeaders(sheet) {
-  sheet.setName("Inscritos Lembrete");
-
-  var headers = [
+function getCabecalhosOficiais() {
+  return [
     "Data e Hora",
     "Nome",
     "E-mail",
     "Perfil / Segmento",
     "Origem / Página",
-    "E-mail 1 (Cadastro - Imediato)",
-    "E-mail 2 (30/11 08h)",
-    "E-mail 3 (01/12 07h - Dia 1)",
-    "E-mail 4 (02/12 07h - Dia 2)",
-    "E-mail 5 (03/12 07h - Dia 3)"
+    "E-mail 1 (Cadastro)",
+    "E-mail 2 (Véspera 30/11 08h)",
+    "E-mail 3 (Dia 1 01/12 07h)",
+    "E-mail 4 (Dia 2 02/12 07h)",
+    "E-mail 5 (Dia 3 03/12 07h)"
   ];
+}
 
-  sheet.clear();
-  sheet.appendRow(headers);
+/**
+ * Atualiza os cabeçalhos da planilha preservando TODOS os dados dos inscritos existentes
+ * e REMOVENDO colunas excedentes K e L ("Nota Apresentação" / "Nota Ideia e Solução").
+ */
+function atualizarCabecalhosPlanilha() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet = getNewsletterSheet(ss);
+  sheet.setName("Inscritos Lembrete");
 
+  var headers = getCabecalhosOficiais();
+
+  // 1. Atualiza a primeira linha com os 10 cabeçalhos oficiais (Colunas A até J)
+  sheet.getRange(1, 1, 1, headers.length).setValues([headers]);
+
+  // 2. Estilização oficial SENAI
   var headerRange = sheet.getRange(1, 1, 1, headers.length);
   headerRange.setBackground("#e4002b");
   headerRange.setFontColor("#ffffff");
@@ -113,26 +126,82 @@ function setupNewsletterHeaders(sheet) {
   sheet.setRowHeight(1, 38);
   sheet.setFrozenRows(1);
 
-  var widths = [160, 190, 250, 170, 150, 190, 180, 190, 190, 190];
+  var widths = [160, 190, 250, 170, 150, 180, 210, 200, 200, 200];
   for (var i = 0; i < widths.length; i++) {
     sheet.setColumnWidth(i + 1, widths[i]);
+  }
+
+  // 3. REMOVE qualquer coluna excedente além da coluna 10 (ex: colunas K e L de notas)
+  var totalColunas = sheet.getMaxColumns();
+  if (totalColunas > 10) {
+    sheet.deleteColumns(11, totalColunas - 10);
+  }
+
+  // 4. Se já existirem inscritos cadastrados, garante que a nova coluna 10 (E-mail 5) tenha "Pendente"
+  var lastRow = sheet.getLastRow();
+  if (lastRow > 1) {
+    var col10Values = sheet.getRange(2, 10, lastRow - 1, 1).getValues();
+    var precisaAtualizar = false;
+    for (var r = 0; r < col10Values.length; r++) {
+      if (!col10Values[r][0] || String(col10Values[r][0]).trim() === "") {
+        col10Values[r][0] = "Pendente";
+        precisaAtualizar = true;
+      }
+    }
+    if (precisaAtualizar) {
+      sheet.getRange(2, 10, lastRow - 1, 1).setValues(col10Values);
+    }
+  }
+
+  var msg = "Planilha de E-mails atualizada com sucesso!\n\n" +
+            "• 10 Colunas oficiais configuradas (Data e Hora até E-mail 5);\n" +
+            "• Colunas excedentes K e L removidas;\n" +
+            "• Dados existentes dos inscritos foram preservados com segurança;\n" +
+            "• Status da nova etapa (E-mail 5 - Dia 3) definido como 'Pendente'.";
+  Logger.log(msg);
+  try {
+    SpreadsheetApp.getUi().alert("Workshop SENAI 2026", msg, SpreadsheetApp.getUi().ButtonSet.OK);
+  } catch (e) {}
+  return msg;
+}
+
+/**
+ * Criação inicial dos cabeçalhos caso a aba esteja totalmente vazia
+ */
+function setupNewsletterHeaders(sheet) {
+  if (sheet.getLastRow() === 0) {
+    sheet.setName("Inscritos Lembrete");
+    var headers = getCabecalhosOficiais();
+    sheet.appendRow(headers);
+
+    var headerRange = sheet.getRange(1, 1, 1, headers.length);
+    headerRange.setBackground("#e4002b");
+    headerRange.setFontColor("#ffffff");
+    headerRange.setFontWeight("bold");
+    headerRange.setFontSize(11);
+    headerRange.setHorizontalAlignment("center");
+    headerRange.setVerticalAlignment("middle");
+    sheet.setRowHeight(1, 38);
+    sheet.setFrozenRows(1);
+
+    var widths = [160, 190, 250, 170, 150, 180, 210, 200, 200, 200];
+    for (var i = 0; i < widths.length; i++) {
+      sheet.setColumnWidth(i + 1, widths[i]);
+    }
+
+    if (sheet.getMaxColumns() > 10) {
+      sheet.deleteColumns(11, sheet.getMaxColumns() - 10);
+    }
+  } else {
+    atualizarCabecalhosPlanilha();
   }
 }
 
 /**
- * Atalho para formatação manual dos cabeçalhos via menu da planilha
+ * Atalho de formatação manual para o menu da planilha
  */
 function formatarPlanilhaManualmente() {
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
-  var sheet = getNewsletterSheet(ss);
-  setupNewsletterHeaders(sheet);
-  try {
-    SpreadsheetApp.getUi().alert(
-      "Workshop SENAI 2026",
-      "Aba 'Inscritos Lembrete' configurada com sucesso para a régua oficial de 5 e-mails (10 colunas)!",
-      SpreadsheetApp.getUi().ButtonSet.OK
-    );
-  } catch (e) {}
+  return atualizarCabecalhosPlanilha();
 }
 
 /**
@@ -201,7 +270,7 @@ function doPost(e) {
     }
 
     if (linhaAlvo !== -1) {
-      // Atualiza registro existente (colunas 1 a 6) mantendo o status dos e-mails 2 a 5
+      // Atualiza dados cadastrais (colunas 1 a 6) mantendo o status dos e-mails 2 a 5 intactos
       sheet.getRange(linhaAlvo, 1, 1, 6).setValues([[
         timestamp,
         nome,
@@ -211,21 +280,26 @@ function doPost(e) {
         statusEmail1
       ]]);
     } else {
-      // Adiciona novo inscrito com as 10 colunas
+      // Adiciona novo inscrito com EXATAMENTE 10 colunas (A até J)
       sheet.appendRow([
-        timestamp,    // Col 1: Data e Hora
-        nome,         // Col 2: Nome
-        email,        // Col 3: E-mail
-        perfil,       // Col 4: Perfil / Segmento
-        origem,       // Col 5: Origem / Página
-        statusEmail1, // Col 6: E-mail 1 (Cadastro - Imediato)
-        "Pendente",   // Col 7: E-mail 2 (30/11 às 08h)
-        "Pendente",   // Col 8: E-mail 3 (01/12 às 07h - Dia 1)
-        "Pendente",   // Col 9: E-mail 4 (02/12 às 07h - Dia 2)
-        "Pendente"    // Col 10: E-mail 5 (03/12 às 07h - Dia 3)
+        timestamp,    // Col 1 (A): Data e Hora
+        nome,         // Col 2 (B): Nome
+        email,        // Col 3 (C): E-mail
+        perfil,       // Col 4 (D): Perfil / Segmento
+        origem,       // Col 5 (E): Origem / Página
+        statusEmail1, // Col 6 (F): E-mail 1 (Cadastro)
+        "Pendente",   // Col 7 (G): E-mail 2 (Véspera 30/11 08h)
+        "Pendente",   // Col 8 (H): E-mail 3 (Dia 1 01/12 07h)
+        "Pendente",   // Col 9 (I): E-mail 4 (Dia 2 02/12 07h)
+        "Pendente"    // Col 10 (J): E-mail 5 (Dia 3 03/12 07h)
       ]);
       linhaAlvo = sheet.getLastRow();
       sheet.getRange(linhaAlvo, 1, 1, 10).setFontSize(10).setVerticalAlignment("middle");
+    }
+
+    // Garante que nenhuma coluna excedente (K, L...) seja mantida
+    if (sheet.getMaxColumns() > 10) {
+      sheet.deleteColumns(11, sheet.getMaxColumns() - 10);
     }
 
     return ContentService
@@ -261,6 +335,7 @@ function doGet(e) {
       status: "ok",
       servico: "SENAI Workshop 2026 — Lembretes por E-mail",
       totalInscritos: total,
+      colunas: 10,
       timestamp: Utilities.formatDate(new Date(), "America/Sao_Paulo", "dd/MM/yyyy HH:mm:ss")
     };
 
@@ -306,7 +381,7 @@ function gerarHtmlEmail(estagio, nome, perfil) {
       config.preheader = "Sua inscrição para receber avisos do Workshop SENAI 2026 foi confirmada com sucesso!";
       config.badgeTitulo = "INSCRIÇÃO CONFIRMADA • WORKSHOP SENAI 2026";
       config.titulo = "Seu lembrete está confirmado!";
-      config.mensagem = "Olá, <strong>" + nomeDisplay + "</strong>" + perfilTexto + "! Agradecemos pela sua inscrição para acompanhar o <strong>Workshop SENAI 2026</strong>. Guarde esta mensagem: nós avisaremos você nos dias do evento para você não perder nada!";
+      config.mensagem = "Olá, <strong>" + nomeDisplay + "</strong>" + perfilTexto + "! Agradecemos pela sua inscrição para acompanhar o <strong>Workshop SENAI 2026</strong>. Guarde esta mensagem: nós avisaremos você nas etapas do evento para não perder nada!";
       config.destaque = "Nossos formandos estão nos preparativos finais para apresentar 40 projetos práticos de alto impacto tecnológico.";
       break;
 
@@ -316,7 +391,7 @@ function gerarHtmlEmail(estagio, nome, perfil) {
       config.preheader = "Prepare-se! Terça, quarta e quinta-feira (01, 02 e 03/12) das 08h às 17h em São Carlos.";
       config.badgeTitulo = "FALTAM 2 DIAS • COMEÇA TERÇA-FEIRA";
       config.titulo = "O Workshop SENAI 2026 começa nesta terça-feira!";
-      config.mensagem = "Olá, <strong>" + nomeDisplay + "</strong>! A contagem regressiva começou: faltam apenas <strong>2 dias</strong> para a abertura oficial do Workshop SENAI 2026 da Escola SENAI Antonio Adolpho Lobbe em São Carlos.";
+      config.mensagem = "Olá, <strong>" + nomeDisplay + "</strong>! A contagem regressiva começou: faltam apenas <strong>2 dias</strong> para a abertura oficial do Workshop SENAI 2026 na Escola SENAI Antonio Adolpho Lobbe em São Carlos.";
       config.destaque = "Serão 3 dias intensos de apresentações, protótipos em bancada, softwares inteligentes, robôs e automações industriais.";
       break;
 
@@ -523,20 +598,20 @@ function dispararLoteEmail(estagio, colunaStatus, rotuloAssunto) {
 
         sheet.getRange(i + 2, colunaStatus).setValue("Enviado em " + timestamp);
         totalEnviados++;
-        Utilities.sleep(150); // Pausa de 150ms para respeitar limites do Google
+        Utilities.sleep(150); // Pausa de segurança de 150ms anti-bloqueio
       } catch (err) {
         sheet.getRange(i + 2, colunaStatus).setValue("Falha: " + err.message);
       }
     }
   }
 
-  var msgFinal = "Disparo concluído: " + totalEnviados + " e-mail(s) enviado(s) para o estágio '" + estagio + "'.";
+  var msgFinal = "Disparo concluído: " + totalEnviados + " e-mail(s) enviado(s) para o lote (Coluna " + colunaStatus + ").";
   Logger.log(msgFinal);
   return msgFinal;
 }
 
 /**
- * Funções específicas para cada lote da régua oficial
+ * Funções específicas para cada lote da régua oficial (Colunas 7, 8, 9 e 10)
  */
 function dispararLoteEmail2_30Nov() {
   return dispararLoteEmail("lembrete_30nov", 7, "⏰ Faltam 2 dias! Workshop SENAI 2026 começa nesta terça-feira");
@@ -609,7 +684,7 @@ function configurarAgendamentosAutomaticos() {
 
   var fuso = "America/Sao_Paulo";
 
-  // 1. E-mail 2: 30/11/2026 às 08h00
+  // 1. E-mail 2: 30/11/2026 às 08h00 (Véspera)
   var dataEmail2 = new Date(2026, 10, 30, 8, 0, 0); // Mês 10 = Novembro em JS
   ScriptApp.newTrigger("dispararLoteEmail2_30Nov")
     .timeBased()
@@ -617,7 +692,7 @@ function configurarAgendamentosAutomaticos() {
     .inTimezone(fuso)
     .create();
 
-  // 2. E-mail 3: 01/12/2026 às 07h00
+  // 2. E-mail 3: 01/12/2026 às 07h00 (Dia 1)
   var dataEmail3 = new Date(2026, 11, 1, 7, 0, 0); // Mês 11 = Dezembro em JS
   ScriptApp.newTrigger("dispararLoteEmail3_01Dez")
     .timeBased()
@@ -625,7 +700,7 @@ function configurarAgendamentosAutomaticos() {
     .inTimezone(fuso)
     .create();
 
-  // 3. E-mail 4: 02/12/2026 às 07h00
+  // 3. E-mail 4: 02/12/2026 às 07h00 (Dia 2)
   var dataEmail4 = new Date(2026, 11, 2, 7, 0, 0);
   ScriptApp.newTrigger("dispararLoteEmail4_02Dez")
     .timeBased()
@@ -633,7 +708,7 @@ function configurarAgendamentosAutomaticos() {
     .inTimezone(fuso)
     .create();
 
-  // 4. E-mail 5: 03/12/2026 às 07h00
+  // 4. E-mail 5: 03/12/2026 às 07h00 (Dia 3)
   var dataEmail5 = new Date(2026, 11, 3, 7, 0, 0);
   ScriptApp.newTrigger("dispararLoteEmail5_03Dez")
     .timeBased()
@@ -642,7 +717,7 @@ function configurarAgendamentosAutomaticos() {
     .create();
 
   var msg = "Agendamentos automáticos ativados com sucesso:\n" +
-            "• E-mail 2: 30/11/2026 às 08h00\n" +
+            "• E-mail 2: 30/11/2026 às 08h00 (Véspera)\n" +
             "• E-mail 3: 01/12/2026 às 07h00 (Dia 1)\n" +
             "• E-mail 4: 02/12/2026 às 07h00 (Dia 2)\n" +
             "• E-mail 5: 03/12/2026 às 07h00 (Dia 3)";
@@ -696,21 +771,21 @@ function onOpen() {
   try {
     SpreadsheetApp.getUi()
       .createMenu("🔔 Workshop 2026 — Lembretes")
-      .addItem("✉️ Enviar E-mail de Teste para Mim (1. Boas-vindas)", "testarEnvioEmail1")
-      .addItem("✉️ Enviar E-mail de Teste para Mim (2. 30/11 08h)", "testarEnvioEmail2")
-      .addItem("✉️ Enviar E-mail de Teste para Mim (3. 01/12 07h)", "testarEnvioEmail3")
-      .addItem("✉️ Enviar E-mail de Teste para Mim (4. 02/12 07h)", "testarEnvioEmail4")
-      .addItem("✉️ Enviar E-mail de Teste para Mim (5. 03/12 07h)", "testarEnvioEmail5")
+      .addItem("✉️ Enviar E-mail de Teste para Mim (1. Cadastro)", "testarEnvioEmail1")
+      .addItem("✉️ Enviar E-mail de Teste para Mim (2. Véspera 30/11 08h)", "testarEnvioEmail2")
+      .addItem("✉️ Enviar E-mail de Teste para Mim (3. Dia 1 01/12 07h)", "testarEnvioEmail3")
+      .addItem("✉️ Enviar E-mail de Teste para Mim (4. Dia 2 02/12 07h)", "testarEnvioEmail4")
+      .addItem("✉️ Enviar E-mail de Teste para Mim (5. Dia 3 03/12 07h)", "testarEnvioEmail5")
       .addSeparator()
       .addItem("⏰ Ativar Agendamento Automático dos 4 Lotes (30/11 a 03/12)", "configurarAgendamentosAutomaticos")
       .addItem("⏹️ Cancelar Todos os Agendamentos Automáticos", "cancelarAgendamentosManualmente")
       .addSeparator()
-      .addItem("🚀 Disparar AGORA Lote 2 (30/11 - 08h)", "executarLote2Manual")
-      .addItem("🚀 Disparar AGORA Lote 3 (01/12 - 07h - Dia 1)", "executarLote3Manual")
-      .addItem("🚀 Disparar AGORA Lote 4 (02/12 - 07h - Dia 2)", "executarLote4Manual")
-      .addItem("🚀 Disparar AGORA Lote 5 (03/12 - 07h - Dia 3)", "executarLote5Manual")
+      .addItem("🚀 Disparar AGORA Lote 2 (Véspera 30/11 - 08h)", "executarLote2Manual")
+      .addItem("🚀 Disparar AGORA Lote 3 (Dia 1 01/12 - 07h)", "executarLote3Manual")
+      .addItem("🚀 Disparar AGORA Lote 4 (Dia 2 02/12 - 07h)", "executarLote4Manual")
+      .addItem("🚀 Disparar AGORA Lote 5 (Dia 3 03/12 - 07h)", "executarLote5Manual")
       .addSeparator()
-      .addItem("🔧 Configurar/Verificar Cabeçalhos da Planilha (10 Colunas)", "formatarPlanilhaManualmente")
+      .addItem("🔧 Atualizar Cabeçalhos e Remover Colunas K/L (10 Colunas)", "formatarPlanilhaManualmente")
       .addToUi();
   } catch (err) {
     // Modo headless

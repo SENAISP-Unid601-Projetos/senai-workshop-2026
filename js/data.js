@@ -587,9 +587,9 @@ window.SITE = {
             { data: "02/12/2026", horario: "das 8h às 17h" },
             { data: "03/12/2026", horario: "das 13h às 17h" }
           ],
-          landing: "",
-          funcionamento: "",
-          comercial: ""
+          landing: "https://sites.google.com/docente.senai.br/mecavision?usp=sharing",
+          funcionamento: "https://youtu.be/3Z-v8Awbyy0?is=niZgLOTVKH88JwX3",
+          comercial: "https://youtu.be/ehDyFFJY30g?is=b9E8rV0ZaY9MojEu"
         },
         {
           id: "mec-6",
@@ -605,7 +605,7 @@ window.SITE = {
             { data: "03/12/2026", horario: "das 13h às 17h" }
           ],
           landing: "https://sites.google.com/aluno.senai.br/smartfactory/in%C3%ADcio",
-          funcionamento: "",
+          funcionamento: "https://youtu.be/bWXB2GlRraw",
           comercial: "https://youtu.be/DaIIry128DA"
         },
         {
@@ -690,7 +690,7 @@ window.SITE = {
             { data: "03/12/2026", horario: "das 8h às 17h" }
           ],
           landing: "https://sites.google.com/aluno.senai.br/motortech/p%C3%A1gina-inicial",
-          funcionamento: "",
+          funcionamento: "https://youtu.be/emsoAGRS53U?si=odFWWNdVva6ad4DV",
           comercial: "https://youtu.be/a3GSUYtcUbE?si=7_TwsibmukGdeyC3"
         },
         {

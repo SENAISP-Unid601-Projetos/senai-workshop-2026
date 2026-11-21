@@ -627,7 +627,7 @@ window.SITE = {
         },
         {
           id: "mec-8",
-          nome: "CyberPipe",
+          nome: "FlowBotics",
           turma: "2IMEC-B",
           integrantes: ["Lívia Cardoso", "Lívia Caliel", "Lívia Santos", "Karyna Napolitano"],
           subtitulo: "CompactMover, Movimentando de forma mais inteligente, reduzindo riscos , acelerando o crescimento.",

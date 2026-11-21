@@ -530,7 +530,7 @@ window.SITE = {
           integrantes: ["Brenda Coelho Santos", "Guilherme Henrique Rosado", "Enzo Deresto", "Diego Montanari"],
           subtitulo: "Transformando precisão em inteligência; Inovando o futuro da furação.",
           descricao: "O objetivo do projeto é modernizar uma furadeira de bancada convencional por meio da automação e da tecnologia, tornando o processo de furação mais preciso, seguro e eficiente. Seu diferencial está na integração de sensores, laser e uma IHM, que permitem maior controle da operação, monitoramento das informações e facilidade de uso.",
-          imagem: "img/projetos/mec-2.jpeg",
+          imagem: "img/projetos/mec-2.png",
           alunos: 0,
           apresentacao: [
             { data: "02/12/2026", horario: "das 8h às 17h" },
@@ -578,10 +578,10 @@ window.SITE = {
           id: "mec-5",
           nome: "MecaVision",
           turma: "2IMEC-B",
-          integrantes: "",
+          integrantes: ["Luis Chiesse", "Natalia Sala", "Lucas Alves"],
           subtitulo: "Frase de destaque do projeto",
-          descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.",
-          imagem: "img/projetos/mec-x.jpeg",
+          descricao: "O projeto Monta Cubo tem como objetivo inovar o processo de montagem do cubo mágico utilizando visão computacional. Seu principal diferencial é oferecer três kits com diferentes propostas e funcionalidades, proporcionando versatilidade, acessibilidade e uma experiência tecnológica de aprendizagem.",
+          imagem: "img/projetos/mec-5.jpeg",
           alunos: 0,
           apresentacao: [
             { data: "02/12/2026", horario: "das 8h às 17h" },
@@ -673,7 +673,7 @@ window.SITE = {
             { data: "03/12/2026", horario: "das 8h às 17h" }
           ],
           landing: "https://sites.google.com/aluno.senai.br/bratorq/in%C3%ADcio",
-          funcionamento: "",
+          funcionamento: "https://www.youtube.com/watch?v=S9cxZcED_rc",
           comercial: "https://youtu.be/Dss8px-Ml50?feature=shared"
         },
         {
@@ -697,7 +697,7 @@ window.SITE = {
           id: "mec-12",
           nome: "AFID Machining",
           turma: "2IMEC-C",
-          integrantes: "",
+          integrantes: ["Arthur Seifert", "Daniel Ramos", "Felipe Fuzato", "Isabela Pedrozo"],
           subtitulo: "Transformando ideias em circuitos, com precisão e inovação.",
           descricao: "O projeto AFID Machining consiste no desenvolvimento de uma CNC Router voltada à fabricação e prototipagem de placas de circuito impresso (PCBs), com o objetivo de tornar esse processo mais acessível, prático e preciso. Desenvolvida por estudantes de Mecatrônica, a máquina utiliza três eixos de movimentação (X, Y e Z), motores de passo e um sistema de controle automatizado para executar trajetórias de usinagem a partir de comandos digitais. Atualmente em fase de desenvolvimento e montagem, o projeto busca integrar conhecimentos de mecânica, eletrônica e programação, oferecendo uma solução que facilite a criação de protótipos eletrônicos e incentive a inovação tecnológica.",
           imagem: "img/projetos/mec-12.png",
@@ -733,7 +733,7 @@ window.SITE = {
           turma: "2IMEC-C",
           integrantes: ["Breno Rafael", "Gleison Santos", "Bruno Gabriel", "Gabriel Lino"],
           subtitulo: "Transformando inovação em movimento, precisão em cada giro e eficiência em cada solda.",
-          descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.",
+          descricao: "O WeldTorno surgiu a partir da necessidade de facilitar o processo de soldagem de peças cilíndricas, proporcionando uma rotação controlada e contínua durante a execução da solda. ",
           imagem: "img/projetos/mec-14.png",
           alunos: 0,
           apresentacao: [
@@ -751,7 +751,7 @@ window.SITE = {
           integrantes: ["Ana Rubia Pedro", "Anna Julia Paris", "Ana Julia Viana", "Amanda de Lúcia"],
           subtitulo: "Inovação que ensina.",
           descricao: "Desenvolver uma prensa pneumática didática, compacta e segura, com o objetivo de modernizar o ensino técnico, aproximando os estudantes da realidade industrial e proporcionando uma aprendizagem prática em pneumática, comandos elétricos e dispositivos de segurança, considerando os requisitos da NR-12.",
-          imagem: "img/projetos/mec-x.jpeg",
+          imagem: "img/projetos/mec-15.png",
           alunos: 0,
           apresentacao: [
             { data: "02/12/2026", horario: "das 13h às 17h" },

@@ -2528,7 +2528,8 @@ body.modal-open {
   }
 
   .modal-scroll {
-    padding: 18px 16px;
+    padding: 18px 16px 36px !important;
+    padding-bottom: max(36px, env(safe-area-inset-bottom, 24px)) !important;
     gap: 12px
   }
 
@@ -2585,7 +2586,8 @@ body.modal-open {
     flex-direction: column !important;
     align-items: stretch !important;
     gap: 12px !important;
-    padding: 14px 16px !important;
+    padding: 14px 16px 22px !important;
+    margin-bottom: 14px !important;
     white-space: normal !important;
     overflow-x: visible !important;
   }
@@ -2630,17 +2632,21 @@ body.modal-open {
     justify-content: center !important;
     gap: 6px !important;
     flex-shrink: 0 !important;
+    padding: 4px 6px 8px !important;
+    overflow: visible !important;
   }
 
   .star-btn {
     font-size: 1.6rem !important;
-    padding: 3px 6px !important;
+    line-height: 1.15 !important;
+    padding: 4px 6px 6px !important;
     min-width: 34px !important;
-    min-height: 38px !important;
+    min-height: 42px !important;
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
     touch-action: manipulation !important;
+    overflow: visible !important;
   }
 }
 

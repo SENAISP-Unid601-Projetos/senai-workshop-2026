@@ -337,14 +337,14 @@ window.SITE = {
           nome: "AutoSort",
           turma: "2IELE-SEDUC",
           integrantes: ["Bianca Cremonezzi", "Erick Kennedy", "Gabriel Casagrande Borges do Rosário", "Leticia Moreira Laurentino Leite", "Matheus Ferreira Patricio", "Rhuan Donda Cardoso"],
-          subtitulo: "Frase de destaque do projeto",
-          descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.",
-          imagem: "img/projetos/mec-x.jpeg",
+          subtitulo: "O futuro em boas mãos.",
+          descricao: "O *AutoSort* é uma empresa responsável pelo projeto de retrofit de uma bancada didática de automação industrial, que busca modernizar sua estrutura por meio da atualização de componentes e da integração de um novo CLP. O sistema utiliza sensores ópticos para identificar diferentes tipos de peças e controlar sua movimentação e separação automática. O projeto tem como objetivo aproximar o ensino técnico das tecnologias utilizadas na indústria.",
+          imagem: "img/projetos/ele-1.png",
           alunos: 0,
           apresentacao: [
             { data: "01/12/2026", horario: "das 8h às 17h" }
           ],
-          landing: "",
+          landing: "https://sites.google.com/aluno.senai.br/autosort?usp=sharing",
           funcionamento: "https://youtu.be/LZEhbVGpsmU?si=riTi2TbZa0w5ILxi",
           comercial: "https://youtu.be/Llgg_pCNkJw?si=jrdOpYIPPgZtMtEh"
         },
@@ -353,14 +353,14 @@ window.SITE = {
           nome: "RACM",
           turma: "2IELE-SEDUC",
           integrantes: ["Eduardo Vieira Jacob", "Charles Wagner da Silva Bomfim", "David Sander da Silva dos Santos", "Vitor Gabriel Ramiro de Oliveira", "João Vitor Barbosa Martins"],
-          subtitulo: "Frase de destaque do projeto",
-          descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.",
-          imagem: "img/projetos/mec-x.jpeg",
+          subtitulo: "Modernizando o presente e construindo o futuro da indústria.",
+          descricao: "O projeto consiste no retrofit de uma célula eletropneumática, visando modernizar equipamentos existentes, melhorar os processos de automação industrial e reduzir custos por meio do reaproveitamento de componentes.",
+          imagem: "img/projetos/ele-2.png",
           alunos: 0,
           apresentacao: [
             { data: "01/12/2026", horario: "das 8h às 17h" }
           ],
-          landing: "",
+          landing: "https://sites.google.com/aluno.senai.br/racmproject/inicio",
           funcionamento: "https://youtu.be/PL5HY8tn3ng?si=o81csFdsYzURHmzI",
           comercial: "https://youtu.be/e2MF2aUY-hc?si=JHQNgwzY2xl4clnV"
         },
@@ -369,9 +369,9 @@ window.SITE = {
           nome: "VotScan",
           turma: "2IELE-SEDUC",
           integrantes: ["João Pedro Nais", "Rafael Marques", "Vinicius Amos", "Albino lima", "Ruan Moraes"],
-          subtitulo: "Frase de destaque do projeto",
-          descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.",
-          imagem: "img/projetos/mec-x.jpeg",
+          subtitulo: "Mais prática, mais diagnóstico, mais aprendizado.",
+          descricao: "O VoltScan é um projeto desenvolvido para auxiliar no ensino de manutenção elétrica, utilizando tecnologia para simular falhas em painéis elétricos. Por meio de uma ESP32, relés e um aplicativo, o sistema permite criar situações em que os alunos podem praticar a identificação e o diagnóstico de problemas, desenvolvendo habilidades técnicas e aproximando o aprendizado da realidade profissional.",
+          imagem: "img/projetos/ele-3.png",
           alunos: 0,
           apresentacao: [
             { data: "01/12/2026", horario: "das 8h às 17h" }
@@ -385,14 +385,14 @@ window.SITE = {
           nome: "Nexo",
           turma: "2IELE-SEDUC",
           integrantes: ["Ananda Caroline Lourenço da Silva", "Cauã Dotti Santos", "Daniel Santos Bezerra", "Lucas Camargo dos Santos", "Vinícius Henrique Menochelli"],
-          subtitulo: "Frase de destaque do projeto",
-          descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.",
-          imagem: "img/projetos/mec-x.jpeg",
+          subtitulo: "Conectando Ideias. Criando Soluções.",
+          descricao: "O objetivo principal se resume em construir um kit didático funcional, auxiliar os alunos no de-senvolvimento de competências técnicas por meio de uma metodologia prática sim-ples e dinâmica, além disso, economizar tempo para que o docente conclua suas aulas com êxito.",
+          imagem: "img/projetos/ele-4.png",
           alunos: 0,
           apresentacao: [
             { data: "01/12/2026", horario: "das 8h às 17h" }
           ],
-          landing: "",
+          landing: "https://sites.google.com/view/projeto-nexo-kit/home",
           funcionamento: "",
           comercial: ""
         },

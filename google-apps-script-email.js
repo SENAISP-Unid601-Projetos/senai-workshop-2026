@@ -7,7 +7,7 @@
  * (Nesta planilha NÃO existem as colunas K 'Nota Apresentação' e L 'Nota Ideia e Solução'.
  *  As notas e visitas pertencem à Planilha de Leads gerenciada por google-apps-script.js).
  *
- * Evento Oficial: 01, 02 e 03 de Dezembro de 2026 (08h às 17h)
+ * Evento Oficial: 01, 02 e 03 de Dezembro de 2026 (08h30 às 12h e das 13h30 às 17h)
  * Cursos Técnicos Apresentados:
  *  - Desenvolvimento de Sistemas (DS)
  *  - Eletroeletrônica (ELE)
@@ -388,27 +388,27 @@ function gerarHtmlEmail(estagio, nome, perfil) {
     case "lembrete_30nov":
     case "email2":
       config.assunto = "⏰ Faltam 2 dias! Workshop SENAI 2026 começa nesta terça-feira (01/12)";
-      config.preheader = "Prepare-se! Terça, quarta e quinta-feira (01, 02 e 03/12) das 08h às 17h em São Carlos.";
+      config.preheader = "Prepare-se! Terça, quarta e quinta-feira (01, 02 e 03/12) das 08h30 às 12h e das 13h30 às 17h em São Carlos.";
       config.badgeTitulo = "FALTAM 2 DIAS • COMEÇA TERÇA-FEIRA";
       config.titulo = "O Workshop SENAI 2026 começa nesta terça-feira!";
       config.mensagem = "Olá, <strong>" + nomeDisplay + "</strong>! A contagem regressiva começou: faltam apenas <strong>2 dias</strong> para a abertura oficial do Workshop SENAI 2026 na Escola SENAI Antonio Adolpho Lobbe em São Carlos.";
-      config.destaque = "Serão 3 dias intensos de apresentações, protótipos em bancada, softwares inteligentes, robôs e automações industriais.";
+      config.destaque = "Serão 3 dias intensos de apresentações, protótipos em bancada, softwares inteligentes, robôs e automações industriais (com horário das 08h30 às 12h e das 13h30 às 17h).";
       break;
 
     case "lembrete_01dez":
     case "email3":
       config.assunto = "🚀 É HOJE! Começou o Workshop SENAI 2026 — 1º Dia de Apresentações";
-      config.preheader = "Portões abertos a partir das 08h! Entrada gratuita na Escola SENAI São Carlos.";
+      config.preheader = "Portões abertos a partir das 08h30! Entrada gratuita na Escola SENAI São Carlos.";
       config.badgeTitulo = "É HOJE • 1º DIA DE APRESENTAÇÕES (01/12)";
       config.titulo = "É hoje! O 1º dia do Workshop SENAI 2026 começou!";
-      config.mensagem = "Olá, <strong>" + nomeDisplay + "</strong>! O grande dia chegou! A partir das <strong>08h</strong>, os portões do SENAI São Carlos estão abertos para você conhecer de perto as soluções criadas pelos nossos futuros técnicos.";
+      config.mensagem = "Olá, <strong>" + nomeDisplay + "</strong>! O grande dia chegou! A partir das <strong>08h30</strong>, os portões do SENAI São Carlos estão abertos para você conhecer de perto as soluções criadas pelos nossos futuros técnicos (com apresentações das 08h30 às 12h e das 13h30 às 17h).";
       config.destaque = "Venha conversar com as equipes, assistir aos pitches técnicos e comerciais e avaliar as soluções inovadoras.";
       break;
 
     case "lembrete_02dez":
     case "email4":
       config.assunto = "⚡ 2º Dia do Workshop SENAI 2026: Novas Apresentações e Tecnologias";
-      config.preheader = "O evento continua nesta quarta-feira (02/12) das 08h às 17h. Venha prestigiar!";
+      config.preheader = "O evento continua nesta quarta-feira (02/12) das 08h30 às 12h e das 13h30 às 17h. Venha prestigiar!";
       config.badgeTitulo = "2º DIA • O WORKSHOP CONTINUA (02/12)";
       config.titulo = "2º Dia! O Workshop SENAI 2026 continua a todo vapor!";
       config.mensagem = "Olá, <strong>" + nomeDisplay + "</strong>! O segundo dia do Workshop SENAI 2026 já está acontecendo com novas bancas avaliadoras, demonstrações ao vivo e networking com empresas e a comunidade.";
@@ -418,11 +418,11 @@ function gerarHtmlEmail(estagio, nome, perfil) {
     case "lembrete_03dez":
     case "email5":
       config.assunto = "🏆 Último Dia! Grande Encerramento e Premiação do Workshop SENAI 2026";
-      config.preheader = "Hoje (03/12) é o último dia das 08h às 17h. Encerramento com as melhores soluções técnicas!";
+      config.preheader = "Hoje (03/12) é o último dia das 08h30 às 12h e das 13h30 às 17h. Encerramento com as melhores soluções técnicas!";
       config.badgeTitulo = "ÚLTIMO DIA • GRANDE ENCERRAMENTO (03/12)";
       config.titulo = "Último dia! Grande encerramento do Workshop SENAI 2026!";
       config.mensagem = "Olá, <strong>" + nomeDisplay + "</strong>! Hoje é a sua última oportunidade de prestigiar nossos formandos, conhecer os 40 projetos e acompanhar as apresentações finais de encerramento do Workshop 2026.";
-      config.destaque = "Aproveite hoje até as 17h para visitar os estandes, interagir com os alunos e docentes e conhecer o futuro da indústria e da tecnologia.";
+      config.destaque = "Aproveite hoje das 08h30 às 12h e das 13h30 às 17h para visitar os estandes, interagir com os alunos e docentes e conhecer o futuro da indústria e da tecnologia.";
       break;
   }
 
@@ -492,7 +492,7 @@ function gerarHtmlEmail(estagio, nome, perfil) {
               '<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f8fafc;border:1px solid #e2e8f0;border-left:5px solid #e4002b;border-radius:8px;margin-bottom:26px;">' +
                 '<tr><td style="padding:18px 20px;">' +
                   '<p style="margin:0 0 8px;font-size:14px;color:#0f172a;"><strong>📅 Data:</strong> 01, 02 e 03 de Dezembro de 2026 (Terça, Quarta e Quinta)</p>' +
-                  '<p style="margin:0 0 8px;font-size:14px;color:#0f172a;"><strong>⏰ Horário:</strong> Das 08h às 17h • Entrada Gratuita</p>' +
+                  '<p style="margin:0 0 8px;font-size:14px;color:#0f172a;"><strong>⏰ Horário:</strong> Das 08h30 às 12h e das 13h30 às 17h • Entrada Gratuita</p>' +
                   '<p style="margin:0 0 8px;font-size:14px;color:#0f172a;"><strong>📍 Local:</strong> Escola SENAI Antonio Adolpho Lobbe</p>' +
                   '<p style="margin:0;font-size:13px;color:#64748b;">R. Cândido Padim, 25 - Vila Prado, São Carlos - SP</p>' +
                 '</td></tr>' +

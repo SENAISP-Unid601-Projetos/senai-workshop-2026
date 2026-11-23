@@ -71,7 +71,7 @@ window.SITE = {
          - imagem: Caminho da imagem de capa (ex: "img/projetos/ds-1.jpeg")
          - apresentacao: Dias e horários de apresentação por equipe:
              [
-               { data: "02/12/2026", horario: "das 8h às 17h" },
+               { data: "02/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" },
                { data: "03/12/2026", horario: "das 13h às 17h" }
              ]
          - alunos: Quantidade de alunos (opcional se preencher integrantes)
@@ -652,8 +652,8 @@ window.SITE = {
           imagem: "img/projetos/mec-9.png",
           alunos: 0,
           apresentacao: [
-            { data: "02/12/2026", horario: "das 13h às 17h" },
-            { data: "03/12/2026", horario: "das 8h às 17h" }
+            { data: "02/12/2026", horario: "das 13h30 às 17h" },
+            { data: "03/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" }
           ],
           landing: "",
           funcionamento: "https://youtu.be/rTpyQ92vSVU?si=RRCgzd6_5Qx03kZI",
@@ -669,8 +669,8 @@ window.SITE = {
           imagem: "img/projetos/mec-10.jpg",
           alunos: 0,
           apresentacao: [
-            { data: "02/12/2026", horario: "das 13h às 17h" },
-            { data: "03/12/2026", horario: "das 8h às 17h" }
+            { data: "02/12/2026", horario: "das 13h30 às 17h" },
+            { data: "03/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" }
           ],
           landing: "https://sites.google.com/aluno.senai.br/bratorq/in%C3%ADcio",
           funcionamento: "https://www.youtube.com/watch?v=S9cxZcED_rc",
@@ -686,8 +686,8 @@ window.SITE = {
           imagem: "img/projetos/mec-11.jpg",
           alunos: 0,
           apresentacao: [
-            { data: "02/12/2026", horario: "das 13h às 17h" },
-            { data: "03/12/2026", horario: "das 8h às 17h" }
+            { data: "02/12/2026", horario: "das 13h30 às 17h" },
+            { data: "03/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" }
           ],
           landing: "https://sites.google.com/aluno.senai.br/motortech/p%C3%A1gina-inicial",
           funcionamento: "https://youtu.be/emsoAGRS53U?si=odFWWNdVva6ad4DV",
@@ -703,8 +703,8 @@ window.SITE = {
           imagem: "img/projetos/mec-12.png",
           alunos: 0,
           apresentacao: [
-            { data: "02/12/2026", horario: "das 13h às 17h" },
-            { data: "03/12/2026", horario: "das 8h às 17h" }
+            { data: "02/12/2026", horario: "das 13h30 às 17h" },
+            { data: "03/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" }
           ],
           landing: "https://sites.google.com/aluno.senai.br/afidmachining/in%C3%ADcio",
           funcionamento: "https://www.youtube.com/watch?v=7AjiiXWqtWg",
@@ -720,8 +720,8 @@ window.SITE = {
           imagem: "img/projetos/mec-13.png",
           alunos: 0,
           apresentacao: [
-            { data: "02/12/2026", horario: "das 13h às 17h" },
-            { data: "03/12/2026", horario: "das 8h às 17h" }
+            { data: "02/12/2026", horario: "das 13h30 às 17h" },
+            { data: "03/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" }
           ],
           landing: "https://sites.google.com/aluno.senai.br/moldcore/in%C3%ADcio",
           funcionamento: "https://www.youtube.com/watch?v=S1LuXnuzmKw",
@@ -737,8 +737,8 @@ window.SITE = {
           imagem: "img/projetos/mec-14.png",
           alunos: 0,
           apresentacao: [
-            { data: "02/12/2026", horario: "das 13h às 17h" },
-            { data: "03/12/2026", horario: "das 8h às 17h" }
+            { data: "02/12/2026", horario: "das 13h30 às 17h" },
+            { data: "03/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" }
           ],
           landing: "https://sites.google.com/aluno.senai.br/weldturn/in%C3%ADcio",
           funcionamento: "https://www.youtube.com/watch?v=IJF09taypvw",
@@ -754,8 +754,8 @@ window.SITE = {
           imagem: "img/projetos/mec-15.png",
           alunos: 0,
           apresentacao: [
-            { data: "02/12/2026", horario: "das 13h às 17h" },
-            { data: "03/12/2026", horario: "das 8h às 17h" }
+            { data: "02/12/2026", horario: "das 13h30 às 17h" },
+            { data: "03/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" }
           ],
           landing: "https://canva.link/ekrbuztgzn3y8ar",
           funcionamento: "https://youtu.be/M09hCnvOHok?si=JOSJQ7JFdF46fZkP",
@@ -771,8 +771,8 @@ window.SITE = {
           imagem: "img/projetos/mec-16.webp",
           alunos: 0,
           apresentacao: [
-            { data: "02/12/2026", horario: "das 13h às 17h" },
-            { data: "03/12/2026", horario: "das 8h às 17h" }
+            { data: "02/12/2026", horario: "das 13h30 às 17h" },
+            { data: "03/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" }
           ],
           landing: "https://sites.google.com/aluno.senai.br/nexusatlas/in%C3%ADcio",
           funcionamento: "https://youtu.be/YWlLSevBkzs?si=VtKE27a8S4rMoRUP",

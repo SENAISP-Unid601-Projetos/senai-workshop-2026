@@ -334,9 +334,9 @@ window.SITE = {
       projetos: [
         {
           id: "ele-1",
-          nome: "Projeto Eletro 1",
+          nome: "AutoSort",
           turma: "2IELE-SEDUC",
-          integrantes: "",
+          integrantes: ["Bianca Cremonezzi", "Erick Kennedy", "Gabriel Casagrande Borges do Rosário", "Leticia Moreira Laurentino Leite", "Matheus Ferreira Patricio", "Rhuan Donda Cardoso"],
           subtitulo: "Frase de destaque do projeto",
           descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.",
           imagem: "img/projetos/mec-x.jpeg",
@@ -345,14 +345,14 @@ window.SITE = {
             { data: "01/12/2026", horario: "das 8h às 17h" }
           ],
           landing: "",
-          funcionamento: "",
-          comercial: ""
+          funcionamento: "https://youtu.be/LZEhbVGpsmU?si=riTi2TbZa0w5ILxi",
+          comercial: "https://youtu.be/Llgg_pCNkJw?si=jrdOpYIPPgZtMtEh"
         },
         {
           id: "ele-2",
-          nome: "Projeto Eletro 2",
+          nome: "RACM",
           turma: "2IELE-SEDUC",
-          integrantes: "",
+          integrantes: ["Eduardo Vieira Jacob", "Charles Wagner da Silva Bomfim", "David Sander da Silva dos Santos", "Vitor Gabriel Ramiro de Oliveira", "João Vitor Barbosa Martins"],
           subtitulo: "Frase de destaque do projeto",
           descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.",
           imagem: "img/projetos/mec-x.jpeg",
@@ -361,14 +361,14 @@ window.SITE = {
             { data: "01/12/2026", horario: "das 8h às 17h" }
           ],
           landing: "",
-          funcionamento: "",
-          comercial: ""
+          funcionamento: "https://youtu.be/PL5HY8tn3ng?si=o81csFdsYzURHmzI",
+          comercial: "https://youtu.be/e2MF2aUY-hc?si=JHQNgwzY2xl4clnV"
         },
         {
           id: "ele-3",
-          nome: "Projeto Eletro 3",
+          nome: "VotScan",
           turma: "2IELE-SEDUC",
-          integrantes: "",
+          integrantes: ["João Pedro Nais", "Rafael Marques", "Vinicius Amos", "Albino lima", "Ruan Moraes"],
           subtitulo: "Frase de destaque do projeto",
           descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.",
           imagem: "img/projetos/mec-x.jpeg",
@@ -378,13 +378,13 @@ window.SITE = {
           ],
           landing: "",
           funcionamento: "",
-          comercial: ""
+          comercial: "https://drive.google.com/file/d/1tOKRRZa7WD3pLyrjlxR7tTj1OCLEzbro/view?usp=drivesdk"
         },
         {
           id: "ele-4",
-          nome: "Projeto Eletro 4",
+          nome: "Nexo",
           turma: "2IELE-SEDUC",
-          integrantes: "",
+          integrantes: ["Ananda Caroline Lourenço da Silva", "Cauã Dotti Santos", "Daniel Santos Bezerra", "Lucas Camargo dos Santos", "Vinícius Henrique Menochelli"],
           subtitulo: "Frase de destaque do projeto",
           descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.",
           imagem: "img/projetos/mec-x.jpeg",
@@ -398,7 +398,7 @@ window.SITE = {
         },
         {
           id: "ele-5",
-          nome: "Projeto Eletro 5",
+          nome: "Celeste",
           turma: "2IELE-SEDUC",
           integrantes: "",
           subtitulo: "Frase de destaque do projeto",
@@ -414,7 +414,7 @@ window.SITE = {
         },
         {
           id: "ele-6",
-          nome: "Projeto Eletro 6",
+          nome: "Raze",
           turma: "2IELE-SEDUC",
           integrantes: "",
           subtitulo: "Frase de destaque do projeto",
@@ -430,57 +430,57 @@ window.SITE = {
         },
         {
           id: "ele-7",
-          nome: "Projeto Eletro 7",
+          nome: "Predicta",
           turma: "4TELE-VW",
-          integrantes: "",
-          subtitulo: "Frase de destaque do projeto",
-          descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.",
+          integrantes: ["Anna Karolina Dantas dos Santos", "Christopher Silva da Costa", "Matheus Christian Papareli Barbosa", "Thaís de Oliveira"],
+          subtitulo: "A um passo à frente.",
+          descricao: "O SmartPredict é um sistema de manutenção preditiva industrial que coleta telemetria contínua de temperatura, vibração, pressão e umidade para antecipar falhas críticas. Executando inferência na borda (edge computing) em Raspberry Pi, o modelo de IA aprende a linha de base operacional da máquina e dispara alertas em tempo real via painel e ntfy ante anomalias, integrando documentação de engenharia com modelos 3D dos gabinetes.",
           imagem: "img/projetos/mec-x.jpeg",
           alunos: 0,
           apresentacao: [
             { data: "02/12/2026", horario: "das 13:30h às 16:30h" }
           ],
-          landing: "",
+          landing: "https://karolinadantas.github.io/predicta/",
           funcionamento: "",
-          comercial: ""
+          comercial: ""          
         },
         {
           id: "ele-8",
-          nome: "Projeto Eletro 8",
+          nome: "Trion",
           turma: "4TELE-VW",
-          integrantes: "",
+          integrantes: ["Gabriel Mathias", "Gustavo Peixoto de Freitas", "Gustavo Silveira", "Vitor Hugo Gini Sala"],
           subtitulo: "Frase de destaque do projeto",
-          descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.",
-          imagem: "img/projetos/mec-x.jpeg",
+          descricao: "O projeto de Retrofit da Mesa Seletora do grupo TRION consiste na renovação e modernização do equipamento, com foco na integração de um CLP (Controlador Lógico Programável) ao sistema de controle. O trabalho também abrange a modernização dos componentes do sistema de separação entre peças já existente e a atualização dos cilindros pneumáticos, visando maior precisão, confiabilidade e eficiência operacional do conjunto.",
+          imagem: "img/projetos/ele-8.png",
           alunos: 0,
           apresentacao: [
             { data: "02/12/2026", horario: "das 13:30h às 16:30h" }
           ],
-          landing: "",
-          funcionamento: "",
-          comercial: ""
+          landing: "https://sites.google.com/aluno.senai.br/trion/in%C3%ADcio",
+          funcionamento: "https://youtu.be/p-D8j1IhhUA?si=RLQFhPTrJt1cvQej",
+          comercial: "https://youtu.be/__tE0LGTysc?si=HdFK9eRUwFMzJT_j"
         },
         {
           id: "ele-9",
-          nome: "Projeto Eletro 9",
+          nome: "Vision Tech",
           turma: "4TELE-VW",
-          integrantes: "",
-          subtitulo: "Frase de destaque do projeto",
-          descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.",
-          imagem: "img/projetos/mec-x.jpeg",
+          integrantes: ["Isabela Guimarães da Silva", "Jennifer Gabrielli Fonseca", "Leomardo de Oliveira Otaviano", "Lucas Sperandio"],
+          subtitulo: "Tecnologia que enxerga.",
+          descricao: "A VisionTech apresenta um projeto de modernização de uma mesa seletora, substituindo os sensores convencionais de identificação de tamanho e cor por uma solução baseada em ESP32 e câmera. Por meio da visão computacional, o sistema busca realizar a identificação dos objetos de forma mais simplificada, reduzindo a quantidade de sensores físicos e, consequentemente, a necessidade de manutenção.",
+          imagem: "img/projetos/ele-9.jpg",
           alunos: 0,
           apresentacao: [
             { data: "02/12/2026", horario: "das 13:30h às 16:30h" }
           ],
-          landing: "",
+          landing: "https://jegabriellifonseca-web.github.io/VISIONTECH/",
           funcionamento: "",
-          comercial: ""
+          comercial: "https://www.youtube.com/watch?v=J-OVlAiYMRw"
         },
         {
           id: "ele-10",
-          nome: "Projeto Eletro 10",
+          nome: "RetroTech",
           turma: "4TELE-VW",
-          integrantes: "",
+          integrantes: ["Arthur Jacob de Paiva Santos", "Eduardo Minetto Corregliano", "Matheus de Rizzo Valério", "Pedro Miuel Gastaldi da Costa", "Rafael Ceschi Rufino"],
           subtitulo: "Frase de destaque do projeto",
           descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.",
           imagem: "img/projetos/mec-x.jpeg",

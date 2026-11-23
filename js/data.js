@@ -27,7 +27,7 @@ window.SITE = {
   /* Informações do Evento */
   evento: {
     data: "01, 02 e 03 de Dezembro de 2026",
-    horario: "Das 08h às 17h",
+    horario: "Das 08h30 às 12h e das 13h30 às 17h",
     diasSemana: { pt: "Terça, Quarta e Quinta-feira", en: "Tuesday, Wednesday and Thursday" },
     local: "Faculdade de Tecnologia e Escola SENAI Antonio Adolpho Lobbe",
     endereco: "R. Cândido Padim, 25 - Vila Prado, São Carlos - SP",

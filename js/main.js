@@ -70,7 +70,7 @@
       eventDateVal: "01, 02 e 03 de Dezembro de 2026",
       eventDateDays: "Terça, Quarta e Quinta-feira • Projetos em Exposição",
       eventTimeLabel: "Horário",
-      eventTimeVal: "Das 08h às 17h",
+      eventTimeVal: "Das 08h30 às 12h e das 13h30 às 17h",
       eventTimeSub: "Aberto ao público • Entrada gratuita",
       eventLocLabel: "Local",
       eventLocName: "Faculdade de Tecnologia e Escola SENAI",
@@ -82,7 +82,7 @@
       eventMapTitle: "📍 Mapa de Localização",
       eventViewRoute: "Ver rota no Google Maps ↗",
       eventHeroBadgeDate: "01, 02 e 03 de Dezembro",
-      eventHeroBadgeTime: "08h às 17h",
+      eventHeroBadgeTime: "08h30 às 12h e 13h30 às 17h",
       eventHeroBadgeLoc: "SENAI São Carlos",
       newsBadge: "Lembrete do Evento",
       newsTitle: "Não perca o Workshop SENAI 2026",
@@ -172,7 +172,7 @@
       eventDateVal: "December 1, 2 & 3, 2026",
       eventDateDays: "Tuesday, Wednesday & Thursday • Projects on Display",
       eventTimeLabel: "Hours",
-      eventTimeVal: "8:00 AM to 5:00 PM",
+      eventTimeVal: "8:30 AM to 12:00 PM & 1:30 PM to 5:00 PM",
       eventTimeSub: "Open to the public • Free admission",
       eventLocLabel: "Location",
       eventLocName: "SENAI College of Technology and School",
@@ -184,7 +184,7 @@
       eventMapTitle: "📍 Location Map",
       eventViewRoute: "Open in Google Maps ↗",
       eventHeroBadgeDate: "December 1, 2 & 3",
-      eventHeroBadgeTime: "8am – 5pm",
+      eventHeroBadgeTime: "8:30am–12pm & 1:30pm–5pm",
       eventHeroBadgeLoc: "SENAI São Carlos",
       newsBadge: "Event Reminder",
       newsTitle: "Don't Miss the SENAI Workshop 2026",
@@ -808,7 +808,7 @@
       '<div class="event-icon-box">⏰</div>' +
       '<div>' +
       '<h3>' + T("eventTimeLabel") + '</h3>' +
-      '<p><strong>' + T("eventTimeVal") + '</strong></p>' +
+      '<p><strong>' + ((S && S.evento && S.evento.horario) ? tr(S.evento.horario) : T("eventTimeVal")) + '</strong></p>' +
       '<span class="event-subtext">' + T("eventTimeSub") + '</span>' +
       '</div>' +
       '</div>' +
@@ -1419,7 +1419,7 @@
           '💻 Desenvolvimento de Sistemas &nbsp;•&nbsp; ⚡ Eletroeletrônica &nbsp;•&nbsp; 🤖 Mecatrônica' +
         '</div>' +
         '<div class="main-a4-clean-event-line">' +
-          '📅 01, 02 e 03 de Dezembro • Das 08h às 17h • 📍 SENAI São Carlos • Entrada Gratuita' +
+          '📅 01, 02 e 03 de Dezembro • Das 08h30 às 12h e 13h30 às 17h • 📍 SENAI São Carlos • Entrada Gratuita' +
         '</div>' +
       '</div>' +
     '</div>';
@@ -1581,7 +1581,7 @@
 
     ctx.font = "600 24px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
     ctx.fillStyle = "#64748b";
-    ctx.fillText("📅 01, 02 e 03 de Dezembro • Das 08h às 17h • 📍 SENAI São Carlos • Entrada Gratuita", width / 2, height - 145);
+    ctx.fillText("📅 01, 02 e 03 de Dezembro • Das 08h30 às 12h e 13h30 às 17h • 📍 SENAI São Carlos • Entrada Gratuita", width / 2, height - 145);
 
     return canvas;
   }

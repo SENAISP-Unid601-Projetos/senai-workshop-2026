@@ -378,7 +378,7 @@ window.SITE = {
           ],
           landing: "https://sites.google.com/aluno.senai.br/testevoltwsss/in%C3%ADcio",
           funcionamento: "",
-          comercial: "https://drive.google.com/file/d/1tOKRRZa7WD3pLyrjlxR7tTj1OCLEzbro/view?usp=drivesdk"
+          comercial: "https://youtube.com/shorts/otA-uUibR3s?is=RP9uTCZb-rApQyf8"
         },
         {
           id: "ele-4",

@@ -376,7 +376,7 @@ window.SITE = {
           apresentacao: [
             { data: "01/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" }
           ],
-          landing: "",
+          landing: "https://sites.google.com/aluno.senai.br/testevoltwsss/in%C3%ADcio",
           funcionamento: "",
           comercial: "https://drive.google.com/file/d/1tOKRRZa7WD3pLyrjlxR7tTj1OCLEzbro/view?usp=drivesdk"
         },
@@ -400,10 +400,10 @@ window.SITE = {
           id: "ele-5",
           nome: "Celeste",
           turma: "2IELE-SEDUC",
-          integrantes: "",
-          subtitulo: "Frase de destaque do projeto",
-          descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.",
-          imagem: "img/projetos/mec-x.jpeg",
+          integrantes: ["Luiz Guilherme Costa", "Luiz Ricardo Leite", "Rafael Henrique Gonçalves Aguiar", "Juan Henrique da Silva Ribeiro"],
+          subtitulo: "Inovação que conecta, e segurança que transforma.",
+          descricao: "A Celeste Automação Elétrica é especializada em soluções inteligentes de automação e otimização de sistemas elétricos, desenvolvendo projetos que unem tecnologia, eficiência e segurança. Nosso compromisso é modernizar processos, reduzir desperdícios e aumentar a produtividade, oferecendo soluções inovadoras e confiáveis que transformam desafios em resultados.",
+          imagem: "img/projetos/ele-5.png",
           alunos: 0,
           apresentacao: [
             { data: "01/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" }
@@ -414,17 +414,17 @@ window.SITE = {
         },
         {
           id: "ele-6",
-          nome: "Raze",
+          nome: "Haze",
           turma: "2IELE-SEDUC",
-          integrantes: "",
+          integrantes: ["Carlos Fabricio Santos de Santana", "Claudio Boni Mazzini", "Christopher Henry Oliveira de Souza", "Omar Gomes Barbosa dos Reis", "Murillo Correa"],
           subtitulo: "Frase de destaque do projeto",
           descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.",
-          imagem: "img/projetos/mec-x.jpeg",
+          imagem: "img/projetos/ele-6.webp",
           alunos: 0,
           apresentacao: [
             { data: "01/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" }
           ],
-          landing: "",
+          landing: "https://sites.google.com/aluno.senai.br/linhaautomatizadaseparadoradep/vis%C3%A3o-geral",
           funcionamento: "",
           comercial: ""
         },
@@ -435,14 +435,14 @@ window.SITE = {
           integrantes: ["Anna Karolina Dantas dos Santos", "Christopher Silva da Costa", "Matheus Christian Papareli Barbosa", "Thaís de Oliveira"],
           subtitulo: "A um passo à frente.",
           descricao: "O SmartPredict é um sistema de manutenção preditiva industrial que coleta telemetria contínua de temperatura, vibração, pressão e umidade para antecipar falhas críticas. Executando inferência na borda (edge computing) em Raspberry Pi, o modelo de IA aprende a linha de base operacional da máquina e dispara alertas em tempo real via painel e ntfy ante anomalias, integrando documentação de engenharia com modelos 3D dos gabinetes.",
-          imagem: "img/projetos/mec-x.jpeg",
+          imagem: "img/projetos/ele-7.png",
           alunos: 0,
           apresentacao: [
             { data: "02/12/2026", horario: "das 13h30 às 16h30" }
           ],
           landing: "https://karolinadantas.github.io/predicta/",
-          funcionamento: "",
-          comercial: ""          
+          funcionamento: "https://www.youtube.com/shorts/n644lnowdko",
+          comercial: "https://youtu.be/jeO7wPUNhGg?is=HmDhs_6S0pKw_Xkd"          
         },
         {
           id: "ele-8",

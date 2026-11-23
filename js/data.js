@@ -90,8 +90,8 @@ window.SITE = {
           imagem: "img/projetos/ds-1.png",
           alunos: 0,
           apresentacao: [
-            { data: "02/12/2026", horario: "das 8h às 17h" },
-            { data: "03/12/2026", horario: "das 8h às 17h" }
+            { data: "02/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" },
+            { data: "03/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" }
           ],
           landing: "https://parksync-landing-page.onrender.com/",
           funcionamento: "",
@@ -107,8 +107,8 @@ window.SITE = {
           imagem: "img/projetos/ds-2.png",
           alunos: 0,
           apresentacao: [
-            { data: "02/12/2026", horario: "das 8h às 17h" },
-            { data: "03/12/2026", horario: "das 8h às 17h" }
+            { data: "02/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" },
+            { data: "03/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" }
           ],
           landing: "https://ryan22-ai.github.io/AgroVision-Site/",
           funcionamento: "",
@@ -124,8 +124,8 @@ window.SITE = {
           imagem: "img/projetos/ds-3.png",
           alunos: 0,
           apresentacao: [
-            { data: "02/12/2026", horario: "das 8h às 17h" },
-            { data: "03/12/2026", horario: "das 8h às 17h" }
+            { data: "02/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" },
+            { data: "03/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" }
           ],
           landing: "https://lorenaslima6-rgb.github.io/BitByte---PAGE/",
           funcionamento: "",
@@ -141,8 +141,8 @@ window.SITE = {
           imagem: "img/projetos/ds-4.png",
           alunos: 0,
           apresentacao: [
-            { data: "02/12/2026", horario: "das 8h às 17h" },
-            { data: "03/12/2026", horario: "das 8h às 17h" }
+            { data: "02/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" },
+            { data: "03/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" }
           ],
           landing: "https://gabrieldasilvaviana.github.io/ReservaDeSala-System1/",
           funcionamento: "",
@@ -158,8 +158,8 @@ window.SITE = {
           imagem: "img/projetos/ds-5.png",
           alunos: 0,
           apresentacao: [
-            { data: "02/12/2026", horario: "das 8h às 17h" },
-            { data: "03/12/2026", horario: "das 8h às 17h" }
+            { data: "02/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" },
+            { data: "03/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" }
           ],
           landing: "https://graceful-donut-514384.netlify.app/",
           funcionamento: "",
@@ -175,8 +175,8 @@ window.SITE = {
           imagem: "img/projetos/ds-6.png",
           alunos: 0,
           apresentacao: [
-            { data: "02/12/2026", horario: "das 8h às 17h" },
-            { data: "03/12/2026", horario: "das 8h às 17h" }
+            { data: "02/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" },
+            { data: "03/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" }
           ],
           landing: "https://adriellyvis.github.io/Chamada-Senai-Landing/",
           funcionamento: "",
@@ -192,8 +192,8 @@ window.SITE = {
           imagem: "img/projetos/ds-7.png",
           alunos: 0,
           apresentacao: [
-            { data: "02/12/2026", horario: "das 8h às 17h" },
-            { data: "03/12/2026", horario: "das 13h às 17h" }
+            { data: "02/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" },
+            { data: "03/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" }
           ],
           landing: "https://flaviaalmeiida.github.io/landing-page-/",
           funcionamento: "",
@@ -209,8 +209,8 @@ window.SITE = {
           imagem: "img/projetos/ds-8.png",
           alunos: 0,
           apresentacao: [
-            { data: "02/12/2026", horario: "das 8h às 17h" },
-            { data: "03/12/2026", horario: "das 13h às 17h" }
+            { data: "02/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" },
+            { data: "03/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" }
           ],
           landing: "https://landingpageclearspaces.vercel.app/",
           funcionamento: "",
@@ -226,8 +226,8 @@ window.SITE = {
           imagem: "img/projetos/ds-9.png",
           alunos: 0,
           apresentacao: [
-            { data: "02/12/2026", horario: "das 8h às 17h" },
-            { data: "03/12/2026", horario: "das 13h às 17h" }
+            { data: "02/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" },
+            { data: "03/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" }
           ],
           landing: "https://fredd-08.github.io/ajuda-landingpage/",
           funcionamento: "",
@@ -243,8 +243,8 @@ window.SITE = {
           imagem: "img/projetos/ds-10.png",
           alunos: 0,
           apresentacao: [
-            { data: "02/12/2026", horario: "das 8h às 17h" },
-            { data: "03/12/2026", horario: "das 13h às 17h" }
+            { data: "02/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" },
+            { data: "03/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" }
           ],
           landing: "https://giulianodanellipau.github.io/HelpSanca-LandingPage/",
           funcionamento: "",
@@ -260,8 +260,8 @@ window.SITE = {
           imagem: "img/projetos/ds-11.png",
           alunos: 0,
           apresentacao: [
-            { data: "02/12/2026", horario: "das 8h às 17h" },
-            { data: "03/12/2026", horario: "das 13h às 17h" }
+            { data: "02/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" },
+            { data: "03/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" }
           ],
           landing: "https://belugasite.vercel.app/",
           funcionamento: "",
@@ -277,8 +277,8 @@ window.SITE = {
           imagem: "img/projetos/ds-12.jpeg",
           alunos: 0,
           apresentacao: [
-            { data: "02/12/2026", horario: "das 8h às 17h" },
-            { data: "03/12/2026", horario: "das 13h às 17h" }
+            { data: "02/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" },
+            { data: "03/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" }
           ],
           landing: "https://kapooll.github.io/Landing-page-floodpath/",
           funcionamento: "",
@@ -294,8 +294,8 @@ window.SITE = {
           imagem: "img/projetos/ds-13.jpg",
           alunos: 0,
           apresentacao: [
-            { data: "02/12/2026", horario: "das 8h às 17h" },
-            { data: "03/12/2026", horario: "das 13h às 17h" }
+            { data: "02/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" },
+            { data: "03/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" }
           ],
           landing: "https://ruanfernandesdasilva.github.io/landing-page/",
           funcionamento: "",
@@ -311,8 +311,8 @@ window.SITE = {
           imagem: "img/projetos/ds-14.png",
           alunos: 0,
           apresentacao: [
-            { data: "02/12/2026", horario: "das 8h às 17h" },
-            { data: "03/12/2026", horario: "das 13h às 17h" }
+            { data: "02/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" },
+            { data: "03/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" }
           ],
           landing: "https://landing-page-wt6o.onrender.com/",
           funcionamento: "",
@@ -342,7 +342,7 @@ window.SITE = {
           imagem: "img/projetos/ele-1.png",
           alunos: 0,
           apresentacao: [
-            { data: "01/12/2026", horario: "das 8h às 17h" }
+            { data: "01/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" }
           ],
           landing: "https://sites.google.com/aluno.senai.br/autosort?usp=sharing",
           funcionamento: "https://youtu.be/LZEhbVGpsmU?si=riTi2TbZa0w5ILxi",
@@ -358,7 +358,7 @@ window.SITE = {
           imagem: "img/projetos/ele-2.png",
           alunos: 0,
           apresentacao: [
-            { data: "01/12/2026", horario: "das 8h às 17h" }
+            { data: "01/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" }
           ],
           landing: "https://sites.google.com/aluno.senai.br/racmproject/inicio",
           funcionamento: "https://youtu.be/PL5HY8tn3ng?si=o81csFdsYzURHmzI",
@@ -374,7 +374,7 @@ window.SITE = {
           imagem: "img/projetos/ele-3.png",
           alunos: 0,
           apresentacao: [
-            { data: "01/12/2026", horario: "das 8h às 17h" }
+            { data: "01/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" }
           ],
           landing: "",
           funcionamento: "",
@@ -390,7 +390,7 @@ window.SITE = {
           imagem: "img/projetos/ele-4.png",
           alunos: 0,
           apresentacao: [
-            { data: "01/12/2026", horario: "das 8h às 17h" }
+            { data: "01/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" }
           ],
           landing: "https://sites.google.com/view/projeto-nexo-kit/home",
           funcionamento: "",
@@ -406,7 +406,7 @@ window.SITE = {
           imagem: "img/projetos/mec-x.jpeg",
           alunos: 0,
           apresentacao: [
-            { data: "01/12/2026", horario: "das 8h às 17h" }
+            { data: "01/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" }
           ],
           landing: "",
           funcionamento: "",
@@ -422,7 +422,7 @@ window.SITE = {
           imagem: "img/projetos/mec-x.jpeg",
           alunos: 0,
           apresentacao: [
-            { data: "01/12/2026", horario: "das 8h às 17h" }
+            { data: "01/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" }
           ],
           landing: "",
           funcionamento: "",
@@ -431,14 +431,14 @@ window.SITE = {
         {
           id: "ele-7",
           nome: "Predicta",
-          turma: "4TELE-VW",
+          turma: "4ELE-VW",
           integrantes: ["Anna Karolina Dantas dos Santos", "Christopher Silva da Costa", "Matheus Christian Papareli Barbosa", "Thaís de Oliveira"],
           subtitulo: "A um passo à frente.",
           descricao: "O SmartPredict é um sistema de manutenção preditiva industrial que coleta telemetria contínua de temperatura, vibração, pressão e umidade para antecipar falhas críticas. Executando inferência na borda (edge computing) em Raspberry Pi, o modelo de IA aprende a linha de base operacional da máquina e dispara alertas em tempo real via painel e ntfy ante anomalias, integrando documentação de engenharia com modelos 3D dos gabinetes.",
           imagem: "img/projetos/mec-x.jpeg",
           alunos: 0,
           apresentacao: [
-            { data: "02/12/2026", horario: "das 13:30h às 16:30h" }
+            { data: "02/12/2026", horario: "das 13h30 às 16h30" }
           ],
           landing: "https://karolinadantas.github.io/predicta/",
           funcionamento: "",
@@ -447,14 +447,14 @@ window.SITE = {
         {
           id: "ele-8",
           nome: "Trion",
-          turma: "4TELE-VW",
+          turma: "4ELE-VW",
           integrantes: ["Gabriel Mathias", "Gustavo Peixoto de Freitas", "Gustavo Silveira", "Vitor Hugo Gini Sala"],
           subtitulo: "Frase de destaque do projeto",
           descricao: "O projeto de Retrofit da Mesa Seletora do grupo TRION consiste na renovação e modernização do equipamento, com foco na integração de um CLP (Controlador Lógico Programável) ao sistema de controle. O trabalho também abrange a modernização dos componentes do sistema de separação entre peças já existente e a atualização dos cilindros pneumáticos, visando maior precisão, confiabilidade e eficiência operacional do conjunto.",
           imagem: "img/projetos/ele-8.png",
           alunos: 0,
           apresentacao: [
-            { data: "02/12/2026", horario: "das 13:30h às 16:30h" }
+            { data: "02/12/2026", horario: "das 13h30 às 16h30" }
           ],
           landing: "https://sites.google.com/aluno.senai.br/trion/in%C3%ADcio",
           funcionamento: "https://youtu.be/p-D8j1IhhUA?si=RLQFhPTrJt1cvQej",
@@ -463,14 +463,14 @@ window.SITE = {
         {
           id: "ele-9",
           nome: "Vision Tech",
-          turma: "4TELE-VW",
+          turma: "4ELE-VW",
           integrantes: ["Isabela Guimarães da Silva", "Jennifer Gabrielli Fonseca", "Leomardo de Oliveira Otaviano", "Lucas Sperandio"],
           subtitulo: "Tecnologia que enxerga.",
           descricao: "A VisionTech apresenta um projeto de modernização de uma mesa seletora, substituindo os sensores convencionais de identificação de tamanho e cor por uma solução baseada em ESP32 e câmera. Por meio da visão computacional, o sistema busca realizar a identificação dos objetos de forma mais simplificada, reduzindo a quantidade de sensores físicos e, consequentemente, a necessidade de manutenção.",
           imagem: "img/projetos/ele-9.jpg",
           alunos: 0,
           apresentacao: [
-            { data: "02/12/2026", horario: "das 13:30h às 16:30h" }
+            { data: "02/12/2026", horario: "das 13h30 às 16h30" }
           ],
           landing: "https://jegabriellifonseca-web.github.io/VISIONTECH/",
           funcionamento: "",
@@ -479,14 +479,14 @@ window.SITE = {
         {
           id: "ele-10",
           nome: "RetroTech",
-          turma: "4TELE-VW",
+          turma: "4ELE-VW",
           integrantes: ["Arthur Jacob de Paiva Santos", "Eduardo Minetto Corregliano", "Matheus de Rizzo Valério", "Pedro Miuel Gastaldi da Costa", "Rafael Ceschi Rufino"],
           subtitulo: "Frase de destaque do projeto",
           descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.",
           imagem: "img/projetos/mec-x.jpeg",
           alunos: 0,
           apresentacao: [
-            { data: "02/12/2026", horario: "das 13:30h às 16:30h" }
+            { data: "02/12/2026", horario: "das 13h30 às 16h30" }
           ],
           landing: "",
           funcionamento: "",
@@ -516,8 +516,8 @@ window.SITE = {
           imagem: "img/projetos/mec-1.jpeg",
           alunos: 4,
           apresentacao: [
-            { data: "02/12/2026", horario: "das 8h às 17h" },
-            { data: "03/12/2026", horario: "das 13h às 17h" }
+            { data: "02/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" },
+            { data: "03/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" }
           ],
           landing: "https://sites.google.com/aluno.senai.br/lathevision/in%C3%ADcio",
           funcionamento: "https://youtu.be/W4yv00il-30?si=Dj0v7-xhAh2rdR9b",
@@ -533,8 +533,8 @@ window.SITE = {
           imagem: "img/projetos/mec-2.png",
           alunos: 0,
           apresentacao: [
-            { data: "02/12/2026", horario: "das 8h às 17h" },
-            { data: "03/12/2026", horario: "das 13h às 17h" }
+            { data: "02/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" },
+            { data: "03/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" }
           ],
           landing: "https://sites.google.com/aluno.senai.br/precisiontech/in%C3%ADcio",
           funcionamento: "https://youtu.be/1vd4hlzFCe0",
@@ -550,8 +550,8 @@ window.SITE = {
           imagem: "img/projetos/mec-3.jpg",
           alunos: 4,
           apresentacao: [
-            { data: "02/12/2026", horario: "das 8h às 17h" },
-            { data: "03/12/2026", horario: "das 13h às 17h" }
+            { data: "02/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" },
+            { data: "03/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" }
           ],
           landing: "https://sites.google.com/aluno.senai.br/mecmonitor/in%C3%ADcio",
           funcionamento: "https://youtu.be/aHWcUqvuHp4?si=6h6Z-o9V0vJpEK3F",
@@ -567,8 +567,8 @@ window.SITE = {
           imagem: "img/projetos/mec-4.jpg",
           alunos: 0,
           apresentacao: [
-            { data: "02/12/2026", horario: "das 8h às 17h" },
-            { data: "03/12/2026", horario: "das 13h às 17h" }
+            { data: "02/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" },
+            { data: "03/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" }
           ],
           landing: "https://sites.google.com/aluno.senai.br/micro-work/in%C3%ADcio",
           funcionamento: "https://youtu.be/lofR74d96lU",
@@ -584,8 +584,8 @@ window.SITE = {
           imagem: "img/projetos/mec-5.jpeg",
           alunos: 0,
           apresentacao: [
-            { data: "02/12/2026", horario: "das 8h às 17h" },
-            { data: "03/12/2026", horario: "das 13h às 17h" }
+            { data: "02/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" },
+            { data: "03/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" }
           ],
           landing: "https://sites.google.com/docente.senai.br/mecavision?usp=sharing",
           funcionamento: "https://youtu.be/3Z-v8Awbyy0?is=niZgLOTVKH88JwX3",
@@ -601,8 +601,8 @@ window.SITE = {
           imagem: "img/projetos/mec-6.jpg",
           alunos: 0,
           apresentacao: [
-            { data: "02/12/2026", horario: "das 8h às 17h" },
-            { data: "03/12/2026", horario: "das 13h às 17h" }
+            { data: "02/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" },
+            { data: "03/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" }
           ],
           landing: "https://sites.google.com/aluno.senai.br/smartfactory/in%C3%ADcio",
           funcionamento: "https://youtu.be/bWXB2GlRraw",
@@ -618,8 +618,8 @@ window.SITE = {
           imagem: "img/projetos/mec-7.png",
           alunos: 0,
           apresentacao: [
-            { data: "02/12/2026", horario: "das 8h às 17h" },
-            { data: "03/12/2026", horario: "das 13h às 17h" }
+            { data: "02/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" },
+            { data: "03/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" }
           ],
           landing: "https://sites.google.com/aluno.senai.br/inkmix1/in%C3%ADcio",
           funcionamento: "https://drive.google.com/file/d/1a08d__SYs85vxcJWslz4OZZkziXFEHWV/view?usp=drive_link",
@@ -635,8 +635,8 @@ window.SITE = {
           imagem: "img/projetos/mec-8.jpg",
           alunos: 0,
           apresentacao: [
-            { data: "02/12/2026", horario: "das 8h às 17h" },
-            { data: "03/12/2026", horario: "das 13h às 17h" }
+            { data: "02/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" },
+            { data: "03/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" }
           ],
           landing: "https://sites.google.com/aluno.senai.br/cyberpipe/in%C3%ADcio",
           funcionamento: "https://youtu.be/ncgJ-N5UVG4",

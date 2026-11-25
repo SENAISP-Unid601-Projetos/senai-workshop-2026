@@ -579,7 +579,7 @@ window.SITE = {
           nome: "MecaVision",
           turma: "2IMEC-B",
           integrantes: ["Luis Chiesse", "Natalia Sala", "Lucas Alves"],
-          subtitulo: "Frase de destaque do projeto",
+          subtitulo: "Enxergando o mundo através da mecatrônica; Transformando possibilidades em inovação.",
           descricao: "O projeto Monta Cubo tem como objetivo inovar o processo de montagem do cubo mágico utilizando visão computacional. Seu principal diferencial é oferecer três kits com diferentes propostas e funcionalidades, proporcionando versatilidade, acessibilidade e uma experiência tecnológica de aprendizagem.",
           imagem: "img/projetos/mec-5.jpeg",
           alunos: 0,

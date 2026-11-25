@@ -95,7 +95,7 @@ window.SITE = {
           ],
           landing: "https://parksync-landing-page.onrender.com/",
           funcionamento: "",
-          comercial: ""
+          comercial: "https://youtu.be/E5x2HYuXN_A"
         },
         {
           id: "ds-2",
@@ -112,7 +112,7 @@ window.SITE = {
           ],
           landing: "https://ryan22-ai.github.io/AgroVision-Site/",
           funcionamento: "",
-          comercial: "https://youtu.be/s3CX23RGCdg"
+          comercial: "https://youtu.be/vOEN_oBTHuU"
         },
         {
           id: "ds-3",
@@ -127,7 +127,7 @@ window.SITE = {
             { data: "02/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" },
             { data: "03/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" }
           ],
-          landing: "https://lorenaslima6-rgb.github.io/BitByte---PAGE/",
+          landing: "https://lorenaslima6-rgb.github.io/bitbyte-landing-page/",
           funcionamento: "",
           comercial: ""
         },
@@ -163,7 +163,7 @@ window.SITE = {
           ],
           landing: "https://graceful-donut-514384.netlify.app/",
           funcionamento: "",
-          comercial: ""
+          comercial: "https://youtu.be/pFknP1iiuJc"
         },
         {
           id: "ds-6",
@@ -179,7 +179,7 @@ window.SITE = {
             { data: "03/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" }
           ],
           landing: "https://adriellyvis.github.io/Chamada-Senai-Landing/",
-          funcionamento: "",
+          funcionamento: "https://youtu.be/dGjn0l-_vRw?si=0mJuFkegajEW6nQ4",
           comercial: ""
         },
         {
@@ -377,7 +377,7 @@ window.SITE = {
             { data: "01/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" }
           ],
           landing: "https://sites.google.com/aluno.senai.br/testevoltwsss/in%C3%ADcio",
-          funcionamento: "",
+          funcionamento: "https://youtu.be/oYSSpK7R8Mc?is=J2pqvM3sBwL53zfQ",
           comercial: "https://youtube.com/shorts/otA-uUibR3s?is=RP9uTCZb-rApQyf8"
         },
         {
@@ -393,7 +393,7 @@ window.SITE = {
             { data: "01/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" }
           ],
           landing: "https://sites.google.com/view/projeto-nexo-kit/home",
-          funcionamento: "",
+          funcionamento: "https://www.youtube.com/shorts/Ni2zi50d5OY",
           comercial: ""
         },
         {
@@ -417,8 +417,8 @@ window.SITE = {
           nome: "Haze",
           turma: "2IELE-SEDUC",
           integrantes: ["Carlos Fabricio Santos de Santana", "Claudio Boni Mazzini", "Christopher Henry Oliveira de Souza", "Omar Gomes Barbosa dos Reis", "Murillo Correa"],
-          subtitulo: "Frase de destaque do projeto",
-          descricao: "Descreva aqui o objetivo e o diferencial do projeto do grupo.",
+          subtitulo: "Inteligência que acelera a sua produção.",
+          descricao: "É um sistema automatizada que utiliza-se de sensores ópticos e indutivos para identificar os objetos que passam em sua esteira e selecioná-los por características específicas.  Seu papel numa indústria de reciclagem passa a ser essencial quando a demanda pede alta produtividade e um processamento de toneladas de resíduos por hora sem interrupção.",
           imagem: "img/projetos/ele-6.webp",
           alunos: 0,
           apresentacao: [
@@ -426,7 +426,7 @@ window.SITE = {
           ],
           landing: "https://sites.google.com/aluno.senai.br/linhaautomatizadaseparadoradep/vis%C3%A3o-geral",
           funcionamento: "",
-          comercial: ""
+          comercial: "https://www.youtube.com/watch?v=ZaypNz9lFbs"
         },
         {
           id: "ele-7",
@@ -442,7 +442,7 @@ window.SITE = {
           ],
           landing: "https://karolinadantas.github.io/predicta/",
           funcionamento: "https://www.youtube.com/shorts/n644lnowdko",
-          comercial: "https://youtu.be/jeO7wPUNhGg?is=HmDhs_6S0pKw_Xkd"          
+          comercial: "https://youtu.be/jeO7wPUNhGg?is=HmDhs_6S0pKw_Xkd"
         },
         {
           id: "ele-8",
@@ -655,7 +655,7 @@ window.SITE = {
             { data: "02/12/2026", horario: "das 13h30 às 17h" },
             { data: "03/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" }
           ],
-          landing: "",
+          landing: "https://sites.google.com/aluno.senai.br/pneutech?usp=sharing",
           funcionamento: "https://youtu.be/rTpyQ92vSVU?si=RRCgzd6_5Qx03kZI",
           comercial: "https://youtu.be/CPDIH-O03U4?si=Dg1QkZCEruu-SsML"
         },

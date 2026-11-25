@@ -393,8 +393,8 @@ window.SITE = {
             { data: "01/12/2026", horario: "das 8h30 às 12h e das 13h30 às 17h" }
           ],
           landing: "https://sites.google.com/view/projeto-nexo-kit/home",
-          funcionamento: "https://www.youtube.com/shorts/Ni2zi50d5OY",
-          comercial: ""
+          funcionamento: "https://youtube.com/shorts/_gDks0uWCyI?si=QciP-Kk1S5INFchS",
+          comercial: "https://www.youtube.com/shorts/Ni2zi50d5OY"
         },
         {
           id: "ele-5",
@@ -475,7 +475,7 @@ window.SITE = {
           landing: "https://jegabriellifonseca-web.github.io/VISIONTECH/",
           funcionamento: "",
           comercial: "https://www.youtube.com/watch?v=J-OVlAiYMRw"
-        },
+        }/*,
         {
           id: "ele-10",
           nome: "RetroTech",
@@ -491,7 +491,7 @@ window.SITE = {
           landing: "",
           funcionamento: "",
           comercial: ""
-        }
+        }*/
       ]
     },
 

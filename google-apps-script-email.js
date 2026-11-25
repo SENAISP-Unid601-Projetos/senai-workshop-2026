@@ -435,21 +435,21 @@ function gerarHtmlEmail(estagio, nome, perfil) {
     '</head>' +
     '<body style="margin:0;padding:0;background-color:#0d111a;font-family:-apple-system,BlinkMacSystemFont,\'Segoe UI\',Roboto,Helvetica,Arial,sans-serif;color:#1e293b;-webkit-font-smoothing:antialiased;">' +
       '<div style="display:none;font-size:1px;color:#0d111a;line-height:1px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;">' + config.preheader + '</div>' +
-      '<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#0d111a;padding:30px 15px;">' +
+      '<table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#0d111a" style="background-color:#0d111a;padding:30px 15px;">' +
         '<tr><td align="center">' +
-          '<table width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:620px;background:#ffffff;border-radius:14px;overflow:hidden;box-shadow:0 12px 35px rgba(0,0,0,0.45);">' +
+          '<table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff" style="max-width:620px;background-color:#ffffff;border-radius:14px;overflow:hidden;box-shadow:0 12px 35px rgba(0,0,0,0.45);">' +
 
-            // Header SENAI
-            '<tr><td style="background:linear-gradient(135deg,#e4002b 0%,#b80022 100%);padding:32px 24px;text-align:center;">' +
-              '<h1 style="margin:0;color:#ffffff;font-size:28px;font-weight:900;letter-spacing:-0.5px;">SEN<span style="color:#ffb703;">AI</span></h1>' +
-              '<p style="margin:6px 0 0;color:rgba(255,255,255,0.92);font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;">' + config.badgeTitulo + '</p>' +
+            // Header SENAI (compatível com Outlook via bgcolor + background-color sólido)
+            '<tr><td bgcolor="#e4002b" style="background-color:#e4002b;background-image:linear-gradient(135deg,#e4002b 0%,#b80022 100%);padding:32px 24px;text-align:center;">' +
+              '<h1 style="margin:0;color:#ffffff;font-size:28px;font-weight:900;letter-spacing:-0.5px;line-height:34px;">SEN<span style="color:#ffb703;">AI</span></h1>' +
+              '<p style="margin:6px 0 0;color:#ffffff;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;line-height:18px;">' + config.badgeTitulo + '</p>' +
             '</td></tr>' +
 
             // Corpo Principal
             '<tr><td style="padding:34px 28px 24px;">' +
               '<h2 style="margin:0 0 16px;color:#0f172a;font-size:21px;font-weight:800;line-height:1.3;">' + config.titulo + '</h2>' +
               '<p style="margin:0 0 16px;color:#334155;font-size:15px;line-height:1.6;">' + config.mensagem + '</p>' +
-              '<p style="margin:0 0 24px;color:#475569;font-size:14px;line-height:1.6;background:#f8fafc;padding:14px 18px;border-radius:8px;border-left:4px solid #e4002b;">' + config.destaque + '</p>' +
+              '<p style="margin:0 0 24px;color:#475569;font-size:14px;line-height:1.6;background-color:#f8fafc;padding:14px 18px;border-radius:8px;border-left:4px solid #e4002b;">' + config.destaque + '</p>' +
 
               // Cards dos 3 Cursos
               '<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:24px;">' +
@@ -459,7 +459,7 @@ function gerarHtmlEmail(estagio, nome, perfil) {
 
                 // DS
                 '<tr><td style="padding:8px 0;">' +
-                  '<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f1f5f9;border-radius:8px;padding:10px 14px;">' +
+                  '<table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#f1f5f9" style="background-color:#f1f5f9;border-radius:8px;padding:10px 14px;">' +
                     '<tr><td>' +
                       '<p style="margin:0;font-size:14px;font-weight:700;color:#0f172a;">💻 Desenvolvimento de Sistemas</p>' +
                       '<p style="margin:3px 0 0;font-size:12px;color:#475569;">Softwares web full-stack, mobile, banco de dados, cloud e IA</p>' +
@@ -469,7 +469,7 @@ function gerarHtmlEmail(estagio, nome, perfil) {
 
                 // ELE
                 '<tr><td style="padding:8px 0;">' +
-                  '<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f1f5f9;border-radius:8px;padding:10px 14px;">' +
+                  '<table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#f1f5f9" style="background-color:#f1f5f9;border-radius:8px;padding:10px 14px;">' +
                     '<tr><td>' +
                       '<p style="margin:0;font-size:14px;font-weight:700;color:#0f172a;">⚡ Eletroeletrônica</p>' +
                       '<p style="margin:3px 0 0;font-size:12px;color:#475569;">Manutenção, montagem e desenvolvimento de sistemas eletroeletrônicos</p>' +
@@ -479,7 +479,7 @@ function gerarHtmlEmail(estagio, nome, perfil) {
 
                 // MEC
                 '<tr><td style="padding:8px 0;">' +
-                  '<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f1f5f9;border-radius:8px;padding:10px 14px;">' +
+                  '<table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#f1f5f9" style="background-color:#f1f5f9;border-radius:8px;padding:10px 14px;">' +
                     '<tr><td>' +
                       '<p style="margin:0;font-size:14px;font-weight:700;color:#0f172a;">🤖 Mecatrônica</p>' +
                       '<p style="margin:3px 0 0;font-size:12px;color:#475569;">Automação industrial, robótica, IoT e controle avançado de processos</p>' +
@@ -489,7 +489,7 @@ function gerarHtmlEmail(estagio, nome, perfil) {
               '</table>' +
 
               // Caixa com Detalhes do Evento
-              '<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#f8fafc;border:1px solid #e2e8f0;border-left:5px solid #e4002b;border-radius:8px;margin-bottom:26px;">' +
+              '<table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#f8fafc" style="background-color:#f8fafc;border:1px solid #e2e8f0;border-left:5px solid #e4002b;border-radius:8px;margin-bottom:26px;">' +
                 '<tr><td style="padding:18px 20px;">' +
                   '<p style="margin:0 0 8px;font-size:14px;color:#0f172a;"><strong>📅 Data:</strong> 01, 02 e 03 de Dezembro de 2026 (Terça, Quarta e Quinta)</p>' +
                   '<p style="margin:0 0 8px;font-size:14px;color:#0f172a;"><strong>⏰ Horário:</strong> Das 08h30 às 12h e das 13h30 às 17h • Entrada Gratuita</p>' +
@@ -501,8 +501,8 @@ function gerarHtmlEmail(estagio, nome, perfil) {
               // Botões de Ação
               '<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:26px;">' +
                 '<tr><td align="center">' +
-                  '<a href="https://senaisp-unid601-projetos.github.io/senai-workshop-2026/index.html" target="_blank" style="display:inline-block;background:#e4002b;color:#ffffff;text-decoration:none;font-size:14px;font-weight:700;padding:12px 22px;border-radius:8px;margin:4px 6px;">🚀 Ver Projetos no Portal</a>' +
-                  '<a href="https://maps.app.goo.gl/ERURVEKNRXTKch5o6" target="_blank" style="display:inline-block;background:#0f172a;color:#ffffff;text-decoration:none;font-size:14px;font-weight:700;padding:12px 22px;border-radius:8px;margin:4px 6px;">🗺️ Abrir no Google Maps</a>' +
+                  '<a href="https://senaisp-unid601-projetos.github.io/senai-workshop-2026/index.html" target="_blank" style="display:inline-block;background-color:#e4002b;color:#ffffff;text-decoration:none;font-size:14px;font-weight:700;padding:12px 22px;border-radius:8px;margin:4px 6px;">🚀 Ver Projetos no Portal</a>' +
+                  '<a href="https://maps.app.goo.gl/ERURVEKNRXTKch5o6" target="_blank" style="display:inline-block;background-color:#0f172a;color:#ffffff;text-decoration:none;font-size:14px;font-weight:700;padding:12px 22px;border-radius:8px;margin:4px 6px;">🗺️ Abrir no Google Maps</a>' +
                 '</td></tr>' +
               '</table>' +
 
@@ -510,7 +510,7 @@ function gerarHtmlEmail(estagio, nome, perfil) {
             '</td></tr>' +
 
             // Rodapé Institucional
-            '<tr><td style="background:#f1f5f9;padding:20px 24px;text-align:center;border-top:1px solid #e2e8f0;">' +
+            '<tr><td bgcolor="#f1f5f9" style="background-color:#f1f5f9;padding:20px 24px;text-align:center;border-top:1px solid #e2e8f0;">' +
               '<p style="margin:0 0 4px;font-size:12px;color:#475569;font-weight:600;">Faculdade de Tecnologia e Escola SENAI Antonio Adolpho Lobbe — São Carlos/SP</p>' +
               '<p style="margin:0;font-size:11px;color:#94a3b8;">Serviço Nacional de Aprendizagem Industrial • Todos os direitos reservados © 2026</p>' +
             '</td></tr>' +
